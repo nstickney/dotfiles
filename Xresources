@@ -1,0 +1,89 @@
+! Terminal Colors -----------------------------------------------------------------------
+! Black + Grey
+*color0:  #333333
+*color8:  #666666
+! Red + Light Red
+*color1:  #cf4517
+*color9:  #f09475
+! Green + Light Green
+*color2:  #17cf17
+*color10: #75f075
+! Brown + Yellow
+*color3:  #cfa117
+*color11: #f0d175
+! Blue + Light Blue
+*color4:  #1793D1
+*color12: #75c7f0
+! Purple + Light Purple
+*color5:  #7317cf
+*color13: #b375f0
+! Cyan + Light Cyan
+*color6:  #17cfa1
+*color14: #75f0d1
+! Light Gray + White
+*color7:  #999999
+*color15: #cccccc
+
+! Fonts ---------------------------------------------------------------------------------
+*font: xft:Inconsolata:size=12,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+
+! URxvt Options -------------------------------------------------------------------------
+! Colors
+URxvt*background: [90]#181100
+URxvt*foreground: #fff8e7
+
+! Turn off all perl extensions except tabs and url matching
+URxvt.perl-ext:
+URxvt.perl-ext-common:      tabbedex,url-select,keyboard-select
+
+! Options for url matching
+URxvt.url-select.launcher:  /usr/bin/xdg-open
+URxvt.url-select.underline: true
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+
+! Options for tabbedex
+URxvt.tabbed.no-tabbedex-keys:  true
+URxvt.keysym.Control-t:         perl:tabbedex:new_tab
+URxvt.keysym.Control-Tab:       perl:tabbedex:next_tab
+URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
+URxvt.keysym.Control-w:         perl:tabbedex:kill_tab
+
+! Scroll options
+URxvt.scrollBar:            false
+URxvt.saveLines:            65535
+URxvt.scrollTtyOutput:      false
+URxvt.scrollWithBuffer:     true
+URxvt.scrollTtyKeypress:    true
+
+! Match URLs for clicking
+URxvt.url-launcher:         /usr/bin/xdg-open
+URxvt.matcher.button:       1
+
+! Set the background transparent (compositing)
+URxvt.depth:    32
+URxvt.buffered: True
+
+! Set the initial geometry
+URxvt.geometry: 95x50
+
+! Rofi ----------------------------------------------------------------------------------
+rofi.modi:                          window,drun
+rofi.font:                          Inconsolata 12
+rofi.padding:                       300
+rofi.terminal:                      urxvt
+rofi.combi-modi:                    window,drun
+rofi.hide-scrollbar:                true
+rofi.fullscreen:                    true
+rofi.display-drun:                  Desktop Apps
+rofi.display-window:                Open Windows
+rofi.display-combi:                 Switch to or Start
+
+! State:           'bg',        'fg',       'bgalt',    'hlbg',     'hlfg'
+rofi.color-normal: #00fff8e7,   #181100,    #66e7f8ff,  #e6666666,  #fff8e7
+rofi.color-urgent: #e6fff8e7,   #cf4517,    #66e7f8ff,  #e6cf4517,  #fff8e7
+rofi.color-active: #e6cccccc,   #181100,    #66cccccc,  #e6333333,  #fff8e7
+
+!                  'bg',        'border',   'separator'
+rofi.color-window: #e6fff8e7,   #e6fff8e7,  #e6333333

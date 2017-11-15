@@ -1,0 +1,124 @@
+#!/bin/sh
+
+printf "Linking configuration files/directories for...\n"
+
+if [ -x "$(command -v aria2c)" ]
+then
+    printf "  aria2...\n"
+    if [ ! -d $HOME/.config ]
+    then
+        mkdir $HOME/.config
+    fi
+    if [ -d $HOME/.config/aria2 ]
+    then
+        rm -r $HOME/.config/aria2
+    fi
+    ln -s $HOME/dotfiles/aria2 $HOME/.config/aria2
+fi
+
+if [ -x "$(command -v atom)" ]
+then
+    printf "  atom...\n"
+    if [ -d $HOME/.atom ]
+    then
+        rm $HOME/.atom/*.coffee > /dev/null 2>&1
+        rm $HOME/.atom/*.cson > /dev/null 2>&1
+        #rm $HOME/.atom/*.json > /dev/null 2>&1
+        rm $HOME/.atom/*.less > /dev/null 2>&1
+    else
+        mkdir $HOME/.atom
+    fi
+    ln -s $HOME/dotfiles/atom/init.coffee $HOME/.atom/init.coffee
+    ln -s $HOME/dotfiles/atom/config.cson $HOME/.atom/config.cson
+    ln -s $HOME/dotfiles/atom/github.cson $HOME/.atom/github.cson
+    ln -s $HOME/dotfiles/atom/keymap.cson $HOME/.atom/keymap.cson
+    ln -s $HOME/dotfiles/atom/snippets.cson $HOME/.atom/snippets.cson
+    ln -s $HOME/dotfiles/atom/styles.less $HOME/.atom/styles.less
+
+    # Install missing packages, update, and remake the list
+    apm list --installed --bare | diff -e - $HOME/dotfiles/atom/packages.list | \
+        grep @ > /tmp/install.list
+    apm install -q --packages-file /tmp/install.list > /dev/null 2>&1
+    apm update --compatible --no-confirm > /dev/null 2>&1
+    apm list --installed --bare > $HOME/dotfiles/atom/packages.list
+fi
+
+if [ -x "$(command -v bash)" ]
+then
+    printf "  bash (and readline)...\n"
+    if [ -e $HOME/.bashrc ]
+    then
+        rm $HOME/.bashrc
+    fi
+    if [ -e $HOME/.bash_profile ]
+    then
+        rm $HOME/.bash_profile
+    fi
+    if [ -e $HOME/.inputrc ]
+    then
+        rm $HOME/.inputrc
+    fi
+    ln -s $HOME/dotfiles/bashrc $HOME/.bashrc
+    ln -s $HOME/dotfiles/bash_profile $HOME/.bash_profile
+    ln -s $HOME/dotfiles/inputrc $HOME/.inputrc
+fi
+
+if [ "nstickney" = "$USER" ] || [ "stickneyn" = "$USER" ]
+then
+    if [ -x "$(command -v git)" ]
+    then
+        printf "  git...\n"
+        if [ -e $HOME/.gitconfig ]
+        then
+            rm $HOME/.gitconfig
+        fi
+        ln -s $HOME/dotfiles/gitconfig $HOME/.gitconfig
+    fi
+fi
+
+if [ -x "$(command -v emacs)" ]
+then
+    printf "  emacs...\n"
+    if [ -d $HOME/.emacs ]
+    then
+        rm $HOME/.emacs
+    fi
+    ln -s $HOME/dotfiles/i3 $HOME/.emacs
+fi
+
+if [ -x "$(command -v i3)" ]
+then
+    printf "  i3wm...\n"
+    if [ -d $HOME/.i3 ]
+    then
+        rm -r $HOME/.i3
+    fi
+    ln -s $HOME/dotfiles/i3 $HOME/.i3
+fi
+
+if [ -x "$(command -v vim)" ]
+then
+    printf "  vim...\n"
+    if [ -e $HOME/.vimrc ]
+    then
+        rm $HOME/.vimrc
+    fi
+    if [ -d $HOME/.vim ]
+    then
+        rm -r $HOME/.vim
+    fi
+    ln -s $HOME/dotfiles/vim $HOME/.vim
+fi
+
+if [ -x "$(command -v xrdb)" ] && [ -x "$(command -v urxvt)" ]
+then
+    printf "  X.Org (rofi and urxvt)...\n"
+    if [ -e $HOME/.Xresources ]
+    then
+        rm $HOME/.Xresources
+    fi
+    ln -s $HOME/dotfiles/Xresources $HOME/.Xresources
+    xrdb $HOME/.Xresources
+fi
+
+printf "    ...Complete!\n"

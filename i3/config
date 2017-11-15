@@ -69,7 +69,7 @@ exec --no-startup-id xautolock -corners ---- -time 3 -locker ~/dotfiles/bin/i3lo
 
 # Start a bunch of stuff
 #exec --no-startup-id blueman-applet # bluetooth
-exec --no-startup-id solaar # logitech unifying receiver
+#exec --no-startup-id solaar # logitech unifying receiver
 exec --no-startup-id keepassx2 # password manager
 exec --no-startup-id nm-applet # NetworkManager
 exec --no-startup-id redshift-gtk -l 31.6:-97.1 # screen color temperature
@@ -241,4 +241,4 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-bindsym Print exec imlib2_grab ~/Pictures/Screenshots/`uname -n`-`date +%Y%m%d-%R`.png
+bindsym Print exec imlib2_grab ~/Pictures/Screenshots/`uname -n`-`date +%Y%m%d-%R:%S`.png

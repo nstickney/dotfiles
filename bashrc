@@ -3,6 +3,7 @@
 # Get useful error information
 #set -x
 
+# Import SSH aliases from protected file
 if [ -f $HOME/SafeDepositBox/$USER/bash-ssh-aliases.sh ]; then
     # shellcheck source=/dev/null
     source $HOME/SafeDepositBox/$USER/bash-ssh-aliases.sh

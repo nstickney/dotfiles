@@ -31,8 +31,8 @@ alias = ""
 
 [[block]]
 block = "disk_space"
-path = "/home"
-alias = ""
+path = "/home/nstickney/SafeDepositBox"
+alias = ""
 
 [[block]]
 block = "sound"

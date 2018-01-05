@@ -1,6 +1,9 @@
 # IDEA projects:
 *.iml
 
+# JRebel
+rebel.xml
+
 # Python pickles
 *.pickle
 

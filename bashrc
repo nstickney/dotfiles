@@ -27,7 +27,7 @@ then
         # Reflector
         if [ -x "$(command -v reflector)" ]
         then
-            alias reflect='echo "Updating Mirrorlist..." && sudo reflector -l 200 -p https --sort rate --save /etc/pacman.d/mirrorlist'
+            alias reflect='sudo echo "Updating Mirrorlist..." && sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
         fi
 
         # Pacaur

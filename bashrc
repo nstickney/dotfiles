@@ -3,10 +3,23 @@
 # Get useful error information
 #set -x
 
+# Defeat Snoopy logging (http://blog.rchapman.org/posts/Bypassing_snoopy_logging/)
+if [ ! -f $HOME/dotfiles/bin/bypass.so ]; then
+    # bypass.so has not yet been compiled, so compile it if possible
+    if [ -x "$(command -v gcc)" ] && [ -f $HOME/dotfiles/bin/bypass.c ]; then
+        cd $HOME/dotfiles/bin/
+        gcc -nostartfiles -shared -O3 -fPIC bypass.c -o bypass.so -ldl -Wall -Wextra
+        cd $HOME
+    fi
+fi
+if [ -x $HOME/dotfiles/bin/bypass.so ]; then
+    export LD_PRELOAD=$HOME/dotfiles/bin/bypass.so
+fi
+
 # Import SSH aliases from protected file
-if [ -f $HOME/SafeDepositBox/$USER/bash-ssh-aliases.sh ]; then
+if [ -f $HOME/SafeDepositBox/$USER/ssh-aliases.sh ]; then
     # shellcheck source=/dev/null
-    source $HOME/SafeDepositBox/$USER/bash-ssh-aliases.sh
+    source $HOME/SafeDepositBox/$USER/ssh-aliases.sh
 fi
 
 # Don't work on OS X

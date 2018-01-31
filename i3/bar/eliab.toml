@@ -35,9 +35,6 @@ path = "/home/nstickney/SafeDepositBox"
 alias = ""
 
 [[block]]
-block = "sound"
-
-[[block]]
 block = "time"
 interval = 1
 format = "%a %Y.%m.%d %T"

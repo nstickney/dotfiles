@@ -1,4 +1,6 @@
-#!/bin/bash
+#
+# /etc/bash.bashrc
+#
 
 # DEFAULT STUFF ###############################################################
 
@@ -11,20 +13,16 @@
 # Get useful error information
 #set -x
 
+# Set language properly
+export LANGUAGE=en_US.UTF-8
+export LC_MESSAGES="C"
+export LC_ALL=en_US.UTF-8
+
 # Recursive **/* and `cd` when only entering a path
 if [ "$(uname -s)" != "Darwin" ]; then
     shopt -s globstar
     shopt -s autocd
 fi
-
-# DEFEAT LOGGING ##############################################################
-
-# Defeat Snoopy logging (http://blog.rchapman.org/posts/Bypassing_snoopy_logging/)
-[ ! -f "$HOME"/dotfiles/bin/bypass.so ] && \
-    [ -x "$(command -v gcc)" ] && \
-    [ -f "$HOME"/dotfiles/bin/bypass.c ] && \
-    gcc -nostartfiles -shared -O3 -fPIC "$HOME"/dotfiles/bin/bypass.c -o "$HOME"/dotfiles/bin/bypass.so -ldl -Wall -Wextra
-[ -x "$HOME"/dotfiles/bin/bypass.so ] && export LD_PRELOAD=$HOME/dotfiles/bin/bypass.so
 
 # BASH PROMPT #################################################################
 
@@ -130,60 +128,3 @@ export HISTFILESIZE=8192
 
 shopt -s cdspell
 [ "$(uname -s)" != "Darwin" ] && shopt -s dirspell
-
-# ALIASES #####################################################################
-
-# Import SSH aliases from protected file
-# shellcheck source=/dev/null
-[ -f "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh ] && source "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh
-
-# Arch-specific aliasing
-if grep -q Arch < /etc/os-release; then
-    # Reflector
-    [ -x "$(command -v reflector)" ] && alias reflect='sudo echo "Updating Mirrorlist..." && sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
-
-    # Pacaur
-    if [ -x "$(command -v pacaur)" ]; then
-        alias pac='pacaur'
-        [ "$(type reflect 2>/dev/null)" ] && alias rpac='reflect && yes | pac -Syyu --noedit --noconfirm'
-
-    # Pacman
-    else
-        alias pac='pacman'
-        [ "$(type reflect 2>/dev/null)" ] && alias rpac='reflect && yes | sudo pac -Syyu --noc onfirm'
-    fi
-fi
-
-# cd
-alias cd..='cd ..'
-
-# git
-alias commit='git commit -m'
-alias pull='git pull origin master'
-alias push='git push origin master'
-
-# ls
-[ ! -x "$(command -v ll)" ] && alias ll='ls -la'
-
-# more is less
-alias more='less'
-
-# ping
-alias pinc='ping -c5'
-
-# sudo / su / root
-[ -x "$(command -v sudo)" ] && alias su='sudo su'
-
-# systemctl
-[ -x "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
-
-# vim
-if [ -x "$(command -v vim)" ]; then
-    alias vi='vim'
-    alias svi='sudo vim'
-    alias svim='sudo vim'
-    export EDITOR='vim'
-else
-    alias svi='sudo vi'
-    export EDITOR='vi'
-fi

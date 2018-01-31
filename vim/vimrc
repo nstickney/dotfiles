@@ -1,31 +1,30 @@
 """ http://marcgg.com/blog/2016/03/01/vimrc-example/
 """ https://github.com/skwp/dotfiles/blob/master/vimrc
+""" http://www.guillaume-barillot.com/2017/06/09/how-to-to-make-vim-to-look-like-atom/
 
 " The basics
 set nocompatible                        " use vim settings instead of vi (must be first)
-filetype plugin on                      " filetype based on filenames
-filetype indent on                      " indent based on filetype
 set autoread                            " automatically reload files changed outside vim
 set backspace=indent,eol,start whichwrap+=<,>,[,]   " backspace/cursor keys wrap lines
-set colorcolumn=90                      " add a right column for line width
-set guifont=Inconsolata\ Medium:12      " font selection
+set colorcolumn=80,90,100,120           " add markers to determine line length
+hi ColorColumn ctermbg=0                " set the color column to dark grey
 set hidden                              " buffers can exist without being in a window
 set history=1000                        " store lots of history
-set nocursorline                        " highlight current line number
-set number                              " show line numbers
+set mouse=a                             " make the dadgum mouse work
 set showmatch                           " highlight matching [{()}]
-set showmode                            " show current mode in bottom bar
 set showcmd                             " show commands in bottom bar
-syntax on                               " use syntax highlighting based on filetype
 
-" Encodings (set to UTF-8 where available)
+" Clipboard
+set clipboard=unnamedplus               " use the system clipboard
+
+" Encoding (set to UTF-8 where available)
 if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
    set fileencodings=ucs-bom,utf-8,latin1
 endif
 
-" Eyecandy
+" Eye Candy
 hi Normal guibg=NONE ctermbg=NONE       " Transparent background
-set t_Co=16                             " Use the 16 terminal colors
+set t_Co=16                             " Use (only) the 16 basic terminal colors
 
 " Faster
 set lazyredraw                          " redraw only as needed
@@ -47,6 +46,17 @@ set smartindent
 set smarttab
 set softtabstop=4                       " 4-space tab insertion
 set tabstop=4                           " tabs are four characters wide
+let g:indentLine_char='┆'               " use ┆ to for indentation guides
+
+" Line Numbers
+set number                              " show line numbers
+hi LineNr ctermfg=0                     " set the line numbers color to dark grey
+set cursorline                          " highlight current line
+hi CursorLine cterm=None                " don't highlight the entire line
+hi CursorLineNr ctermfg=8               " set the current line number color to grey
+
+" Miscellaneous
+let g:vim_markdown_conceal=0            " Turn off conceal in Markdown
 
 " Scrolling
 set scrolloff=8                         " start scrolling 8 lines away from margins
@@ -59,13 +69,29 @@ set ignorecase                          " ignore case searching
 set incsearch                           " search as you type
 set smartcase                           " stop ignoring case if a capital is typed
 
-" Swap files (turned off)
-set nobackup
-set noswapfile
-set nowb
+" Spellcheck
+set spelllang=en_us                     "
+set spellfile=$HOME/dotfiles/vim/stick.utf-8.add
+set spell
+hi clear SpellBad
+hi SpellBad cterm=underline
+
+" Status (lightline)
+set laststatus=2
+set noshowmode
+
+" Swap files (backup, swap files written in /tmp)
+set backupdir=/tmp//                    " Stored by full file path in /tmp
+set directory=/tmp//                    " Stored by full file path in /tmp
+set wb                                  " Backups are written before actual writes
+
+" Syntax Highlighting
+filetype plugin on                      " detect file type from file name extensions
+filetype indent on                      " indent based on detected file type
+syntax on                               " use syntax highlighting for detected file type
 
 " Wildcards
-set wildmode=list:longest
+set wildmode=list:longest               " wildmenu behaves like bash completion
 set wildmenu                            " ctrl-n and ctrl-p scroll thru matches
 set wildignore=*.o,*.obj,*~             " stuff to ignore when tab completing
 set wildignore+=*vim/backups*
@@ -77,3 +103,6 @@ set wildignore+=*.gem
 set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
+
+" Wrappings
+set wrap linebreak nolist

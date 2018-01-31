@@ -27,47 +27,6 @@
 ! Fonts ---------------------------------------------------------------------------------
 *font: xft:Inconsolata:size=12,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
 
-! URxvt Options -------------------------------------------------------------------------
-! Colors
-URxvt*background: [90]#181100
-URxvt*foreground: #fff8e7
-
-! Turn off all perl extensions except tabs and url matching
-URxvt.perl-ext:
-URxvt.perl-ext-common:      tabbedex,url-select,keyboard-select
-
-! Options for url matching
-URxvt.url-select.launcher:  /usr/bin/xdg-open
-URxvt.url-select.underline: true
-URxvt.keysym.M-u:           perl:url-select:select_next
-URxvt.keysym.M-Escape:      perl:keyboard-select:activate
-URxvt.keysym.M-s:           perl:keyboard-select:search
-
-! Options for tabbedex
-URxvt.tabbed.no-tabbedex-keys:  true
-URxvt.keysym.Control-t:         perl:tabbedex:new_tab
-URxvt.keysym.Control-Tab:       perl:tabbedex:next_tab
-URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
-URxvt.keysym.Control-w:         perl:tabbedex:kill_tab
-
-! Scroll options
-URxvt.scrollBar:            false
-URxvt.saveLines:            65535
-URxvt.scrollTtyOutput:      false
-URxvt.scrollWithBuffer:     true
-URxvt.scrollTtyKeypress:    true
-
-! Match URLs for clicking
-URxvt.url-launcher:         /usr/bin/xdg-open
-URxvt.matcher.button:       1
-
-! Set the background transparent (compositing)
-URxvt.depth:    32
-URxvt.buffered: True
-
-! Set the initial geometry
-URxvt.geometry: 95x50
-
 ! Rofi ----------------------------------------------------------------------------------
 rofi.modi:                          window,drun
 rofi.font:                          Inconsolata 12

@@ -55,6 +55,16 @@ set cursorline                          " highlight current line
 hi CursorLine cterm=None                " don't highlight the entire line
 hi CursorLineNr ctermfg=8               " set the current line number color to grey
 
+"" @cur33's Line Numbers function
+function! LineNumberToggle()
+    if(&relativenumber != 1)
+        set number!
+    endif
+    set relativenumber!
+endfunc
+nnoremap <C-n> :call LineNumberToggle()<cr>
+call LineNumberToggle()
+
 " Miscellaneous
 let g:vim_markdown_conceal=0            " Turn off conceal in Markdown
 
@@ -90,6 +100,9 @@ filetype plugin on                      " detect file type from file name extens
 filetype indent on                      " indent based on detected file type
 syntax on                               " use syntax highlighting for detected file type
 
+" Visual Wrapping
+set wrap linebreak nolist
+
 " Wildcards
 set wildmode=list:longest               " wildmenu behaves like bash completion
 set wildmenu                            " ctrl-n and ctrl-p scroll thru matches
@@ -103,6 +116,3 @@ set wildignore+=*.gem
 set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
-
-" Wrappings
-set wrap linebreak nolist

@@ -157,6 +157,9 @@ fi
 # cd
 alias cd..='cd ..'
 
+# firewall-cmd
+[ -x "$(command -v firewall-cmd)" ] && alias fw='sudo firewall-cmd'
+
 # git
 alias commit='git commit -m'
 alias pull='git pull origin master'

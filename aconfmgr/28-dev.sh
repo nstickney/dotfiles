@@ -28,6 +28,8 @@ then
 
     ### Git
     #AddPackage --foreign git-aurcheck # a helper like namcap that checks and offers solutions for common problems in git submissions to the AUR
+    AddPackage tig # Text-mode interface for Git.
+    
 
     ### GPU Programming on NVIDIA
     # AddPackage cuda # NVIDIA's GPU programming toolkit

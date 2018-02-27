@@ -53,6 +53,7 @@ AddPackage mtools # A collection of utilities to access MS-DOS disks	A collectio
 AddPackage net-tools # Configuration tools for Linux networking
 AddPackage nilfs-utils # A log-structured file system supporting continuous snapshotting (userspace utils)
 AddPackage ntfs-3g # NTFS filesystem driver and utilities
+AddPackage openntpd # Free, easy to use implementation of the Network Time Protocol
 AddPackage pacman # A library-based package manager with dependency support
 AddPackage patch # A utility to apply patch files to original sources
 AddPackage pciutils # PCI bus configuration space access library and tools
@@ -88,11 +89,13 @@ AddPackage --foreign pacaur # An AUR helper that minimizes user interactioncou
 CopyFile /etc/bash.bashrc
 CopyFile /etc/makepkg.conf
 CopyFile /etc/motd
+CopyFile /etc/ntpd.conf
 CopyFile /etc/pacman.conf
 CopyFile /etc/pacman.d/hooks/mirrorupgrade.hook
 CopyFile /etc/profile.d/pacaur.sh
 CopyFile /etc/profile.d/powerpill.sh
 
+CreateLink /etc/systemd/system/multi-user.target.wants/openntpd.service /usr/lib/systemd/system/openntpd.service
 CreateLink /etc/systemd/user/sockets.target.wants/dirmngr.socket /usr/lib/systemd/user/dirmngr.socket
 CreateLink /etc/systemd/user/sockets.target.wants/gpg-agent-browser.socket /usr/lib/systemd/user/gpg-agent-browser.socket
 CreateLink /etc/systemd/user/sockets.target.wants/gpg-agent-extra.socket /usr/lib/systemd/user/gpg-agent-extra.socket

@@ -24,7 +24,6 @@ AddPackage networkmanager # Network connection manager and user applications
 AddPackage networkmanager-openvpn # NetworkManager VPN plugin for OpenVPN
 AddPackage nftables # Netfilter tables userspace tools
 AddPackage nss-mdns # glibc plugin providing host name resolution via mDNS
-AddPackage ntp # Network Time Protocol reference implementation
 AddPackage openssh # Free version of the SSH connectivity tools
 AddPackage openvpn # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
 AddPackage privoxy # A web proxy with advanced filtering capabilities.
@@ -39,6 +38,7 @@ AddPackage --foreign google-talkplugin # Video chat browser plug-in for Google T
 # AddPackage --foreign skypeforlinux-bin # Skype for Linux WebRTC Beta
 AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 
+CopyFile /etc/avahi/avahi-daemon.conf
 CopyFile /etc/nftables.conf
 CopyFile /etc/privoxy/config
 CopyFile /etc/sysctl.d/51-net.conf
@@ -47,7 +47,6 @@ CreateLink /etc/systemd/system/dbus-org.freedesktop.Avahi.service /usr/lib/syste
 CreateLink /etc/systemd/system/multi-user.target.wants/NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
 CreateLink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service /usr/lib/systemd/system/avahi-daemon.service
 CreateLink /etc/systemd/system/multi-user.target.wants/nftables.service /usr/lib/systemd/system/nftables.service
-CreateLink /etc/systemd/system/multi-user.target.wants/ntpd.service /usr/lib/systemd/system/ntpd.service
 CreateLink /etc/systemd/system/multi-user.target.wants/privoxy.service /usr/lib/systemd/system/privoxy.service
 CreateLink /etc/systemd/system/multi-user.target.wants/tor.service /usr/lib/systemd/system/tor.service
 CreateLink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket /usr/lib/systemd/system/avahi-daemon.socket

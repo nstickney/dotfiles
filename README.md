@@ -53,8 +53,6 @@ The included i3wm configuration requires the following packages as dependencies 
 ## Usage
 If you install new software on the list of included configurations, re-run the `install.sh` script to link the required configuration files.
 
-The only configuration here which requires user interaction is the LaTeX configuration. It is housed in the `tex` directory and contains `common.tex`, a file which provides sane defaults for use with the `article`, `beamer`, and `letter` classes. Copy it to the same directory as your main `.tex` file and add the line `\input{common.tex}` to use it; it automatically detects which of the three supported classes is loaded.
-
 ## Contribute
 [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/)
 

@@ -1,6 +1,3 @@
-[submodule "8401886ckyhhmvkzsnz"]
-	path = tex
-	url = https://git.overleaf.com/8401886ckyhhmvkzsnz
 [submodule "vim/pack/stick/start/vim-polyglot"]
 	path = vim/pack/stick/start/vim-polyglot
 	url = https://github.com/sheerun/vim-polyglot

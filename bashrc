@@ -174,6 +174,9 @@ alias more='less'
 # ping
 alias pinc='ping -c5'
 
+# ss
+alias sl='sudo ss -ltunp'
+
 # sudo / su / root
 [ -x "$(command -v sudo)" ] && alias su='sudo su'
 

@@ -38,3 +38,9 @@ Sudo
 stateful
 whitespace
 spellfile
+CentOS
+VirtualBox
+systemd
+TLS
+nftables
+nginx

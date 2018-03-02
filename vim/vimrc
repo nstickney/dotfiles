@@ -23,8 +23,8 @@ if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
 endif
 
 " Eye Candy
-hi Normal guibg=NONE ctermbg=NONE       " Transparent background
-set t_Co=16                             " Use (only) the 16 basic terminal colors
+hi Normal guibg=NONE ctermbg=NONE       " transparent background
+set t_Co=16                             " use (only) the 16 basic terminal colors
 
 " Faster
 set lazyredraw                          " redraw only as needed
@@ -66,7 +66,7 @@ nnoremap <C-n> :call LineNumberToggle()<cr>
 call LineNumberToggle()
 
 " Miscellaneous
-let g:vim_markdown_conceal=0            " Turn off conceal in Markdown
+let g:vim_markdown_conceal=0            " turn off conceal in Markdown
 
 " Scrolling
 set scrolloff=8                         " start scrolling 8 lines away from margins
@@ -78,6 +78,9 @@ set hlsearch                            " highlight searches
 set ignorecase                          " ignore case searching
 set incsearch                           " search as you type
 set smartcase                           " stop ignoring case if a capital is typed
+if executable('ag')                     " use the_silver_searcher if available
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 " Spellcheck
 set spelllang=en_us                     "
@@ -91,9 +94,9 @@ set laststatus=2
 set noshowmode
 
 " Swap files (backup, swap files written in /tmp)
-set backupdir=/tmp//                    " Stored by full file path in /tmp
-set directory=/tmp//                    " Stored by full file path in /tmp
-set wb                                  " Backups are written before actual writes
+set backupdir=/tmp//                    " stored by full file path in /tmp
+set directory=/tmp//                    " stored by full file path in /tmp
+set wb                                  " backups are written before actual writes
 
 " Syntax Highlighting
 filetype plugin on                      " detect file type from file name extensions

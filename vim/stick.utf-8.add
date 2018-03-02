@@ -36,3 +36,5 @@ UTF-8
 dev
 Sudo
 stateful
+whitespace
+spellfile

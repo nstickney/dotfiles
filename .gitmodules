@@ -10,3 +10,6 @@
 [submodule "vim/pack/stick/start/syntastic"]
 	path = vim/pack/stick/start/syntastic
 	url = https://github.com/vim-syntastic/syntastic
+[submodule "vim/pack/stick/start/ack"]
+	path = vim/pack/stick/start/ack
+	url = https://github.com/mileszs/ack.vim

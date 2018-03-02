@@ -29,6 +29,7 @@ AddPackage rcs # opt dep for gramps
 AddPackage keepassxc # Cross-platform community-driven port of Keepass password manager
 AddPackage redshift # Adjusts the color temperature of your screen according to your surroundings
 AddPackage texlive-bin # opt dep for evince/vim/python
+AddPackage the_silver_searcher # Code searching tool similar to Ack, but faster
 AddPackage truecrypt # Free open-source cross-platform disk encryption software
 AddPackage --foreign vim-gnome # Vi Improved, a highly configurable, improved version of the vi text editor (with Gnome GUI)
 AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX

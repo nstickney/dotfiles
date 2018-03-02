@@ -36,7 +36,7 @@ then
     # AddPackage opencl-nvidia # OpenCL implementation for NVIDIA
 
     ### Java
-    #AddPackage eclipse-jee # Highly extensible IDE (JEE variant)
+    AddPackage eclipse-jee # Highly extensible IDE (JEE variant)
     AddPackage jdk8-openjdk # OpenJDK Java 8 full runtime environment
     AddPackage --foreign intellij-idea-ultimate-edition # An intelligent IDE for Java, Groovy and other programming languages with advanced refactoring features intensely focused on developer productivity.
     AddPackage --foreign jmeter # A Java desktop application designed to load test functional behavior and measure performance

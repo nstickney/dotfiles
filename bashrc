@@ -175,8 +175,12 @@ alias more='less'
 # ping
 alias pinc='ping -c5'
 
-# ss
-alias sl='sudo ss -ltunp'
+# ss (replaces netstat)
+if [ -x "$(command -v ss)" ]; then
+    [ -x "$(command -v sudo)" ] && alias sl='sudo ss -ltunp' || sl='ss -ltunp'
+elif [ -x "$(command -v netstat)" ]; then
+    [ -x "$(command -v sudo)" ] && alias sl='sudo netstat -ltunp' || sl='netstat -ltunp'
+fi
 
 # sudo / su / root
 [ -x "$(command -v sudo)" ] && alias su='sudo su'

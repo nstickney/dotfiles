@@ -1,5 +1,9 @@
 #!/bin/sh
 
+printf '%s\n' "Initializing and updating submodules..."
+
+git submodule init && git submodule update --recursive --remote
+
 printf '%s\n' "Linking configuration files/directories for..."
 
 if [ -x "$(command -v aconfmgr)" ]; then

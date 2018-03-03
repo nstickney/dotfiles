@@ -37,6 +37,7 @@ AddPackage gzip # GNU compression utility
 AddPackage htop # Interactive process viewer
 AddPackage jfsutils # JFS filesystem utilities
 AddPackage less # A terminal based program for viewing text files
+AddPackage lesspipe # an input filter for the pager less
 AddPackage libtool # A generic library support script
 AddPackage licenses # The standard licenses distribution package
 AddPackage linux # The Linux kernel and modules
@@ -68,6 +69,7 @@ AddPackage reiserfsprogs # Reiserfs utilities
 AddPackage screen # Full-screen window manager that multiplexes a physical terminal
 AddPackage sed # GNU stream editor
 AddPackage shadow # Password and account management tool suite with support for shadow files and PAM
+AddPackage source-highlight # Convert source code to syntax highlighted document
 AddPackage sudo # Give certain users the ability to run some commands as root
 AddPackage sysfsutils # System Utilities Based on Sysfs
 AddPackage systemd-sysvcompat # sysvinit compat for systemd

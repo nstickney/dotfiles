@@ -23,6 +23,14 @@ then
     # AddPackage --foreign visual-paradigm-community # UML design application
     # AddPackage --foreign yed # Very powerful graph editor written in java
 
+    ### Docker
+    AddPackage docker # Pack, ship and run any application as a lightweight container
+    AddPackage docker-compose # Fast, isolated development environments using Docker
+    AddPackage docker-machine # Machine management for a container-centric world
+    CopyFile /etc/docker/key.json 600
+    CopyFile /etc/systemd/system/docker.service.d/override.conf
+    SetFileProperty /etc/docker mode 700
+
     ### GeoTIFF
     # AddPackage --foreign qgis # Geographic Information System (GIS) that supports vector, raster & database formats
 

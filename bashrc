@@ -88,6 +88,7 @@ alias egrep='egrep --color=auto'
 [ -x "$(command -v colordiff)" ] && alias diff='colordiff'
 
 # less
+[ -e /usr/bin/source-higthlight-esc.sh ] && export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
 export LESS='-R'
 
 # man - colored, and with help

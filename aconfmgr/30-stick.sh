@@ -15,9 +15,6 @@ then
     AddPackage virtualbox-guest-iso # The official VirtualBox Guest Additions ISO image
 fi
 
-AddPackage ctags # atom opt dep
-AddPackage shellcheck # atom opt dep
-AddPackage trash-cli # atom opt dep
 AddPackage git # the fast distributed version control system
 AddPackage git-crypt # Transparent file encryption in Git
 AddPackage gramps #
@@ -26,15 +23,22 @@ AddPackage libgexiv2 # opt dep for gramps
 AddPackage osm-gps-map # opt dep for gramps
 AddPackage python-pyicu # opt dep for gramps
 AddPackage rcs # opt dep for gramps
-AddPackage keepassxc # Cross-platform community-driven port of Keepass password manager
+AddPackage keepassxc # Cross-platform community-driven port of Keepass password manage
 AddPackage redshift # Adjusts the color temperature of your screen according to your surroundings
+AddPackage rkhunter # Checks machines for the presence of rootkits and other unwanted tools
+AddPackage rmlint # Tool to remove duplicates and other lint, being much faster than fdupes
+AddPackage rmlint-shredder # Graphical user interface for rmlint
+AddPackage shellcheck # Shell script analysis tool
 AddPackage texlive-bin # opt dep for evince/vim/python
 AddPackage the_silver_searcher # Code searching tool similar to Ack, but faster
 AddPackage truecrypt # Free open-source cross-platform disk encryption software
-AddPackage --foreign vim-gnome # Vi Improved, a highly configurable, improved version of the vi text editor (with Gnome GUI)
-AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
+# AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
 
 AddPackage --foreign fslint # A utility to find and clean various forms of lint on a filesystem
 AddPackage --foreign lbry-app-bin # The LBRY app built using electron
+AddPackage --foreign python-proselint # A linter for prose
+# AddPackage --foreign python-vint # VimL Linter
+AddPackage --foreign redpen # A document checker. RedPen is a proofreading tool to help writers or programmers.
+AddPackage --foreign vim-gnome # Vi Improved, a highly configurable, improved version of the vi text editor (with Gnome GUI)
 # AddPackage --foreign zotero # Zotero Standalone, a free, easy-to-use tool to help you collect, organize, cite, and share your research sources
 # AddPackage xpdf # opt dep for Zotero

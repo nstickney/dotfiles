@@ -1,6 +1,4 @@
-#
-# /etc/bash.bashrc
-#
+#!/bin/bash
 
 # DEFAULT STUFF ###############################################################
 
@@ -13,11 +11,6 @@
 # Get useful error information
 #set -x
 
-# Set language properly
-export LANGUAGE=en_US.UTF-8
-export LC_MESSAGES="C"
-export LC_ALL=en_US.UTF-8
-
 # Recursive **/* and `cd` when only entering a path
 if [ "$(uname -s)" != "Darwin" ]; then
     shopt -s globstar
@@ -28,7 +21,7 @@ fi
 
 bash_prompt_command() {
     # How many characters of the $PWD should be kept
-    local pwdmaxlen=25
+	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER}))
     # Indicate that there has been dir truncation
     local trunc_symbol="..."
     local dir=${PWD##*/}
@@ -57,7 +50,7 @@ bash_prompt() {
     local UC=$EY                # user's color
     [ $UID -eq "0" ] && UC=$ER  # root's color
 
-    PS1="\\n  \\t \\d\\n${UC}\\u${U}@${EC}\\h${U}[${G}\\s${U}]:${EB}\${CPWD}${UC} \\$ ${U}"
+    PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
 }
 
 PROMPT_COMMAND=bash_prompt_command
@@ -86,18 +79,19 @@ alias egrep='egrep --color=auto'
 [ -x "$(command -v colordiff)" ] && alias diff='colordiff'
 
 # less
+[ -e /usr/bin/source-higthlight-esc.sh ] && export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
 export LESS='-R'
 
 # man - colored, and with help
 man() {
     env \
-        LESS_TERMCAP_mb="$(printf '\\e[1;32m')" \
-        LESS_TERMCAP_md="$(printf '\\e[1;33m')" \
-        LESS_TERMCAP_me="$(printf '\\e[0m')" \
-        LESS_TERMCAP_se="$(printf '\\e[0m')" \
-        LESS_TERMCAP_so="$(printf '\\e[1;45;30m')" \
-        LESS_TERMCAP_ue="$(printf '\\e[0m')" \
-        LESS_TERMCAP_us="$(printf '\\e[0;34m')" \
+        LESS_TERMCAP_mb="$(printf '\e[1;32m')" \
+        LESS_TERMCAP_md="$(printf '\e[1;33m')" \
+        LESS_TERMCAP_me="$(printf '\e[0m')" \
+        LESS_TERMCAP_se="$(printf '\e[0m')" \
+        LESS_TERMCAP_so="$(printf '\e[1;45;30m')" \
+        LESS_TERMCAP_ue="$(printf '\e[0m')" \
+        LESS_TERMCAP_us="$(printf '\e[0;34m')" \
         man "$@" || (help "$@" 2> /dev/null && help "$@" | less)
 }
 

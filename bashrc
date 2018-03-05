@@ -30,7 +30,7 @@ fi
 
 bash_prompt_command() {
     # How many characters of the $PWD should be kept
-    local pwdmaxlen=25
+	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER}))
     # Indicate that there has been dir truncation
     local trunc_symbol="..."
     local dir=${PWD##*/}
@@ -59,7 +59,7 @@ bash_prompt() {
     local UC=$EY                # user's color
     [ $UID -eq "0" ] && UC=$ER  # root's color
 
-    PS1="\\n  \\t \\d\\n${UC}\\u${U}@${EC}\\h${U}[${G}\\s${U}]:${EB}\${CPWD}${UC} \\$ ${U}"
+    PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
 }
 
 PROMPT_COMMAND=bash_prompt_command
@@ -177,9 +177,17 @@ alias pinc='ping -c5'
 
 # ss (replaces netstat)
 if [ -x "$(command -v ss)" ]; then
-    [ -x "$(command -v sudo)" ] && alias sl='sudo ss -ltunp' || sl='ss -ltunp'
+    if [ -x "$(command -v sudo)" ]; then
+		alias sl='sudo ss -ltunp'
+	else
+		alias sl='ss -ltunp'
+	fi
 elif [ -x "$(command -v netstat)" ]; then
-    [ -x "$(command -v sudo)" ] && alias sl='sudo netstat -ltunp' || sl='netstat -ltunp'
+    if [ -x "$(command -v sudo)" ]; then
+		alias sl='sudo netstat -ltunp'
+	else
+		alias sl='netstat -ltunp'
+	fi
 fi
 
 # sudo / su / root

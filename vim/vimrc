@@ -39,14 +39,15 @@ set nofoldenable                        " don't fold by default
 nnoremap p p=`]<C-o>                    " auto-indent pasted text
 nnoremap P P=`]<C-o>                    " auto-indent pasted text
 set autoindent
-set expandtab
-set nowrap
-set shiftwidth=4
-set smartindent
+set cindent
+set cinoptions=(0,u0,U0
+set noexpandtab                         " tabs for indentation
 set smarttab
-set softtabstop=4                       " 4-space tab insertion
 set tabstop=4                           " tabs are four characters wide
-let g:indentLine_char='┆'               " use ┆ to for indentation guides
+set shiftwidth=4
+set softtabstop=0                       " no soft-tab insertion
+set list lcs=tab:\┆\                    " show indentation guides
+hi SpecialKey ctermfg=0
 
 " Line Numbers
 set number                              " show line numbers
@@ -104,7 +105,7 @@ filetype indent on                      " indent based on detected file type
 syntax on                               " use syntax highlighting for detected file type
 
 " Visual Wrapping
-set wrap linebreak nolist
+set wrap linebreak
 
 " Wildcards
 set wildmode=list:longest               " wildmenu behaves like bash completion

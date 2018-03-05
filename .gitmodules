@@ -1,9 +1,6 @@
 [submodule "vim/pack/stick/start/vim-polyglot"]
 	path = vim/pack/stick/start/vim-polyglot
 	url = https://github.com/sheerun/vim-polyglot
-[submodule "vim/pack/stick/start/indentLine"]
-	path = vim/pack/stick/start/indentLine
-	url = https://github.com/Yggdroot/indentLine
 [submodule "vim/pack/stick/start/lightline"]
 	path = vim/pack/stick/start/lightline
 	url = https://github.com/itchyny/lightline.vim

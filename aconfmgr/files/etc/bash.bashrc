@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DEFAULT STUFF ###############################################################
+# BASE CONFIGURATION ##########################################################
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -58,6 +58,27 @@ bash_prompt
 unset bash_prompt
 
 # COLORIZE EVERYTHING #########################################################
+
+# the tty/framebuffer console
+if [ "$TERM" = "linux" ]; then
+	echo -en "\\e]P0333333" # black
+	echo -en "\\e]P8666666" # gray
+	echo -en "\\e]P1CC0099" # red
+	echo -en "\\e]P9FF4DD2" # bright red
+	echo -en "\\e]P299CC00" # green
+	echo -en "\\e]PAD2FF4D" # bright green
+	echo -en "\\e]P3CC4400" # brown
+	echo -en "\\e]PBFF884D" # yellow
+	echo -en "\\e]P40099CC" # blue
+	echo -en "\\e]PC4DD2FF" # bright blue
+	echo -en "\\e]P53300CC" # magenta
+	echo -en "\\e]PD794DFF" # bright magenta
+	echo -en "\\e]P600CC33" # cyan
+	echo -en "\\e]PE4DFF79" # bright cyan
+	echo -en "\\e]P7999999" # light gray
+	echo -en "\\e]PFEEEEEE" # white
+	clear # fix artifacts
+fi
 
 # ls
 if [ "$(uname -s)" == "Darwin" ]; then

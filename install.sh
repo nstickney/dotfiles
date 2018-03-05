@@ -22,7 +22,7 @@ if [ -x "$(command -v aria2c)" ]; then
 	if [ ! -d "$HOME"/.config ]; then
 		mkdir "$HOME"/.config
 	fi
-	if [ -d "$HOME"/.config/aria2 ]; then
+	if [ -e "$HOME"/.config/aria2 ]; then
 		rm -r "$HOME"/.config/aria2
 	fi
 	ln -s "$HOME"/dotfiles/aria2 "$HOME"/.config/aria2
@@ -46,19 +46,19 @@ fi
 
 if [ -x "$(command -v dconf)" ]; then
 	printf '%s\n' "  dconf (GNOME and GTK)..."
-	if [ -d "$HOME"/.config/autostart ]; then
+	if [ -e "$HOME"/.config/autostart ]; then
 		rm -r "$HOME"/.config/autostart
 	fi
 	ln -s "$HOME"/dotfiles/autostart "$HOME"/.config/autostart
-	if [ -d "$HOME"/.config/dconf ]; then
+	if [ -e "$HOME"/.config/dconf ]; then
 		rm -r "$HOME"/.config/dconf
 	fi
 	ln -s "$HOME"/dotfiles/dconf "$HOME"/.config/dconf
-	if [ -d "$HOME"/.config/gtk-3.0 ]; then
+	if [ -e "$HOME"/.config/gtk-3.0 ]; then
 		rm -r "$HOME"/.config/gtk-3.0
 	fi
 	ln -s "$HOME"/dotfiles/gtk-3.0 "$HOME"/.config/gtk-3.0
-	if [ -d "$HOME"/.config/gtk-4.0 ]; then
+	if [ -e "$HOME"/.config/gtk-4.0 ]; then
 		rm -r "$HOME"/.config/gtk-4.0
 	fi
 	ln -s "$HOME"/dotfiles/gtk-4.0 "$HOME"/.config/gtk-4.0
@@ -66,7 +66,7 @@ fi
 
 if [ -x "$(command -v emacs)" ]; then
 	printf '%s\n' "  emacs..."
-	if [ -d "$HOME"/.emacs ]; then
+	if [ -e "$HOME"/.emacs ]; then
 		rm "$HOME"/.emacs
 	fi
 	ln -s "$HOME"/dotfiles/i3 "$HOME"/.emacs
@@ -84,7 +84,7 @@ fi
 
 if [ -x "$(command -v i3)" ]; then
 	printf '%s\n' "  i3wm..."
-	if [ -d "$HOME"/.i3 ]; then
+	if [ -e "$HOME"/.i3 ]; then
 		rm -r "$HOME"/.i3
 	fi
 	ln -s "$HOME"/dotfiles/i3 "$HOME"/.i3
@@ -95,14 +95,15 @@ if [ -x "$(command -v vim)" ]; then
 	if [ -e "$HOME"/.vimrc ]; then
 		rm "$HOME"/.vimrc
 	fi
-	if [ -d "$HOME"/.vim ]; then
+	if [ -e "$HOME"/.vim ]; then
 		rm -r "$HOME"/.vim
 	fi
 	ln -s "$HOME"/dotfiles/vim "$HOME"/.vim
 
 	if [ "nstickney" = "$USER" ] && [ -x "$(command -v sudo)" ]; then
 		printf '%s' " and linking for root..."
-		sudo ln -sf "$HOME"/.vim /root/.vim
+		sudo [ -e /root/.vim ] && sudo rm -rf /root/.vim
+		sudo ln -s "$HOME"/.vim /root/.vim
 	fi
 	printf '\n'
 fi

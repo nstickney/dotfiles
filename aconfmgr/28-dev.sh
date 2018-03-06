@@ -56,7 +56,9 @@ then
     # AddPackage --foreign google-java-format-git # Reformats Java source code to comply with Google Java Style
     AddPackage --foreign intellij-idea-ultimate-edition # An intelligent IDE for Java, Groovy and other programming languages with advanced refactoring features intensely focused on developer productivity.
     AddPackage --foreign jmeter # A Java desktop application designed to load test functional behavior and measure performance
+	AddPackage maven # A Java project management and project comprehension tool
     AddPackage visualvm # Visual tool integrating several command-line JDK tools and lightweight profiling capabilities
+	AddPackage --foreign wildfly # Wildfly Application Server
 
     ### JavaScript
     AddPackage eslint # An AST-based pattern checker for JavaScript
@@ -107,10 +109,9 @@ then
     # AddPackage --foreign python-theano # Definition and optimized evaluation of mathematical expressions on Numpy arrays.
     # AddPackage --foreign python-tifffile # Read and write image data from and to TIFF files
 
-    ### Web
-    AddPackage pgadmin4 # Comprehensive design and management interface for PostgreSQL
-    AddPackage postgresql # Sophisticated object-relational DBMS
-    # AddPackage --foreign wildfly # Wildfly Application Server
+    ### SQL
+    # AddPackage pgadmin4 # Comprehensive design and management interface for PostgreSQL
+    # AddPackage postgresql # Sophisticated object-relational DBMS
 
     ### YAML
     AddPackage --foreign yamllint # A linter for YAML files

@@ -1,7 +1,8 @@
 # dotfiles
-`nstickney`'s config files.
 
 [![unlicense](https://img.shields.io/badge/un-license-green.svg?style=flat)](http://unlicense.org) [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
+
+> @nstickney's configuration files
 
 ## Background
 Includes configuration for:
@@ -17,10 +18,10 @@ Includes configuration for:
 * Xorg (inputrc, Xresources)
 
 ## Installation
-* Clone repo to `$HOME`
-* `./install.sh` (Fair warning: this deletes current configurations)
+* Clone repository to `$HOME`
+* `./install.sh` (**WARNING**: this deletes current configurations)
 
-The install script only links config files for software that is actually available in the `$PATH`.
+The install script only links configuration files for software that is actually available in the `$PATH`.
 
 The i3wm configuration uses a per-host status bar configuration file located in the `./i3/bar` directory (for example, `./i3/bar/eli.toml`). You should rename one (`cp ./i3/bar/default.toml ./i3/bar/$HOSTNAME.toml`), then update it with the correct network and storage devices for your host.
 
@@ -32,9 +33,9 @@ The included i3wm configuration requires the following packages as dependencies 
 * feh (set desktop background)
 * gnome-terminal
 * i3lock, imagemagick, and imlib2 (lock screen)
-* i3status-rust (infomrmation bar) ([AUR](https://aur.archlinux.org/packages/i3status-rust/))
+* i3status-rust (information bar) ([AUR](https://aur.archlinux.org/packages/i3status-rust/))
 * libpulse (volume control)
-* numlockx (turn on NumLock by default)
+* numlockx (turn NumLock on by default)
 * playerctl (music player controls)
 * polkit-gnome (PolicyKit integration)
 * rofi (application launcher/switcher)

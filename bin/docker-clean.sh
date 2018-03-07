@@ -7,7 +7,7 @@ docker stop "$(docker ps -q)" > /dev/null 2>&1
 wait
 
 # Delete all containers
-docker rm "$(docker ps -a -q)" > /dev/null 2>&1
+yes | docker container prune > /dev/null 2>&1
 
 # Delete all images
 if [ "$1" == "all" ]; then

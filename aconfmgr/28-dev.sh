@@ -110,6 +110,7 @@ then
     # AddPackage --foreign python-tifffile # Read and write image data from and to TIFF files
 
     ### SQL
+	AddPackage mariadb-clients # MariaDB client tools
     # AddPackage pgadmin4 # Comprehensive design and management interface for PostgreSQL
     # AddPackage postgresql # Sophisticated object-relational DBMS
 

@@ -47,6 +47,4 @@ CreateLink /etc/systemd/system/dbus-org.freedesktop.Avahi.service /usr/lib/syste
 CreateLink /etc/systemd/system/multi-user.target.wants/NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
 CreateLink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service /usr/lib/systemd/system/avahi-daemon.service
 CreateLink /etc/systemd/system/multi-user.target.wants/nftables.service /usr/lib/systemd/system/nftables.service
-CreateLink /etc/systemd/system/multi-user.target.wants/privoxy.service /usr/lib/systemd/system/privoxy.service
-CreateLink /etc/systemd/system/multi-user.target.wants/tor.service /usr/lib/systemd/system/tor.service
 CreateLink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket /usr/lib/systemd/system/avahi-daemon.socket

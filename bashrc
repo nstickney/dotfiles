@@ -17,6 +17,9 @@ if [ "$(uname -s)" != "Darwin" ]; then
     shopt -s autocd
 fi
 
+# Fix perl complaining about LC_ALL
+export LC_ALL=en_US.UTF-8
+
 # BASH PROMPT #################################################################
 
 bash_prompt_command() {

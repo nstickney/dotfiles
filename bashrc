@@ -161,6 +161,11 @@ export PATH="$PATH":"$HOME"/dotfiles/bin
 shopt -s cdspell
 [ "$(uname -s)" != "Darwin" ] && shopt -s dirspell
 
+# GPG KEY
+################################################################
+GPG_TTY="$(tty)"
+export GPG_TTY
+
 # USER ALIASES ################################################################
 
 # Import SSH aliases from protected file

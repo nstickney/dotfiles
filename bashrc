@@ -95,9 +95,11 @@ alias vdir='vdir --color=auto'
 
 # grep
 export GREP_COLOR="1;33"
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+if grep --color "a" <<< "a" &>/dev/null; then
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
+fi
 
 # diff
 [ -x "$(command -v colordiff)" ] && alias diff='colordiff'

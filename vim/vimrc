@@ -50,7 +50,6 @@ set list lcs=tab:\┆\                    " show indentation guides
 hi SpecialKey ctermfg=0
 
 " Line Numbers
-set number                              " show line numbers
 hi LineNr ctermfg=0                     " set the line numbers color to dark grey
 set cursorline                          " highlight current line
 hi CursorLine cterm=None                " don't highlight the entire line
@@ -64,7 +63,7 @@ function! LineNumberToggle()
 	set relativenumber!
 endfunc
 nnoremap <C-n> :call LineNumberToggle()<cr>
-"" call LineNumberToggle()
+call LineNumberToggle()
 
 " Miscellaneous
 let g:vim_markdown_conceal=0            " turn off conceal in Markdown

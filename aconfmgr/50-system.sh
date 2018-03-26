@@ -31,10 +31,6 @@ if [[ "$HOSTNAME" == "elisha" || \
 then
     AddPackage nvidia # NVIDIA drivers for linux
     AddPackage nvidia-utils # NVIDIA drivers utilities
-	CreateLink /etc/systemd/system/sockets.target.wants/cups.socket /usr/lib/systemd/system/cups.socket
-	CreateLink /etc/systemd/system/sockets.target.wants/org.cups.cupsd.socket /usr/lib/systemd/system/org.cups.cupsd.socket
-	CreateLink /etc/systemd/system/printer.target.wants/org.cups.cupsd.service /usr/lib/systemd/system/org.cups.cupsd.service
-	CreateLink /etc/systemd/system/multi-user.target.wants/org.cups.cupsd.path /usr/lib/systemd/system/org.cups.cupsd.path
 fi
 
 if [[ "$HOSTNAME" == "elijah" ]]
@@ -71,6 +67,7 @@ then
     AddPackage efibootmgr
 fi
 
+CopyFile /etc/dconf/db/ibus
 CopyFile /etc/locale.conf
 
 CreateLink /etc/localtime /usr/share/zoneinfo/America/Chicago

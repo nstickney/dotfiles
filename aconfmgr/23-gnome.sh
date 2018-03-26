@@ -55,7 +55,7 @@ AddPackage gnome-session # The GNOME Session Handler
 AddPackage gnome-settings-daemon # The GNOME Settings daemon
 AddPackage gnome-system-log # View your system logs
 AddPackage gnome-system-monitor # View current processes and monitor system state
-AddPackage gnome-tweak-tool # Customize advanced GNOME 3 options
+AddPackage gnome-tweaks # Graphical interface for advanced GNOME 3 settings (Tweak Tool)
 AddPackage gparted # A Partition Magic clone, frontend to GNU Parted
 AddPackage gvfs # Virtual filesystem implementation for GIO
 AddPackage gvfs-afc # Virtual filesystem implementation for GIO (AFC backend; Apple mobile devices)

@@ -52,6 +52,7 @@ AddPackage mdadm # A tool for managing/monitoring Linux md device arrays, also k
 AddPackage mlocate # Merging locate/updatedb implementation
 AddPackage mtools # A collection of utilities to access MS-DOS disks	A collection of utilities to access MS-DOS disks
 AddPackage net-tools # Configuration tools for Linux networking
+AddPackage neofetch # A CLI system information tool written in BASH that supports displaying images.
 AddPackage nilfs-utils # A log-structured file system supporting continuous snapshotting (userspace utils)
 AddPackage ntfs-3g # NTFS filesystem driver and utilities
 AddPackage openntpd # Free, easy to use implementation of the Network Time Protocol
@@ -85,7 +86,6 @@ AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
 AddPackage augeas # aconfmgr opt dep
 AddPackage --foreign aurvote # Vote for your favorite AUR packages
 AddPackage --foreign find-the-command # Interactive command-not-found hook for bash and zsh using the power of pacman
-AddPackage --foreign neofetch # A CLI system information tool written in BASH that supports displaying images.
 AddPackage --foreign pacaur # An AUR helper that minimizes user interactioncou
 
 CopyFile /etc/bash.bashrc

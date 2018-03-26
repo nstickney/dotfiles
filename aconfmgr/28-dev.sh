@@ -50,7 +50,7 @@ then
     AddPackage tidy # A tool to tidy down your HTML code to a clean style
 
     ### Java
-    AddPackage eclipse-jee # Highly extensible IDE (JEE variant)
+    # AddPackage eclipse-jee # Highly extensible IDE (JEE variant)
     AddPackage jdk8-openjdk # OpenJDK Java 8 full runtime environment
     # AddPackage --foreign checkstyle # A tool to help programmers write Java code that adheres to a coding standard
     # AddPackage --foreign google-java-format-git # Reformats Java source code to comply with Google Java Style

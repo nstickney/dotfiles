@@ -14,7 +14,12 @@ docker network ls | awk '{print $1 " " $2}' | grep -v -e NETWORK -e bridge -e ho
 if [ "$1" == "all" ]; then
 	printf '%s\n' "  Removing all images..."
 	docker images -a -q | xargs docker rmi > /dev/null 2>&1
+	yes | docker system prune -a
 elif [ "$1" == "built" ]; then
 	printf '%s\n' "  Removing all created images..."
 	docker images -a | grep -v -e / -e REPOSITORY | awk '{print $3}' | xargs docker rmi > /dev/null 2>&1
 fi
+
+printf '%s\n' "  Removing dangling volumes"
+yes | docker system prune
+yes | docker volume prune

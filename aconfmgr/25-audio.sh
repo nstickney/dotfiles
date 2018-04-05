@@ -6,4 +6,5 @@ AddPackage gst-plugins-ugly # GStreamer Multimedia Framework Ugly Plugins
 AddPackage pavucontrol # PulseAudio Volume Control
 AddPackage pulseaudio # A featureful, general-purpose sound server
 
+CreateLink /etc/systemd/user/sockets.target.wants/pipewire.socket /usr/lib/systemd/user/pipewire.socket
 CreateLink /etc/systemd/user/sockets.target.wants/pulseaudio.socket /usr/lib/systemd/user/pulseaudio.socket

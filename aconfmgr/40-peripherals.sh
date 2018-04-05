@@ -42,8 +42,16 @@ AddPackage mtpfs # A FUSE filesystem that supports reading and writing from any 
 AddPackage pcmciautils # Utilities for inserting and removing PCMCIA cards
 AddPackage --foreign brother-mfc-j480dw # LPR and CUPS driver for the Brother MFC-j480DW
 
+# shellcheck disable=SC2148
+#if [[ "$HOSTNAME" == "elisha" || \
+#	"$HOSTNAME" == "elizabeth" || \
+#	"$HOSTNAME" == "elijah" ]]
+#then
+#fi
+
 CopyFile /etc/nsswitch.conf
 
+CreateLink /etc/systemd/system/multi-user.target.wants/cups.path /usr/lib/systemd/system/cups.path
 CreateLink /etc/systemd/system/multi-user.target.wants/org.cups.cupsd.path /usr/lib/systemd/system/org.cups.cupsd.path
 CreateLink /etc/systemd/system/printer.target.wants/org.cups.cupsd.service /usr/lib/systemd/system/org.cups.cupsd.service
 CreateLink /etc/systemd/system/sockets.target.wants/cups.socket /usr/lib/systemd/system/cups.socket

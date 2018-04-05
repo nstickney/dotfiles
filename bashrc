@@ -23,8 +23,10 @@ export LC_ALL=en_US.UTF-8
 # BASH PROMPT #################################################################
 
 bash_prompt_command() {
+	# Git branch
+	GTBR=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')
     # How many characters of the $PWD should be kept
-	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER}))
+	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER} - ${#GTBR}))
     # Indicate that there has been dir truncation
     local trunc_symbol="..."
     local dir=${PWD##*/}
@@ -48,12 +50,13 @@ bash_prompt() {
     local ER="\\[\\e[1;31m\\]" # bold red
     local EY="\\[\\e[1;33m\\]" # bold yellow
     local EB="\\[\\e[1;34m\\]" # bold blue
+	local EV="\\[\\e[1;35m\\]" # bold violet
     local EC="\\[\\e[1;36m\\]" # bold cyan
 
     local UC=$EY                # user's color
     [ $UID -eq "0" ] && UC=$ER  # root's color
 
-    PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
+	PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${EV}\${GTBR}${U}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
 }
 
 PROMPT_COMMAND=bash_prompt_command

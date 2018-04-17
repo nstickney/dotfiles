@@ -1,7 +1,7 @@
 [user]
 	name = Stick
-	email = nstickney@gmail.com
-	signingkey = C0CB19EB0309B80D
+	email = nstickney@pm.me
+	signingkey = 1FEE51A9DEDCCD04A30356F1BCB707F25AD86199
 [credential]
 	helper = cache --timeout=3600
 [core]

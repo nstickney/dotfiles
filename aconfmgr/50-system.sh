@@ -67,7 +67,6 @@ then
     AddPackage efibootmgr
 fi
 
-CopyFile /etc/dconf/db/ibus
 CopyFile /etc/locale.conf
 
 CreateLink /etc/localtime /usr/share/zoneinfo/America/Chicago

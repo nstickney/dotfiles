@@ -40,5 +40,5 @@ AddPackage --foreign python-proselint # A linter for prose
 # AddPackage --foreign python-vint # VimL Linter
 AddPackage --foreign redpen # A document checker. RedPen is a proofreading tool to help writers or programmers.
 AddPackage --foreign vim-gnome # Vi Improved, a highly configurable, improved version of the vi text editor (with Gnome GUI)
-# AddPackage --foreign zotero # Zotero Standalone, a free, easy-to-use tool to help you collect, organize, cite, and share your research sources
+AddPackage --foreign zotero # Zotero Standalone, a free, easy-to-use tool to help you collect, organize, cite, and share your research sources
 # AddPackage xpdf # opt dep for Zotero

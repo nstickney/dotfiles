@@ -57,10 +57,11 @@ AddPackage nilfs-utils # A log-structured file system supporting continuous snap
 AddPackage ntfs-3g # NTFS filesystem driver and utilities
 AddPackage openntpd # Free, easy to use implementation of the Network Time Protocol
 AddPackage pacman # A library-based package manager with dependency support
+AddPackage pacman-contrib # Contributed scripts and tools for pacman systems
 AddPackage patch # A utility to apply patch files to original sources
 AddPackage pciutils # PCI bus configuration space access library and tools
 AddPackage perl # A highly capable, feature-rich programming language
-AddPackage pkg-config # A system for managing library compile/link flags
+AddPackage pkgconf # Package compiler and linker metadata toolkit
 AddPackage pkgfile # a pacman .files metadata explorer
 AddPackage powerpill # Pacman wrapper for faster downloads.
 AddPackage procps-ng # Utilities for monitoring your system and its processes
@@ -84,9 +85,9 @@ AddPackage xfsprogs # XFS filesystem utilities
 
 AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
 AddPackage augeas # aconfmgr opt dep
+AddPackage --foreign aurman # AUR helper with almost pacman syntax
 AddPackage --foreign aurvote # Vote for your favorite AUR packages
 AddPackage --foreign find-the-command # Interactive command-not-found hook for bash and zsh using the power of pacman
-AddPackage --foreign pacaur # An AUR helper that minimizes user interactioncou
 
 CopyFile /etc/bash.bashrc
 CopyFile /etc/makepkg.conf
@@ -94,7 +95,7 @@ CopyFile /etc/motd
 CopyFile /etc/ntpd.conf
 CopyFile /etc/pacman.conf
 CopyFile /etc/pacman.d/hooks/mirrorupgrade.hook
-CopyFile /etc/profile.d/pacaur.sh
+CopyFile /etc/profile.d/aurman.sh
 CopyFile /etc/profile.d/powerpill.sh
 
 CreateLink /etc/systemd/system/multi-user.target.wants/openntpd.service /usr/lib/systemd/system/openntpd.service

@@ -180,9 +180,9 @@ if grep -q Arch < /etc/os-release; then
     # Reflector
     [ -x "$(command -v reflector)" ] && alias reflect='sudo echo "Updating Mirrorlist..." && sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
 
-    # Pacaur
-    if [ -x "$(command -v pacaur)" ]; then
-        alias pac='pacaur'
+    # Aurman
+    if [ -x "$(command -v aurman)" ]; then
+        alias pac='aurman'
         [ "$(type reflect 2>/dev/null)" ] && alias rpac='reflect && yes | pac -Syyu --noedit --noconfirm'
 
     # Pacman

@@ -39,7 +39,6 @@ AddPackage android-udev # Udev rules to connect Android devices to your linux bo
 AddPackage cups # The CUPS Printing System - daemon package
 AddPackage cups-pdf # PDF printer for cups
 AddPackage mtpfs # A FUSE filesystem that supports reading and writing from any MTP device
-AddPackage pcmciautils # Utilities for inserting and removing PCMCIA cards
 AddPackage --foreign brother-mfc-j480dw # LPR and CUPS driver for the Brother MFC-j480DW
 
 # shellcheck disable=SC2148

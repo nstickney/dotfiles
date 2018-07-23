@@ -30,14 +30,12 @@ if [[ "$HOSTNAME" == "elisha" || \
       "$HOSTNAME" == "elisheba" ]]
 then
     AddPackage nvidia # NVIDIA drivers for linux
-    AddPackage nvidia-utils # NVIDIA drivers utilities
 fi
 
 if [[ "$HOSTNAME" == "elijah" ]]
 then
     AddPackage grub # GNU GRand Unified Bootloader (2)
     AddPackage nvidia-340xx # NVIDIA drivers for linux, 340xx legacy branch
-    AddPackage nvidia-340xx-utils # NVIDIA drivers utilities
 fi
 
 if [[ "$HOSTNAME" == "eliab" ]]
@@ -69,7 +67,7 @@ fi
 
 CopyFile /etc/locale.conf
 
-CreateLink /etc/localtime /usr/share/zoneinfo/America/Chicago
+CreateLink /etc/localtime /usr/share/zoneinfo/US/Eastern
 CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
 CreateLink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service /usr/lib/systemd/system/NetworkManager-dispatcher.service
 CreateLink /etc/systemd/system/display-manager.service /usr/lib/systemd/system/gdm.service

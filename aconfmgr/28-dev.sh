@@ -58,7 +58,7 @@ then
     AddPackage --foreign jmeter # A Java desktop application designed to load test functional behavior and measure performance
 	AddPackage maven # A Java project management and project comprehension tool
     AddPackage visualvm # Visual tool integrating several command-line JDK tools and lightweight profiling capabilities
-	AddPackage --foreign wildfly # Wildfly Application Server
+	#AddPackage --foreign wildfly # Wildfly Application Server
 
     ### JavaScript
     AddPackage eslint # An AST-based pattern checker for JavaScript

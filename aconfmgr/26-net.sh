@@ -22,6 +22,7 @@ AddPackage privoxy # A web proxy with advanced filtering capabilities.
 AddPackage python2-dbus # avahi optionally requires python2-dbus: avahi-discover
 AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
+AddPackage tcpdump # Powerful command-line packet analyzer
 AddPackage tor # Anonymizing overlay network
 AddPackage wget # A network utility to retrieve files from the Web
 

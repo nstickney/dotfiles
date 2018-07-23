@@ -57,7 +57,6 @@ AddPackage nilfs-utils # A log-structured file system supporting continuous snap
 AddPackage ntfs-3g # NTFS filesystem driver and utilities
 AddPackage openntpd # Free, easy to use implementation of the Network Time Protocol
 AddPackage pacman # A library-based package manager with dependency support
-AddPackage pacman-contrib # Contributed scripts and tools for pacman systems
 AddPackage patch # A utility to apply patch files to original sources
 AddPackage pciutils # PCI bus configuration space access library and tools
 AddPackage perl # A highly capable, feature-rich programming language
@@ -95,7 +94,6 @@ CopyFile /etc/motd
 CopyFile /etc/ntpd.conf
 CopyFile /etc/pacman.conf
 CopyFile /etc/pacman.d/hooks/mirrorupgrade.hook
-CopyFile /etc/profile.d/aurman.sh
 CopyFile /etc/profile.d/powerpill.sh
 
 CreateLink /etc/systemd/system/multi-user.target.wants/openntpd.service /usr/lib/systemd/system/openntpd.service

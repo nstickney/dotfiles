@@ -25,7 +25,6 @@ then
     AddPackage gnome-search-tool # Utility to search for files
     AddPackage gnome-shell # The next generation GNOME Shell
     AddPackage gnome-shell-extensions # Extensions for GNOME shell, including classic mode
-    AddPackage gnome-themes-standard # Default themes for the GNOME desktop
     AddPackage gnome-video-effects # Effects for Cheese, etc
     AddPackage gnome-user-docs # User documentation for GNOME
     AddPackage gnome-user-share # Easy to use user-level file sharing for GNOME
@@ -82,3 +81,5 @@ AddPackage unrar # The RAR uncompression programs
 AddPackage xdg-user-dirs-gtk # Creates user dirs and asks to relocalize them
 
 AddPackage --foreign gnome-terminal-transparency # The GNOME Terminal Emulator, with background transparency
+
+CopyFile /etc/gdm/custom.conf

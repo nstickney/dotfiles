@@ -5,7 +5,6 @@ then
 fi
 
 AddPackage xf86-input-mouse # X.org mouse input driver
-AddPackage xorg-server # Xorg X server
 AddPackage xorg-xdpyinfo # Display information utility for X
 AddPackage xorg-xev # Print contents of X events
 AddPackage xorg-xfontsel # Point and click selection of X11 font names

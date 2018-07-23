@@ -171,6 +171,9 @@ export GPG_TTY
 
 # USER ALIASES ################################################################
 
+# Overrides
+[ -d "$HOME"/dotfiles/overrides ] && export PATH="$HOME"/dotfiles/overrides:$PATH
+
 # Import SSH aliases from protected file
 # shellcheck source=/dev/null
 [ -f "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh ] && source "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh

@@ -5,5 +5,4 @@ AddPackage --foreign ephifonts # A collection of free fonts including Helvetica,
 AddPackage --foreign otf-bitstream-charter # Bitstream charter fonts
 AddPackage --foreign ttf-sil-fonts # A collection of OFL-licensed fonts from SIL (Abyssinica, Andika, Annapurna, Apparatus, Charis and more)
 
-CopyFile /etc/fonts/conf.d/00-fix-helvetica.conf # ephifonts opt dep
 CopyFile /etc/fonts/conf.d/20-no-embedded.conf # Don't use bitmaps

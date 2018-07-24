@@ -24,7 +24,6 @@ AddPackage osm-gps-map # opt dep for gramps
 AddPackage python-pyicu # opt dep for gramps
 AddPackage rcs # opt dep for gramps
 AddPackage keepassxc # Cross-platform community-driven port of Keepass password manage
-AddPackage redshift # Adjusts the color temperature of your screen according to your surroundings
 AddPackage ripgrep # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rkhunter # Checks machines for the presence of rootkits and other unwanted tools
 AddPackage rmlint # Tool to remove duplicates and other lint, being much faster than fdupes

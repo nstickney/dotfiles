@@ -46,7 +46,6 @@ The included i3wm configuration requires the following packages as dependencies 
 * blueman (Bluetooth applet)
 * KeepassXC (password manager)
 * network-manager-applet (NetworkManager applet)
-* redshift-gtk (automatically change screen color temperature for better sleep)
 * solaar (Logitech Unifying Receiver control applet) ([AUR](https://aur.archlinux.org/packages/solaar/))
 * ttf-inconsolata (default font)
 * xrandr (control multi-screen setups)

@@ -4,12 +4,12 @@
 [submodule "vim/pack/stick/start/lightline"]
 	path = vim/pack/stick/start/lightline
 	url = https://github.com/itchyny/lightline.vim
-[submodule "vim/pack/stick/start/ack"]
-	path = vim/pack/stick/start/ack
-	url = https://github.com/mileszs/ack.vim
 [submodule "vim/pack/stick/start/ale"]
 	path = vim/pack/stick/start/ale
 	url = https://github.com/w0rp/ale
 [submodule "vim/pack/stick/start/lightline-ale"]
 	path = vim/pack/stick/start/lightline-ale
 	url = https://github.com/maximbaz/lightline-ale
+[submodule "vim/pack/stick/start/indentLine"]
+	path = vim/pack/stick/start/indentLine
+	url = https://github.com/Yggdroot/indentLine

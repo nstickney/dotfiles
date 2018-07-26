@@ -179,7 +179,7 @@ export GPG_TTY
 [ -f "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh ] && source "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh
 
 # Arch-specific aliasing
-if grep -q Arch < /etc/os-release; then
+if grep -q Arch /etc/os-release 2>/dev/null; then
     # Reflector
     [ -x "$(command -v reflector)" ] && alias reflect='sudo echo "Updating Mirrorlist..." && sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
 

@@ -66,6 +66,13 @@ endfunc
 nnoremap <C-n> :call LineNumberToggle()<cr>
 call LineNumberToggle()
 
+" Linting (ALE)
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%severity%][%linter%] %s'
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+
 " Miscellaneous
 let g:vim_markdown_conceal=0            " turn off conceal in Markdown
 

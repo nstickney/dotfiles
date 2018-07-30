@@ -13,3 +13,6 @@
 [submodule "vim/pack/stick/start/indentLine"]
 	path = vim/pack/stick/start/indentLine
 	url = https://github.com/Yggdroot/indentLine
+[submodule "vim/pack/stick/start/vim-signify"]
+	path = vim/pack/stick/start/vim-signify
+	url = https://github.com/mhinz/vim-signify

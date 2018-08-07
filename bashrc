@@ -266,3 +266,6 @@ if [ -x "$(command -v sudo)" ]; then
 	[ -x "$(command -v su)" ] && alias su='sudo su'
 	[ -x "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
 fi
+
+# TABS ########################################################################
+[ -x "$(command -v tabs)" ] && tabs 4

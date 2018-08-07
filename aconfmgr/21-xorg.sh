@@ -1,7 +1,7 @@
 # shellcheck disable=SC2148
 if [[ "$HOSTNAME" == "elisha" ]]
 then
-    AddPackage mesa-demos # Mesa demos and tools
+	AddPackage mesa-demos # Mesa demos and tools
 fi
 
 AddPackage xf86-input-mouse # X.org mouse input driver

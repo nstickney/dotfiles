@@ -1,42 +1,42 @@
 # shellcheck disable=SC2148
 if [[ "$HOSTNAME" == "elisha" || \
-      "$HOSTNAME" == "elizabeth" || \
-      "$HOSTNAME" == "elijah" || \
-      "$HOSTNAME" == "eli" || \
-      "$HOSTNAME" == "elisheba" ]]
+	  "$HOSTNAME" == "elizabeth" || \
+	  "$HOSTNAME" == "elijah" || \
+	  "$HOSTNAME" == "eli" || \
+	  "$HOSTNAME" == "elisheba" ]]
 then
-    AddPackage adwaita-icon-theme # Adwaita icon theme
-    AddPackage dconf-editor # dconf Editor
-    AddPackage gedit # A text editor for GNOME
-    AddPackage gedit-code-assistance # Code assistance for gedit
-    AddPackage gnome-backgrounds # Background images and data for GNOME
-    AddPackage gnome-calculator # GNOME Scientific calculator
-    AddPackage gnome-characters # A character map application
-    AddPackage gnome-contacts # Contacts Manager for GNOME
-    AddPackage gnome-desktop # Library with common API for various GNOME modules
-    AddPackage gnome-dictionary # Look up words in dictionary sources
-    AddPackage gnome-documents # A document manager application for GNOME
-    AddPackage gnome-font-viewer # A font viewer utility for GNOME
-    AddPackage gnome-keyring # Stores passwords and encryption keys
-    AddPackage gnome-maps # A simple GNOME 3 maps application
-    AddPackage gnome-music # Music player and management application
-    AddPackage gnome-photos # Access, organize, and share your photos on GNOME
-    AddPackage gnome-screenshot # Take pictures of your screen
-    AddPackage gnome-search-tool # Utility to search for files
-    AddPackage gnome-shell # The next generation GNOME Shell
-    AddPackage gnome-shell-extensions # Extensions for GNOME shell, including classic mode
-    AddPackage gnome-video-effects # Effects for Cheese, etc
-    AddPackage gnome-user-docs # User documentation for GNOME
-    AddPackage gnome-user-share # Easy to use user-level file sharing for GNOME
-    AddPackage gnome-weather # Access current weather conditions and forecasts
-    AddPackage grilo # Framework that provides access to various sources of multimedia content
-    AddPackage grilo-plugins # Plugins for Grilo
-    AddPackage libdmapsharing # A library that implements the DMAP family of protocols
-    AddPackage mousetweaks # Mouse accessibility enhancements
-    AddPackage mutter # A window manager for GNOME
-    AddPackage mx # A widget toolkit using Clutter
-    AddPackage tracker # Desktop-neutral user information store, search tool and indexer
-    AddPackage vinagre # A VNC Client for the GNOME desktop
+	AddPackage adwaita-icon-theme # Adwaita icon theme
+	AddPackage dconf-editor # dconf Editor
+	AddPackage gedit # A text editor for GNOME
+	AddPackage gedit-code-assistance # Code assistance for gedit
+	AddPackage gnome-backgrounds # Background images and data for GNOME
+	AddPackage gnome-calculator # GNOME Scientific calculator
+	AddPackage gnome-characters # A character map application
+	AddPackage gnome-contacts # Contacts Manager for GNOME
+	AddPackage gnome-desktop # Library with common API for various GNOME modules
+	AddPackage gnome-dictionary # Look up words in dictionary sources
+	AddPackage gnome-documents # A document manager application for GNOME
+	AddPackage gnome-font-viewer # A font viewer utility for GNOME
+	AddPackage gnome-keyring # Stores passwords and encryption keys
+	AddPackage gnome-maps # A simple GNOME 3 maps application
+	AddPackage gnome-music # Music player and management application
+	AddPackage gnome-photos # Access, organize, and share your photos on GNOME
+	AddPackage gnome-screenshot # Take pictures of your screen
+	AddPackage gnome-search-tool # Utility to search for files
+	AddPackage gnome-shell # The next generation GNOME Shell
+	AddPackage gnome-shell-extensions # Extensions for GNOME shell, including classic mode
+	AddPackage gnome-video-effects # Effects for Cheese, etc
+	AddPackage gnome-user-docs # User documentation for GNOME
+	AddPackage gnome-user-share # Easy to use user-level file sharing for GNOME
+	AddPackage gnome-weather # Access current weather conditions and forecasts
+	AddPackage grilo # Framework that provides access to various sources of multimedia content
+	AddPackage grilo-plugins # Plugins for Grilo
+	AddPackage libdmapsharing # A library that implements the DMAP family of protocols
+	AddPackage mousetweaks # Mouse accessibility enhancements
+	AddPackage mutter # A window manager for GNOME
+	AddPackage mx # A widget toolkit using Clutter
+	AddPackage tracker # Desktop-neutral user information store, search tool and indexer
+	AddPackage vinagre # A VNC Client for the GNOME desktop
 fi
 
 ### GNOME-ish stuff used outside GNOME

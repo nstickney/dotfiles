@@ -1,4 +1,4 @@
-AddPackage aide # A file integrity checker and intrusion detection program.
+# AddPackage aide # A file integrity checker and intrusion detection program.
 # AddPackage metasploit # Advanced open-source platform for developing, testing, and using exploit code
 AddPackage rkhunter # Checks machines for the presence of rootkits and other unwanted tools
 AddPackage vulscan # A module which enhances nmap to a vulnerability scanner

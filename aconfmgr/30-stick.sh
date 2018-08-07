@@ -12,6 +12,7 @@ AddPackage thunderbird # Standalone mail and news reader from mozilla.org
 AddPackage truecrypt # Free open-source cross-platform disk encryption software
 # AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
 
+AddPackage --foreign exercism-cli # Command line client for exercism.io
 AddPackage --foreign fslint # A utility to find and clean various forms of lint on a filesystem
 AddPackage --foreign lbry-app-bin # The LBRY app built using electron
 AddPackage --foreign protonmail-bridge # Application to use IMAP/SMTP with your paid ProtonMail account

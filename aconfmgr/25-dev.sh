@@ -7,9 +7,17 @@ AddPackage tig # Text-mode interface for Git.
 AddPackage --foreign vim-gnome # Vi Improved, a highly configurable, improved version of the vi text editor (with Gnome GUI)
 AddPackage vim-spell-en # Language files for Vim spell checking
 
-# Linting (for vim-ale)
+# Network Testing
+AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
+AddPackage ipguard # arp<->ip relation checking tool
+AddPackage nmap # Utility for network discovery and security auditing
+AddPackage wireshark-gtk # a free network protocol analyzer for Unix/Linux and Windows - GTK frontend
+AddPackage geoip-database-extra # wireshark-gtk opt dep
+
+# Programming Languages
 
 ### Bash
+AddPackage bash-bats # Bash Automated Testing System
 AddPackage shellcheck # Shell script analysis tool
 AddPackage shellharden # Bash linter and syntax highlighter
 
@@ -33,10 +41,3 @@ AddPackage autopep8 # A tool that automatically formats Python code to conform t
 AddPackage flake8 # The modular source code checker: pep8, pyflakes and co
 AddPackage python-pycodestyle # Python style guide checker
 AddPackage yapf # Python style guide checker
-
-# Network Testing
-AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
-AddPackage ipguard # arp<->ip relation checking tool
-AddPackage nmap # Utility for network discovery and security auditing
-AddPackage wireshark-gtk # a free network protocol analyzer for Unix/Linux and Windows - GTK frontend
-AddPackage geoip-database-extra # wireshark-gtk opt dep

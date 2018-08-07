@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Find the default interface with its IP address and netmask
 the_interface="$(ip route | grep default | awk '{print $5}')"

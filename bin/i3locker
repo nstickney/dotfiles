@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Take a screenshot
 imlib2_grab /tmp/screen_locked.png

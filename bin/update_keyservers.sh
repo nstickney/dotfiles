@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 servers="x-hkp://pool.sks-keyservers.net pgp.mit.edu wwwkeys.ch.pgp.net"
 for server in $servers; do

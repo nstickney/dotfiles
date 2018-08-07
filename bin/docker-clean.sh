@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 printf '%s\n' "  Stopping all containers..."
 docker ps -a -q | xargs docker stop > /dev/null 2>&1

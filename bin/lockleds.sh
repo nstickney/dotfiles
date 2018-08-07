@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 case "$(xset q 2>/dev/null | grep LED | sed s/[^1-9]//g)" in
         '1')
         echo "⛶⛶"

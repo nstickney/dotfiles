@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # BASE CONFIGURATION ##########################################################
 
@@ -6,51 +6,54 @@
 [[ $- != *i* ]] && return
 
 # Check window size after each command and update $LINES and $COLUMNS as needed
-[[ $DISPLAY ]] && shopt -s checkwinsize
+[ "$DISPLAY" ] && shopt -s checkwinsize
 
-# Get useful error information
-#set -x
-
-# Recursive **/* and `cd` when only entering a path
+# Recursive **/* and `cd` when only entering a path (does not work on OS X)
 if [ "$(uname -s)" != "Darwin" ]; then
-    shopt -s globstar
-    shopt -s autocd
+	shopt -s globstar
+	shopt -s autocd
 fi
+
+# Fix perl complaining about LC_ALL
+export LC_ALL=en_US.UTF-8
 
 # BASH PROMPT #################################################################
 
 bash_prompt_command() {
-    # How many characters of the $PWD should be kept
-	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER}))
-    # Indicate that there has been dir truncation
-    local trunc_symbol="..."
-    local dir=${PWD##*/}
-    pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
-    CPWD=${PWD/#$HOME/\~}
-    local pwdoffset=$(( ${#CPWD} - pwdmaxlen ))
-    if [ ${pwdoffset} -gt "0" ]
-    then
-        CPWD=${CPWD:$pwdoffset:$pwdmaxlen}
-        CPWD=${trunc_symbol}/${CPWD#*/}
-    fi
+	# Git branch
+	GTBR=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')
+	# How many characters of the $PWD should be kept
+	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER} - ${#GTBR}))
+	# Indicate that there has been dir truncation
+	local trunc_symbol="..."
+	local dir=${PWD##*/}
+	pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
+	CPWD=${PWD/#$HOME/\~}
+	local pwdoffset=$(( ${#CPWD} - pwdmaxlen ))
+	if [ ${pwdoffset} -gt "0" ]
+	then
+		CPWD=${CPWD:$pwdoffset:$pwdmaxlen}
+		CPWD=${trunc_symbol}/${CPWD#*/}
+	fi
 }
 
 bash_prompt() {
-    local U="\\[\\e[0m\\]"     # unsets color to term's fg color
+	local U="\\[\\e[0m\\]"     # default foreground color
 
-    # regular colors
-    local G="\\[\\e[0;32m\\]"  # green
+	# regular colors
+	local G="\\[\\e[0;32m\\]"  # green
 
-    # emphasized (bolded) colors
-    local ER="\\[\\e[1;31m\\]" # bold red
-    local EY="\\[\\e[1;33m\\]" # bold yellow
-    local EB="\\[\\e[1;34m\\]" # bold blue
-    local EC="\\[\\e[1;36m\\]" # bold cyan
+	# emphasized (bolded) colors
+	local ER="\\[\\e[1;31m\\]" # bold red
+	local EY="\\[\\e[1;33m\\]" # bold yellow
+	local EB="\\[\\e[1;34m\\]" # bold blue
+	local EV="\\[\\e[1;35m\\]" # bold violet
+	local EC="\\[\\e[1;36m\\]" # bold cyan
 
-    local UC=$EY                # user's color
-    [ $UID -eq "0" ] && UC=$ER  # root's color
+	local UC=$EY                # user's color
+	[ $UID -eq "0" ] && UC=$ER  # root's color
 
-    PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
+   PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${EV}\${GTBR}${U}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
 }
 
 PROMPT_COMMAND=bash_prompt_command
@@ -82,9 +85,9 @@ fi
 
 # ls
 if [ "$(uname -s)" == "Darwin" ]; then
-    alias ls='ls -G'
+	alias ls='ls -G'
 else
-    alias ls='ls --color=auto'
+	alias ls='ls --color=auto'
 fi
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -92,9 +95,11 @@ alias vdir='vdir --color=auto'
 
 # grep
 export GREP_COLOR="1;33"
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
+if grep --color "a" <<< "a" &>/dev/null; then
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
+fi
 
 # diff
 [ -x "$(command -v colordiff)" ] && alias diff='colordiff'
@@ -105,25 +110,23 @@ export LESS='-R'
 
 # man - colored, and with help
 man() {
-    env \
-        LESS_TERMCAP_mb="$(printf '\e[1;32m')" \
-        LESS_TERMCAP_md="$(printf '\e[1;33m')" \
-        LESS_TERMCAP_me="$(printf '\e[0m')" \
-        LESS_TERMCAP_se="$(printf '\e[0m')" \
-        LESS_TERMCAP_so="$(printf '\e[1;45;30m')" \
-        LESS_TERMCAP_ue="$(printf '\e[0m')" \
-        LESS_TERMCAP_us="$(printf '\e[0;34m')" \
-        man "$@" || (help "$@" 2> /dev/null && help "$@" | less)
+	env \
+		LESS_TERMCAP_mb="$(printf '\e[1;32m')" \
+		LESS_TERMCAP_md="$(printf '\e[1;33m')" \
+		LESS_TERMCAP_me="$(printf '\e[0m')" \
+		LESS_TERMCAP_se="$(printf '\e[0m')" \
+		LESS_TERMCAP_so="$(printf '\e[1;45;30m')" \
+		LESS_TERMCAP_ue="$(printf '\e[0m')" \
+		LESS_TERMCAP_us="$(printf '\e[0;34m')" \
+		man "$@" || (help "$@" 2> /dev/null && help "$@" | less)
 }
 
 # COMPLETION ##################################################################
 
 # Bash completion where available
-# shellcheck source=/dev/null
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 
 # Find-The-Command
-# shellcheck source=/dev/null
 [ -r /usr/share/doc/find-the-command/ftc.bash ] && source /usr/share/doc/find-the-command/ftc.bash
 
 # Sudo Completion
@@ -140,6 +143,5 @@ PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 export HISTFILESIZE=8192
 
 # SPELLING ####################################################################
-
 shopt -s cdspell
 [ "$(uname -s)" != "Darwin" ] && shopt -s dirspell

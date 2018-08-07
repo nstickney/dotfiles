@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # BASE CONFIGURATION ##########################################################
 
@@ -6,15 +6,12 @@
 [[ $- != *i* ]] && return
 
 # Check window size after each command and update $LINES and $COLUMNS as needed
-[[ $DISPLAY ]] && shopt -s checkwinsize
+[ "$DISPLAY" ] && shopt -s checkwinsize
 
-# Get useful error information
-#set -x
-
-# Recursive **/* and `cd` when only entering a path
+# Recursive **/* and `cd` when only entering a path (does not work on OS X)
 if [ "$(uname -s)" != "Darwin" ]; then
-    shopt -s globstar
-    shopt -s autocd
+	shopt -s globstar
+	shopt -s autocd
 fi
 
 # Fix perl complaining about LC_ALL
@@ -25,38 +22,38 @@ export LC_ALL=en_US.UTF-8
 bash_prompt_command() {
 	# Git branch
 	GTBR=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')
-    # How many characters of the $PWD should be kept
+	# How many characters of the $PWD should be kept
 	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER} - ${#GTBR}))
-    # Indicate that there has been dir truncation
-    local trunc_symbol="..."
-    local dir=${PWD##*/}
-    pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
-    CPWD=${PWD/#$HOME/\~}
-    local pwdoffset=$(( ${#CPWD} - pwdmaxlen ))
-    if [ ${pwdoffset} -gt "0" ]
-    then
-        CPWD=${CPWD:$pwdoffset:$pwdmaxlen}
-        CPWD=${trunc_symbol}/${CPWD#*/}
-    fi
+	# Indicate that there has been dir truncation
+	local trunc_symbol="..."
+	local dir=${PWD##*/}
+	pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
+	CPWD=${PWD/#$HOME/\~}
+	local pwdoffset=$(( ${#CPWD} - pwdmaxlen ))
+	if [ ${pwdoffset} -gt "0" ]
+	then
+		CPWD=${CPWD:$pwdoffset:$pwdmaxlen}
+		CPWD=${trunc_symbol}/${CPWD#*/}
+	fi
 }
 
 bash_prompt() {
-    local U="\\[\\e[0m\\]"     # unsets color to term's fg color
+	local U="\\[\\e[0m\\]"     # default foreground color
 
-    # regular colors
-    local G="\\[\\e[0;32m\\]"  # green
+	# regular colors
+	local G="\\[\\e[0;32m\\]"  # green
 
-    # emphasized (bolded) colors
-    local ER="\\[\\e[1;31m\\]" # bold red
-    local EY="\\[\\e[1;33m\\]" # bold yellow
-    local EB="\\[\\e[1;34m\\]" # bold blue
+	# emphasized (bolded) colors
+	local ER="\\[\\e[1;31m\\]" # bold red
+	local EY="\\[\\e[1;33m\\]" # bold yellow
+	local EB="\\[\\e[1;34m\\]" # bold blue
 	local EV="\\[\\e[1;35m\\]" # bold violet
-    local EC="\\[\\e[1;36m\\]" # bold cyan
+	local EC="\\[\\e[1;36m\\]" # bold cyan
 
-    local UC=$EY                # user's color
-    [ $UID -eq "0" ] && UC=$ER  # root's color
+	local UC=$EY                # user's color
+	[ $UID -eq "0" ] && UC=$ER  # root's color
 
-	PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${EV}\${GTBR}${U}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
+   PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${EV}\${GTBR}${U}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
 }
 
 PROMPT_COMMAND=bash_prompt_command
@@ -88,9 +85,9 @@ fi
 
 # ls
 if [ "$(uname -s)" == "Darwin" ]; then
-    alias ls='ls -G'
+	alias ls='ls -G'
 else
-    alias ls='ls --color=auto'
+	alias ls='ls --color=auto'
 fi
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -113,25 +110,23 @@ export LESS='-R'
 
 # man - colored, and with help
 man() {
-    env \
-        LESS_TERMCAP_mb="$(printf '\e[1;32m')" \
-        LESS_TERMCAP_md="$(printf '\e[1;33m')" \
-        LESS_TERMCAP_me="$(printf '\e[0m')" \
-        LESS_TERMCAP_se="$(printf '\e[0m')" \
-        LESS_TERMCAP_so="$(printf '\e[1;45;30m')" \
-        LESS_TERMCAP_ue="$(printf '\e[0m')" \
-        LESS_TERMCAP_us="$(printf '\e[0;34m')" \
-        man "$@" || (help "$@" 2> /dev/null && help "$@" | less)
+	env \
+		LESS_TERMCAP_mb="$(printf '\e[1;32m')" \
+		LESS_TERMCAP_md="$(printf '\e[1;33m')" \
+		LESS_TERMCAP_me="$(printf '\e[0m')" \
+		LESS_TERMCAP_se="$(printf '\e[0m')" \
+		LESS_TERMCAP_so="$(printf '\e[1;45;30m')" \
+		LESS_TERMCAP_ue="$(printf '\e[0m')" \
+		LESS_TERMCAP_us="$(printf '\e[0;34m')" \
+		man "$@" || (help "$@" 2> /dev/null && help "$@" | less)
 }
 
 # COMPLETION ##################################################################
 
 # Bash completion where available
-# shellcheck source=/dev/null
 [ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 
 # Find-The-Command
-# shellcheck source=/dev/null
 [ -r /usr/share/doc/find-the-command/ftc.bash ] && source /usr/share/doc/find-the-command/ftc.bash
 
 # Sudo Completion
@@ -158,48 +153,30 @@ export HISTFILESIZE=8192
 
 # PATH ########################################################################
 export PATH="$PATH":"$HOME"/dotfiles/bin
+[ -d "$HOME"/dotfiles/overrides ] && export PATH="$HOME"/dotfiles/overrides:$PATH
 
 # SPELLING ####################################################################
-
 shopt -s cdspell
 [ "$(uname -s)" != "Darwin" ] && shopt -s dirspell
 
-# GPG KEY
-################################################################
+# GPG KEY #####################################################################
 GPG_TTY="$(tty)"
 export GPG_TTY
 
 # USER ALIASES ################################################################
 
-# Overrides
-[ -d "$HOME"/dotfiles/overrides ] && export PATH="$HOME"/dotfiles/overrides:$PATH
-
 # Import SSH aliases from protected file
 # shellcheck source=/dev/null
 [ -f "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh ] && source "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh
 
-# Arch-specific aliasing
-if grep -q Arch /etc/os-release 2>/dev/null; then
-    # Reflector
-    [ -x "$(command -v reflector)" ] && alias reflect='sudo echo "Updating Mirrorlist..." && sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
-
-    # Aurman
-    if [ -x "$(command -v aurman)" ]; then
-        alias pac='aurman'
-        [ "$(type reflect 2>/dev/null)" ] && alias rpac='reflect && yes | pac -Syyu --noedit --noconfirm'
-
-    # Pacman
-    else
-        alias pac='pacman'
-        [ "$(type reflect 2>/dev/null)" ] && alias rpac='reflect && yes | sudo pac -Syyu --noc onfirm'
-    fi
-fi
-
 # cd
 alias cd..='cd ..'
 
-# firewall-cmd
-[ -x "$(command -v firewall-cmd)" ] && alias fw='sudo firewall-cmd'
+# editor
+if [ -x "$(command -v vim)" ]; then
+	alias vi='vim'
+	export EDITOR='vim'
+fi
 
 # git
 alias commit='git commit -m'
@@ -209,40 +186,83 @@ alias push='git push origin master'
 # ls
 [ ! -x "$(command -v ll)" ] && alias ll='ls -la'
 
-# more is less
+# less is more
 alias more='less'
 
 # ping
 alias pinc='ping -c5'
 
-# ss (replaces netstat)
-if [ -x "$(command -v ss)" ]; then
-    if [ -x "$(command -v sudo)" ]; then
-		alias sl='sudo ss -ltunp'
-	else
-		alias sl='ss -ltunp'
+# sudo
+if [ -x "$(command -v sudo)" ]; then
+
+	# Editor
+	[ -x "$(command -v vim)" ] && alias svi="sudo vim"
+
+	# Networking
+
+	### firewall-cmd
+	[ -x "$(command -v firewall-cmd)" ] && alias fw='sudo firewall-cmd'
+
+	### SS / Netstat
+	if [ -x "$(command -v ss)" ]; then
+		alias ss='sudo ss'
+	elif [ -x "$(command -v netstat)" ]; then
+		alias netstat='sudo netstat'
 	fi
-elif [ -x "$(command -v netstat)" ]; then
-    if [ -x "$(command -v sudo)" ]; then
-		alias sl='sudo netstat -ltunp'
-	else
-		alias sl='netstat -ltunp'
+	[ "$(type -t ss)" == "alias" ] && alias sl='ss -ltunp'
+
+	# Package Managers
+
+	### Apt (Apt-Metalink)
+	if [ -x "$(command -v apt)" ]; then
+		if [ -x "$(command -v apt-metalink)" ]; then
+		    alias apt='sudo apt-metalink'
+		else
+			alias apt='sudo apt'
+		fi
+		alias aptup='apt update && apt upgrade && apt dist-upgrade'
 	fi
-fi
 
-# sudo / su / root
-[ -x "$(command -v sudo)" ] && alias su='sudo su'
+	### DNF/Yum
+	if [ -x "$(command -v dnf)" ]; then
+		alias dnf='sudo dnf'
+		alias dnfup='dnf -y update'
+	elif [ -x "$(command -v yum)" ]; then
+		alias dnf='sudo yum'
+		alias dnfup='yum -y update'
+	fi
 
-# systemctl
-[ -x "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
+	### Pacman (Reflector/Powerpill/Aurman)
+	if [ -x "$(command -v pacman)" ]; then
 
-# vim
-if [ -x "$(command -v vim)" ]; then
-    alias vi='vim'
-    alias svi='sudo vim'
-    alias svim='sudo vim'
-    export EDITOR='vim'
-else
-    alias svi='sudo vi'
-    export EDITOR='vi'
+		# Reflector
+		[ -x "$(command -v reflector)" ] && alias reflect='sudo printf "Updating Mirrorlist..." && sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
+
+		# Powerpill or Pacman
+		if [ -x "$(command -v powerpill)" ]; then
+			PACMAN="$(command -v powerpill)"
+			alias pac='sudo powerpill'
+		else
+			PACMAN="$(command -v pacman)"
+			alias pac='sudo pacman'
+		fi
+		export PACMAN
+		alias pacup='yes | pac -Syyu --noconfirm'
+
+		# Aurman
+		if [ -x "$(command -v aurman)" ]; then
+			alias pac='aurman'
+			alias pacup='yes | pac -Syyu --noedit --noconfirm'
+		fi
+
+		# Combos
+		if [ "$(type reflect 2>/dev/null)" ]; then
+			alias rpac='reflect && pac'
+			alias rpacup='reflect && pacup'
+		fi
+	fi
+
+	# System
+	[ -x "$(command -v su)" ] && alias su='sudo su'
+	[ -x "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
 fi

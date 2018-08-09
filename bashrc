@@ -226,11 +226,10 @@ if [ -x "$(command -v sudo)" ]; then
 	### DNF/Yum
 	if [ -x "$(command -v dnf)" ]; then
 		alias dnf='sudo dnf'
-		alias dnfup='dnf -y update'
 	elif [ -x "$(command -v yum)" ]; then
 		alias dnf='sudo yum'
-		alias dnfup='yum -y update'
 	fi
+	alias dnfup='dnf -y update'
 
 	### Pacman (Reflector/Powerpill/Aurman)
 	if [ -x "$(command -v pacman)" ]; then

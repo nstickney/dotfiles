@@ -2,7 +2,9 @@
 AddPackage cloc # Count lines of code
 AddPackage git # the fast distributed version control system
 AddPackage git-crypt # Transparent file encryption in Git
+AddPackage parallel # A shell tool for executing jobs in parallel
 AddPackage ripgrep # A search tool that combines the usability of ag with the raw speed of grep
+AddPackage rsync # A file transfer program to keep remote files in sync
 AddPackage tig # Text-mode interface for Git.
 AddPackage --foreign vim-gnome # Vi Improved, a highly configurable, improved version of the vi text editor (with Gnome GUI)
 AddPackage vim-spell-en # Language files for Vim spell checking
@@ -27,6 +29,7 @@ AddPackage flawfinder # Searches through source code for potential security flaw
 
 ### HTML
 AddPackage tidy # A tool to tidy down your HTML code to a clean style
+AddPackage --foreign minify # Minifier CLI for HTML, CSS, JS, JSON, SVG and XML
 
 ### Multi-language
 AddPackage astyle # A free, fast and small automatic formatter for C, C++, C#, and Java source code.

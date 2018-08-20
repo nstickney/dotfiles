@@ -90,7 +90,6 @@ AddPackage --foreign find-the-command # Interactive command-not-found hook for b
 
 CopyFile /etc/bash.bashrc
 CopyFile /etc/makepkg.conf
-CopyFile /etc/motd
 CopyFile /etc/ntpd.conf
 CopyFile /etc/pacman.conf
 CopyFile /etc/pacman.d/hooks/mirrorupgrade.hook

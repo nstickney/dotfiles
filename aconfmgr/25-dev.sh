@@ -27,6 +27,9 @@ AddPackage shellharden # Bash linter and syntax highlighter
 AddPackage cppcheck # A tool for static C/C++ code analysis
 AddPackage flawfinder # Searches through source code for potential security flaws
 
+### Java
+AddPackage vim-jad # Automatically decompile Java class files and display Java code
+
 ### HTML
 AddPackage tidy # A tool to tidy down your HTML code to a clean style
 AddPackage --foreign minify # Minifier CLI for HTML, CSS, JS, JSON, SVG and XML

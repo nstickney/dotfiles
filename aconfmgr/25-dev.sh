@@ -24,10 +24,17 @@ AddPackage shellcheck # Shell script analysis tool
 AddPackage shellharden # Bash linter and syntax highlighter
 
 ### C/C++
+AddPackage cmake # A cross-platform open-source make system
 AddPackage cppcheck # A tool for static C/C++ code analysis
 AddPackage flawfinder # Searches through source code for potential security flaws
+AddPackage gdb # The GNU Debugger
+
+### Go
+AddPackage delve # A debugger for the Go programming language.
+AddPackage go # Core compiler tools for the Go programming language
 
 ### Java
+AddPackage intellij-idea-community-edition # IDE for Java, Groovy and other programming languages with advanced refactoring features
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
 ### HTML
@@ -47,3 +54,6 @@ AddPackage autopep8 # A tool that automatically formats Python code to conform t
 AddPackage flake8 # The modular source code checker: pep8, pyflakes and co
 AddPackage python-pycodestyle # Python style guide checker
 AddPackage yapf # Python style guide checker
+
+### Rust
+AddPackage rust # Systems programming language focused on safety, speed and concurrency

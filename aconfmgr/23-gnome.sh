@@ -48,6 +48,7 @@ AddPackage evince # Document viewer (PDF, Postscript, djvu, tiff, dvi, XPS, Sync
 AddPackage file-roller # Create and modify archives
 AddPackage filemanager-actions # File-manager extension which offers user configurable context menu actions
 AddPackage gdm # Display manager and login screen
+AddPackage gnome-calculator # GNOME Scientific calculator
 AddPackage gnome-control-center # GNOME's main interface to configure various aspects of the desktop
 AddPackage gnome-disk-utility # Disk Management Utility for GNOME
 AddPackage gnome-session # The GNOME Session Handler

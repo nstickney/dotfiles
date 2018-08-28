@@ -16,3 +16,6 @@
 [submodule "vim/pack/stick/start/vim-signify"]
 	path = vim/pack/stick/start/vim-signify
 	url = https://github.com/mhinz/vim-signify
+[submodule "vim/pack/stick/start/vim-mucomplete"]
+	path = vim/pack/stick/start/vim-mucomplete
+	url = https://github.com/lifepillar/vim-mucomplete

@@ -13,9 +13,18 @@
 [submodule "vim/pack/stick/start/indentLine"]
 	path = vim/pack/stick/start/indentLine
 	url = https://github.com/Yggdroot/indentLine
-[submodule "vim/pack/stick/start/vim-signify"]
-	path = vim/pack/stick/start/vim-signify
-	url = https://github.com/mhinz/vim-signify
 [submodule "vim/pack/stick/start/vim-mucomplete"]
 	path = vim/pack/stick/start/vim-mucomplete
 	url = https://github.com/lifepillar/vim-mucomplete
+[submodule "vim/pack/stick/start/tcomment_vim"]
+	path = vim/pack/stick/start/tcomment_vim
+	url = https://github.com/tomtom/tcomment_vim
+[submodule "vim/pack/stick/start/ctrlp.vim"]
+	path = vim/pack/stick/start/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim
+[submodule "vim/pack/stick/start/vim-ripgrep"]
+	path = vim/pack/stick/start/vim-ripgrep
+	url = https://github.com/jremmen/vim-ripgrep
+[submodule "vim/pack/stick/start/vim-signify"]
+	path = vim/pack/stick/start/vim-signify
+	url = https://github.com/mhinz/vim-signify

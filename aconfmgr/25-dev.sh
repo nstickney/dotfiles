@@ -28,6 +28,7 @@ AddPackage cmake # A cross-platform open-source make system
 AddPackage cppcheck # A tool for static C/C++ code analysis
 AddPackage flawfinder # Searches through source code for potential security flaws
 AddPackage gdb # The GNU Debugger
+AddPackage vim-omnicppcomplete # vim c++ completion omnifunc with a ctags database
 
 ### Go
 AddPackage delve # A debugger for the Go programming language.
@@ -53,6 +54,7 @@ AddPackage perl-tidy # Parses and beautifies perl source
 AddPackage autopep8 # A tool that automatically formats Python code to conform to the PEP 8 style guide
 AddPackage flake8 # The modular source code checker: pep8, pyflakes and co
 AddPackage python-pycodestyle # Python style guide checker
+AddPackage vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
 AddPackage yapf # Python style guide checker
 
 ### Rust

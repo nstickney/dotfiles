@@ -21,12 +21,6 @@ nnoremap <C-G> :bprev<CR>               " move to previous buffer
 " Clipboard
 set clipboard=unnamedplus               " use the system clipboard
 
-" Completion is
-set completeopt+=menuone
-set shortmess+=c                        " Shut off completion messages
-let g:mucomplete#enable_auto_at_startup = 1
-let g:mucomplete#delayed_completion = 1
-
 " Encoding (set to UTF-8 where available)
 if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
    	set fileencodings=ucs-bom,utf-8,latin1

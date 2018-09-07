@@ -6,8 +6,10 @@ AddPackage parallel # A shell tool for executing jobs in parallel
 AddPackage ripgrep # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rsync # A file transfer program to keep remote files in sync
 AddPackage tig # Text-mode interface for Git.
-AddPackage --foreign vim-gnome # Vi Improved, a highly configurable, improved version of the vi text editor (with Gnome GUI)
+AddPackage tmux # A terminal multiplexer
+AddPackage vim # Vi Improved, a highly configurable, improved version of the vi text editor
 AddPackage vim-spell-en # Language files for Vim spell checking
+AddPackage vim-systemd # ViM syntax highlighting for systemd unit files
 
 # Network Testing
 AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
@@ -59,3 +61,6 @@ AddPackage yapf # Python style guide checker
 
 ### Rust
 AddPackage rust # Systems programming language focused on safety, speed and concurrency
+
+### Scala
+AddPackage sbt # The interactive build tool

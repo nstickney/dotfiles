@@ -2,17 +2,21 @@
 """ https://github.com/skwp/dotfiles/blob/master/vimrc
 """ http://www.guillaume-barillot.com/2017/06/09/how-to-to-make-vim-to-look-like-atom/
 
-" The basics
+" Basics
 set nocompatible                        " use vim settings instead of vi (must be first)
 set autoread                            " automatically reload files changed outside vim
 set backspace=indent,eol,start whichwrap+=<,>,[,]   " backspace/cursor keys wrap lines
 set colorcolumn=80,90,100,120           " add markers to determine line length
 hi ColorColumn ctermbg=0                " set the color column to dark grey
-set hidden                              " buffers can exist without being in a window
 set history=1000                        " store lots of history
 set mouse=a                             " make the dadgum mouse work
 set showmatch                           " highlight matching [{()}]
 set showcmd                             " show commands in bottom bar
+
+" Buffers
+set hidden                              " buffers can exist without being in a window
+nnoremap <C-N> :bnext<CR>               " move to next buffer
+nnoremap <C-P> :bprev<CR>               " move to previous buffer
 
 " Clipboard
 set clipboard=unnamedplus               " use the system clipboard
@@ -96,8 +100,8 @@ set hlsearch                            " highlight searches
 set ignorecase                          " ignore case searching
 set incsearch                           " search as you type
 set smartcase                           " stop ignoring case if a capital is typed
-if executable('ag')                     " use the_silver_searcher if available
-	let g:ackprg = 'ag --vimgrep'
+if executable('rg')                     " use ripgrep if available
+	let g:ackprg = 'rg --vimgrep'
 endif
 
 " Spellcheck
@@ -125,13 +129,19 @@ let g:lightline = {
 			\ },
 			\ 'active': {
 			\ 'left': [[ 'mode', 'paste' ],
-			\ [ 'readonly', 'filename', 'modified' ]],
+			\ [ 'filename', 'readonly', 'modified' ]],
 			\ 'right': [[ 'lineinfo' ],
 			\ [ 'percent' ],
 			\ [ 'fileformat', 'fileencoding', 'filetype' ],
-			\ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]]
+			\ [ 'linter_checking', 'linter_errors', 'linter_warnings' ]]
 			\ },
 			\}
+let g:lightline.separator = {
+	\   'left': '', 'right': ''
+  \}
+let g:lightline.subseparator = {
+	\   'left': '', 'right': ''
+  \}
 let g:lightline#ale#indicator_checking = "\uf110"
 let g:lightline#ale#indicator_warnings = "\uf071"
 let g:lightline#ale#indicator_errors = "\uf05e"

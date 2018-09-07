@@ -17,17 +17,6 @@ if [ -x "$(command -v aconfmgr)" ]; then
 	ln -s "$HOME"/dotfiles/aconfmgr "$HOME"/.config/aconfmgr
 fi
 
-if [ -x "$(command -v aria2c)" ]; then
-	printf '%s\n' "  aria2..."
-	if [ ! -d "$HOME"/.config ]; then
-		mkdir "$HOME"/.config
-	fi
-	if [ -e "$HOME"/.config/aria2 ]; then
-		rm -r "$HOME"/.config/aria2
-	fi
-	ln -s "$HOME"/dotfiles/aria2 "$HOME"/.config/aria2
-fi
-
 if [ -x "$(command -v bash)" ]; then
 	printf '%s\n' "  bash (and readline)..."
 	if [ -e "$HOME"/.bashrc ]; then
@@ -62,14 +51,6 @@ if [ -x "$(command -v dconf)" ]; then
 		rm -r "$HOME"/.config/gtk-4.0
 	fi
 	ln -s "$HOME"/dotfiles/gtk-4.0 "$HOME"/.config/gtk-4.0
-fi
-
-if [ -x "$(command -v emacs)" ]; then
-	printf '%s\n' "  emacs..."
-	if [ -e "$HOME"/.emacs ]; then
-		rm "$HOME"/.emacs
-	fi
-	ln -s "$HOME"/dotfiles/i3 "$HOME"/.emacs
 fi
 
 if [ "nstickney" = "$USER" ] || [ "stickneyn" = "$USER" ]; then

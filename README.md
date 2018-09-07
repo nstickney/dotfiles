@@ -7,14 +7,11 @@
 ## Background
 Includes configuration for:
 * aconfmgr
-* aria2
 * Bash
 * dconf (GNOME/GTK)
-* Emacs
 * i3
-* LaTeX (submodule from Overleaf)
 * rofi (Xresources)
-* vim (including plugins as submodules)
+* Vim (including plugins as submodules)
 * Xorg (inputrc, Xresources)
 
 ## Installation

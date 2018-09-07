@@ -155,6 +155,10 @@ export HISTFILESIZE=8192
 export PATH="$PATH":"$HOME"/dotfiles/bin
 [ -d "$HOME"/dotfiles/overrides ] && export PATH="$HOME"/dotfiles/overrides:$PATH
 
+# NVM
+# shellcheck disable=1091
+[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
+
 # SPELLING ####################################################################
 shopt -s cdspell
 [ "$(uname -s)" != "Darwin" ] && shopt -s dirspell

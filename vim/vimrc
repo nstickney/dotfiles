@@ -15,8 +15,8 @@ set showcmd                             " show commands in bottom bar
 
 " Buffers
 set hidden                              " buffers can exist without being in a window
-nnoremap <C-N> :bnext<CR>               " move to next buffer
-nnoremap <C-P> :bprev<CR>               " move to previous buffer
+nnoremap <C-T> :bnext<CR>               " move to next buffer
+nnoremap <C-G> :bprev<CR>               " move to previous buffer
 
 " Clipboard
 set clipboard=unnamedplus               " use the system clipboard
@@ -116,12 +116,14 @@ set laststatus=2
 set noshowmode
 let g:lightline = {
 			\ 'component_expand': {
+			\ 'buffers': 'lightline#bufferline#buffers',
 			\ 'linter_checking': 'lightline#ale#checking',
 			\ 'linter_warnings': 'lightline#ale#warnings',
 			\ 'linter_errors': 'lightline#ale#errors',
 			\ 'linter_ok': 'lightline#ale#ok'
 			\ },
 			\ 'component_type': {
+			\ 'buffers': 'tabsel',
 			\ 'linter_checking': 'left',
 			\ 'linter_warnings': 'warning',
 			\ 'linter_errors': 'error',
@@ -132,7 +134,6 @@ let g:lightline = {
 			\ [ 'filename', 'readonly', 'modified' ]],
 			\ 'right': [[ 'lineinfo' ],
 			\ [ 'percent' ],
-			\ [ 'fileformat', 'fileencoding', 'filetype' ],
 			\ [ 'linter_checking', 'linter_warnings', 'linter_errors', 'linter_ok' ]]
 			\ },
 			\}
@@ -142,6 +143,11 @@ let g:lightline.separator = {
 let g:lightline.subseparator = {
 	\   'left': '', 'right': ''
   \}
+let g:lightline.tabline = {
+  			\   'left': [ ['buffers'] ],
+  			\   'right': [ ['fileformat', 'fileencoding', 'filetype'] ],
+  			\ }
+set showtabline=2  " Show tabline
 let g:lightline#ale#indicator_checking = "\uf110 "
 let g:lightline#ale#indicator_warnings = "\uf071  "
 let g:lightline#ale#indicator_errors = "\uf05e  "

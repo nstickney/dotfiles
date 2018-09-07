@@ -28,3 +28,6 @@
 [submodule "vim/pack/stick/start/vim-signify"]
 	path = vim/pack/stick/start/vim-signify
 	url = https://github.com/mhinz/vim-signify
+[submodule "vim/pack/stick/start/lightline-bufferline"]
+	path = vim/pack/stick/start/lightline-bufferline
+	url = https://github.com/mgee/lightline-bufferline

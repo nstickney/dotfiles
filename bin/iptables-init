@@ -1,0 +1,41 @@
+#!/bin/sh
+
+LOOPBACK_IF="lo"
+INTERFACE="$(ip route | grep default | awk '{print $5}')"    # Main interface
+INTRANET="$(ip addr | grep "$INTERFACE" | awk 'FNR==2{print $2}')" # Intranet
+INTRANET_ADDR="$(echo "$INTRANET" | awk -F/ '{print $1}')"
+
+# Clear initial rules and set default policy (DROP)
+iptables -F
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+
+# Drop invalid connections
+iptables -A INPUT -m state --state INVALID -j DROP
+iptables -A OUTPUT -m state --state INVALID -j DROP
+iptables -A INPUT -s "$INTRANET_ADDR" -j DROP # Host spoofing
+iptables -A OUTPUT -d "$INTRANET_ADDR" -j DROP # Why not?
+
+# Bad addresses (including source address spoofing) and bad packets
+#iptables -A INPUT -s 10.0.0.0/8 -j DROP # Class A
+#iptables -A INPUT -s 172.16.0.0/12 -j DROP # Class B
+#iptables -A INPUT -s 192.168.0.0/16 -j DROP # Class C
+iptables -A INPUT -s 224.0.0.0/4 -j DROP # Class D
+iptables -A INPUT -s 240.0.0.0/4 -j DROP # Class E
+
+# Allow loopback in and out
+iptables -A INPUT -i "$LOOPBACK_IF" -j ACCEPT
+
+# Allow established connections
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Allow services from within intranet ONLY
+iptables -A INPUT -p tcp -s "$INTRANET" -m tcp --dport 22 -j ACCEPT # SSH
+
+# Allow required services outbound
+iptables -A INPUT -i "$INTERFACE" -p udp -m udp --sport 67:68 -j ACCEPT # DHCP
+iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT # DNS (UDP)
+iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP (TCP)
+iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS (TCP)
+iptables -A OUTPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2 (UDP)

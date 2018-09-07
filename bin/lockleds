@@ -1,10 +1,10 @@
 #! /usr/bin/env bash
 case "$(xset q 2>/dev/null | grep LED | sed s/[^1-9]//g)" in
         '1')
-        echo "⛶⛶"
+        echo ⛶⛶
         ;;
         '2')
-        echo "⛶⛶"
+        echo ⛶⛶
         ;;
         '3')
         echo "🄰⛶"

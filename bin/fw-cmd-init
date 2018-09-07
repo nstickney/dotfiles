@@ -2,7 +2,7 @@
 
 # Find the default interface with its IP address and netmask
 the_interface="$(ip route | grep default | awk '{print $5}')"
-the_network="$(ip addr | grep "$the_interface$" | awk '{print $2}')"
+the_network="$(ip addr | grep "$the_interface" | awk '{print $2}')"
 
 # Turn off everything in the public zone
 firewall-cmd --permanent --zone=public --remove-service=dhcpv6-client

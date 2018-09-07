@@ -71,3 +71,12 @@ Preload
 griefing
 else's
 rootkits
+uncomment
+DNS
+UDP
+SSL
+IMAP
+SMTP
+multicast
+DHCP
+keyservers

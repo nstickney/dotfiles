@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 printf '%s\n' "Initializing and updating submodules..."
 
@@ -98,5 +98,42 @@ if [ -x "$(command -v xrdb)" ] && [ -x "$(command -v rofi)" ]; then
 	ln -s "$HOME"/dotfiles/Xresources "$HOME"/.Xresources
 	xrdb "$HOME"/.Xresources
 fi
-
 printf '%s\n' "    ...Complete!"
+
+if [ -x "$(command -v sudo)" ]; then
+	if [ -x "$(command -v firewall-cmd)" ]; then
+		while true; do
+			read -r -p "Install firewalld configuration? [y/N]:" -n 1 yn
+			echo
+			case $yn in
+				[Yy]* ) sudo "$HOME"/dotfiles/bin/fw-cmd-init; break;;
+				[Nn]* ) break;;
+				"" ) break;;
+			esac
+		done
+	fi
+
+	if [ -x "$(command -v iptables)" ]; then
+		while true; do
+			read -r -p "Install iptables configuration? [y/N]: " -n 1 yn
+			echo
+			case $yn in
+				[Yy]* ) sudo "$HOME"/dotfiles/bin/iptables-init; break;;
+				[Nn]* ) break;;
+				"" ) break;;
+			esac
+		done
+	fi
+
+	if [ -x "$(command -v nft)" ]; then
+		while true; do
+			read -r -p "Install nftables configuration? [y/N]: " -n 1 yn
+			echo
+			case $yn in
+				[Yy]* ) sudo "$HOME"/dotfiles/bin/nftables-init; break;;
+				[Nn]* ) break;;
+				"" ) break;;
+			esac
+		done
+	fi
+fi

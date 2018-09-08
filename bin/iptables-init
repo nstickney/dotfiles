@@ -1,6 +1,33 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-LOOPBACK_IF="lo"
+# Unofficial bash strict mode (http://redsymbol.net/articles/unofficial-bash-strict-mode/)
+set -euo pipefail
+
+# Sanity check
+if [ ! -x "$(command -v iptables)" ]; then
+	printf '%s\n' "Do you have iptables installed?"
+	exit 127
+fi
+
+# nftables sanity check
+if [ ! -x "$(command -v nft)" ]; then
+	while true; do
+		printf '%s\n' "You have nftables installed. It supercedes iptables."
+		read -r -p "Continue with iptables? [y/N]: " -n 1 yn
+		echo
+		case $yn in
+			[Yy]* ) break;;
+			[Nn]* ) exit;;
+			"" ) exit;;
+		esac
+	done
+fi
+
+# Ensure iptables service is running
+if [ -x "$(command -v systemctl)" ]; then
+	systemctl restart iptables
+fi
+
 INTERFACE="$(ip route | grep default | awk '{print $5}')"    # Main interface
 INTRANET="$(ip addr | grep "$INTERFACE" | awk 'FNR==2{print $2}')" # Intranet
 INTRANET_ADDR="$(echo "$INTRANET" | awk -F/ '{print $1}')"
@@ -8,34 +35,98 @@ INTRANET_ADDR="$(echo "$INTRANET" | awk -F/ '{print $1}')"
 # Clear initial rules and set default policy (DROP)
 iptables -F
 iptables -P INPUT DROP
-iptables -P OUTPUT DROP
 iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+
+# Also drop IPv6
+if [ -x "$(command -v ip6tables)" ]; then
+	ip6tables -F
+	ip6tables -P INPUT DROP
+	ip6tables -P FORWARD DROP
+	ip6tables -P OUTPUT DROP
+fi
+
+# The "BASE" chain will be used to hold rules applied to all other chains
+iptables -N BASE
+iptables -P BASE DROP
+iptables -A INPUT -j BASE
+iptables -A FORWARD -j BASE
+iptables -A OUTPUT -j BASE
 
 # Drop invalid connections
-iptables -A INPUT -m state --state INVALID -j DROP
-iptables -A OUTPUT -m state --state INVALID -j DROP
-iptables -A INPUT -s "$INTRANET_ADDR" -j DROP # Host spoofing
-iptables -A OUTPUT -d "$INTRANET_ADDR" -j DROP # Why not?
-
-# Bad addresses (including source address spoofing) and bad packets
-#iptables -A INPUT -s 10.0.0.0/8 -j DROP # Class A
-#iptables -A INPUT -s 172.16.0.0/12 -j DROP # Class B
-#iptables -A INPUT -s 192.168.0.0/16 -j DROP # Class C
-iptables -A INPUT -s 224.0.0.0/4 -j DROP # Class D
-iptables -A INPUT -s 240.0.0.0/4 -j DROP # Class E
+iptables -A BASE -m state --state INVALID -j DROP
+iptables -A OUTPUT -d "$INTRANET_ADDR" -j DROP
 
 # Allow loopback in and out
-iptables -A INPUT -i "$LOOPBACK_IF" -j ACCEPT
+iptables -A BASE -i lo -j ACCEPT
 
 # Allow established connections
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A BASE -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-# Allow services from within intranet ONLY
-iptables -A INPUT -p tcp -s "$INTRANET" -m tcp --dport 22 -j ACCEPT # SSH
+# Jump back after the base chain
+iptables -A BASE -j RETURN
 
-# Allow required services outbound
-iptables -A INPUT -i "$INTERFACE" -p udp -m udp --sport 67:68 -j ACCEPT # DHCP
-iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT # DNS (UDP)
-iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP (TCP)
-iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS (TCP)
-iptables -A OUTPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2 (UDP)
+# Prevent host spoofing
+iptables -A INPUT -s "$INTRANET_ADDR" -j DROP
+iptables -A FORWARD -s "$INTRANET_ADDR" -j DROP
+iptables -A FORWARD -d "$INTRANET_ADDR" -j DROP
+
+# Allow DHCP from intranet for faster renewals
+iptables -A INPUT -s "$INTRANET" -p udp -m udp --sport 67 -m udp --dport 68 -j ACCEPT
+
+# Allow mDNS from intranet for zeroconf
+iptables -A INPUT -s "$INTRANET" -p udp -m udp --dport 5353 -j ACCEPT
+
+# Allow ping from intranet
+iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT   # Echo reply
+iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 3 -j ACCEPT   # Destination unreachable
+iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT   # Echo request
+iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 11 -j ACCEPT  # Time exceeded
+iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 12 -j ACCEPT  # Parameter problem
+iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT  # Echo reply
+iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT  # Echo request
+
+# Allow ssh from intranet
+iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT # SSH
+
+# Allow printing to intranet
+iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 631 -j ACCEPT # IPP
+
+# Allow required services outbound (TCP)
+iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
+iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
+iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT # RSYNC
+iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # SSH
+iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT # WHOIS
+
+# Allow required services outbound (UDP)
+iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
+iptables -A OUTPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
+iptables -A OUTPUT -p udp -m udp --dport 123 -j ACCEPT # NTP
+iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT # OpenVPN
+
+# Allow Minecraft outbound?
+allow_minecraft () {
+	iptables -A OUTPUT -p tcp -m tcp --dport 25565 -j ACCEPT
+	iptables -A OUTPUT -p tcp -m tcp --dport 27094 -j ACCEPT
+}
+while true; do
+	read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
+	echo
+	case $mc in
+		[Yy]* ) allow_minecraft; break;;
+		[Nn]* ) break;;
+		"" ) break;;
+	esac
+done
+
+# Show the result
+printf '\n%s\n\n' "IPtables rules implemented:"
+iptables -L
+echo
+
+# Warn about non-persistence
+printf '%s\n' "WARNING: The applied configuration is NOT PERMANENT across reboots. Please"
+printf '%s\n' "    consult your distribution's documentation to determine how best to"
+printf '%s\n' "    persist these rules. Suggested tools include iptables-save and"
+printf '%s\n' "    iptables-persistent."

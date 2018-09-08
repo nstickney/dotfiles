@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+
+# Unofficial bash strict mode (http://redsymbol.net/articles/unofficial-bash-strict-mode/)
+set -euo pipefail
+
+# Sanity check
+if [ ! -x "$(command -v nft)" ]; then
+	printf '%s\n' "Do you have nftables installed?"
+	exit 127
+fi
+
+# Ensure nftables service is running
+if [ -x "$(command -v systemctl)" ]; then
+	systemctl restart nftables
+fi
+
+INTERFACE="$(ip route | grep default | awk '{print $5}')"    # Main interface
+INTRANET="$(ip addr | grep "$INTERFACE" | awk 'FNR==2{print $2}')" # Intranet
+INTRANET_ADDR="$(echo "$INTRANET" | awk -F/ '{print $1}')"
+
+# Clear initial rules and set default policy (DROP)
+nft flush ruleset
+nft add table ip filter
+nft add chain ip filter input \{ type filter hook input priority 0\; policy drop\; \}
+nft add chain ip filter forward \{ type filter hook forward priority 0\; policy drop\; \}
+nft add chain ip filter output \{ type filter hook output priority 0\; policy drop\; \}
+
+# Also drop IPv6
+nft add table ip6 filter
+nft add chain ip6 filter input \{ type filter hook input priority 0\; policy drop\; \}
+nft add chain ip6 filter forward \{ type filter hook forward priority 0\; policy drop\; \}
+nft add chain ip6 filter output \{ type filter hook output priority 0\; policy drop\; \}
+
+# The "base" chain will be used to hold rules applied to all other chains
+nft add chain ip filter base
+nft add rule ip filter input jump base
+nft add rule ip filter forward jump base
+nft add rule ip filter output jump base
+
+# Drop invalid connections
+nft add rule ip filter base ct state invalid drop
+
+# Prevent host spoofing
+nft add rule ip filter input ip saddr "$INTRANET_ADDR" drop
+nft add rule ip filter forward ip saddr "$INTRANET_ADDR" drop
+nft add rule ip filter forward ip daddr "$INTRANET_ADDR" drop
+nft add rule ip filter output ip daddr "$INTRANET_ADDR" drop
+
+# Allow loopback in and out to itself
+nft add rule ip filter base meta iif lo oif lo accept
+
+# Allow established connections
+nft add rule ip filter base ct state \{ established, related \} accept
+
+# Allow DHCP from intranet for faster renewals
+nft add rule ip filter input ip saddr "$INTRANET" udp sport bootps udp dport bootpc accept
+
+# Allow mDNS from intranet for zeroconf
+nft add rule ip filter input ip saddr "$INTRANET" udp dport mdns accept
+
+# Allow ping from intranet
+nft add rule ip filter input ip protocol icmp ip saddr "$INTRANET" icmp type \{ echo-request, \
+	echo-reply, time-exceeded, parameter-problem, destination-unreachable \} accept
+nft add rule ip filter output ip protocol icmp ip saddr "$INTRANET" icmp type \{ echo-request, \
+	echo-reply \} accept
+
+# Allow ssh from intranet
+nft add rule ip filter input ip saddr "$INTRANET" tcp dport ssh accept
+
+# Allow printing to intranet
+nft add rule ip filter output ip daddr "$INTRANET" tcp dport ipp accept
+
+# Allow required services outbound
+nft add rule ip filter output tcp dport \{ http, https, rsync, ssh, whois \} accept
+nft add rule ip filter output udp dport \{ domain, https, ntp, openvpn \} accept
+
+# Allow Minecraft outbound?
+while true; do
+	read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
+	echo
+	case $mc in
+		[Yy]* ) nft add rule ip filter output tcp dport \{ 25565, 27094 \} accept; break;;
+		[Nn]* ) break;;
+		"" ) break;;
+	esac
+done
+
+# Show the result
+printf '\n%s\n\n' "NFT rules implemented:"
+nft list ruleset
+echo
+
+# Save to /etc/nftables.conf
+save_permanent_nftables () {
+	cp /etc/nftables.conf /etc/nftables.conf.bak
+	printf '%s\n\n' "#!/usr/bin/nft -f" > /etc/nftables.conf
+	nft list ruleset >> /etc/nftables.conf
+	printf '%s\n' "Configuration saved."
+}
+while true; do
+	read -r -p "Save to /etc/nftables.conf? [y/N]: " -n 1 yn
+	echo
+	case $yn in
+		[Yy]* ) save_permanent_nftables; break;;
+		[Nn]* ) break;;
+		"" ) break;;
+	esac
+done
+
+# Start nftables at boot
+if [ -x "$(command -v systemctl)" ]; then
+	while true; do
+		read -r -p "Start nftables at boot? [y/N]: " -n 1 yn
+		echo
+		case $yn in
+			[Yy]* ) systemctl enable nftables; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
+fi

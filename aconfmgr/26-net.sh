@@ -33,7 +33,6 @@ AddPackage --foreign signal # Signal Private Messenger for the Desktop
 AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 
 CopyFile /etc/avahi/avahi-daemon.conf
-CopyFile /etc/nftables.conf
 CopyFile /etc/privoxy/config
 CopyFile /etc/sysctl.d/51-net.conf
 

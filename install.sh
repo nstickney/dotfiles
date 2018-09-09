@@ -71,6 +71,14 @@ if [ -x "$(command -v i3)" ]; then
 	ln -s "$HOME"/dotfiles/i3 "$HOME"/.i3
 fi
 
+if [ -x "$(command -v tmux)" ]; then
+	printf '%s\n' "  tmux..."
+	if [ -e "$HOME"/.tmux.conf ]; then
+		rm -r "$HOME"/.tmux.conf
+	fi
+	ln -s "$HOME"/dotfiles/tmux.conf "$HOME"/.tmux.conf
+fi
+
 if [ -x "$(command -v vim)" ]; then
 	printf '%s' "  vim..."
 	if [ -e "$HOME"/.vimrc ]; then

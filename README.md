@@ -11,6 +11,7 @@ Includes configuration for:
 * dconf (GNOME/GTK)
 * i3
 * rofi (Xresources)
+* tmux
 * Vim (including plugins as submodules)
 * Xorg (inputrc, Xresources)
 

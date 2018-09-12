@@ -17,7 +17,7 @@ Includes configuration for:
 
 ## Installation
 * Clone repository to `$HOME`
-* `./install.sh` (**WARNING**: this deletes current configurations)
+* `./install` (**NOTE:** Existing configurations will be renamed `*.old`.)
 
 The install script only links configuration files for software that is actually available in the `$PATH`.
 

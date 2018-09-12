@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+# Prepare a CentOS7 machine as server, from minimal installation
+
+# Unofficial Bash Strict Mode (http://redsymbol.net/articles/unofficial-bash-strict-mode/)
+set -euo pipefail
+
+# Install EPEL repository
+sudo yum -y install epel-release
+
+# Install ripgrep COPR repository
+sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
+
+# Remove unwanted items
+sudo yum -y erase chrony
+
+# Update everything
+sudo yum -y update
+
+# Install necessary items
+sudo yum -y install aria2 deltarpm git ripgrep vim-enhanced tmux yum-{cron,utils}
+
+# Filebeat (Elastic Stack)
+install_filebeat() {
+	sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+	cat >elastic.6.repo <<EOL
+[elastic-6.x]
+name=Elastic repository for 6.x packages
+baseurl=https://artifacts.elastic.co/packages/6.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+EOL
+	sudo mv elastic.6.repo /etc/yum.repos.d/
+	sudo yum -y install filebeat
+	while true; do
+		read -r -p "Start Filebeat at next boot? [y/N]: " -n 1 ins
+		echo
+		case $ins in
+			[Yy]* ) sudo systemctl enable filebeat; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
+}
+while true; do
+	read -r -p "Install Filebeat for Elastic Stack? [y/N]: " -n 1 ins
+	echo
+	case $ins in
+		[Yy]* ) install_filebeat; break;;
+		[Nn]* ) break;;
+		"" ) break;;
+	esac
+done
+
+# Git the dotfiles
+dir="$(pwd)"
+cd "$HOME" || exit
+git clone https://github.com/nstickney/dotfiles
+cd -- dotfiles || exit
+./install
+cd "$dir" || exit
+
+# Basic firewall
+sudo ~/dotfiles/bin/fw-cmd-init

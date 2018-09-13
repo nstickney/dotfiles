@@ -11,6 +11,7 @@ AddPackage inetutils # A collection of common network programs
 AddPackage iproute2 # IP Routing Utilities
 AddPackage iputils # Network monitoring tools, including ping
 AddPackage lynx # A text browser for the World Wide Web
+AddPackage masscan # TCP port scanner, spews SYN packets asynchronously, scanning entire Internet in under 5 minutes
 AddPackage netctl # Profile based systemd network management
 AddPackage networkmanager # Network connection manager and user applications
 AddPackage networkmanager-openvpn # NetworkManager VPN plugin for OpenVPN

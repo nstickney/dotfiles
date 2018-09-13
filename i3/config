@@ -52,7 +52,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # Fix monitors
 exec_always --no-startup-id [[ $HOSTNAME == "elisha" ]] && xrandr --output DP-3 --primary --left-of DP-1
 exec_always --no-startup-id [[ $HOSTNAME == "elizabeth" ]] && xrandr --output DVI-D-0 --primary --rotate left --left-of DP-1
-exec_always --no-startup-id [[ $HOSTNAME == "elias" ]] && xrandr --output HDMI2 --primary --left-of HDMI1
+exec_always --no-startup-id [[ $HOSTNAME == "elias" ]] && xrandr --output HDMI1 --primary --left-of HDMI2
 exec_always --no-startup-id [[ $HOSTNAME == "elijah" ]] && xrandr --dpi 144
 exec_always --no-startup-id [[ $HOSTNAME == "eliel" ]] && xrandr -s 1680x1050
 

@@ -30,8 +30,8 @@ AddPackage wget # A network utility to retrieve files from the Web
 
 # AddPackage --foreign chromium-widevine # A browser plugin designed for the viewing of premium video content
 AddPackage --foreign google-talkplugin # Video chat browser plug-in for Google Talk
+AddPackage --foreign ripcord # Qt-based Discord and Slack client
 AddPackage --foreign signal # Signal Private Messenger for the Desktop
-# AddPackage --foreign skypeforlinux-bin # Skype for Linux WebRTC Beta
 AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 
 CopyFile /etc/avahi/avahi-daemon.conf

@@ -72,7 +72,8 @@ nft add rule ip filter output ip daddr "$INTRANET" tcp dport ipp accept
 
 # Allow required services outbound
 nft add rule ip filter output tcp dport \{ http, https, rsync, ssh, whois \} accept
-nft add rule ip filter output udp dport \{ domain, https, ntp, openvpn \} accept
+nft add rule ip filter output udp dport \{ domain, https, ntp \} accept
+
 
 # Allow Minecraft outbound?
 while true; do
@@ -80,6 +81,28 @@ while true; do
 	echo
 	case $mc in
 		[Yy]* ) nft add rule ip filter output tcp dport \{ 25565, 27094 \} accept; break;;
+		[Nn]* ) break;;
+		"" ) break;;
+	esac
+done
+
+# Allow OpenVPN outbound?
+while true; do
+	read -r -p "Does this computer use OpenVPN? [y/N]: " -n 1 ov
+	echo
+	case $ov in
+		[Yy]* ) nft add rule ip filter output tcp dport openvpn accept; break;;
+		[Nn]* ) break;;
+		"" ) break;;
+	esac
+done
+
+# Allow vSphere outbound?
+while true; do
+	read -r -p "Is this computer used to access vSphere? [y/N]: " -n 1 vs
+	echo
+	case $vs in
+		[Yy]* ) nft add rule ip filter output tcp dport 9443 accept; break;;
 		[Nn]* ) break;;
 		"" ) break;;
 	esac

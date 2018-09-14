@@ -214,7 +214,7 @@ if [ -x "$(command -v sudo)" ]; then
 	if [ -x "$(command -v ss)" ]; then
 		alias ss='sudo ss'
 	elif [ -x "$(command -v netstat)" ]; then
-		alias netstat='sudo netstat'
+		alias ss='sudo netstat'
 	fi
 	[ "$(type -t ss)" == "alias" ] && alias sl='ss -ltunp'
 
@@ -227,7 +227,7 @@ if [ -x "$(command -v sudo)" ]; then
 		else
 			alias apt='sudo apt'
 		fi
-		alias aptup='apt update && apt upgrade && apt dist-upgrade'
+		alias aptup='apt update && apt upgrade && apt dist-upgrade && apt-autoremove'
 	fi
 
 	### DNF/Yum

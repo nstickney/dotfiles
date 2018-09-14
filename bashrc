@@ -141,6 +141,10 @@ man() {
 	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/dotfiles/bin/bypass.c -o "$HOME"/dotfiles/bin/bypass.so -ldl -Wall -Wextra
 [ -x "$HOME"/dotfiles/bin/bypass.so ] && export LD_PRELOAD=$HOME/dotfiles/bin/bypass.so
 
+# GPG KEY #####################################################################
+GPG_TTY="$(tty)"
+export GPG_TTY
+
 # HISTORY #####################################################################
 
 # Avoid duplicates, and share history across terminals
@@ -163,9 +167,8 @@ export PATH="$PATH":"$HOME"/dotfiles/bin
 shopt -s cdspell
 [ "$(uname -s)" != "Darwin" ] && shopt -s dirspell
 
-# GPG KEY #####################################################################
-GPG_TTY="$(tty)"
-export GPG_TTY
+# TABS ########################################################################
+[ -x "$(command -v tabs)" ] && tabs 4
 
 # USER ALIASES ################################################################
 
@@ -269,6 +272,3 @@ if [ -x "$(command -v sudo)" ]; then
 	[ -x "$(command -v su)" ] && alias su='sudo su'
 	[ -x "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
 fi
-
-# TABS ########################################################################
-[ -x "$(command -v tabs)" ] && tabs 4

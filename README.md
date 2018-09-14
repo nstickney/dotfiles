@@ -37,7 +37,7 @@ The included i3wm configuration requires the following packages as dependencies 
 * playerctl (music player controls)
 * polkit-gnome (PolicyKit integration)
 * rofi (application launcher/switcher)
-* ttf-font-awesome (used in info bar) ([AUR](https://aur.archlinux.org/packages/ttf-font-awesome/))
+* ttf-font-awesome (used in info bar)
 * xautolock (lock screen on timeout)
 
 #### Optional
@@ -49,7 +49,7 @@ The included i3wm configuration requires the following packages as dependencies 
 * xrandr (control multi-screen setups)
 
 ## Usage
-If you install new software on the list of included configurations, re-run the `install.sh` script to link the required configuration files.
+If you install new software on the list of included configurations, re-run the `install` script to link the required configuration files.
 
 ## Contribute
 [Contributor Covenant](http://contributor-covenant.org/version/1/3/0/)

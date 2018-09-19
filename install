@@ -9,103 +9,83 @@ git submodule init && git submodule update --recursive --remote
 
 printf '%s\n' "Linking configuration files/directories for..."
 
+backup_or_remove() {
+	if [ -L "$1" ]; then
+		rm "$1"
+	elif [ -e "$1" ]; then
+		if [ -e "$1".old ]; then
+			rm -rf "$1".old
+		fi
+		mv "$1" "$1".old
+	fi
+}
+
+ensure_dir_exists() {
+	if [ ! -d "$1" ]; then
+		mkdir -p "$1"
+	fi
+}
+
 if [ -x "$(command -v aconfmgr)" ]; then
 	printf '%s\n' "  aconfmgr..."
-	if [ ! -d "$HOME"/.config ]; then
-		mkdir "$HOME"/.config
-	fi
-	if [ -e "$HOME"/.config/aconfmgr ]; then
-		mv "$HOME"/.config/aconfmgr "$HOME"/.config/aconfmgr.old
-	fi
+	ensure_dir_exists "$HOME"/.config
+	backup_or_remove "$HOME"/.config/aconfmgr
 	ln -s "$HOME"/dotfiles/aconfmgr "$HOME"/.config/aconfmgr
 fi
 
 if [ -x "$(command -v bash)" ]; then
 	printf '%s\n' "  bash (and readline)..."
-	if [ -e "$HOME"/.bashrc ]; then
-		mv "$HOME"/.bashrc "$HOME"/.bashrc.old
-	fi
+	backup_or_remove "$HOME"/.bashrc
 	ln -s "$HOME"/dotfiles/bashrc "$HOME"/.bashrc
-	if [ -e "$HOME"/.bash_profile ]; then
-		mv "$HOME"/.bash_profile "$HOME"/.bash_profile.old
-	fi
+	backup_or_remove "$HOME"/.bash_profile
 	ln -s "$HOME"/dotfiles/bash_profile "$HOME"/.bash_profile
-	if [ -e "$HOME"/.inputrc ]; then
-		mv "$HOME"/.inputrc "$HOME"/.inputrc.old
-	fi
+	backup_or_remove "$HOME"/.inputrc
 	ln -s "$HOME"/dotfiles/inputrc "$HOME"/.inputrc
 fi
 
 if [ -x "$(command -v dconf)" ]; then
 	printf '%s\n' "  dconf (GNOME and GTK)..."
-	if [ -e "$HOME"/.config/autostart ]; then
-		mv "$HOME"/.config/autostart "$HOME"/.config/autostart.old
-	fi
+	ensure_dir_exists "$HOME"/.config
+	backup_or_remove "$HOME"/.config/autostart
 	ln -s "$HOME"/dotfiles/autostart "$HOME"/.config/autostart
-	if [ -e "$HOME"/.config/dconf ]; then
-		mv "$HOME"/.config/dconf "$HOME"/.config/dconf.old
-	fi
+	backup_or_remove "$HOME"/.config/dconf
 	ln -s "$HOME"/dotfiles/dconf "$HOME"/.config/dconf
-	if [ -e "$HOME"/.config/gtk-3.0 ]; then
-		mv "$HOME"/.config/gtk-3.0 "$HOME"/.config/gtk-3.0.old
-	fi
+	backup_or_remove "$HOME"/.config/gtk-3.0
 	ln -s "$HOME"/dotfiles/gtk-3.0 "$HOME"/.config/gtk-3.0
-	if [ -e "$HOME"/.config/gtk-4.0 ]; then
-		mv "$HOME"/.config/gtk-4.0 "$HOME"/.config/gtk-4.0.old
-	fi
+	backup_or_remove "$HOME"/.config/gtk-4.0
 	ln -s "$HOME"/dotfiles/gtk-4.0 "$HOME"/.config/gtk-4.0
 fi
 
 if [ "nstickney" = "$USER" ] || [ "stickneyn" = "$USER" ]; then
 	if [ -x "$(command -v git)" ]; then
 		printf '%s\n' "  git..."
-		if [ -e "$HOME"/.gitconfig ]; then
-			mv "$HOME"/.gitconfig "$HOME"/.gitconfig.old
-		fi
+		backup_or_remove "$HOME"/.gitconfig
 		ln -s "$HOME"/dotfiles/gitconfig "$HOME"/.gitconfig
 	fi
 fi
 
 if [ -x "$(command -v i3)" ]; then
 	printf '%s\n' "  i3wm..."
-	if [ -e "$HOME"/.i3 ]; then
-		mv "$HOME"/.i3 "$HOME"/.i3.old
-	fi
+	backup_or_remove "$HOME"/.i3
 	ln -s "$HOME"/dotfiles/i3 "$HOME"/.i3
 fi
 
 if [ -x "$(command -v tmux)" ]; then
 	printf '%s\n' "  tmux..."
-	if [ -e "$HOME"/.tmux.conf ]; then
-		mv "$HOME"/.tmux.conf "$HOME"/.tmux.conf.old
-	fi
+	backup_or_remove "$HOME"/.tmux.conf
 	ln -s "$HOME"/dotfiles/tmux.conf "$HOME"/.tmux.conf
 fi
 
 if [ -x "$(command -v vim)" ]; then
-	printf '%s' "  vim..."
-	if [ -e "$HOME"/.vimrc ]; then
-		mv "$HOME"/.vimrc "$HOME"/.vimrc.old
-	fi
-	if [ -e "$HOME"/.vim ]; then
-		mv "$HOME"/.vim "$HOME"/.vim.old
-	fi
+	printf '%s\n' "  vim..."
+	backup_or_remove "$HOME"/.vimrc
+	backup_or_remove "$HOME"/.vim
 	ln -s "$HOME"/dotfiles/vim "$HOME"/.vim
-
-	if [ "nstickney" = "$USER" ] && [ -x "$(command -v sudo)" ]; then
-		printf '%s' " and linking for root..."
-		sudo [ -e /root/.vim ] && sudo mv /root/.vim /root/.vim.old
-		sudo ln -s "$HOME"/.vim /root/.vim
-	fi
-	printf '\n'
 fi
 
 if [ -x "$(command -v xrdb)" ] && [ -x "$(command -v rofi)" ]; then
 	printf '%s\n' "  X.Org (rofi)..."
-	if [ -e "$HOME"/.Xresources ]
-	then
-		mv "$HOME"/.Xresources "$HOME"/.Xresources.old
-	fi
+	backup_or_remove "$HOME"/.Xresources
 	ln -s "$HOME"/dotfiles/Xresources "$HOME"/.Xresources
 	xrdb "$HOME"/.Xresources
 fi

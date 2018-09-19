@@ -257,7 +257,7 @@ if [ -x "$(command -v sudo)" ]; then
 
 		# Aurman
 		if [ -x "$(command -v aurman)" ]; then
-			alias pac='aurman --sort_by_name'
+			alias pac='aurman'
 			alias pacup='yes | pac -Syyu --noedit --noconfirm --devel'
 		fi
 

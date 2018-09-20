@@ -18,10 +18,76 @@ fi
 export LC_ALL=en_US.UTF-8
 
 # BASH PROMPT #################################################################
+# git portion pulled from @jcgoble3's gitprompt.sh
+# https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
+
+git_branch() {
+	git branch --no-color 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+
+git_status() {
+	# + changes are staged and ready to commit
+	# * unstaged changes are present
+	# ? untracked files are present
+	# - changes have been stashed
+	# ^ local commits need to be pushed to the remote
+	local status=''
+	status="$(git status --porcelain 2>/dev/null)"
+	local output=''
+	grep -q '^[MADRC]' <<<"$status" && output="$output+"
+	grep -q '^.[MD]' <<<"$status" && output="$output*"
+	grep -q '^??' <<<"$status" && output="$output?"
+	[[ -n $(git stash list) ]] && output="${output}-"
+	[[ -n $(git log --branches --not --remotes) ]] && output="${output}^"
+	printf '%s' "$output"
+}
+
+git_color() {
+	# - White if everything is clean
+	# - Green if all changes are staged
+	# - Red if there are uncommitted changes with nothing staged
+	# - Yellow if there are both staged and unstaged changes
+	# - Blue if there are unpushed commits
+	local staged=''
+	staged=$([[ $1 =~ \+ ]] && printf '%s' "yes")
+	local dirty=''
+	dirty=$([[ $1 =~ [*\?] ]] && printf '%s' "yes")
+	local needs_push=''
+	needs_push=$([[ $1 = *"^" ]] && printf '%s' "yes")
+	if [[ -n $staged ]] && [[ -n $dirty ]]; then
+		printf '\033[1;33m'  # bold yellow
+	elif [[ -n $staged ]]; then
+		printf '\033[1;32m'  # bold green
+	elif [[ -n $dirty ]]; then
+		printf '\033[1;31m'  # bold red
+	elif [[ -n $needs_push ]]; then
+		printf '\033[1;36m'  # bold teal
+	else
+		printf ''
+	fi
+}
+
+git_prompt() {
+	# First, get the branch name...
+	local branch=''
+	branch=$(git_branch)
+	# Empty output? Then we're not in a Git repository, so bypass the rest
+	# of the function, producing no output
+	if [[ -n "$branch" ]]; then
+		local state=''
+		state=$(git_status)
+		local color=''
+		color=$(git_color "$state")
+		# Now output the actual code to insert the branch and status
+		printf " \\x01$color\\x02($branch$state)\\x01\\033[00m\\x02"  # last bit resets color
+	fi
+}
+
+# 
 
 bash_prompt_command() {
-	# Git branch
-	GTBR=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/')
+	# Git
+	GTBR=$(git_prompt)
 	# How many characters of the $PWD should be kept
 	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER} - ${#GTBR}))
 	# Indicate that there has been dir truncation
@@ -47,13 +113,12 @@ bash_prompt() {
 	local ER="\\[\\e[1;31m\\]" # bold red
 	local EY="\\[\\e[1;33m\\]" # bold yellow
 	local EB="\\[\\e[1;34m\\]" # bold blue
-	local EV="\\[\\e[1;35m\\]" # bold violet
 	local EC="\\[\\e[1;36m\\]" # bold cyan
 
 	local UC=$EY                # user's color
 	[ $UID -eq "0" ] && UC=$ER  # root's color
 
-   PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${EV}\${GTBR}${U}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
+   	PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\${GTBR}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
 }
 
 PROMPT_COMMAND=bash_prompt_command
@@ -64,22 +129,22 @@ unset bash_prompt
 
 # the tty/framebuffer console
 if [ "$TERM" = "linux" ]; then
-	echo -en "\\e]P0333333" # black
-	echo -en "\\e]P8666666" # gray
-	echo -en "\\e]P1CC0099" # red
-	echo -en "\\e]P9FF4DD2" # bright red
-	echo -en "\\e]P299CC00" # green
-	echo -en "\\e]PAD2FF4D" # bright green
-	echo -en "\\e]P3CC4400" # brown
-	echo -en "\\e]PBFF884D" # yellow
-	echo -en "\\e]P40099CC" # blue
-	echo -en "\\e]PC4DD2FF" # bright blue
-	echo -en "\\e]P53300CC" # magenta
-	echo -en "\\e]PD794DFF" # bright magenta
-	echo -en "\\e]P600CC33" # cyan
-	echo -en "\\e]PE4DFF79" # bright cyan
-	echo -en "\\e]P7999999" # light gray
-	echo -en "\\e]PFEEEEEE" # white
+	printfn "\\e]P0333333" # black
+	printfn "\\e]P8666666" # gray
+	printfn "\\e]P1CC0099" # red
+	printfn "\\e]P9FF4DD2" # bright red
+	printfn "\\e]P299CC00" # green
+	printfn "\\e]PAD2FF4D" # bright green
+	printfn "\\e]P3CC4400" # brown
+	printfn "\\e]PBFF884D" # yellow
+	printfn "\\e]P40099CC" # blue
+	printfn "\\e]PC4DD2FF" # bright blue
+	printfn "\\e]P53300CC" # magenta
+	printfn "\\e]PD794DFF" # bright magenta
+	printfn "\\e]P600CC33" # cyan
+	printfn "\\e]PE4DFF79" # bright cyan
+	printfn "\\e]P7999999" # light gray
+	printfn "\\e]PFEEEEEE" # white
 	clear # fix artifacts
 fi
 
@@ -119,7 +184,7 @@ man() {
 		LESS_TERMCAP_ue="$(printf '\e[0m')" \
 		LESS_TERMCAP_us="$(printf '\e[0;34m')" \
 		man "$@" || (help "$@" 2> /dev/null && help "$@" | less)
-}
+	}
 
 # COMPLETION ##################################################################
 
@@ -132,6 +197,19 @@ man() {
 # Sudo Completion
 [ -x "$(command -v sudo)" ] && complete -cf sudo
 
+# DEFEAT LOGGING ##############################################################
+
+# Defeat Snoopy logging (http://blog.rchapman.org/posts/Bypassing_snoopy_logging/)
+[ ! -f "$HOME"/dotfiles/bin/bypass.so ] && \
+	[ -x "$(command -v gcc)" ] && \
+	[ -f "$HOME"/dotfiles/bin/bypass.c ] && \
+	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/dotfiles/bin/bypass.c -o "$HOME"/dotfiles/bin/bypass.so -ldl -Wall -Wextra
+	[ -x "$HOME"/dotfiles/bin/bypass.so ] && export LD_PRELOAD=$HOME/dotfiles/bin/bypass.so
+
+# GPG KEY #####################################################################
+GPG_TTY="$(tty)"
+export GPG_TTY
+
 # HISTORY #####################################################################
 
 # Avoid duplicates, and share history across terminals
@@ -142,6 +220,17 @@ PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 # Max history size
 export HISTFILESIZE=8192
 
+# PATH ########################################################################
+export PATH="$PATH":"$HOME"/dotfiles/bin
+[ -d "$HOME"/dotfiles/overrides ] && export PATH="$HOME"/dotfiles/overrides:$PATH
+
+# NVM
+# shellcheck disable=1091
+[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
+
 # SPELLING ####################################################################
 shopt -s cdspell
 [ "$(uname -s)" != "Darwin" ] && shopt -s dirspell
+
+# TABS ########################################################################
+[ -x "$(command -v tabs)" ] && tabs 4

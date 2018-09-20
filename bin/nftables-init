@@ -16,7 +16,7 @@ fi
 
 INTERFACE="$(ip route | grep default | awk '{print $5}')"    # Main interface
 INTRANET="$(ip addr | grep "$INTERFACE" | awk 'FNR==2{print $2}')" # Intranet
-INTRANET_ADDR="$(echo "$INTRANET" | awk -F/ '{print $1}')"
+INTRANET_ADDR="$(printf '%s' "$INTRANET" | awk -F/ '{print $1}')"
 
 # Clear initial rules and set default policy (DROP)
 nft flush ruleset
@@ -78,7 +78,7 @@ nft add rule ip filter output udp dport \{ domain, https, ntp \} accept
 # Allow Minecraft outbound?
 while true; do
 	read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
-	echo
+	printf '\n'
 	case $mc in
 		[Yy]* ) nft add rule ip filter output tcp dport \{ 25565, 27094 \} accept; break;;
 		[Nn]* ) break;;
@@ -89,7 +89,7 @@ done
 # Allow OpenVPN outbound?
 while true; do
 	read -r -p "Does this computer use OpenVPN? [y/N]: " -n 1 ov
-	echo
+	printf '\n'
 	case $ov in
 		[Yy]* ) nft add rule ip filter output tcp dport openvpn accept; break;;
 		[Nn]* ) break;;
@@ -100,7 +100,7 @@ done
 # Allow vSphere outbound?
 while true; do
 	read -r -p "Is this computer used to access vSphere? [y/N]: " -n 1 vs
-	echo
+	printf '\n'
 	case $vs in
 		[Yy]* ) nft add rule ip filter output tcp dport 9443 accept; break;;
 		[Nn]* ) break;;
@@ -109,9 +109,9 @@ while true; do
 done
 
 # Show the result
-printf '\n%s\n\n' "NFT rules implemented:"
+printf '\n\e[1;32m%s\e[0m\n\n' "NFT rules implemented:"
 nft list ruleset
-echo
+printf '\n'
 
 # Save to /etc/nftables.conf
 save_permanent_nftables () {
@@ -122,7 +122,7 @@ save_permanent_nftables () {
 }
 while true; do
 	read -r -p "Save to /etc/nftables.conf? [y/N]: " -n 1 yn
-	echo
+	printf '\n'
 	case $yn in
 		[Yy]* ) save_permanent_nftables; break;;
 		[Nn]* ) break;;
@@ -134,7 +134,7 @@ done
 if [ -x "$(command -v systemctl)" ]; then
 	while true; do
 		read -r -p "Start nftables at boot? [y/N]: " -n 1 yn
-		echo
+		printf '\n'
 		case $yn in
 			[Yy]* ) systemctl enable nftables; break;;
 			[Nn]* ) break;;

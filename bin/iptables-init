@@ -14,7 +14,7 @@ if [ ! -x "$(command -v nft)" ]; then
 	while true; do
 		printf '%s\n' "You have nftables installed. It supercedes iptables."
 		read -r -p "Continue with iptables? [y/N]: " -n 1 yn
-		echo
+		printf '\n'
 		case $yn in
 			[Yy]* ) break;;
 			[Nn]* ) exit;;
@@ -30,7 +30,7 @@ fi
 
 INTERFACE="$(ip route | grep default | awk '{print $5}')"    # Main interface
 INTRANET="$(ip addr | grep "$INTERFACE" | awk 'FNR==2{print $2}')" # Intranet
-INTRANET_ADDR="$(echo "$INTRANET" | awk -F/ '{print $1}')"
+INTRANET_ADDR="$(printf '%s' "$INTRANET" | awk -F/ '{print $1}')"
 
 # Clear initial rules and set default policy (DROP)
 iptables -F
@@ -78,13 +78,13 @@ iptables -A INPUT -s "$INTRANET" -p udp -m udp --sport 67 -m udp --dport 68 -j A
 iptables -A INPUT -s "$INTRANET" -p udp -m udp --dport 5353 -j ACCEPT
 
 # Allow ping from intranet
-iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT   # Echo reply
+iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT   # echo reply
 iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 3 -j ACCEPT   # Destination unreachable
-iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT   # Echo request
+iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT   # echo request
 iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 11 -j ACCEPT  # Time exceeded
 iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 12 -j ACCEPT  # Parameter problem
-iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT  # Echo reply
-iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT  # Echo request
+iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT  # echo reply
+iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT  # echo request
 
 # Allow ssh from intranet
 iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT # SSH
@@ -112,7 +112,7 @@ allow_minecraft () {
 }
 while true; do
 	read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
-	echo
+	printf '\n'
 	case $mc in
 		[Yy]* ) allow_minecraft; break;;
 		[Nn]* ) break;;
@@ -121,12 +121,13 @@ while true; do
 done
 
 # Show the result
-printf '\n%s\n\n' "IPtables rules implemented:"
+printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"
 iptables -L
-echo
+printf '\n'
 
 # Warn about non-persistence
-printf '%s\n' "WARNING: The applied configuration is NOT PERMANENT across reboots. Please"
+printf '\e[1;31m%s\e[0m' "WARNING:"
+printf '%s\n' " The applied configuration is NOT PERMANENT across reboots. Please"
 printf '%s\n' "    consult your distribution's documentation to determine how best to"
 printf '%s\n' "    persist these rules. Suggested tools include iptables-save and"
 printf '%s\n' "    iptables-persistent."

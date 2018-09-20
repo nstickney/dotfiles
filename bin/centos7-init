@@ -37,7 +37,7 @@ EOL
 	sudo yum -y install filebeat
 	while true; do
 		read -r -p "Start Filebeat at next boot? [y/N]: " -n 1 ins
-		echo
+		printf '\n'
 		case $ins in
 			[Yy]* ) sudo systemctl enable filebeat; break;;
 			[Nn]* ) break;;
@@ -47,7 +47,7 @@ EOL
 }
 while true; do
 	read -r -p "Install Filebeat for Elastic Stack? [y/N]: " -n 1 ins
-	echo
+	printf '\n'
 	case $ins in
 		[Yy]* ) install_filebeat; break;;
 		[Nn]* ) break;;

@@ -1,31 +1,34 @@
 ! Terminal Colors -----------------------------------------------------------------------
+! Background and Foreground
+*background: #222222
+*foreground: #eeeeee
 ! Black + Grey
 *color0:  #333333
 *color8:  #666666
 ! Red + Light Red
-*color1:  #cf4517
-*color9:  #f09475
+*color1:  #cc0099
+*color9:  #ff4dd2
 ! Green + Light Green
-*color2:  #17cf17
-*color10: #75f075
+*color2:  #99cc00
+*color10: #d2ff4d
 ! Brown + Yellow
-*color3:  #cfa117
-*color11: #f0d175
+*color3:  #cc4400
+*color11: #ff884d
 ! Blue + Light Blue
-*color4:  #1793D1
-*color12: #75c7f0
+*color4:  #0099cc
+*color12: #4dd2ff
 ! Purple + Light Purple
-*color5:  #7317cf
-*color13: #b375f0
+*color5:  #4400cc
+*color13: #884dff
 ! Cyan + Light Cyan
-*color6:  #17cfa1
-*color14: #75f0d1
+*color6:  #00cc44
+*color14: #4dff88
 ! Light Gray + White
 *color7:  #999999
 *color15: #cccccc
 
 ! Fonts ---------------------------------------------------------------------------------
-*font: xft:Inconsolata:size=12,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+*font: xft:Inconsolata:size=13,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
 
 ! Rofi ----------------------------------------------------------------------------------
 rofi.modi:                          window,drun
@@ -46,3 +49,12 @@ rofi.color-active: #e6cccccc,   #181100,    #66cccccc,  #e6333333,  #fff8e7
 
 !                  'bg',        'border',   'separator'
 rofi.color-window: #e6fff8e7,   #e6fff8e7,  #e6333333
+
+! URxvt ---------------------------------------------------------------------------------
+URxvt.background: [90]#111111
+URxvt.depth:    32
+URxvt.buffered: True
+
+! Xterm ---------------------------------------------------------------------------------
+XTerm.vt100.metaSendsEscape: true
+XTerm.vt100.saveLines: 65535

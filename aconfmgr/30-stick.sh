@@ -10,6 +10,9 @@ AddPackage rmlint-shredder # Graphical user interface for rmlint
 AddPackage texlive-bin # opt dep for evince/vim/python
 AddPackage thunderbird # Standalone mail and news reader from mozilla.org
 AddPackage truecrypt # Free open-source cross-platform disk encryption software
+AddPackage rxvt-unicode # Unicode enabled rxvt-clone terminal emulator (urxvt)
+AddPackage urxvt-perls # URL and Mouseless text selection for rxvt-unicode
+AddPackage --foreign urxvt-tabbedex # A tabbed extension for rxvt-unicode with several enhancements
 # AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
 
 AddPackage --foreign exercism-cli # Command line client for exercism.io

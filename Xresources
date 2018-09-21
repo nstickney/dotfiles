@@ -28,7 +28,7 @@
 *color15: #cccccc
 
 ! Fonts ---------------------------------------------------------------------------------
-*font: xft:Inconsolata:size=13,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+*font: xft:Inconsolata,PowerlineSymbols:size=12
 
 ! Rofi ----------------------------------------------------------------------------------
 rofi.modi:                          window,drun
@@ -43,17 +43,39 @@ rofi.display-window:                Open Windows
 rofi.display-combi:                 Switch to or Start
 
 ! State:           'bg',        'fg',       'bgalt',    'hlbg',     'hlfg'
-rofi.color-normal: #00fff8e7,   #181100,    #66e7f8ff,  #e6666666,  #fff8e7
-rofi.color-urgent: #e6fff8e7,   #cf4517,    #66e7f8ff,  #e6cf4517,  #fff8e7
-rofi.color-active: #e6cccccc,   #181100,    #66cccccc,  #e6333333,  #fff8e7
+rofi.color-normal: #00eeeeee,   #222222,    #66cccccc,  #e6666666,  #eeeeee
+rofi.color-urgent: #e6666666,   #ff4dd2,    #66444444,  #e6ff4dd2,  #ff4dd2
+rofi.color-active: #e6666666,   #d2ff4d,    #66444444,  #e6333333,  #d2ff4d
 
 !                  'bg',        'border',   'separator'
-rofi.color-window: #e6fff8e7,   #e6fff8e7,  #e6333333
+rofi.color-window: #e6eeeeee,   #e6eeeeee,  #e6333333
 
 ! URxvt ---------------------------------------------------------------------------------
-URxvt.background: [90]#111111
-URxvt.depth:    32
-URxvt.buffered: True
+! Colors
+URxvt.background: [90]#222222
+URxvt.buffered:   true
+URxvt.depth:      32
+! Turn off all perl extensions except tabs and url matching
+URxvt.perl-ext:
+URxvt.perl-ext-common:      tabbedex,url-select,keyboard-select
+! Options for url matching
+URxvt.url-select.launcher:  /usr/bin/xdg-open
+URxvt.url-select.underline: true
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+! Options for tabbedex
+URxvt.tabbed.no-tabbedex-keys:  true
+URxvt.keysym.Control-t:         perl:tabbedex:new_tab
+URxvt.keysym.Control-Tab:       perl:tabbedex:next_tab
+URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
+URxvt.keysym.Control-w:         perl:tabbedex:kill_tab
+! Scroll options
+URxvt.scrollBar:            false
+URxvt.saveLines:            65535
+URxvt.scrollTtyOutput:      false
+URxvt.scrollWithBuffer:     true
+URxvt.scrollTtyKeypress:    true
 
 ! Xterm ---------------------------------------------------------------------------------
 XTerm.vt100.metaSendsEscape: true

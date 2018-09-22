@@ -15,6 +15,7 @@ AddPackage lynx # A text browser for the World Wide Web
 AddPackage masscan # TCP port scanner, spews SYN packets asynchronously, scanning entire Internet in under 5 minutes
 AddPackage netctl # Profile based systemd network management
 AddPackage networkmanager # Network connection manager and user applications
+AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnect
 AddPackage networkmanager-openvpn # NetworkManager VPN plugin for OpenVPN
 AddPackage nftables # Netfilter tables userspace tools
 AddPackage nss-mdns # glibc plugin providing host name resolution via mDNS

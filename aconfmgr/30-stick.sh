@@ -1,3 +1,4 @@
+AddPackage alacritty # A cross-platform, GPU-accelerated terminal emulator
 AddPackage gramps # Genealogy program, which helps you track your family tree
 AddPackage gtkspell3 # opt dep for gramps
 AddPackage libgexiv2 # opt dep for gramps
@@ -12,7 +13,7 @@ AddPackage thunderbird # Standalone mail and news reader from mozilla.org
 AddPackage truecrypt # Free open-source cross-platform disk encryption software
 AddPackage rxvt-unicode # Unicode enabled rxvt-clone terminal emulator (urxvt)
 AddPackage urxvt-perls # URL and Mouseless text selection for rxvt-unicode
-AddPackage --foreign urxvt-tabbedex # A tabbed extension for rxvt-unicode with several enhancements
+AddPackage --foreign urxvt-tabbedex-git # A tabbed extension for rxvt-unicode with several enhancements
 # AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
 
 AddPackage --foreign exercism-cli # Command line client for exercism.io

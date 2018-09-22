@@ -33,6 +33,13 @@ if [ -x "$(command -v aconfmgr)" ]; then
 	ln -s "$HOME"/dotfiles/aconfmgr "$HOME"/.config/aconfmgr
 fi
 
+if [ -x "$(command -v alacritty)" ]; then
+	printf '%s\n' "  alacritty..."
+	ensure_dir_exists "$HOME"/.config
+	backup_or_remove "$HOME"/.config/alacritty
+	ln -s "$HOME"/dotfiles/alacritty "$HOME"/.config/alacritty
+fi
+
 if [ -x "$(command -v bash)" ]; then
 	printf '%s\n' "  bash (and readline)..."
 	backup_or_remove "$HOME"/.bashrc
@@ -83,11 +90,11 @@ if [ -x "$(command -v vim)" ]; then
 	ln -s "$HOME"/dotfiles/vim "$HOME"/.vim
 fi
 
-if [ -x "$(command -v xrdb)" ] && [ -x "$(command -v rofi)" ]; then
+if [ -x "$(command -v rofi)" ] || [ -x "$(command -v urxvt)" ]; then
 	printf '%s\n' "  X.Org (rofi)..."
 	backup_or_remove "$HOME"/.Xresources
 	ln -s "$HOME"/dotfiles/Xresources "$HOME"/.Xresources
-	xrdb "$HOME"/.Xresources
+	[ -x "$(command -v xrdb)" ] && xrdb "$HOME"/.Xresources
 fi
 printf '%s\n' "    ...Complete!"
 

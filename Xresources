@@ -66,6 +66,7 @@ URxvt.keysym.M-Escape:      perl:keyboard-select:activate
 URxvt.keysym.M-s:           perl:keyboard-select:search
 ! Options for tabbedex
 URxvt.tabbed.no-tabbedex-keys:  true
+URxvt.tabbed.autohide:          true
 URxvt.keysym.Control-t:         perl:tabbedex:new_tab
 URxvt.keysym.Control-Tab:       perl:tabbedex:next_tab
 URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab

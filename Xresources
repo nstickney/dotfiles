@@ -1,7 +1,7 @@
 ! Terminal Colors -----------------------------------------------------------------------
 ! Background and Foreground
 *background: #222222
-*foreground: #eeeeee
+*foreground: #dddddd
 ! Black + Grey
 *color0:  #333333
 *color8:  #666666
@@ -18,7 +18,7 @@
 *color4:  #0099cc
 *color12: #4dd2ff
 ! Purple + Light Purple
-*color5:  #4400cc
+*color5:  #4c00e6
 *color13: #884dff
 ! Cyan + Light Cyan
 *color6:  #00cc44
@@ -28,11 +28,11 @@
 *color15: #cccccc
 
 ! Fonts ---------------------------------------------------------------------------------
-*font: xft:Inconsolata,PowerlineSymbols:size=12
+*font: xft:Source Code Pro:size=12
 
 ! Rofi ----------------------------------------------------------------------------------
 rofi.modi:                          window,drun
-rofi.font:                          Inconsolata 12
+rofi.font:                          Source Code Pro 12
 rofi.padding:                       300
 rofi.terminal:                      urxvt
 rofi.combi-modi:                    window,drun
@@ -43,12 +43,12 @@ rofi.display-window:                Open Windows
 rofi.display-combi:                 Switch to or Start
 
 ! State:           'bg',        'fg',       'bgalt',    'hlbg',     'hlfg'
-rofi.color-normal: #00eeeeee,   #222222,    #66cccccc,  #e6666666,  #eeeeee
-rofi.color-urgent: #e6666666,   #ff4dd2,    #66444444,  #e6ff4dd2,  #ff4dd2
-rofi.color-active: #e6666666,   #d2ff4d,    #66444444,  #e6333333,  #d2ff4d
+rofi.color-normal: #00222222,   #dddddd,    #66333333,  #e6111111,  #dddddd
+rofi.color-urgent: #e6222222,   #cc0099,    #66333333,  #e6111111,  #cc0099
+rofi.color-active: #e6222222,   #cc4400,    #66333333,  #e6111111,  #cc4400
 
 !                  'bg',        'border',   'separator'
-rofi.color-window: #e6eeeeee,   #e6eeeeee,  #e6333333
+rofi.color-window: #e6222222,   #e6222222,  #e6333333
 
 ! URxvt ---------------------------------------------------------------------------------
 ! Colors

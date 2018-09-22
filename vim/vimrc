@@ -80,6 +80,7 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%severity%][%linter%]% code:% %s'
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
+hi SignColumn ctermbg=None
 
 " Miscellaneous
 let g:vim_markdown_conceal=0            " turn off conceal in Markdown
@@ -142,10 +143,10 @@ let g:lightline.tabline = {
   			\   'right': [ ['fileformat', 'fileencoding', 'filetype'] ],
   			\ }
 set showtabline=2  " Show tabline
-let g:lightline#ale#indicator_checking = "\uf110 "
-let g:lightline#ale#indicator_warnings = "\uf071  "
-let g:lightline#ale#indicator_errors = "\uf05e  "
-let g:lightline#ale#indicator_ok = "\uf00c "
+let g:lightline#ale#indicator_checking = "..."
+let g:lightline#ale#indicator_warnings = "?"
+let g:lightline#ale#indicator_errors = "!"
+let g:lightline#ale#indicator_ok = ""
 
 " Swap files (backup, swap files written in /tmp)
 set backupdir=/tmp//                    " stored by full file path in /tmp

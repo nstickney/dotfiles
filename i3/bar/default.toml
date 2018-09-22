@@ -48,4 +48,4 @@ format = "%a %Y.%m.%d %T"
 [[block]]
 block = "custom"
 interval = 1
-command = "~/dotfiles/bin/lockleds"
+command = "lockleds"

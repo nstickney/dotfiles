@@ -16,17 +16,17 @@ for_window [class="^.*"] border pixel 1
 gaps inner 2
 
 ## Font (window titles and bar)
-font pango:FontAwesome, Inconsolata, Consolas, Droid Sans Mono, DejaVu Sans Mono 14
+font pango:Source Code Pro 12
 
 ## Colors (see http://i3wm.org/docs/userguide.html#_changing_colors)
-set $fore   #fff8e7
-set $fade   #fff8e780
-set $back   #181100
-set $bact   #18110080
+set $fore   #dddddd
+set $fade   #dddddd80
+set $back   #222222
+set $bact   #22222280
 set $trns   #00000000
-set $acto   #333333
-set $actt   #33333380
-set $hint   #cc4400
+set $acto   #993300
+set $actt   #99330080
+set $hint   #990033
 
 # Window Class          Border  Background  Text    Indicator   Child Border
 client.unfocused        $back   $bact       $fade   $bact       $back
@@ -92,7 +92,7 @@ bar {
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod1+Return exec gnome-terminal
+bindsym Mod1+Return exec alacritty
 
 # kill focused window
 bindsym Mod1+Shift+q kill

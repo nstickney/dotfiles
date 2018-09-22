@@ -34,11 +34,11 @@ AddPackage gdb # The GNU Debugger
 AddPackage vim-omnicppcomplete # vim c++ completion omnifunc with a ctags database
 
 ### Go
-AddPackage delve # A debugger for the Go programming language.
-AddPackage go # Core compiler tools for the Go programming language
+# AddPackage delve # A debugger for the Go programming language.
+# AddPackage go # Core compiler tools for the Go programming language
 
 ### Java
-AddPackage intellij-idea-community-edition # IDE for Java, Groovy and other programming languages with advanced refactoring features
+# AddPackage intellij-idea-community-edition # IDE for Java, Groovy and other programming languages with advanced refactoring features
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
 ### HTML
@@ -64,4 +64,4 @@ AddPackage yapf # Python style guide checker
 AddPackage rust # Systems programming language focused on safety, speed and concurrency
 
 ### Scala
-AddPackage sbt # The interactive build tool
+# AddPackage sbt # The interactive build tool

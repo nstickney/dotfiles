@@ -4,10 +4,10 @@ AddPackage bind-tools # The ISC DNS tools
 # AddPackage chromium # The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser
 AddPackage dhcpcd # RFC2131 compliant DHCP client daemon
 AddPackage dnsmasq # Lightweight, easy to configure DNS forwarder and DHCP server
-AddPackage fail2ban # Bans IPs after too many failed authentication attempts
+# AddPackage fail2ban # Bans IPs after too many failed authentication attempts
 # AddPackage icedtea-web # Free web browser plugin to run applets written in Java and an implementation of Java Web Start
 AddPackage firefox # Standalone web browser from mozilla.org
-AddPackage flashplugin # Adobe Flash Player NPAPI - disgusting, but necessary for vSphere
+# AddPackage flashplugin # Adobe Flash Player NPAPI - disgusting, but necessary for vSphere
 AddPackage inetutils # A collection of common network programs
 AddPackage iproute2 # IP Routing Utilities
 AddPackage iputils # Network monitoring tools, including ping

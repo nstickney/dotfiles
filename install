@@ -50,19 +50,6 @@ if [ -x "$(command -v bash)" ]; then
 	ln -s "$HOME"/dotfiles/inputrc "$HOME"/.inputrc
 fi
 
-if [ -x "$(command -v dconf)" ]; then
-	printf '%s\n' "  dconf (GNOME and GTK)..."
-	ensure_dir_exists "$HOME"/.config
-	backup_or_remove "$HOME"/.config/autostart
-	ln -s "$HOME"/dotfiles/autostart "$HOME"/.config/autostart
-	backup_or_remove "$HOME"/.config/dconf
-	ln -s "$HOME"/dotfiles/dconf "$HOME"/.config/dconf
-	backup_or_remove "$HOME"/.config/gtk-3.0
-	ln -s "$HOME"/dotfiles/gtk-3.0 "$HOME"/.config/gtk-3.0
-	backup_or_remove "$HOME"/.config/gtk-4.0
-	ln -s "$HOME"/dotfiles/gtk-4.0 "$HOME"/.config/gtk-4.0
-fi
-
 if [ "nstickney" = "$USER" ] || [ "stickneyn" = "$USER" ]; then
 	if [ -x "$(command -v git)" ]; then
 		printf '%s\n' "  git..."
@@ -97,6 +84,27 @@ if [ -x "$(command -v rofi)" ] || [ -x "$(command -v urxvt)" ]; then
 	[ -x "$(command -v xrdb)" ] && xrdb "$HOME"/.Xresources
 fi
 printf '%s\n' "    ...Complete!"
+
+if [ -L "$HOME/.config/autostart" ]; then
+	printf '%s' "Removing old autostart symlink..."
+	rm -rf "$HOME"/.config/autostart
+	printf '%s\n' " Done!"
+fi
+if [ -L "$HOME/.config/dconf" ]; then
+	printf '%s' "Removing old dconf symlink..."
+	rm -rf "$HOME"/.config/dconf
+	printf '%s\n' " Done!"
+fi
+if [ -L "$HOME/.config/gtk-3.0" ]; then
+	printf '%s' "Removing old gtk-3.0 symlink..."
+	rm -rf "$HOME"/.config/gtk-3.0
+	printf '%s\n' " Done!"
+fi
+if [ -L "$HOME/.config/gtk-4.0" ]; then
+	printf '%s' "Removing old gtk-4.0 symlink..."
+	rm -rf "$HOME"/.config/gtk-4.0
+	printf '%s\n' " Done!"
+fi
 
 if [ -x "$(command -v sudo)" ]; then
 	if [ -x "$(command -v firewall-cmd)" ]; then

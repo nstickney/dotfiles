@@ -218,7 +218,7 @@ shopt -s histappend
 PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 
 # Date and time format
-export HISTTIMEFORMAT="%Y.%m.%d %T  "
+#export HISTTIMEFORMAT="%Y.%m.%d %T  "
 
 # Max history size
 export HISTFILESIZE=8192

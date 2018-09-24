@@ -83,8 +83,6 @@ git_prompt() {
 	fi
 }
 
-# 
-
 bash_prompt_command() {
 	# Git
 	GTBR=$(git_prompt)
@@ -218,7 +216,7 @@ shopt -s histappend
 PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 
 # Date and time format
-#export HISTTIMEFORMAT="%Y.%m.%d %T  "
+#export HISTTIMEFORMAT='%Y.%m.%d %T  '
 
 # Max history size
 export HISTFILESIZE=8192
@@ -245,7 +243,11 @@ shopt -s cdspell
 [ -f "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh ] && source "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh
 
 # cd
+alias ..='cd ..'
 alias cd..='cd ..'
+
+# df
+[ ! -x "$(command -v dh)" ] && alias dh='df -Tha --total'
 
 # editor
 if [ -x "$(command -v vim)" ]; then
@@ -260,12 +262,20 @@ alias push='git push origin master'
 
 # ls
 [ ! -x "$(command -v ll)" ] && alias ll='ls -la'
+[ ! -x "$(command -v sl)" ] && alias sl='ls'
 
 # less is more
 alias more='less'
 
+# mkdir
+alias mkdir='mkdir -pv'
+
 # ping
-alias pinc='ping -c5'
+alias pinc='ping -c'
+
+# ps
+[ ! -x "$(command -v pf)" ] && alias pf='ps auxf'
+[ ! -x "$(command -v pg)" ] && alias pg='ps aux | grep -v grep | grep -i -e'
 
 # sudo
 if [ -x "$(command -v sudo)" ]; then

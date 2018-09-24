@@ -148,6 +148,9 @@ let g:lightline#ale#indicator_warnings = "?"
 let g:lightline#ale#indicator_errors = "!"
 let g:lightline#ale#indicator_ok = ""
 
+" sudo
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+
 " Swap files (backup, swap files written in /tmp)
 set backupdir=/tmp//                    " stored by full file path in /tmp
 set directory=/tmp//                    " stored by full file path in /tmp

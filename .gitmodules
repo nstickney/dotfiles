@@ -28,3 +28,6 @@
 [submodule "vim/pack/stick/start/lightline-bufferline"]
 	path = vim/pack/stick/start/lightline-bufferline
 	url = https://github.com/mgee/lightline-bufferline
+[submodule "vim/pack/stick/start/emmet"]
+	path = vim/pack/stick/start/emmet
+	url = https://github.com/mattn/emmet-vim

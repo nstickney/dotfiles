@@ -1,31 +1,40 @@
 ! Terminal Colors -----------------------------------------------------------------------
-! Background and Foreground
-*background: #222222
-*foreground: #dddddd
-! Black + Grey
-*color0:  #333333
-*color8:  #666666
-! Red + Light Red
-*color1:  #cc0099
-*color9:  #ff4dd2
-! Green + Light Green
-*color2:  #99cc00
-*color10: #d2ff4d
-! Brown + Yellow
-*color3:  #cc4400
-*color11: #ff884d
-! Blue + Light Blue
-*color4:  #0099cc
-*color12: #4dd2ff
-! Purple + Light Purple
-*color5:  #4c00e6
-*color13: #884dff
-! Cyan + Light Cyan
-*color6:  #00cc44
-*color14: #4dff88
-! Light Gray + White
-*color7:  #999999
-*color15: #cccccc
+! special
+*.foreground:   #e2e2e2
+*.background:   #1b1b1b
+*.cursorColor:  #e2e2e2
+
+! black
+*.color0:       #303030
+*.color8:       #474747
+
+! red
+*.color1:       #dc304d
+*.color9:       #ff6e7d
+
+! green
+*.color2:       #618126
+*.color10:      #96b659
+
+! yellow
+*.color3:       #c15522
+*.color11:      #fe8a53
+
+! blue
+*.color4:       #6e6ecc
+*.color12:      #a5a2ff
+
+! magenta
+*.color5:       #b25694
+*.color13:      #ec8bca
+
+! cyan
+*.color6:       #22866a
+*.color14:      #54bc9d
+
+! white
+*.color7:       #c6c6c6
+*.color15:      #ffffff
 
 ! Fonts ---------------------------------------------------------------------------------
 *font: xft:Source Code Pro:size=12
@@ -43,16 +52,16 @@ rofi.display-window:                Open Windows
 rofi.display-combi:                 Switch to or Start
 
 ! State:           'bg',        'fg',       'bgalt',    'hlbg',     'hlfg'
-rofi.color-normal: #00222222,   #dddddd,    #66333333,  #e6111111,  #dddddd
-rofi.color-urgent: #e6222222,   #cc0099,    #66333333,  #e6111111,  #cc0099
-rofi.color-active: #e6222222,   #cc4400,    #66333333,  #e6111111,  #cc4400
+rofi.color-normal: #00303030,   #c6c6c6,    #66474747,  #e61b1b1b,  #e2e2e2
+rofi.color-urgent: #e6303030,   #dc304d,    #66474747,  #e61b1b1b,  #ff6e7d
+rofi.color-active: #e6303030,   #c15522,    #66474747,  #e61b1b1b,  #fe8a53
 
 !                  'bg',        'border',   'separator'
-rofi.color-window: #e6222222,   #e6222222,  #e6333333
+rofi.color-window: #e6303030,   #e6303030,  #e61b1b1b
 
 ! URxvt ---------------------------------------------------------------------------------
 ! Colors
-URxvt.background: [90]#222222
+URxvt.background: [90]#1b1b1b
 URxvt.buffered:   true
 URxvt.depth:      32
 ! Turn off all perl extensions except tabs and url matching

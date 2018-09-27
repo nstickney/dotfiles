@@ -135,12 +135,11 @@ render_timer: false
 # and cursor.background colors, otherwise invert the colors of the cursor.
 custom_cursor_colors: false
 
-# Colors (Tomorrow Night Bright)
 colors:
   # Default colors
   primary:
-    background: '0x222222'
-    foreground: '0xdddddd'
+    background: '0x1b1b1b'
+    foreground: '0xe2e2e2'
 
     # (Optional) Bright and Dim foreground colors
     #
@@ -153,41 +152,41 @@ colors:
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
-    text: '0x222222'
-    cursor: '0xdddddd'
+    text:    '0x1b1b1b'
+    cursor:  '0xe2e2e2'
 
   # Normal colors
   normal:
-    black:   '0x333333'
-    red:     '0xcc0099'
-    green:   '0x99cc00'
-    yellow:  '0xcc4400'
-    blue:    '0x0099cc'
-    magenta: '0x4c00e6'
-    cyan:    '0x00cc44'
-    white:   '0xcccccc'
+    black:   '0x303030'
+    red:     '0xdc304d'
+    green:   '0x618126'
+    yellow:  '0xc15522'
+    blue:    '0x6e6ecc'
+    magenta: '0xb25694'
+    cyan:    '0x22866a'
+    white:   '0xc6c6c6'
 
   # Bright colors
   bright:
-    black:   '0x666666'
-    red:     '0xff4dd2'
-    green:   '0xd2ff4d'
-    yellow:  '0xff884d'
-    blue:    '0x4dd2ff'
-    magenta: '0x884dff'
-    cyan:    '0x4dff88'
+    black:   '0x474747'
+    red:     '0xff6e7d'
+    green:   '0x96b659'
+    yellow:  '0xfe8a53'
+    blue:    '0xa5a2ff'
+    magenta: '0xec8bca'
+    cyan:    '0x54bc9d'
     white:   '0xffffff'
 
   # Dim colors (Optional)
   dim:
-    black:   '0x111111'
-    red:     '0x990033'
-    green:   '0x330000'
-    yellow:  '0x992200'
-    blue:    '0x003399'
-    magenta: '0x220099'
-    cyan:    '0x009922'
-    white:   '0x999999'
+    black:   '0x000000'
+    red:     '0x9e0022'
+    green:   '0x2f4f00'
+    yellow:  '0x852000'
+    blue:    '0x373f95'
+    magenta: '0x7b2161'
+    cyan:    '0x00543b'
+    white:   '0xababab'
 
 # Visual Bell
 #

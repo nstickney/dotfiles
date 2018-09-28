@@ -127,22 +127,22 @@ unset bash_prompt
 
 # the tty/framebuffer console
 if [ "$TERM" = "linux" ]; then
-	printfn "\\e]P01B1B1B" # black
-	printfn "\\e]P8474747" # gray
-	printfn "\\e]P1B25694" # red
-	printfn "\\e]P9EC8BCA" # bright red
-	printfn "\\e]P2259830" # green
-	printfn "\\e]PA61BF62" # bright green
+	printfn "\\e]P0303030" # black
+	printfn "\\e]P1D73753" # red
+	printfn "\\e]P2907234" # green
 	printfn "\\e]P3C15522" # brown
-	printfn "\\e]PBFE8A53" # yellow
-	printfn "\\e]P46E6ECC" # blue
-	printfn "\\e]PCA5A2FF" # bright blue
-	printfn "\\e]P59B5FBB" # magenta
-	printfn "\\e]PDD393F3" # bright magenta
-	printfn "\\e]P61A8586" # cyan
-	printfn "\\e]PE5CBABB" # bright cyan
+	printfn "\\e]P47A64E9" # blue
+	printfn "\\e]P5B25694" # magenta
+	printfn "\\e]P6538160" # cyan
 	printfn "\\e]P7C6C6C6" # light gray
-	printfn "\\e]PFE2E2E2" # white
+	printfn "\\e]P8474747" # gray
+	printfn "\\e]P9FF7384" # bright red
+	printfn "\\e]PAC8A565" # bright green
+	printfn "\\e]PBFE8A53" # yellow
+	printfn "\\e]PCB497FF" # bright blue
+	printfn "\\e]PDEC8BCA" # bright magenta
+	printfn "\\e]PE86B693" # bright cyan
+	printfn "\\e]PFFFFFFF" # white
 	clear # fix artifacts
 fi
 

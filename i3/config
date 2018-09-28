@@ -19,14 +19,14 @@ gaps inner 2
 font pango:Source Code Pro 12
 
 ## Colors (see http://i3wm.org/docs/userguide.html#_changing_colors)
-set $fore   #dddddd
-set $fade   #dddddd80
-set $back   #222222
-set $bact   #22222280
+set $fore   #e2e2e2
+set $fade   #e2e2e280
+set $back   #1b1b1b
+set $bact   #1b1b1b80
 set $trns   #00000000
-set $acto   #993300
-set $actt   #99330080
-set $hint   #990033
+set $acto   #852000
+set $actt   #85200080
+set $hint   #9a0027
 
 # Window Class          Border  Background  Text    Indicator   Child Border
 client.unfocused        $back   $bact       $fade   $bact       $back

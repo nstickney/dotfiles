@@ -236,11 +236,7 @@ shopt -s cdspell
 # TABS ########################################################################
 [ -x "$(command -v tabs)" ] && tabs 4
 
-# USER ALIASES ################################################################
-
-# Import SSH aliases from protected file
-# shellcheck source=/dev/null
-[ -f "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh ] && source "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh
+# USEFUL ALIASES ##############################################################
 
 # cd
 alias ..='cd ..'
@@ -256,9 +252,12 @@ if [ -x "$(command -v vim)" ]; then
 fi
 
 # git
-alias commit='git commit -m'
-alias pull='git pull origin master'
-alias push='git push origin master'
+[ ! -x "$(command -v commit)" ] && alias commit='git commit -m'
+[ ! -x "$(command -v pull)" ] && alias pull='git pull origin master'
+[ ! -x "$(command -v purr)" ] && alias purr='git pull --recurse-submodules -r origin master'
+[ ! -x "$(command -v push)" ] && alias push='git push origin master'
+[ ! -x "$(command -v puff)" ] && alias puff='git push -f origin master'
+[ ! -x "$(command -v rebase)" ] && alias rebase='git rebase -i'
 
 # ls
 [ ! -x "$(command -v ll)" ] && alias ll='ls -la'
@@ -271,22 +270,24 @@ alias more='less'
 alias mkdir='mkdir -pv'
 
 # ping
-alias pinc='ping -c'
+[ ! -x "$(command -v pinc)" ] && alias pinc='ping -c'
 
 # ps
 [ ! -x "$(command -v pf)" ] && alias pf='ps auxf'
 [ ! -x "$(command -v pg)" ] && alias pg='ps aux | grep -v grep | grep -i -e'
 
-# sudo
-if [ -x "$(command -v sudo)" ]; then
+# sudo (only run this part if we're not root, and sudo is installed)
+if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 
 	# Editor
 	[ -x "$(command -v vim)" ] && alias svi="sudo vim"
 
 	# Networking
 
-	### firewall-cmd
+	### firewalls
 	[ -x "$(command -v firewall-cmd)" ] && alias fw='sudo firewall-cmd'
+	[ -x "$(command -v iptables)" ] && alias ipt='sudo iptables'
+	[ -x "$(command -v nft)" ] && alias nft='sudo nftables'
 
 	### SS / Netstat
 	if [ -x "$(command -v ss)" ]; then
@@ -350,3 +351,9 @@ if [ -x "$(command -v sudo)" ]; then
 	[ -x "$(command -v su)" ] && alias su='sudo su'
 	[ -x "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
 fi
+
+# USER ALIASES ################################################################
+
+# Import SSH aliases from protected file
+# shellcheck source=/dev/null
+[ -f "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh ] && source "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh

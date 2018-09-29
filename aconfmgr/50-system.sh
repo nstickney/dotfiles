@@ -1,6 +1,11 @@
 # shellcheck disable=SC2148
 
-# VirtualBox versus Physical Machine
+# Virtual Machine (any type)
+if sudo dmesg | grep -q "Hypervisor detected"; then
+	CopyFile /etc/gdm/custom.conf
+fi
+
+# VirtualBox
 if systemd-detect-virt | grep -q oracle; then
 	AddPackage virtualbox-guest-modules-arch # Virtualbox guest kernel modules for Arch Kernel
 	AddPackage virtualbox-guest-utils # VirtualBox Guest userspace utilities
@@ -48,7 +53,6 @@ then
 	AddPackage nvidia-340xx # NVIDIA drivers for linux, 340xx legacy branch
 fi
 
-CopyFile /etc/gdm/custom.conf
 CopyFile /etc/locale.conf
 
 CreateLink /etc/localtime /usr/share/zoneinfo/US/Eastern

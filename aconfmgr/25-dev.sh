@@ -1,4 +1,5 @@
 # Basic tools
+AddPackage --foreign bfg # Removes large or troublesome blobs like git-filter-branch does, but faster.
 AddPackage cloc # Count lines of code
 AddPackage git # the fast distributed version control system
 AddPackage git-crypt # Transparent file encryption in Git
@@ -57,6 +58,7 @@ AddPackage perl-tidy # Parses and beautifies perl source
 AddPackage autopep8 # A tool that automatically formats Python code to conform to the PEP 8 style guide
 AddPackage flake8 # The modular source code checker: pep8, pyflakes and co
 AddPackage python-pycodestyle # Python style guide checker
+AddPackage tk # A windowing toolkit for use with tcl (python turtles)
 AddPackage vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
 AddPackage yapf # Python style guide checker
 

@@ -82,5 +82,3 @@ AddPackage unrar # The RAR uncompression programs
 AddPackage xdg-user-dirs-gtk # Creates user dirs and asks to relocalize them
 
 AddPackage --foreign gnome-terminal-transparency # The GNOME Terminal Emulator, with background transparency
-
-CopyFile /etc/gdm/custom.conf

@@ -58,6 +58,7 @@ AddPackage perl-tidy # Parses and beautifies perl source
 AddPackage autopep8 # A tool that automatically formats Python code to conform to the PEP 8 style guide
 AddPackage flake8 # The modular source code checker: pep8, pyflakes and co
 AddPackage python-pycodestyle # Python style guide checker
+AddPackage python-pytest # Simple powerful testing with Python
 AddPackage tk # A windowing toolkit for use with tcl (python turtles)
 AddPackage vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
 AddPackage yapf # Python style guide checker

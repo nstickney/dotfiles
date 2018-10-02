@@ -182,7 +182,7 @@ man() {
 		LESS_TERMCAP_ue="$(printf '\e[0m')" \
 		LESS_TERMCAP_us="$(printf '\e[0;34m')" \
 		man "$@" || (help "$@" 2> /dev/null && help "$@" | less)
-	}
+}
 
 # COMPLETION ##################################################################
 
@@ -241,6 +241,7 @@ shopt -s cdspell
 # cd
 alias ..='cd ..'
 alias cd..='cd ..'
+alias .-='cd -'
 
 # df
 [ ! -x "$(command -v dh)" ] && alias dh='df -Tha --total'
@@ -252,12 +253,29 @@ if [ -x "$(command -v vim)" ]; then
 fi
 
 # git
+[ ! -x "$(command -v amend)" ] && alias amend='git commit --amend'
 [ ! -x "$(command -v commit)" ] && alias commit='git commit -m'
 [ ! -x "$(command -v pull)" ] && alias pull='git pull origin master'
 [ ! -x "$(command -v purr)" ] && alias purr='git pull --recurse-submodules -r origin master'
 [ ! -x "$(command -v push)" ] && alias push='git push origin master'
 [ ! -x "$(command -v puff)" ] && alias puff='git push -f origin master'
 [ ! -x "$(command -v rebase)" ] && alias rebase='git rebase -i'
+[ ! -x "$(command -v reflog)" ] && alias reflog='git reflog'
+
+# https://twitter.com/aran384/status/1046487063489437696
+if [ ! -x "$(command -v tableflip)" ]; then
+	tableflip() {
+		while true; do
+			read -r -p "Really throw it all away? [y/N]: " -n 1 yn
+			printf '\n'
+			case $yn in
+				[Yy]* ) git fetch && git reset --hard && git clean -dfx; break;;
+				[Nn]* ) break;;
+				"" ) break;;
+			esac
+		done
+	}
+fi
 
 # ls
 [ ! -x "$(command -v ll)" ] && alias ll='ls -la'

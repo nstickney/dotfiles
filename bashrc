@@ -277,6 +277,9 @@ if [ ! -x "$(command -v tableflip)" ]; then
 	}
 fi
 
+# ip address
+[ -x "$(command -v curl)" ] && [ ! -x "$(command -v ipe)" ] && alias ipe='curl ipinfo.io/ip'
+
 # ls
 [ ! -x "$(command -v ll)" ] && alias ll='ls -la'
 [ ! -x "$(command -v sl)" ] && alias sl='ls'
@@ -293,6 +296,12 @@ alias mkdir='mkdir -pv'
 # ps
 [ ! -x "$(command -v pf)" ] && alias pf='ps auxf'
 [ ! -x "$(command -v pg)" ] && alias pg='ps aux | grep -v grep | grep -i -e'
+
+# tar
+[ ! -x "$(command -v untar)" ] && alias untar='tar -zxvf'
+
+# wget
+[ -x "$(command -v wget)" ] && alias wget='wget -c'
 
 # sudo (only run this part if we're not root, and sudo is installed)
 if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then

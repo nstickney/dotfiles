@@ -97,6 +97,17 @@ while true; do
 	esac
 done
 
+# Allow ProxMox outbound?
+while true; do
+	read -r -p "Is this computer used to access ProxMox? [y/N]: " -n 1 ov
+	printf '\n'
+	case $ov in
+		[Yy]* ) nft add rule ip filter output tcp dport 8006 accept; break;;
+		[Nn]* ) break;;
+		"" ) break;;
+	esac
+done
+
 # Allow vSphere outbound?
 while true; do
 	read -r -p "Is this computer used to access vSphere? [y/N]: " -n 1 vs

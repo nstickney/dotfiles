@@ -314,7 +314,7 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 	### firewalls
 	[ -x "$(command -v firewall-cmd)" ] && alias fw='sudo firewall-cmd'
 	[ -x "$(command -v iptables)" ] && alias ipt='sudo iptables'
-	[ -x "$(command -v nft)" ] && alias nft='sudo nftables'
+	[ -x "$(command -v nft)" ] && alias nft='sudo nft'
 
 	### SS / Netstat
 	if [ -x "$(command -v ss)" ]; then

@@ -27,9 +27,11 @@ AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based 
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 AddPackage tcpdump # Powerful command-line packet analyzer
 AddPackage tor # Anonymizing overlay network
+AddPackage whois # Intelligent WHOIS client
 AddPackage wget # A network utility to retrieve files from the Web
 
 # AddPackage --foreign chromium-widevine # A browser plugin designed for the viewing of premium video content
+# AddPackage --foreign discord #
 AddPackage --foreign google-talkplugin # Video chat browser plug-in for Google Talk
 AddPackage --foreign ripcord # Qt-based Discord and Slack client
 AddPackage --foreign signal # Signal Private Messenger for the Desktop

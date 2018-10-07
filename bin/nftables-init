@@ -84,17 +84,18 @@ main() {
 	# Drop invalid connections
 	sudo nft add rule ip filter base ct state invalid drop
 
+	# Allow established connections
+	sudo nft add rule ip filter base ct state \{ established, related \} accept
+
+	# Allow loopback in and out to itself
+	sudo nft add rule ip filter base meta iif lo oif lo accept
+	sudo nft add rule ip filter base ip saddr 127.0.0.0/8 ip daddr 127.0.0.0/8 accept
+
 	# Prevent host spoofing
 	sudo nft add rule ip filter input ip saddr "$INTRANET_ADDR" drop
 	sudo nft add rule ip filter forward ip saddr "$INTRANET_ADDR" drop
 	sudo nft add rule ip filter forward ip daddr "$INTRANET_ADDR" drop
 	sudo nft add rule ip filter output ip daddr "$INTRANET_ADDR" drop
-
-	# Allow loopback in and out to itself
-	sudo nft add rule ip filter base meta iif lo oif lo accept
-
-	# Allow established connections
-	sudo nft add rule ip filter base ct state \{ established, related \} accept
 
 	# Allow DHCP from intranet for faster renewals
 	sudo nft add rule ip filter input ip saddr "$INTRANET" udp sport bootps udp dport bootpc accept

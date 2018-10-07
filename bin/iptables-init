@@ -138,13 +138,13 @@ main() {
 
 	# Drop invalid connections
 	sudo iptables -A BASE -m state --state INVALID -j DROP
-	sudo iptables -A OUTPUT -d "$INTRANET_ADDR" -j DROP
-
-	# Allow loopback in and out
-	sudo iptables -A BASE -i lo -j ACCEPT
 
 	# Allow established connections
 	sudo iptables -A BASE -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+	# Allow loopback in and out
+	sudo iptables -A BASE -i lo -j ACCEPT
+	sudo iptables -A BASE -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
 
 	# Jump back after the base chain
 	sudo iptables -A BASE -j RETURN
@@ -153,6 +153,7 @@ main() {
 	sudo iptables -A INPUT -s "$INTRANET_ADDR" -j DROP
 	sudo iptables -A FORWARD -s "$INTRANET_ADDR" -j DROP
 	sudo iptables -A FORWARD -d "$INTRANET_ADDR" -j DROP
+	sudo iptables -A OUTPUT -d "$INTRANET_ADDR" -j DROP
 
 	# Allow DHCP from intranet for faster renewals
 	sudo iptables -A INPUT -s "$INTRANET" -p udp -m udp --sport 67 -m udp --dport 68 -j ACCEPT
@@ -170,14 +171,13 @@ main() {
 	sudo iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT  # echo request
 
 	# Uncomment the lines below as needed to make services available
-	# sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT # SSH
-	# sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH (DANGER)
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH
+	# sudo iptables -A INPUT -p udp -m udp --dport 53 -j ACCEPT # SSH
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
 	# sudo iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 25565 -j ACCEPT # Minecraft
-	# sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap
-	# sudo iptables -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap (DANGER)
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap
 
 	# Allow printing to intranet
 	sudo iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 631 -j ACCEPT

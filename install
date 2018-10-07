@@ -109,18 +109,6 @@ if [ -L "$HOME/.config/gtk-4.0" ]; then
 fi
 
 if [ -x "$(command -v sudo)" ]; then
-	if [ -x "$(command -v firewall-cmd)" ]; then
-		while true; do
-			read -r -p "Install firewalld configuration? [y/N]:" -n 1 yn
-			printf '\n'
-			case $yn in
-				[Yy]* ) sudo "$HOME"/dotfiles/bin/fw-cmd-init; break;;
-				[Nn]* ) break;;
-				"" ) break;;
-			esac
-		done
-	fi
-
 	if [ -x "$(command -v iptables)" ]; then
 		while true; do
 			read -r -p "Install iptables configuration? [y/N]: " -n 1 yn
@@ -132,7 +120,6 @@ if [ -x "$(command -v sudo)" ]; then
 			esac
 		done
 	fi
-
 	if [ -x "$(command -v nft)" ]; then
 		while true; do
 			read -r -p "Install nftables configuration? [y/N]: " -n 1 yn

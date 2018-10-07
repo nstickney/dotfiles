@@ -4,48 +4,50 @@
 
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
 set -eEuo pipefail
-trap 'echo "Aborting due to errexit on line $LINENO. Exit code: $?" >&2' ERR
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 IFS=$'\n\t'
 
 # Lock down /tmp, /var/tmp, and /dev/shm
 awk '!/^#/ && ($2 == "/tmp") { if(!match($4, /nodev/)) $4=$4",nodev" } 1' \
 	/etc/fstab > /tmp/new_fstab
-mv /tmp/new_fstab /etc/fstab
+sudo mv /tmp/new_fstab /etc/fstab
 awk '!/^#/ && ($2 == "/tmp") { if(!match($4, /noexec/)) $4=$4",noexec" } 1' \
 	/etc/fstab > /tmp/new_fstab
-mv /tmp/new_fstab /etc/fstab
+sudo mv /tmp/new_fstab /etc/fstab
 awk '!/^#/ && ($2 == "/tmp") { if(!match($4, /nosuid/)) $4=$4",nosuid" } 1' \
 	/etc/fstab > /tmp/new_fstab
-mv /tmp/new_fstab /etc/fstab
-echo '/tmp   /var/tmp  none   bind,rw,nodev,noexec,nosuid   0 0' >> /etc/fstab
-echo 'tmpfs  /dev/shm  tmpfs  defaults,nodev,noexec,nosuid  0 0' >> /etc/fstab
+sudo mv /tmp/new_fstab /etc/fstab
+echo '/tmp  /var/tmp none  bind,rw,nodev,noexec,nosuid  0 0' | sudo tee -a /etc/fstab >/dev/null
+echo 'tmpfs /dev/shm tmpfs defaults,nodev,noexec,nosuid 0 0' | sudo tee -a /etc/fstab >/dev/null
 
 # Install EPEL repository
-yum -y install epel-release
+sudo yum -y install epel-release
 
 # Install ripgrep COPR repository
-yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
+sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
 
 # Remove unwanted items
-yum -y erase aic94xx-firmware alsa* chrony firewalld iwl*firmware postfix 
+sudo yum -y erase aic94xx-firmware alsa* chrony firewalld iwl*firmware postfix 
 
 # Update everything
-yum -y update
+sudo yum -y update
 
 # Install necessary items
-yum -y install aide aria2 bash-completion bind-utils deltarpm fail2ban git \
-	htop lsof ntp psmisc ripgrep vim-enhanced tmux yum-{cron,utils}
+sudo yum -y install aide aria2 bash-completion bind-utils deltarpm fail2ban git htop \
+	iptables-services lsof ntp psmisc ripgrep vim-enhanced tmux yum-{cron,utils}
 
 # Install VM tools as needed
-if dmesg | grep -q "Hypervisor detected: KVM"; then
-	yum -y install qemu-guest-agent
-	systemctl enable qemu-guest-agent
+if sudo dmesg | grep -q "Hypervisor detected: KVM"; then
+	sudo yum -y install qemu-guest-agent
+	sudo systemctl enable qemu-guest-agent
+elif sudo dmidecode | grep -q "VirtualBox"; then
+	printf '\n\e[1;31m%s\e[0m\n\n' "Please install the VirtualBox Guest Additions!"
 fi
 
 # Function to install Filebeat (Elastic Stack)
 install_filebeat() {
-	rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
-	cat > /etc/yum.repos.d/elastic.6.repo <<EOL
+	sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+	cat | sudo tee /etc/yum.repos.d/elastic.6.repo >/dev/null <<EOL
 [elastic-6.x]
 name=Elastic repository for 6.x packages
 baseurl=https://artifacts.elastic.co/packages/6.x/yum
@@ -55,12 +57,12 @@ enabled=1
 autorefresh=1
 type=rpm-md
 EOL
-	yum -y install filebeat
+	sudo yum -y install filebeat
 	while true; do
 		read -r -p "Start Filebeat at next boot? [y/N]: " -n 1 ins
 		printf '\n'
 		case $ins in
-			[Yy]* ) systemctl enable filebeat; break;;
+			[Yy]* ) sudo systemctl enable filebeat; break;;
 			[Nn]* ) break;;
 			"" ) break;;
 		esac

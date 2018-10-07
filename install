@@ -126,7 +126,7 @@ if [ -x "$(command -v sudo)" ]; then
 			read -r -p "Install iptables configuration? [y/N]: " -n 1 yn
 			printf '\n'
 			case $yn in
-				[Yy]* ) sudo "$HOME"/dotfiles/bin/iptables-init; break;;
+				[Yy]* ) "$HOME"/dotfiles/bin/iptables-init; break;;
 				[Nn]* ) break;;
 				"" ) break;;
 			esac
@@ -138,7 +138,7 @@ if [ -x "$(command -v sudo)" ]; then
 			read -r -p "Install nftables configuration? [y/N]: " -n 1 yn
 			printf '\n'
 			case $yn in
-				[Yy]* ) sudo "$HOME"/dotfiles/bin/nftables-init; break;;
+				[Yy]* ) "$HOME"/dotfiles/bin/nftables-init; break;;
 				[Nn]* ) break;;
 				"" ) break;;
 			esac

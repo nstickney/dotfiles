@@ -5,6 +5,11 @@ set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 IFS=$'\n\t'
 
+add_openvpn_rules() {
+	sudo nft add rule ip filter output tcp dport openvpn accept
+	sudo nft add rule ip filter output udp dport openvpn accept
+}
+
 save_permanent_nftables() {
 	sudo cp /etc/nftables.conf /etc/nftables.conf.bak
 	printf '%s\n\n' "#!/usr/bin/nft -f" | sudo tee /etc/nftables.conf >/dev/null
@@ -33,7 +38,7 @@ main() {
 
 	# Find necessary information
 	local INTERFACE
-	INTERFACE="$(ip route | grep default | awk '{print $5}')"    # Main interface
+	INTERFACE="$(ip route | grep default | awk '{print $5}')" # Main interface
 	local INTRANET
 	INTRANET="$(ip addr | grep "$INTERFACE" | awk 'FNR==2{print $2}')" # Intranet
 	local INTRANET_ADDR
@@ -95,12 +100,19 @@ main() {
 		\{ echo-request, echo-reply, time-exceeded, parameter-problem, \
 		destination-unreachable \} accept
 
-	# Allow ssh from intranet
-	sudo nft add rule ip filter input ip saddr "$INTRANET" tcp dport ssh accept
-
 	# Anti-lockout rule (allow SSH from current connection)
 	[ ! -z "${SSH_ADDR+x}" ] && sudo nft add rule ip filter input ip saddr \
 		"$SSH_ADDR" tcp -m dport ssh accept
+
+	# Uncomment the lines below as needed to make services available
+	# sudo nft add rule ip filter input ip saddr "$INTRANET" tcp dport ssh accept # SSH (Intranet)
+	# sudo nft add rule ip filter input tcp dport ssh accept # SSH (DANGER)
+	# sudo nft add rule ip filter input tcp dport http accept # HTTP
+	# sudo nft add rule ip filter input tcp dport https accept # HTTPS
+	# sudo nft add rule ip filter input udp dport https accept # HTTP/2
+	# sudo nft add rule ip filter input tcp dport 25565 accept # Minecraft
+	# sudo nft add rule ip filter input ip saddr "$INTRANET" -p tcp dport 8123 accept # Dynmap
+	# sudo nft add rule ip filter input tcp dport 8123 accept # Dynmap (DANGER)
 
 	# Allow printing to intranet
 	sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport ipp accept
@@ -125,7 +137,7 @@ main() {
 		read -r -p "Does this computer use OpenVPN? [y/N]: " -n 1 ov
 		printf '\n'
 		case $ov in
-			[Yy]* ) sudo nft add rule ip filter output tcp dport openvpn accept; break;;
+			[Yy]* ) add_openvpn_rules; break;;
 			[Nn]* ) break;;
 			"" ) break;;
 		esac

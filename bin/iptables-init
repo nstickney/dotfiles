@@ -5,6 +5,11 @@ set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 IFS=$'\n\t'
 
+add_openvpn_rules() {
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 1194 -j ACCEPT
+	sudo iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
+}
+
 save_permanent_iptables() {
 
 	# On an Arch machine:
@@ -150,12 +155,19 @@ main() {
 	sudo iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT  # echo reply
 	sudo iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT  # echo request
 
-	# Allow ssh from intranet
-	sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT
-
 	# Anti-lockout rule (allow SSH from current connection)
 	[ -z "${SSH_ADDR+x}" ] || sudo iptables -A INPUT -s "$SSH_ADDR" -p tcp -m tcp \
 		--dport 22 -j ACCEPT
+
+	# Uncomment the lines below as needed to make services available
+	# sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT # SSH (Intranet)
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH (DANGER)
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
+	# sudo iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 25565 -j ACCEPT # Minecraft
+	# sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap (Intranet)
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap (DANGER)
 
 	# Allow printing to intranet
 	sudo iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 631 -j ACCEPT
@@ -189,7 +201,7 @@ main() {
 		read -r -p "Does this computer use OpenVPN? [y/N]: " -n 1 ov
 		printf '\n'
 		case $ov in
-			[Yy]* ) sudo iptables -A OUTPUT -p tcp -m tcp --dport 1194 -j ACCEPT; break;;
+			[Yy]* ) add_openvpn_rules; break;;
 			[Nn]* ) break;;
 			"" ) break;;
 		esac

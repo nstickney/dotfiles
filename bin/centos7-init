@@ -41,7 +41,8 @@ if sudo dmesg | grep -q "Hypervisor detected: KVM"; then
 	sudo yum -y install qemu-guest-agent
 	sudo systemctl enable qemu-guest-agent
 elif sudo dmidecode | grep -q "VirtualBox"; then
-	printf '\n\e[1;31m%s\e[0m\n\n' "Please install the VirtualBox Guest Additions!"
+	printf '\e[1;31m%s\e[0m\n' "Please install the VirtualBox Guest Additions!"
+	printf '%s\n' " => https://wiki.centos.org/HowTos/Virtualization/VirtualBox/CentOSguest"
 fi
 
 # Function to install Filebeat (Elastic Stack)

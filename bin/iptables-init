@@ -238,6 +238,30 @@ main() {
 	printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"
 	sudo iptables -L
 	printf '\n'
+
+	# Make rules persistent
+	while true; do
+		read -r -p "Save rules persistently? [y/N]: " -n 1 yn
+		printf '\n'
+		case $yn in
+			[Yy]* ) save_permanent_iptables; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
+
+	# Start iptables at boot
+	if [ -x "$(command -v systemctl)" ]; then
+		while true; do
+			read -r -p "Start iptables at boot? [y/N]: " -n 1 yn
+			printf '\n'
+			case $yn in
+				[Yy]* ) sudo systemctl enable iptables; break;;
+				[Nn]* ) break;;
+				"" ) break;;
+			esac
+		done
+	fi
 }
 
 main "$@"

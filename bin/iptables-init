@@ -180,6 +180,8 @@ main() {
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap
 
 	# Allow printing to intranet
+	sudo iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 161 -j ACCEPT
+	sudo iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 515 -j ACCEPT
 	sudo iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 631 -j ACCEPT
 
 	# Allow required services outbound (TCP)

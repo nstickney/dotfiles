@@ -121,6 +121,8 @@ main() {
 	# sudo nft add rule ip filter input tcp dport 8123 accept # Dynmap (DANGER)
 
 	# Allow printing to intranet
+	sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport snmp accept
+	sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport 515 accept
 	sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport ipp accept
 
 	# Allow required services outbound

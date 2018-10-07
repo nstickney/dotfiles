@@ -127,22 +127,22 @@ unset bash_prompt
 
 # the tty/framebuffer console
 if [ "$TERM" = "linux" ]; then
-	printfn "\\e]P0303030" # black
-	printfn "\\e]P1D73753" # red
-	printfn "\\e]P2907234" # green
-	printfn "\\e]P3C15522" # brown
-	printfn "\\e]P47A64E9" # blue
-	printfn "\\e]P5B25694" # magenta
-	printfn "\\e]P6538160" # cyan
-	printfn "\\e]P7C6C6C6" # light gray
-	printfn "\\e]P8474747" # gray
-	printfn "\\e]P9FF7384" # bright red
-	printfn "\\e]PAC8A565" # bright green
-	printfn "\\e]PBFE8A53" # yellow
-	printfn "\\e]PCB497FF" # bright blue
-	printfn "\\e]PDEC8BCA" # bright magenta
-	printfn "\\e]PE86B693" # bright cyan
-	printfn "\\e]PFFFFFFF" # white
+	printf "\\e]P0303030" # black
+	printf "\\e]P1D73753" # red
+	printf "\\e]P2907234" # green
+	printf "\\e]P3C15522" # brown
+	printf "\\e]P47A64E9" # blue
+	printf "\\e]P5B25694" # magenta
+	printf "\\e]P6538160" # cyan
+	printf "\\e]P7C6C6C6" # light gray
+	printf "\\e]P8474747" # gray
+	printf "\\e]P9FF7384" # bright red
+	printf "\\e]PAC8A565" # bright green
+	printf "\\e]PBFE8A53" # yellow
+	printf "\\e]PCB497FF" # bright blue
+	printf "\\e]PDEC8BCA" # bright magenta
+	printf "\\e]PE86B693" # bright cyan
+	printf "\\e]PFFFFFFF" # white
 	clear # fix artifacts
 fi
 
@@ -168,8 +168,10 @@ fi
 [ -x "$(command -v colordiff)" ] && alias diff='colordiff'
 
 # less
-[ -e /usr/bin/source-higthlight-esc.sh ] && export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
-export LESS='-R'
+if [ -e /usr/bin/source-higthlight-esc.sh ]; then
+	export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
+	export LESS='-R'
+fi
 
 # man - colored, and with help
 man() {
@@ -277,9 +279,6 @@ if [ ! -x "$(command -v tableflip)" ]; then
 	}
 fi
 
-# ip address
-[ -x "$(command -v curl)" ] && [ ! -x "$(command -v ipe)" ] && alias ipe='curl ipinfo.io/ip'
-
 # ls
 [ ! -x "$(command -v ll)" ] && alias ll='ls -la'
 [ ! -x "$(command -v sl)" ] && alias sl='ls'
@@ -312,35 +311,36 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 	# Networking
 
 	### firewalls
-	[ -x "$(command -v firewall-cmd)" ] && alias fw='sudo firewall-cmd'
-	[ -x "$(command -v iptables)" ] && alias ipt='sudo iptables'
-	[ -x "$(command -v nft)" ] && alias nft='sudo nft'
+	[ -x "$(command -v firewall-cmd)" ] && alias sfw='sudo firewall-cmd'
+	[ -x "$(command -v iptables)" ] && alias sipt='sudo iptables'
+	[ -x "$(command -v nft)" ] && alias snft='sudo nft'
 
 	### SS / Netstat
 	if [ -x "$(command -v ss)" ]; then
-		alias ss='sudo ss'
+		alias sss='sudo ss'
 	elif [ -x "$(command -v netstat)" ]; then
-		alias ss='sudo netstat'
+		alias sss='sudo netstat'
 	fi
-	[ "$(type -t ss)" == "alias" ] && alias sl='ss -ltunp'
+	[ "$(type -t sss)" == "alias" ] && alias sll='sss -ltunp'
 
 	# Package Managers
 
 	### Apt (Apt-Metalink)
 	if [ -x "$(command -v apt)" ]; then
 		if [ -x "$(command -v apt-metalink)" ]; then
-			alias apt='sudo apt-metalink'
+			alias apt='apt-metalink'
+			alias sapt='sudo apt-metalink'
 		else
-			alias apt='sudo apt'
+			alias sapt='sudo apt'
 		fi
-		alias aptup='apt update && apt upgrade && apt dist-upgrade && apt-autoremove'
+		alias aptup='sapt update && sapt dist-upgrade && sapt autoremove'
 	fi
 
 	### DNF/Yum
 	if [ -x "$(command -v dnf)" ]; then
-		alias dnf='sudo dnf'
+		alias sdnf='sudo dnf'
 	elif [ -x "$(command -v yum)" ]; then
-		alias dnf='sudo yum'
+		alias sdnf='sudo yum'
 	fi
 	alias dnfup='dnf -y update'
 

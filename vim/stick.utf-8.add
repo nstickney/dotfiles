@@ -96,3 +96,5 @@ virtualization
 whitespace
 workspace
 symlink
+untracked
+unstaged

@@ -1,133 +1,226 @@
 #!/usr/bin/env bash
 
-# Unofficial bash strict mode (http://redsymbol.net/articles/unofficial-bash-strict-mode/)
-set -euo pipefail
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+IFS=$'\n\t'
 
-# Sanity check
-if [ ! -x "$(command -v iptables)" ]; then
-	printf '%s\n' "Do you have iptables installed?"
-	exit 127
-fi
+save_permanent_iptables() {
 
-# nftables sanity check
-if [ ! -x "$(command -v nft)" ]; then
+	# On an Arch machine:
+	if [ -x "$(command -v pacman)" ] && [ -x "$(command -v iptables-save)" ]; then
+		sudo iptables-save | sudo tee /etc/iptables/iptables.rules >/dev/null
+
+	# On a CentOS machine:
+	elif [ -x "$(command -v yum)" ] && \
+		sudo yum list installed iptables-services >/dev/null 2>&1 ; then
+		sudo service iptables save
+	
+	# On a Debian machine:
+	elif [ -x "$(apt)" ] && dpkg -s iptables-persistent >/dev/null 2>&1; then
+		sudo dpkg-reconfigure -y iptables-persistent
+	
+	# Otherwise, fail:
+	else
+		# Warn about non-persistence
+		printf '\e[1;31m%s\e[0m' "WARNING:"
+		printf '%s\n' " The applied configuration is NOT PERMANENT across reboots. Please"
+		printf '%s\n' "    consult your distribution's documentation to determine how best to"
+		printf '%s\n' "    persist these rules. Suggested tools include iptables-persistent,"
+		printf '%s\n' "    iptables-save, or iptables-services."
+	fi
+
+}
+
+main() {
+	# Sanity check
+	if [ ! -x "$(command -v iptables)" ]; then
+		printf '%s\n' "Do you have iptables installed?"
+		exit 127
+	fi
+
+	# firewalld sanity check
+	if [ -x "$(command -v firewall-cmd)" ]; then
+		while true; do
+			printf '%s\n' "You have firewalld installed. It conflicts with these settings."
+			read -r -p "Continue with iptables? [y/N]: " -n 1 yn
+			printf '\n'
+			case $yn in
+				[Yy]* ) break;;
+				[Nn]* ) exit;;
+				"" ) exit;;
+			esac
+		done
+	fi
+
+	# nftables sanity check
+	if [ -x "$(command -v nft)" ]; then
+		while true; do
+			printf '%s\n' "You have nftables installed. It supercedes iptables."
+			read -r -p "Continue with iptables? [y/N]: " -n 1 yn
+			printf '\n'
+			case $yn in
+				[Yy]* ) break;;
+				[Nn]* ) exit;;
+				"" ) exit;;
+			esac
+		done
+	fi
+
+	# Sudo check
+	if [ ! -x "$(command -v sudo)" ]; then
+		printf '%s\n' "This script requires sudo." >&2
+		exit 127
+	fi
+
+	# Don't run with sudo! Need to preserve $SSH_CLIENT in some situations
+	if (( "$(id -u)" == 0 )) && [ ! -z "$SUDO_COMMAND" ]; then
+		printf '%s\n' "Don't run this script with sudo; it will invoke sudo as required."
+		exit 1
+	fi
+
+	# Ensure iptables service is running
+	if [ -x "$(command -v systemctl)" ]; then
+		sudo systemctl restart iptables
+	fi
+
+	# Find necessary information
+	local INTERFACE
+	INTERFACE="$(ip route | grep default | awk '{print $5}')"    # Main interface
+	local INTRANET
+	INTRANET="$(ip addr | grep "$INTERFACE" | awk 'FNR==2{print $2}')" # Intranet
+	local INTRANET_ADDR
+	INTRANET_ADDR="$(printf '%s' "$INTRANET" | awk -F/ '{print $1}')"
+	if [ ! -z "${SSH_CLIENT+x}" ]; then
+		local SSH_ADDR
+		SSH_ADDR="$(echo "$SSH_CLIENT" | cut -d' ' -f1)"
+	fi
+
+	# Clear initial rules and set default policy (DROP)
+	sudo iptables -F
+	sudo iptables -P INPUT DROP
+	sudo iptables -P FORWARD DROP
+	sudo iptables -P OUTPUT DROP
+
+	# Also drop IPv6
+	if [ -x "$(command -v ip6tables)" ]; then
+		sudo ip6tables -F
+		sudo ip6tables -P INPUT DROP
+		sudo ip6tables -P FORWARD DROP
+		sudo ip6tables -P OUTPUT DROP
+	fi
+
+	# The "BASE" chain will be used to hold rules applied to all other chains
+	sudo iptables -N BASE
+	sudo iptables -P BASE DROP
+	sudo iptables -A INPUT -j BASE
+	sudo iptables -A FORWARD -j BASE
+	sudo iptables -A OUTPUT -j BASE
+
+	# Drop invalid connections
+	sudo iptables -A BASE -m state --state INVALID -j DROP
+	sudo iptables -A OUTPUT -d "$INTRANET_ADDR" -j DROP
+
+	# Allow loopback in and out
+	sudo iptables -A BASE -i lo -j ACCEPT
+
+	# Allow established connections
+	sudo iptables -A BASE -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+	# Jump back after the base chain
+	sudo iptables -A BASE -j RETURN
+
+	# Prevent host spoofing
+	sudo iptables -A INPUT -s "$INTRANET_ADDR" -j DROP
+	sudo iptables -A FORWARD -s "$INTRANET_ADDR" -j DROP
+	sudo iptables -A FORWARD -d "$INTRANET_ADDR" -j DROP
+
+	# Allow DHCP from intranet for faster renewals
+	sudo iptables -A INPUT -s "$INTRANET" -p udp -m udp --sport 67 -m udp --dport 68 -j ACCEPT
+
+	# Allow mDNS from intranet for zeroconf
+	sudo iptables -A INPUT -s "$INTRANET" -p udp -m udp --dport 5353 -j ACCEPT
+
+	# Allow ping from intranet
+	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT   # echo reply
+	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 3 -j ACCEPT   # unreachable
+	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT   # echo request
+	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 11 -j ACCEPT  # time exceeded
+	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 12 -j ACCEPT  # parameter problem
+	sudo iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT  # echo reply
+	sudo iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT  # echo request
+
+	# Allow ssh from intranet
+	sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT
+
+	# Anti-lockout rule (allow SSH from current connection)
+	[ -z "${SSH_ADDR+x}" ] || sudo iptables -A INPUT -s "$SSH_ADDR" -p tcp -m tcp \
+		--dport 22 -j ACCEPT
+
+	# Allow printing to intranet
+	sudo iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 631 -j ACCEPT
+
+	# Allow required services outbound (TCP)
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT # WHOIS
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT # RSYNC
+
+	# Allow required services outbound (UDP)
+	sudo iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
+	sudo iptables -A OUTPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
+	sudo iptables -A OUTPUT -p udp -m udp --dport 123 -j ACCEPT # NTP
+
+	# Allow Minecraft outbound?
 	while true; do
-		printf '%s\n' "You have nftables installed. It supercedes iptables."
-		read -r -p "Continue with iptables? [y/N]: " -n 1 yn
+		read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
 		printf '\n'
-		case $yn in
-			[Yy]* ) break;;
-			[Nn]* ) exit;;
-			"" ) exit;;
+		case $mc in
+			[Yy]* ) sudo iptables -A OUTPUT -p tcp --match multiport -m tcp \
+				--dport 25565,27094 -j ACCEPT; break;;
+			[Nn]* ) break;;
+			"" ) break;;
 		esac
 	done
-fi
 
-# Ensure iptables service is running
-if [ -x "$(command -v systemctl)" ]; then
-	systemctl restart iptables
-fi
+	# Allow OpenVPN outbound?
+	while true; do
+		read -r -p "Does this computer use OpenVPN? [y/N]: " -n 1 ov
+		printf '\n'
+		case $ov in
+			[Yy]* ) sudo iptables -A OUTPUT -p tcp -m tcp --dport 1194 -j ACCEPT; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
 
-INTERFACE="$(ip route | grep default | awk '{print $5}')"    # Main interface
-INTRANET="$(ip addr | grep "$INTERFACE" | awk 'FNR==2{print $2}')" # Intranet
-INTRANET_ADDR="$(printf '%s' "$INTRANET" | awk -F/ '{print $1}')"
+	# Allow ProxMox outbound?
+	while true; do
+		read -r -p "Is this computer used to access ProxMox? [y/N]: " -n 1 ov
+		printf '\n'
+		case $ov in
+			[Yy]* ) sudo iptables -A OUTPUT -p tcp -m tcp --dport 8006 -j ACCEPT; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
 
-# Clear initial rules and set default policy (DROP)
-iptables -F
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
-iptables -P OUTPUT DROP
+	# Allow vSphere outbound?
+	while true; do
+		read -r -p "Is this computer used to access vSphere? [y/N]: " -n 1 vs
+		printf '\n'
+		case $vs in
+			[Yy]* ) sudo iptables -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
 
-# Also drop IPv6
-if [ -x "$(command -v ip6tables)" ]; then
-	ip6tables -F
-	ip6tables -P INPUT DROP
-	ip6tables -P FORWARD DROP
-	ip6tables -P OUTPUT DROP
-fi
-
-# The "BASE" chain will be used to hold rules applied to all other chains
-iptables -N BASE
-iptables -P BASE DROP
-iptables -A INPUT -j BASE
-iptables -A FORWARD -j BASE
-iptables -A OUTPUT -j BASE
-
-# Drop invalid connections
-iptables -A BASE -m state --state INVALID -j DROP
-iptables -A OUTPUT -d "$INTRANET_ADDR" -j DROP
-
-# Allow loopback in and out
-iptables -A BASE -i lo -j ACCEPT
-
-# Allow established connections
-iptables -A BASE -m state --state ESTABLISHED,RELATED -j ACCEPT
-
-# Jump back after the base chain
-iptables -A BASE -j RETURN
-
-# Prevent host spoofing
-iptables -A INPUT -s "$INTRANET_ADDR" -j DROP
-iptables -A FORWARD -s "$INTRANET_ADDR" -j DROP
-iptables -A FORWARD -d "$INTRANET_ADDR" -j DROP
-
-# Allow DHCP from intranet for faster renewals
-iptables -A INPUT -s "$INTRANET" -p udp -m udp --sport 67 -m udp --dport 68 -j ACCEPT
-
-# Allow mDNS from intranet for zeroconf
-iptables -A INPUT -s "$INTRANET" -p udp -m udp --dport 5353 -j ACCEPT
-
-# Allow ping from intranet
-iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT   # echo reply
-iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 3 -j ACCEPT   # Destination unreachable
-iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT   # echo request
-iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 11 -j ACCEPT  # Time exceeded
-iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 12 -j ACCEPT  # Parameter problem
-iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT  # echo reply
-iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT  # echo request
-
-# Allow ssh from intranet
-iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT # SSH
-
-# Allow printing to intranet
-iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 631 -j ACCEPT # IPP
-
-# Allow required services outbound (TCP)
-iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
-iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
-iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT # RSYNC
-iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # SSH
-iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT # WHOIS
-
-# Allow required services outbound (UDP)
-iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
-iptables -A OUTPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
-iptables -A OUTPUT -p udp -m udp --dport 123 -j ACCEPT # NTP
-iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT # OpenVPN
-
-# Allow Minecraft outbound?
-allow_minecraft () {
-	iptables -A OUTPUT -p tcp -m tcp --dport 25565 -j ACCEPT
-	iptables -A OUTPUT -p tcp -m tcp --dport 27094 -j ACCEPT
-}
-while true; do
-	read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
+	# Show the result
+	printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"
+	sudo iptables -L
 	printf '\n'
-	case $mc in
-		[Yy]* ) allow_minecraft; break;;
-		[Nn]* ) break;;
-		"" ) break;;
-	esac
-done
+}
 
-# Show the result
-printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"
-iptables -L
-printf '\n'
-
-# Warn about non-persistence
-printf '\e[1;31m%s\e[0m' "WARNING:"
-printf '%s\n' " The applied configuration is NOT PERMANENT across reboots. Please"
-printf '%s\n' "    consult your distribution's documentation to determine how best to"
-printf '%s\n' "    persist these rules. Suggested tools include iptables-save and"
-printf '%s\n' "    iptables-persistent."
+main "$@"

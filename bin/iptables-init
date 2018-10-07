@@ -5,6 +5,11 @@ set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 IFS=$'\n\t'
 
+add_minecraft_rules() {
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 25565 -j ACCEPT
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 27094 -j ACCEPT
+}
+
 add_openvpn_rules() {
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 1194 -j ACCEPT
 	sudo iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
@@ -101,8 +106,20 @@ main() {
 		SSH_ADDR="$(echo "$SSH_CLIENT" | cut -d' ' -f1)"
 	fi
 
-	# Clear initial rules and set default policy (DROP)
+	# Clear initial rules
 	sudo iptables -F
+
+	# The "BASE" chain will be used to hold rules applied to all other chains
+	sudo iptables -N BASE
+	sudo iptables -A INPUT -j BASE
+	sudo iptables -A FORWARD -j BASE
+	sudo iptables -A OUTPUT -j BASE
+
+	# Anti-lockout rule (allow SSH from current connection)
+	[ -z "${SSH_ADDR+x}" ] || sudo iptables -A INPUT -s "$SSH_ADDR" -p tcp -m tcp \
+		--dport 22 -j ACCEPT
+
+	# Set default policy for all chains to DROP
 	sudo iptables -P INPUT DROP
 	sudo iptables -P FORWARD DROP
 	sudo iptables -P OUTPUT DROP
@@ -114,13 +131,6 @@ main() {
 		sudo ip6tables -P FORWARD DROP
 		sudo ip6tables -P OUTPUT DROP
 	fi
-
-	# The "BASE" chain will be used to hold rules applied to all other chains
-	sudo iptables -N BASE
-	sudo iptables -P BASE DROP
-	sudo iptables -A INPUT -j BASE
-	sudo iptables -A FORWARD -j BASE
-	sudo iptables -A OUTPUT -j BASE
 
 	# Drop invalid connections
 	sudo iptables -A BASE -m state --state INVALID -j DROP
@@ -155,18 +165,14 @@ main() {
 	sudo iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT  # echo reply
 	sudo iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT  # echo request
 
-	# Anti-lockout rule (allow SSH from current connection)
-	[ -z "${SSH_ADDR+x}" ] || sudo iptables -A INPUT -s "$SSH_ADDR" -p tcp -m tcp \
-		--dport 22 -j ACCEPT
-
 	# Uncomment the lines below as needed to make services available
-	# sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT # SSH (Intranet)
+	# sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT # SSH
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH (DANGER)
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
 	# sudo iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 25565 -j ACCEPT # Minecraft
-	# sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap (Intranet)
+	# sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap (DANGER)
 
 	# Allow printing to intranet
@@ -189,8 +195,7 @@ main() {
 		read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
 		printf '\n'
 		case $mc in
-			[Yy]* ) sudo iptables -A OUTPUT -p tcp --match multiport -m tcp \
-				--dport 25565,27094 -j ACCEPT; break;;
+			[Yy]* ) add_minecraft_rules; break;;
 			[Nn]* ) break;;
 			"" ) break;;
 		esac

@@ -289,6 +289,9 @@ alias more='less'
 # mkdir
 alias mkdir='mkdir -pv'
 
+# makepkg
+[ -x "$(command -v makepkg)" ] && alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
+
 # ping
 [ ! -x "$(command -v pinc)" ] && alias pinc='ping -c'
 

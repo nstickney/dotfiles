@@ -5,6 +5,29 @@ set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 IFS=$'\n\t'
 
+add_bittorrent_incoming() {
+	sudo nft add rule ip filter input tcp dport 8999 accept
+	sudo nft add rule ip filter input udp dport 8999 accept
+}
+
+add_bittorrent_rules() {
+	sudo nft add rule ip filter output tcp dport \{ 6969, 8999, 51413 \} accept
+	sudo nft add rule ip filter output udp dport \{ 6969, 8999, 51413 \} accept
+
+	# Allow incoming bittorrent connections?
+	while true; do
+		read -r -p "Allow BitTorrent inbound? [y/N]: " -n 1 mc
+		printf '\n'
+		case $mc in
+			[Yy]* ) add_bittorrent_incoming; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
+
+	# Allow Minecraft outbound?
+}
+
 add_openvpn_rules() {
 	sudo nft add rule ip filter output tcp dport openvpn accept
 	sudo nft add rule ip filter output udp dport openvpn accept
@@ -100,8 +123,11 @@ main() {
 	# Allow DHCP from intranet for faster renewals
 	sudo nft add rule ip filter input ip saddr "$INTRANET" udp sport bootps udp dport bootpc accept
 
-	# Allow mDNS from intranet for zeroconf
+	# Allow mDNS to/from intranet for zeroconf
 	sudo nft add rule ip filter input ip saddr "$INTRANET" udp dport mdns accept
+	sudo nft add rule ip filter input ip daddr 224.0.0.251 udp dport mdns accept
+	sudo nft add rule ip filter output ip daddr "$INTRANET" udp dport mdns accept
+	sudo nft add rule ip filter output ip daddr 224.0.0.251 udp dport mdns accept
 
 	# Allow ping to and from intranet
 	sudo nft add rule ip filter output ip protocol icmp ip saddr "$INTRANET" icmp type \
@@ -121,13 +147,24 @@ main() {
 	# sudo nft add rule ip filter input tcp dport 8123 accept # Dynmap (DANGER)
 
 	# Allow printing to intranet
-	sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport snmp accept
-	sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport 515 accept
+	# sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport snmp accept
+	# sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport 515 accept
 	sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport ipp accept
 
 	# Allow required services outbound
 	sudo nft add rule ip filter output tcp dport \{ http, https, rsync, ssh, whois \} accept
 	sudo nft add rule ip filter output udp dport \{ domain, https, ntp \} accept
+
+	# Allow BitTorrent?
+	while true; do
+		read -r -p "Allow BitTorrent? [y/N]: " -n 1 mc
+		printf '\n'
+		case $mc in
+			[Yy]* ) add_bittorrent_rules; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
 
 	# Allow Minecraft outbound?
 	while true; do

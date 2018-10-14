@@ -3,6 +3,7 @@ AddPackage --foreign bfg # Removes large or troublesome blobs like git-filter-br
 AddPackage cloc # Count lines of code
 AddPackage git # the fast distributed version control system
 AddPackage git-crypt # Transparent file encryption in Git
+AddPackage namcap # A Pacman package analyzer
 AddPackage parallel # A shell tool for executing jobs in parallel
 AddPackage ripgrep # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rsync # A file transfer program to keep remote files in sync
@@ -11,7 +12,6 @@ AddPackage tmux # A terminal multiplexer
 AddPackage tree # A directory listing program displaying a depth indented list of files
 AddPackage vim # Vi Improved, a highly configurable, improved version of the vi text editor
 AddPackage vim-spell-en # Language files for Vim spell checking
-AddPackage vim-systemd # ViM syntax highlighting for systemd unit files
 
 # Network Testing
 AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
@@ -35,8 +35,8 @@ AddPackage gdb # The GNU Debugger
 AddPackage vim-omnicppcomplete # vim c++ completion omnifunc with a ctags database
 
 ### Go
-# AddPackage delve # A debugger for the Go programming language.
-# AddPackage go # Core compiler tools for the Go programming language
+AddPackage delve # A debugger for the Go programming language.
+AddPackage go # Core compiler tools for the Go programming language
 
 ### Java
 # AddPackage intellij-idea-community-edition # IDE for Java, Groovy and other programming languages with advanced refactoring features

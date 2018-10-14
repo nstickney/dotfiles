@@ -264,6 +264,16 @@ fi
 [ ! -x "$(command -v rebase)" ] && alias rebase='git rebase -i'
 [ ! -x "$(command -v reflog)" ] && alias reflog='git reflog'
 
+# https://help.github.com/articles/removing-sensitive-data-from-a-repository/
+if [ ! -x "$(command -v repoclean)" ]; then
+	repoclean() {
+		git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '"$*" --prune-empty --tag-name-filter cat -- --all
+		git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
+		git reflog expire --expire=now --all
+		git gc --prune=now
+	}
+fi
+
 # https://twitter.com/aran384/status/1046487063489437696
 if [ ! -x "$(command -v tableflip)" ]; then
 	tableflip() {

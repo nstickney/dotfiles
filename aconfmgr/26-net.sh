@@ -1,7 +1,7 @@
 AddPackage aria2 # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
 AddPackage avahi # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
 AddPackage bind-tools # The ISC DNS tools
-# AddPackage chromium # The open-source project behind Google Chrome, an attempt at creating a safer, faster, and more stable browser
+AddPackage chromium # A web browser built for speed, simplicity, and security
 AddPackage dhcpcd # RFC2131 compliant DHCP client daemon
 AddPackage dnsmasq # Lightweight, easy to configure DNS forwarder and DHCP server
 # AddPackage fail2ban # Bans IPs after too many failed authentication attempts

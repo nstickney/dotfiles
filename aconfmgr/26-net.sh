@@ -4,7 +4,6 @@ AddPackage bind-tools # The ISC DNS tools
 AddPackage chromium # A web browser built for speed, simplicity, and security
 AddPackage dhcpcd # RFC2131 compliant DHCP client daemon
 AddPackage dnsmasq # Lightweight, easy to configure DNS forwarder and DHCP server
-# AddPackage fail2ban # Bans IPs after too many failed authentication attempts
 # AddPackage icedtea-web # Free web browser plugin to run applets written in Java and an implementation of Java Web Start
 AddPackage firefox # Standalone web browser from mozilla.org
 # AddPackage flashplugin # Adobe Flash Player NPAPI - disgusting, but necessary for vSphere
@@ -12,7 +11,6 @@ AddPackage inetutils # A collection of common network programs
 AddPackage iproute2 # IP Routing Utilities
 AddPackage iputils # Network monitoring tools, including ping
 AddPackage lynx # A text browser for the World Wide Web
-AddPackage masscan # TCP port scanner, spews SYN packets asynchronously, scanning entire Internet in under 5 minutes
 AddPackage netctl # Profile based systemd network management
 AddPackage networkmanager # Network connection manager and user applications
 AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnect
@@ -24,6 +22,7 @@ AddPackage openvpn # An easy-to-use, robust and highly configurable VPN (Virtual
 AddPackage privoxy # A web proxy with advanced filtering capabilities.
 AddPackage python2-dbus # avahi optionally requires python2-dbus: avahi-discover
 AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
+AddPackage sniffglue # Secure multithreaded packet sniffer
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 AddPackage tcpdump # Powerful command-line packet analyzer
 AddPackage tor # Anonymizing overlay network

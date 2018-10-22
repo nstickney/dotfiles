@@ -1,8 +1,9 @@
 # Basic tools
-AddPackage --foreign bfg # Removes large or troublesome blobs like git-filter-branch does, but faster.
 AddPackage cloc # Count lines of code
+AddPackage fd # Simple, fast and user-friendly alternative to find
 AddPackage git # the fast distributed version control system
 AddPackage git-crypt # Transparent file encryption in Git
+AddPackage --foreign hyperfine # A command-line benchmarking tool
 AddPackage namcap # A Pacman package analyzer
 AddPackage parallel # A shell tool for executing jobs in parallel
 AddPackage ripgrep # A search tool that combines the usability of ag with the raw speed of grep

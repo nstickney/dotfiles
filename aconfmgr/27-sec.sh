@@ -1,4 +1,4 @@
-if [[ "$HOSTNAME" == "elisha" || "$HOSTNAME" == "eliab" ]]; then
+if [[ "$HOSTNAME" == "elisha" || "$HOSTNAME" == "elias" ]]; then
 	# Forensics
 	AddPackage foremost # A console program to recover files based on their headers, footers, and internal data structures
 	AddPackage sleuthkit # File system and media management forensic analysis tools

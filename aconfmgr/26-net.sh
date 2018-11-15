@@ -28,6 +28,7 @@ AddPackage tcpdump # Powerful command-line packet analyzer
 AddPackage tor # Anonymizing overlay network
 AddPackage whois # Intelligent WHOIS client
 AddPackage wget # A network utility to retrieve files from the Web
+AddPackage youtube-dl # A small command-line program to download videos from YouTube.com and a few more sites
 
 # AddPackage --foreign chromium-widevine # A browser plugin designed for the viewing of premium video content
 # AddPackage --foreign discord #

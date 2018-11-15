@@ -184,7 +184,7 @@ man() {
 		LESS_TERMCAP_ue="$(printf '\e[0m')" \
 		LESS_TERMCAP_us="$(printf '\e[0;34m')" \
 		man "$@" || (help "$@" 2> /dev/null && help "$@" | less)
-}
+	}
 
 # COMPLETION ##################################################################
 
@@ -299,6 +299,12 @@ alias more='less'
 # mkdir
 alias mkdir='mkdir -pv'
 
+if [ ! -x "$(command -v mkcd)" ]; then
+	mkcd() {
+		mkdir -pv "$@" && cd "$_" || exit
+	}
+fi
+
 # makepkg
 [ -x "$(command -v makepkg)" ] && alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 
@@ -308,6 +314,18 @@ alias mkdir='mkdir -pv'
 # ps
 [ ! -x "$(command -v pf)" ] && alias pf='ps auxf'
 [ ! -x "$(command -v pg)" ] && alias pg='ps aux | grep -v grep | grep -i -e'
+
+if [ ! -x "$(command -v tableflip)" ]; then
+	kp() {
+		local pid
+		pid=$(ps -ef | sed 1d | eval "fzf -m --header='[kill:process]'" | awk '{print $2}')
+
+		if [ "x$pid" != "x" ]; then
+			echo "$pid" | xargs kill -"${1:-9}"
+			kp "$@"
+		fi
+	}
+fi
 
 # tar
 [ ! -x "$(command -v untar)" ] && alias untar='tar -zxvf'

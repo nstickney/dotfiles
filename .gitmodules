@@ -31,3 +31,6 @@
 [submodule "vim/pack/stick/start/emmet"]
 	path = vim/pack/stick/start/emmet
 	url = https://github.com/mattn/emmet-vim
+[submodule "vim/pack/stick/start/targets.vim"]
+	path = vim/pack/stick/start/targets.vim
+	url = https://github.com/wellle/targets.vim

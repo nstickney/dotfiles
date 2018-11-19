@@ -6,7 +6,7 @@ AddPackage dhcpcd # RFC2131 compliant DHCP client daemon
 AddPackage dnsmasq # Lightweight, easy to configure DNS forwarder and DHCP server
 # AddPackage icedtea-web # Free web browser plugin to run applets written in Java and an implementation of Java Web Start
 AddPackage firefox # Standalone web browser from mozilla.org
-# AddPackage flashplugin # Adobe Flash Player NPAPI - disgusting, but necessary for vSphere
+AddPackage flashplugin # Adobe Flash Player NPAPI - disgusting, but necessary for vSphere
 AddPackage inetutils # A collection of common network programs
 AddPackage iproute2 # IP Routing Utilities
 AddPackage iputils # Network monitoring tools, including ping
@@ -17,6 +17,7 @@ AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnec
 AddPackage networkmanager-openvpn # NetworkManager VPN plugin for OpenVPN
 AddPackage nftables # Netfilter tables userspace tools
 AddPackage nss-mdns # glibc plugin providing host name resolution via mDNS
+AddPackage obs-studio # Free, open source software for live streaming and recording
 AddPackage openssh # Free version of the SSH connectivity tools
 AddPackage openvpn # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
 AddPackage privoxy # A web proxy with advanced filtering capabilities.

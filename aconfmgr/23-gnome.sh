@@ -57,6 +57,7 @@ AddPackage gnome-system-log # View your system logs
 AddPackage gnome-system-monitor # View current processes and monitor system state
 AddPackage gnome-tweaks # Graphical interface for advanced GNOME 3 settings (Tweak Tool)
 AddPackage gparted # A Partition Magic clone, frontend to GNU Parted
+AddPackage gucharmap # Gnome Unicode Charmap
 AddPackage gvfs # Virtual filesystem implementation for GIO
 AddPackage gvfs-afc # Virtual filesystem implementation for GIO (AFC backend; Apple mobile devices)
 AddPackage gvfs-goa # Virtual filesystem implementation for GIO (Gnome Online Accounts backend; cloud storage)

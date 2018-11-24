@@ -16,7 +16,7 @@ for_window [class="^.*"] border pixel 1
 gaps inner 2
 
 ## Font (window titles and bar)
-font pango:Source Code Pro 12
+font pango:Source Code Pro, Font Awesome 5 Free Solid 12
 
 ## Colors (see http://i3wm.org/docs/userguide.html#_changing_colors)
 set $fore   #e2e2e2

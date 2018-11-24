@@ -1,4 +1,8 @@
-icons = "awesome"
+[icons]
+name = "awesome"
+[icons.overrides]
+cpu = "  "
+memory_mem = "  "
 
 [theme]
 name = "plain"

@@ -39,8 +39,7 @@ client.background       $bact
 ### Startup Actions #####
 
 # Finalize host-specific configuration of status bar
-exec_always --no-startup-id [ ! -e $i3dir/bar/$HOSTNAME.toml ] && ln -s $i3dir/bar/elisha.toml $i3dir/bar/$HOSTNAME.toml
-exec_always --no-startup-id cat $i3dir/bar/theme.toml > $i3dir/status.toml && cat $i3dir/bar/$HOSTNAME.toml >> $i3dir/status.toml
+exec_always --no-startup-id $i3dir/bar/i3bar-configure $i3dir
 
 # Get GNOME settings working
 exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings

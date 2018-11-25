@@ -21,7 +21,7 @@ Includes configuration for:
 
 The install script only links configuration files for software that is actually available in the `$PATH`.
 
-The i3wm configuration uses a per-host status bar configuration file located in the `./i3/bar` directory (for example, `./i3/bar/eli.toml`). You should rename one (`cp ./i3/bar/default.toml ./i3/bar/$HOSTNAME.toml`), then update it with the correct network and storage devices for your host.
+The i3wm configuration uses a per-host status bar configuration file located in the `./i3/bar` directory (for example, `./i3/bar/eli.toml`). You should rename one (`cp ./i3/bar/elisha.toml ./i3/bar/$HOSTNAME.toml`), then update it with the correct network and storage devices for your host.
 
 ### Dependencies
 

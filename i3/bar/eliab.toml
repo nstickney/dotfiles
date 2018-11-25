@@ -5,12 +5,7 @@ max_width = 100
 [[block]]
 block = "custom"
 interval = 1000
-command = "uname -nr"
-
-[[block]]
-block = "custom"
-interval = 30
-command = "hostname -i"
+cycle = ["echo  $(hostname -i)", "echo  $(uname -n)", "echo  $(uname -r)", "echo  $(whoami)"]
 
 [[block]]
 block = "pacman"

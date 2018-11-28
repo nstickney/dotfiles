@@ -415,4 +415,4 @@ fi
 
 # Import SSH aliases from protected file
 # shellcheck source=/dev/null
-[ -f "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh ] && source "$HOME"/SafeDepositBox/"$USER"/ssh-aliases.sh
+[ -f "$HOME"/SafeDepositBox/"$USER"/bash-secrets.sh ] && source "$HOME"/SafeDepositBox/"$USER"/bash-secrets.sh

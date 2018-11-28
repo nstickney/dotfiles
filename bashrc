@@ -391,6 +391,7 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 		fi
 		export PACMAN
 		alias pacup='yes | pac -Syyu --noconfirm'
+		alias pacout='pac -Runcs $(pac -Qdtq)'
 
 		# Aurman
 		if [ -x "$(command -v aurman)" ]; then

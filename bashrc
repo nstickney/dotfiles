@@ -224,8 +224,39 @@ PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
 export HISTFILESIZE=8192
 
 # PATH ########################################################################
-export PATH="$PATH":"$HOME"/dotfiles/bin
-[ -d "$HOME"/dotfiles/overrides ] && export PATH="$HOME"/dotfiles/overrides:$PATH
+
+## Remove duplicate items
+## https://unix.stackexchange.com/a/338737
+remove_dups() {
+    local D=${2:-:}
+    local path=
+    local dir=
+    while IFS= read -r -d"$D" dir; do
+        [[ $path$D =~ .*$D$dir$D.* ]] || path+="$D$dir"
+    done <<< "$1$D"
+    printf %s "${path#$D}"
+}
+PATH="$(remove_dups "$PATH")"
+
+## Cleanly add an item to the end of $PATH
+## https://unix.stackexchange.com/a/124447
+path_append() {
+	case ":${PATH:=$1}:" in
+		*:$@:*) ;;
+		*) PATH="$PATH:$1";;
+	esac
+}
+
+## Cleanly add an item to the beginning of $PATH
+path_override() {
+	case ":${PATH:=$1}:" in
+		*:$@:*) ;;
+		*) PATH="$1:$PATH";;
+	esac
+}
+
+[ -d "$HOME/dotfiles/overrides" ] && path_override "$HOME/dotfiles/overrides"
+path_append "$HOME/dotfiles/bin"
 
 # NVM
 # shellcheck disable=1091

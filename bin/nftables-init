@@ -5,14 +5,30 @@ set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 IFS=$'\n\t'
 
+add_ip_chain() {
+	sudo nft add chain ip filter "$@"
+}
+
+add_ip_rule() {
+	sudo nft add rule ip filter "$@"
+}
+
+add_ip6_chain() {
+	sudo nft add chain ip6 filter "$@"
+}
+
+add_ip6_rule() {
+	sudo nft add rule ip6 filter "$@"
+}
+
 add_bittorrent_incoming() {
-	sudo nft add rule ip filter input tcp dport 8999 accept
-	sudo nft add rule ip filter input udp dport 8999 accept
+	add_ip_rule input tcp dport 8999 accept
+	add_ip_rule input udp dport 8999 accept
 }
 
 add_bittorrent_rules() {
-	sudo nft add rule ip filter output tcp dport \{ 6969, 8999, 51413 \} accept
-	sudo nft add rule ip filter output udp dport \{ 6969, 8999, 51413 \} accept
+	add_ip_rule output tcp dport \{ 6969, 8999, 51413 \} accept
+	add_ip_rule output udp dport \{ 6969, 8999, 51413 \} accept
 
 	# Allow incoming bittorrent connections?
 	while true; do
@@ -24,46 +40,109 @@ add_bittorrent_rules() {
 			"" ) break;;
 		esac
 	done
+}
 
-	# Allow Minecraft outbound?
+add_printing_rules() {
+	# Allow printing to intranet
+	# add_ip_rule output ip daddr "$INTRANET" tcp dport snmp accept
+	# add_ip_rule output ip daddr "$INTRANET" tcp dport 515 accept
+	add_ip_rule output ip daddr "$INTRANET" tcp dport ipp accept
 }
 
 add_openvpn_rules() {
-	sudo nft add rule ip filter output tcp dport openvpn accept
-	sudo nft add rule ip filter output udp dport openvpn accept
+	add_ip_rule output tcp dport openvpn accept
+	add_ip_rule output udp dport openvpn accept
+}
+
+add_workstation_rules() {
+
+	# Allow ping to intranet
+	add_ip_rule output ip protocol icmp ip saddr "$INTRANET" icmp type \
+		echo-request accept
+	add_ip_rule input ip protocol icmp ip saddr "$INTRANET" icmp type \
+		\{ echo-reply, time-exceeded, parameter-problem, \
+		destination-unreachable \} accept
+
+	# Allow needed workstation outbound access
+	add_ip_rule output tcp dport \{ rsync, ssh, whois \} accept
+
+	# Allow printing to intranet?
+	while true; do
+		read -r -p "Does this computer use network printers? [y/N]: " -n 1 np
+		printf '\n'
+		case $np in
+			[Yy]* ) add_printing_rules; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
+
+	# Allow Minecraft outbound?
+	while true; do
+		read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
+		printf '\n'
+		case $mc in
+			[Yy]* ) add_ip_rule output tcp dport \{ 25565, 27094 \} accept; \
+				break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
+
+	# Allow ProxMox outbound?
+	while true; do
+		read -r -p "Is this computer used to access ProxMox? [y/N]: " -n 1 pm
+		printf '\n'
+		case $pm in
+			[Yy]* ) add_ip_rule output tcp dport 8006 accept; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
+
+	# Allow vSphere outbound?
+	while true; do
+		read -r -p "Is this computer used to access vSphere? [y/N]: " -n 1 vs
+		printf '\n'
+		case $vs in
+			[Yy]* ) add_ip_rule output tcp dport 9443 accept; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
 }
 
 save_permanent_nftables() {
 	sudo cp /etc/nftables.conf /etc/nftables.conf.bak
-	printf '%s\n\n' "#!/usr/bin/nft -f" | sudo tee /etc/nftables.conf >/dev/null
+	printf '#!/usr/bin/nft -f\n\n' | sudo tee /etc/nftables.conf >/dev/null
 	sudo nft list ruleset | sudo tee -a /etc/nftables.conf >/dev/null
-	printf '%s\n' "Configuration saved."
+	printf 'Configuration saved.\n'
 }
 
 main() {
 	# Sanity check
 	if [ ! -x "$(command -v nft)" ]; then
-		printf '%s\n' "Do you have nftables installed?" >&2
+		printf 'Do you have nftables installed?\n' >&2
 		exit 127
 	fi
 
 	# Sudo check
 	if [ ! -x "$(command -v sudo)" ]; then
-		printf '%s\n' "This script requires sudo." >&2
+		printf 'This script requires sudo.\n' >&2
 		exit 127
 	fi
 
 	# Don't run with sudo! Need to preserve $SSH_CLIENT in some situations
 	if (( "$(id -u)" == 0 )) && [ ! -z "$SUDO_COMMAND" ]; then
-		printf '%s\n' "Don't run this script with sudo; it will invoke sudo as required."
+		printf 'Do not run this as root (sudo); it invokes sudo as required.\n'
 		exit 1
 	fi
 
 	# Find necessary information
-	local INTERFACE
-	INTERFACE="$(ip route | grep default | awk '{print $5}')" # Main interface
+	local IFACE
+	IFACE="$(ip route | grep default | awk '{print $5}')" # Main interface
 	local INTRANET
-	INTRANET="$(ip addr | grep "$INTERFACE" | awk 'FNR==2{print $2}')" # Intranet
+	INTRANET="$(ip addr | grep "$IFACE" | awk 'FNR==2{print $2}')" # Intranet
 	local INTRANET_ADDR
 	INTRANET_ADDR="$(printf '%s' "$INTRANET" | awk -F/ '{print $1}')"
 	if [ ! -z "${SSH_CLIENT+x}" ]; then
@@ -76,102 +155,88 @@ main() {
 		sudo systemctl restart nftables
 	fi
 
-	# Clear initial rules
+	# Clear initial rules (set all policies to ACCEPT and delete extra chains)
 	sudo nft flush ruleset
 	sudo nft add table ip filter
-	sudo nft add chain ip filter input \{ type filter hook input priority 0\; \}
-	sudo nft add chain ip filter forward \{ type filter hook forward priority 0\; \}
-	sudo nft add chain ip filter output \{ type filter hook output priority 0\; \}
+	add_ip_chain input \{ type filter hook input priority 0\; \}
+	add_ip_chain forward \{ type filter hook forward priority 0\; \}
+	add_ip_chain output \{ type filter hook output priority 0\; \}
 
 	# The "base" chain will be used to hold rules applied to all other chains
-	sudo nft add chain ip filter base
-	sudo nft add rule ip filter input jump base
-	sudo nft add rule ip filter forward jump base
-	sudo nft add rule ip filter output jump base
+	add_ip_chain base
+	add_ip_rule input jump base
+	add_ip_rule forward jump base
+	add_ip_rule output jump base
+
+	# Drop invalid connections
+	add_ip_rule base ct state invalid drop
+
+	# Allow established connections
+	add_ip_rule base ct state \{ established, related \} accept
+
+	# Allow loopback in and out to itself
+	add_ip_rule base meta iif lo oif lo accept
+	add_ip_rule base ip saddr 127.0.0.0/8 ip daddr 127.0.0.0/8 accept
 
 	# Anti-lockout rule (allow SSH from current connection)
-	[ ! -z "${SSH_ADDR+x}" ] && sudo nft add rule ip filter input ip saddr \
-		"$SSH_ADDR" tcp -m dport ssh accept
+	[ ! -z "${SSH_ADDR+x}" ] && add_ip_rule input ip saddr "$SSH_ADDR" tcp -m \
+		--dport ssh accept
 
 	# Set default policy for all chains to DROP
-	sudo nft add chain ip filter input \{ policy drop\; \}
-	sudo nft add chain ip filter forward \{ policy drop\; \}
-	sudo nft add chain ip filter output \{ policy drop\; \}
+	add_ip_chain input \{ policy drop\; \}
+	add_ip_chain forward \{ policy drop\; \}
+	add_ip_chain output \{ policy drop\; \}
 
 	# Also drop IPv6
 	sudo nft add table ip6 filter
-	sudo nft add chain ip6 filter input \{ type filter hook input priority 0\; policy drop\; \}
-	sudo nft add chain ip6 filter forward \{ type filter hook forward priority 0\; policy drop\; \}
-	sudo nft add chain ip6 filter output \{ type filter hook output priority 0\; policy drop\; \}
-
-	# Drop invalid connections
-	sudo nft add rule ip filter base ct state invalid drop
-
-	# Allow established connections
-	sudo nft add rule ip filter base ct state \{ established, related \} accept
-
-	# Allow loopback in and out to itself
-	sudo nft add rule ip filter base meta iif lo oif lo accept
-	sudo nft add rule ip filter base ip saddr 127.0.0.0/8 ip daddr 127.0.0.0/8 accept
+	add_ip6_chain input \{ type filter hook input priority 0\; policy drop\; \}
+	add_ip6_chain forward \{ type filter hook forward priority 0\; \
+		policy drop\; \}
+	add_ip6_chain output \{ type filter hook output priority 0\; \
+		policy drop\; \}
 
 	# Prevent host spoofing
-	sudo nft add rule ip filter input ip saddr "$INTRANET_ADDR" drop
-	sudo nft add rule ip filter forward ip saddr "$INTRANET_ADDR" drop
-	sudo nft add rule ip filter forward ip daddr "$INTRANET_ADDR" drop
-	sudo nft add rule ip filter output ip daddr "$INTRANET_ADDR" drop
+	add_ip_rule input ip saddr "$INTRANET_ADDR" drop
+	add_ip_rule forward ip saddr "$INTRANET_ADDR" drop
+	add_ip_rule forward ip daddr "$INTRANET_ADDR" drop
+	add_ip_rule output ip daddr "$INTRANET_ADDR" drop
 
 	# Allow DHCP from intranet for faster renewals
-	sudo nft add rule ip filter input ip saddr "$INTRANET" udp sport bootps udp dport bootpc accept
+	add_ip_rule input ip saddr "$INTRANET" udp sport bootps udp dport bootpc \
+		accept
 
 	# Allow mDNS to/from intranet for zeroconf
-	sudo nft add rule ip filter input ip saddr "$INTRANET" udp dport mdns accept
-	sudo nft add rule ip filter input ip daddr 224.0.0.251 udp dport mdns accept
-	sudo nft add rule ip filter output ip daddr "$INTRANET" udp dport mdns accept
-	sudo nft add rule ip filter output ip daddr 224.0.0.251 udp dport mdns accept
+	add_ip_rule input ip saddr "$INTRANET" udp dport mdns accept
+	add_ip_rule input ip daddr 224.0.0.251 udp dport mdns accept
+	add_ip_rule output ip daddr "$INTRANET" udp dport mdns accept
+	add_ip_rule output ip daddr 224.0.0.251 udp dport mdns accept
 
 	# Allow ping to and from intranet
-	sudo nft add rule ip filter output ip protocol icmp ip saddr "$INTRANET" icmp type \
-		\{ echo-request, echo-reply \} accept
-	sudo nft add rule ip filter input ip protocol icmp ip saddr "$INTRANET" icmp type \
-		\{ echo-request, echo-reply, time-exceeded, parameter-problem, \
-		destination-unreachable \} accept
+	add_ip_rule output ip protocol icmp ip saddr "$INTRANET" icmp type \
+		echo-reply accept
+	add_ip_rule input ip protocol icmp ip saddr "$INTRANET" icmp type \
+		echo-request accept
 
 	# Uncomment the lines below as needed to make services available
-	# sudo nft add rule ip filter input ip saddr "$INTRANET" tcp dport ssh accept # SSH
-	# sudo nft add rule ip filter input tcp dport ssh accept # SSH (DANGER)
-	# sudo nft add rule ip filter input tcp dport http accept # HTTP
-	# sudo nft add rule ip filter input tcp dport https accept # HTTPS
-	# sudo nft add rule ip filter input udp dport https accept # HTTP/2
-	# sudo nft add rule ip filter input tcp dport 25565 accept # Minecraft
-	# sudo nft add rule ip filter input ip saddr "$INTRANET" -p tcp dport 8123 accept # Dynmap
-	# sudo nft add rule ip filter input tcp dport 8123 accept # Dynmap (DANGER)
-
-	# Allow printing to intranet
-	# sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport snmp accept
-	# sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport 515 accept
-	sudo nft add rule ip filter output ip daddr "$INTRANET" tcp dport ipp accept
+	# add_ip_rule input ip saddr "$INTRANET" tcp dport ssh accept # SSH
+	# add_ip_rule input tcp dport ssh accept # SSH (DANGER)
+	# add_ip_rule input tcp dport http accept # HTTP
+	# add_ip_rule input tcp dport https accept # HTTPS
+	# add_ip_rule input udp dport https accept # HTTP/2
+	# add_ip_rule input tcp dport 25565 accept # Minecraft
+	# add_ip_rule input ip saddr "$INTRANET" -p tcp dport 8123 accept # Dynmap
+	# add_ip_rule input tcp dport 8123 accept # Dynmap (DANGER)
 
 	# Allow required services outbound
-	sudo nft add rule ip filter output tcp dport \{ http, https, rsync, ssh, whois \} accept
-	sudo nft add rule ip filter output udp dport \{ domain, https, ntp \} accept
+	add_ip_rule output tcp dport \{ http, https \} accept
+	add_ip_rule output udp dport \{ domain, https, ntp \} accept
 
 	# Allow BitTorrent?
 	while true; do
-		read -r -p "Allow BitTorrent? [y/N]: " -n 1 mc
+		read -r -p "Allow BitTorrent? [y/N]: " -n 1 bt
 		printf '\n'
-		case $mc in
+		case $bt in
 			[Yy]* ) add_bittorrent_rules; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
-
-	# Allow Minecraft outbound?
-	while true; do
-		read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
-		printf '\n'
-		case $mc in
-			[Yy]* ) sudo nft add rule ip filter output tcp dport \{ 25565, 27094 \} accept; break;;
 			[Nn]* ) break;;
 			"" ) break;;
 		esac
@@ -188,23 +253,12 @@ main() {
 		esac
 	done
 
-	# Allow ProxMox outbound?
+	# Workstation?
 	while true; do
-		read -r -p "Is this computer used to access ProxMox? [y/N]: " -n 1 ov
+		read -r -p "Is this machine a workstation? [y/N]: " -n 1 wk
 		printf '\n'
-		case $ov in
-			[Yy]* ) sudo nft add rule ip filter output tcp dport 8006 accept; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
-
-	# Allow vSphere outbound?
-	while true; do
-		read -r -p "Is this computer used to access vSphere? [y/N]: " -n 1 vs
-		printf '\n'
-		case $vs in
-			[Yy]* ) sudo nft add rule ip filter output tcp dport 9443 accept; break;;
+		case $wk in
+			[Yy]* ) add_workstation_rules; break;;
 			[Nn]* ) break;;
 			"" ) break;;
 		esac

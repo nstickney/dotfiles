@@ -64,7 +64,7 @@ add_workstation_rules() {
 		destination-unreachable \} accept
 
 	# Allow needed workstation outbound access
-	add_ip_rule output tcp dport \{ rsync, ssh, whois \} accept
+	add_ip_rule output tcp dport \{ ircd, rsync, ssh, whois \} accept
 
 	# Allow printing to intranet?
 	while true; do

@@ -1,5 +1,6 @@
 if [[ "$HOSTNAME" == "elisha" || "$HOSTNAME" == "elias" ]]; then
 	# Forensics
+	AddPackage extundelete # Utility for recovering deleted files from ext2, ext3 or ext4 partitions by parsing the journal
 	AddPackage foremost # A console program to recover files based on their headers, footers, and internal data structures
 	AddPackage sleuthkit # File system and media management forensic analysis tools
 	AddPackage --foreign autopsy # The Autopsy Forensic Browser is a GUI for The Sleuth Kit.
@@ -25,6 +26,7 @@ AddPackage fail2ban # Bans IPs after too many failed authentication attempts
 AddPackage rkhunter # Checks machines for the presence of rootkits and other unwanted tools
 
 # Log Management
+# AddPackage --foreign bro-aux # Small auxiliary tools for Bro.
 # AddPackage filebeat # Sends log files to Logstash or directly to Elasticsearch
 # CreateLink /etc/systemd/system/multi-user.target.wants/filebeat.service /usr/lib/systemd/system/filebeat.service
 

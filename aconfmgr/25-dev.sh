@@ -12,6 +12,7 @@ AddPackage rsync # A file transfer program to keep remote files in sync
 AddPackage tig # Text-mode interface for Git.
 AddPackage tmux # A terminal multiplexer
 AddPackage tree # A directory listing program displaying a depth indented list of files
+AddPackage valgrind # Tool to help find memory-management problems in programs
 AddPackage vim # Vi Improved, a highly configurable, improved version of the vi text editor
 AddPackage vim-spell-en # Language files for Vim spell checking
 
@@ -59,6 +60,7 @@ AddPackage perl-tidy # Parses and beautifies perl source
 ### Python
 AddPackage autopep8 # A tool that automatically formats Python code to conform to the PEP 8 style guide
 AddPackage flake8 # The modular source code checker: pep8, pyflakes and co
+AddPackage python-pip # The PyPA recommended tool for installing Python packages
 AddPackage python-pycodestyle # Python style guide checker
 AddPackage python-pytest # Simple powerful testing with Python
 AddPackage tk # A windowing toolkit for use with tcl (python turtles)

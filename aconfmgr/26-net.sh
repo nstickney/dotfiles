@@ -10,6 +10,7 @@ AddPackage flashplugin # Adobe Flash Player NPAPI - disgusting, but necessary fo
 AddPackage inetutils # A collection of common network programs
 AddPackage iproute2 # IP Routing Utilities
 AddPackage iputils # Network monitoring tools, including ping
+AddPackage irssi # Modular text mode IRC client with Perl scripting
 AddPackage lynx # A text browser for the World Wide Web
 AddPackage netctl # Profile based systemd network management
 AddPackage networkmanager # Network connection manager and user applications
@@ -27,6 +28,7 @@ AddPackage sniffglue # Secure multithreaded packet sniffer
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 AddPackage tcpdump # Powerful command-line packet analyzer
 AddPackage tor # Anonymizing overlay network
+AddPackage traceroute # Tracks the route taken by packets over an IP network
 AddPackage whois # Intelligent WHOIS client
 AddPackage wget # A network utility to retrieve files from the Web
 AddPackage youtube-dl # A small command-line program to download videos from YouTube.com and a few more sites

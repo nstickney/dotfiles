@@ -64,7 +64,7 @@ add_workstation_rules() {
 		destination-unreachable \} accept
 
 	# Allow needed workstation outbound access
-	add_ip_rule output tcp dport \{ ircd, rsync, ssh, whois \} accept
+	add_ip_rule output tcp dport \{ ircd, 6697, rsync, ssh, whois \} accept
 
 	# Allow printing to intranet?
 	while true; do
@@ -133,7 +133,7 @@ main() {
 	fi
 
 	# Don't run with sudo! Need to preserve $SSH_CLIENT in some situations
-	if (( "$(id -u)" == 0 )) && [ ! -z "$SUDO_COMMAND" ]; then
+	if (( "$(id -u)" == 0 )) && [ -n "$SUDO_COMMAND" ]; then
 		printf 'Do not run this as root (sudo); it invokes sudo as required.\n'
 		exit 1
 	fi
@@ -145,7 +145,7 @@ main() {
 	INTRANET="$(ip addr | grep "$IFACE" | awk 'FNR==2{print $2}')" # Intranet
 	local INTRANET_ADDR
 	INTRANET_ADDR="$(printf '%s' "$INTRANET" | awk -F/ '{print $1}')"
-	if [ ! -z "${SSH_CLIENT+x}" ]; then
+	if [ -n "${SSH_CLIENT+x}" ]; then
 		local SSH_ADDR
 		SSH_ADDR="$(echo "$SSH_CLIENT" | cut -d' ' -f1)"
 	fi
@@ -179,7 +179,7 @@ main() {
 	add_ip_rule base ip saddr 127.0.0.0/8 ip daddr 127.0.0.0/8 accept
 
 	# Anti-lockout rule (allow SSH from current connection)
-	[ ! -z "${SSH_ADDR+x}" ] && add_ip_rule input ip saddr "$SSH_ADDR" tcp -m \
+	[ -n "${SSH_ADDR+x}" ] && add_ip_rule input ip saddr "$SSH_ADDR" tcp -m \
 		--dport ssh accept
 
 	# Set default policy for all chains to DROP

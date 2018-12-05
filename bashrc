@@ -286,8 +286,10 @@ if [ -x "$(command -v vim)" ]; then
 fi
 
 # git
+[ ! -x "$(command -v addall)" ] && alias addall='git commit -A'
 [ ! -x "$(command -v amend)" ] && alias amend='git commit --amend'
 [ ! -x "$(command -v commit)" ] && alias commit='git commit -m'
+[ ! -x "$(command -v ignored)" ] && alias ignored='git ls-files --others -i --exclude-standard'
 [ ! -x "$(command -v pull)" ] && alias pull='git pull origin master'
 [ ! -x "$(command -v purr)" ] && alias purr='git pull --recurse-submodules -r origin master'
 [ ! -x "$(command -v push)" ] && alias push='git push origin master'

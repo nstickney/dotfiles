@@ -4,18 +4,34 @@
 
 > @nstickney's configuration files
 
-## Background
-Includes configuration for:
-* aconfmgr
-* Bash
-* dconf (GNOME/GTK)
-* i3
-* rofi (Xresources)
-* tmux
-* Vim (including plugins as submodules)
-* Xorg (inputrc, Xresources)
+## Table of Contents
 
-## Installation
+- [Background](#background)
+- [Install](#install)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Background
+
+Includes configuration for:
+* `aconfmgr`
+* `alacritty`
+* `bash`
+* `dconf` (GNOME/GTK)
+* `i3` (`i3-gaps`)
+* `rofi` (Xresources)
+* `tmux`
+* `vim` (including plugins as submodules)
+* `xorg` (inputrc, Xresources)
+
+### Acknowledgements:
+
+This repository's [logo](logo.png) has been shamelessly ~~stolen~~ borrowed from [Ícaro Medeiros](https://dotfiles.zeef.com/icaro.medeiros). Many other sources are linked throughout the configuration files.
+
+
+## Install
+
 * Clone repository to `$HOME`
 * `./install` (**NOTE:** Existing configurations will be renamed `*.old`.)
 
@@ -26,33 +42,43 @@ The i3wm configuration uses a per-host status bar configuration file located in 
 ### Dependencies
 
 #### Required
+
 The included i3wm configuration requires the following packages as dependencies (listings are for Arch Linux; YMMV):
-* compton (window transparency)
-* feh (set desktop background)
-* gnome-terminal
-* i3lock, imagemagick, and imlib2 (lock screen)
-* i3status-rust (information bar) ([AUR](https://aur.archlinux.org/packages/i3status-rust/))
-* libpulse (volume control)
-* numlockx (turn NumLock on by default)
-* playerctl (music player controls)
-* polkit-gnome (PolicyKit integration)
-* rofi (application launcher/switcher)
-* ttf-font-awesome (used in info bar)
-* xautolock (lock screen on timeout)
+* `i3-gaps` (window manager)
+* `alacritty` or `rxvt-unicode` (terminal emulator)
+* `compton` (window transparency)
+* `feh` (set desktop background)
+* `i3lock`, `imagemagick`, and `imlib2` (lock screen)
+* `i3status-rust` (information bar) ([AUR](https://aur.archlinux.org/packages/i3status-rust/))
+* `otf-font-awesome` (used in info bar)
+* `polkit-gnome` (PolicyKit integration)
+* `rofi` (application launcher/switcher)
+* `xautolock` (lock screen on timeout)
 
 #### Optional
-* blueman (Bluetooth applet)
-* KeepassXC (password manager)
-* network-manager-applet (NetworkManager applet)
-* solaar (Logitech Unifying Receiver control applet) ([AUR](https://aur.archlinux.org/packages/solaar/))
-* ttf-inconsolata (default font)
-* xrandr (control multi-screen setups)
+
+* `adobe-source-code-pro-fonts` (default font)
+* `blueman` (Bluetooth applet)
+* `KeepassXC` (password manager)
+* `libpulse` (volume control)
+* `network-manager-applet` (NetworkManager applet)
+* `numlockx` (turn NumLock on by default)
+* `playerctl` (music player controls)
+* `solaar` (Logitech Unifying Receiver control applet) ([AUR](https://aur.archlinux.org/packages/solaar/))
+* `xrandr` (control multi-screen setups)
 
 ## Usage
+
+I typically use `gdm` to handle workstation login, and `i3-gnome` [AUR](https://aur.archlinux.org/packages/i3-gnome/) as the default window session. Both are included in the `aconfmgr` configuration.
+
 If you install new software on the list of included configurations, re-run the `install` script to link the required configuration files.
 
 ## Contribute
-[Code Of Conduct](CONDUCT.md)
+
+> Contributors to this project are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md "Code of Conduct").
+
+I welcome [issues](docs/issue_template.md "Issue template"), but I prefer [pull requests](dosc/pull_request_template.md "Pull request template")! See the [contribution guidelines](docs/contributing.md "Contributing") for more information.
 
 ## License
-[Unlicense](LICENSE)
+
+This code is [set free](LICENSE).

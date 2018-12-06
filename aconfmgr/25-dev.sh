@@ -20,6 +20,7 @@ AddPackage vim-spell-en # Language files for Vim spell checking
 AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
 AddPackage ipguard # arp<->ip relation checking tool
 AddPackage nmap # Utility for network discovery and security auditing
+AddPackage vegeta # HTTP load testing tool
 AddPackage wireshark-gtk # a free network protocol analyzer for Unix/Linux and Windows - GTK frontend
 AddPackage geoip-database-extra # wireshark-gtk opt dep
 

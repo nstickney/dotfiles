@@ -261,8 +261,9 @@ main() {
 	sudo iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT  # echo reply
 
 	# Uncomment the lines below as needed to make services available
-	# sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH
-	# sudo iptables -A INPUT -p udp -m udp --dport 53 -j ACCEPT # SSH
+	# sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT # SSH
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH (DANGER)
+	# sudo iptables -A INPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
 	# sudo iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2

@@ -341,7 +341,8 @@ fi
 # makepkg
 [ -x "$(command -v makepkg)" ] && alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 
-# ping
+# networking
+[ ! -x "$(command -v ipme)" ] && alias ipme='curl ifconfig.me'
 [ ! -x "$(command -v pinc)" ] && alias pinc='ping -c'
 
 # ps

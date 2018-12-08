@@ -367,6 +367,24 @@ fi
 # tar
 [ ! -x "$(command -v untar)" ] && alias untar='tar -zxvf'
 
+# tmux
+# https://www.nathankowald.com/blog/2014/03/tmux-attach-session-alias/
+if [ -x "$(command -v tmux)" ] && [ ! -x "$(command -v tmax)" ]; then
+	tmax() {
+		if ((${#1} > 0)); then
+			tmux attach -t "$1" || tmux new -s "$1"
+		else
+			tmux attach || tmux new
+		fi
+	}
+	_tmax() {
+		read -ra COMPREPLY <<< "$(compgen -W "$(tmux ls -F '#S' | xargs)" -- \
+			"${COMP_WORDS[COMP_CWORD]}")"
+	}
+	complete -F _tmax tmax
+fi
+[ ! -x "$(command -v tmls)" ] && alias tmls='tmux ls'
+
 # wget
 [ -x "$(command -v wget)" ] && alias wget='wget -c'
 

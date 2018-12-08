@@ -271,6 +271,9 @@ shopt -s cdspell
 
 # USEFUL ALIASES ##############################################################
 
+# bats (Bash Automated Testing System)
+[ -x "$(command -v bats)" ] && alias bats='time bats'
+
 # cd
 alias ..='cd ..'
 alias cd..='cd ..'

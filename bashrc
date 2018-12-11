@@ -372,9 +372,9 @@ fi
 if [ -x "$(command -v tmux)" ] && [ ! -x "$(command -v tmax)" ]; then
 	tmax() {
 		if ((${#1} > 0)); then
-			tmux attach -t "$1" || tmux new -s "$1"
+			tmux attach -t "$1" 2>/dev/null || tmux new -s "$1"
 		else
-			tmux attach || tmux new
+			tmux attach 2>/dev/null || tmux new
 		fi
 	}
 	_tmax() {

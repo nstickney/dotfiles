@@ -5,7 +5,7 @@
 
 ### Variables #####
 set $i3dir  ~/dotfiles/i3
-set $bgdir ~/SafeDepositBox/$USER
+set $bgdir ~/SafeDepositBox/$USER/backgrounds
 
 ### Appearance #####
 
@@ -49,14 +49,9 @@ exec --no-startup-id gnome-power-manager
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Fix monitors
-exec_always --no-startup-id [[ $HOSTNAME == "elisha" ]] && xrandr --output DP-3 --primary --left-of DP-1
-exec_always --no-startup-id [[ $HOSTNAME == "elizabeth" ]] && xrandr --output DVI-D-0 --primary --rotate left --left-of DP-1
-exec_always --no-startup-id [[ $HOSTNAME == "elias" ]] && xrandr --output HDMI1 --primary --left-of HDMI2
-exec_always --no-startup-id [[ $HOSTNAME == "elijah" ]] && xrandr --dpi 144
-exec_always --no-startup-id [[ $HOSTNAME == "eliel" ]] && xrandr -s 1680x1050
+exec_always --no-startup-id [ -x "$HOME"/SafeDepositBox/"$USER"/xrandr-setup ] && "$HOME"/SafeDepositBox/"$USER"/xrandr-setup
 
 # Set the root background
-exec_always --no-startup-id [[ $HOSTNAME == "elisha" || $HOSTNAME == "elizabeth" || $HOSTNAME == "elijah" || $HOSTNAME == "eli" || $HOSTNAME == "elisheba" ]] && ln -sf $bgdir/kiss.png $bgdir/current.png || ln -sf $bgdir/dust.png $bgdir/current.png
 exec_always --no-startup-id feh --bg-scale $bgdir/current.png
 
 # Start compositor

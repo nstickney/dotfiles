@@ -46,6 +46,7 @@ if [ -x "$(command -v bash)" ]; then
 	printf '%s\n' "  bash (and readline)..."
 	backup_or_remove "$HOME"/.bashrc
 	ln -s "$HOME"/dotfiles/bashrc "$HOME"/.bashrc
+	source "$HOME"/.bashrc
 	backup_or_remove "$HOME"/.bash_profile
 	ln -s "$HOME"/dotfiles/bash_profile "$HOME"/.bash_profile
 	backup_or_remove "$HOME"/.inputrc

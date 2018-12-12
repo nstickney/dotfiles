@@ -468,6 +468,6 @@ fi
 
 # USER ALIASES ################################################################
 
-# Import SSH aliases from protected file
+# Import bash secrets from protected file
 # shellcheck source=/dev/null
 [ -f "$HOME"/SafeDepositBox/"$USER"/bash-secrets.sh ] && source "$HOME"/SafeDepositBox/"$USER"/bash-secrets.sh

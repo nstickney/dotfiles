@@ -212,6 +212,9 @@ export GPG_TTY
 
 # HISTORY #####################################################################
 
+# Colon seperated list of exact commands to ignore
+export HISTIGNORE="clear:bg:fg:cd:cd -:exit:date:poweroff:reboot:* --help"
+
 # Avoid duplicates, and share history across terminals
 export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend

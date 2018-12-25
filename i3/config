@@ -95,6 +95,7 @@ bindsym Mod1+Return exec [ -x "$(command -v alacritty)" ] && alacritty || urxvt
 bindsym Mod1+Shift+q kill
 
 # start rofi (a program launcher)
+bindsym Menu exec rofi -show combi
 bindsym Super_L exec rofi -show combi
 bindsym Super_R exec rofi -show combi
 bindsym Mod1+Tab exec rofi -show combi

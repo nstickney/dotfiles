@@ -274,6 +274,13 @@ shopt -s cdspell
 
 # USEFUL ALIASES ##############################################################
 
+# aurvote
+if [ -x "$(command -v aurvote)" ]; then
+	aurvoteall() {
+		pac -Qm | cut -f1 -d' ' | xargs aurvote
+	}
+fi
+
 # bats (Bash Automated Testing System)
 [ -x "$(command -v bats)" ] && alias bats='time bats'
 
@@ -292,7 +299,7 @@ if [ -x "$(command -v vim)" ]; then
 fi
 
 # git
-[ ! -x "$(command -v addall)" ] && alias addall='git commit -A'
+[ ! -x "$(command -v addall)" ] && alias addall='git add -A && git status'
 [ ! -x "$(command -v amend)" ] && alias amend='git commit --amend'
 [ ! -x "$(command -v commit)" ] && alias commit='git commit -m'
 [ ! -x "$(command -v ignored)" ] && alias ignored='git ls-files --others -i --exclude-standard'

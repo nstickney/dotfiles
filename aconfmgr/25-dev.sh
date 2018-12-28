@@ -48,7 +48,7 @@ AddPackage vim-jad # Automatically decompile Java class files and display Java c
 
 ### HTML
 AddPackage tidy # A tool to tidy down your HTML code to a clean style
-AddPackage --foreign minify # Minifier CLI for HTML, CSS, JS, JSON, SVG and XML
+# AddPackage --foreign minify # Minifier CLI for HTML, CSS, JS, JSON, SVG and XML
 
 ### Multi-language
 AddPackage astyle # A free, fast and small automatic formatter for C, C++, C#, and Java source code.

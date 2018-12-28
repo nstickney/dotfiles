@@ -1,9 +1,9 @@
 if [[ "$HOSTNAME" == "elisha" || "$HOSTNAME" == "elias" ]]; then
 	# Cracking
-	AddPackage hashcat # Multithreaded advanced password recovery utility
-	AddPackage hashcat-utils # Set of small utilities that are useful in advanced password cracking
-	AddPackage hcxkeys # Set of tools to generate plainmasterkeys (rainbowtables) and hashes for hashcat and John the Ripper
-	AddPackage hcxtools # Portable solution for capturing wlan traffic and conversion to hashcat and John the Ripper formats
+	# AddPackage hashcat # Multithreaded advanced password recovery utility
+	# AddPackage hashcat-utils # Set of small utilities that are useful in advanced password cracking
+	# AddPackage hcxkeys # Set of tools to generate plainmasterkeys (rainbowtables) and hashes for hashcat and John the Ripper
+	# AddPackage hcxtools # Portable solution for capturing wlan traffic and conversion to hashcat and John the Ripper formats
 
 	# Forensics
 	AddPackage --foreign autopsy # The Autopsy Forensic Browser is a GUI for The Sleuth Kit.
@@ -25,6 +25,9 @@ if [[ "$HOSTNAME" == "elisha" || "$HOSTNAME" == "elias" ]]; then
 	# Security Checking
 	AddPackage --foreign burpsuite # An integrated platform for performing security testing of web applications (free edition).
 	AddPackage testssl.sh # Testing TLS/SSL encryption
+
+	# Signal analysis
+	AddPackage --foreign inspectrum # SDR signal analyzer
 fi
 
 # Host Security

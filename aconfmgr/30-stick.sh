@@ -4,6 +4,7 @@ AddPackage --foreign exercism-cli # Command line client for exercism.io
 AddPackage --foreign fslint # A utility to find and clean various forms of lint on a filesystem
 AddPackage gramps # Genealogy program, which helps you track your family tree
 AddPackage gtkspell3 # opt dep for gramps
+AddPackage hugo # Fast and Flexible Static Site Generator in Go
 AddPackage --foreign lbry-app-bin # The LBRY app built using electron
 AddPackage libgexiv2 # opt dep for gramps
 AddPackage osm-gps-map # opt dep for gramps

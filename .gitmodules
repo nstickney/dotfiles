@@ -34,3 +34,6 @@
 [submodule "vim/pack/stick/start/targets.vim"]
 	path = vim/pack/stick/start/targets.vim
 	url = https://github.com/wellle/targets.vim
+[submodule "vim/pack/stick/start/vim-abolish"]
+	path = vim/pack/stick/start/vim-abolish
+	url = https://github.com/tpope/vim-abolish

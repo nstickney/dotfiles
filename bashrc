@@ -18,7 +18,6 @@ fi
 export LC_ALL=en_US.UTF-8
 
 # BASH PROMPT #################################################################
-# git portion pulled from @jcgoble3's gitprompt.sh
 # https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
 
 git_branch() {
@@ -362,7 +361,7 @@ fi
 [ ! -x "$(command -v pf)" ] && alias pf='ps auxf'
 [ ! -x "$(command -v pg)" ] && alias pg='ps aux | grep -v grep | grep -i -e'
 
-if [ ! -x "$(command -v tableflip)" ]; then
+if [ ! -x "$(command -v kp)" ]; then
 	kp() {
 		local pid
 		pid=$(ps -ef | sed 1d | eval "fzf -m --header='[kill:process]'" | awk '{print $2}')
@@ -370,6 +369,25 @@ if [ ! -x "$(command -v tableflip)" ]; then
 		if [ "x$pid" != "x" ]; then
 			echo "$pid" | xargs kill -"${1:-9}"
 			kp "$@"
+		fi
+	}
+fi
+
+# ssh
+if [ -x "$(command -v ssh)" ] && [ ! -x "$(command -v tunnel)" ]; then
+	# Create ssh tunnel on port $2 (default 19998) to server $1
+	tunnel() {
+		ssh -f -N -D "${2:-19998}" -4 "$1"
+	}
+
+	# Kill the ssh tunnel running on server or port $1 (default all tunnels)
+	kill_tunnel() {
+		local PID
+		PID="$(pgrep -a ssh | grep "\-f \-N \-D .*$1.*" | cut -f1 -d' ' | xargs)"
+		if ((${#PID} > 0)); then
+			kill "$PID"
+		else
+			printf 'No ssh tunnels running.\n'
 		fi
 	}
 fi
@@ -419,7 +437,7 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 	elif [ -x "$(command -v netstat)" ]; then
 		alias ss='sudo netstat'
 	fi
-	[ "$(type -t ss)" == "alias" ] && alias sl='sss -ltunp'
+	[ "$(type -t ss)" == "alias" ] && alias sl='ss -ltunp'
 
 	# Package Managers
 

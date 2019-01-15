@@ -116,7 +116,7 @@ bash_prompt() {
 	local UC=$EY                # user's color
 	[ $UID -eq "0" ] && UC=$ER  # root's color
 
-   	PS1="\\n    \\t \\d ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\${GTBR}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
+	PS1="\\n    \\t \\d\\n    ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\${GTBR}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
 }
 
 PROMPT_COMMAND=bash_prompt_command
@@ -277,7 +277,7 @@ shopt -s cdspell
 # aurvote
 if [ -x "$(command -v aurvote)" ]; then
 	aurvoteall() {
-		pac -Qm | cut -f1 -d' ' | xargs aurvote
+		pacman -Qm | cut -f1 -d' ' | xargs aurvote
 	}
 fi
 
@@ -401,6 +401,8 @@ fi
 # sudo (only run this part if we're not root, and sudo is installed)
 if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 
+	[ ! -x "$(command -v please)" ] && alias please="sudo !!"
+
 	# Editor
 	[ -x "$(command -v vim)" ] && alias svi="sudo vim"
 
@@ -413,32 +415,27 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 
 	### SS / Netstat
 	if [ -x "$(command -v ss)" ]; then
-		alias sss='sudo ss'
+		alias ss='sudo ss'
 	elif [ -x "$(command -v netstat)" ]; then
-		alias sss='sudo netstat'
+		alias ss='sudo netstat'
 	fi
-	[ "$(type -t sss)" == "alias" ] && alias sll='sss -ltunp'
+	[ "$(type -t ss)" == "alias" ] && alias sl='sss -ltunp'
 
 	# Package Managers
 
 	### Apt (Apt-Metalink)
 	if [ -x "$(command -v apt)" ]; then
-		if [ -x "$(command -v apt-metalink)" ]; then
-			alias apt='apt-metalink'
-			alias sapt='sudo apt-metalink'
-		else
-			alias sapt='sudo apt'
-		fi
-		alias aptup='sapt update && sapt dist-upgrade && sapt autoremove'
+		alias apt='sudo apt'
+		alias aptup='apt update && apt dist-upgrade && apt autoremove'
 	fi
 
 	### DNF/Yum
 	if [ -x "$(command -v dnf)" ]; then
-		alias sdnf='sudo dnf'
+		alias dnf='sudo dnf'
 	elif [ -x "$(command -v yum)" ]; then
-		alias sdnf='sudo yum'
+		alias dnf='sudo yum'
 	fi
-	alias dnfup='dnf -y update'
+	[ "$(type -t dnf)" == "alias" ] && alias dnfup='dnf -y update'
 
 	### Pacman (Reflector/Powerpill/Aurman)
 	if [ -x "$(command -v pacman)" ]; then

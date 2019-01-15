@@ -1,5 +1,6 @@
 # Basic tools
 AddPackage cloc # Count lines of code
+AddPackage code # The Open Source build of Visual Studio Code (vscode) editor
 AddPackage fd # Simple, fast and user-friendly alternative to find
 AddPackage fzf # Command-line fuzzy finder
 AddPackage git # the fast distributed version control system

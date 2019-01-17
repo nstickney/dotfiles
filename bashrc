@@ -115,7 +115,7 @@ bash_prompt() {
 	local UC=$EY                # user's color
 	[ $UID -eq "0" ] && UC=$ER  # root's color
 
-	PS1="\\n    \\t \\d\\n    ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\${GTBR}\\n[${G}\\s${U}] ${UC}\\$ ${U}"
+	PS1="\\n    \\D{%a %Y.%m.%d %T}\\n    ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\${GTBR}\\n[${G}\\s \\V${U}] ${UC}\\$ ${U}"
 }
 
 PROMPT_COMMAND=bash_prompt_command

@@ -1,4 +1,53 @@
 #!/usr/bin/env bash
 
 # https://gist.github.com/pfig/1808188#gistcomment-1667360
-convert "$1" -define icon:auto-resize=256,192,128,96,64,48,32,16 favicon.ico
+convert "$1" -define icon:auto-resize=16,32 favicon.ico
+
+# https://www.emergeinteractive.com/insights/detail/The-Essentials-of-FavIcons
+# https://mobiforge.com/design-development/adding-favicons-in-a-multi-browser-multi-platform-world
+for size in 16 32 150 180 192; do
+	convert "$1" -resize "$size"x"$size" favicon-"$size".png
+done
+if [[ "$1" =~ ^.*.svg$ ]]; then
+	cp "$1" favicon.svg
+else
+	inkscape -f "$1" -l favicon.svg
+fi
+
+printf '\n\e[1;32mADD TO\e[1;35m manifest.json\e[1;32m:\e[0m\n\n'
+printf '{
+    "name": "",
+    "short_name": "",
+    "icons": [
+        {
+            "src": "/images/favicon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "!!INSERTTHEMECOLOR!!",
+    "background_color": "!!INSERTTHEMECOLOR!!",
+    "display": "standalone"
+}'
+
+printf '\n\n\e[1;32mADD TO\e[1;35m browserconfig.xml\e[1;32m:\e[0m\n\n'
+printf '<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <square150x150logo src="/images/favicon-150.png"/>
+      <TileColor>!!INSERTTHEMECOLOR!!</TileColor>
+    </tile>
+  </msapplication>
+</browserconfig>'
+
+printf '\n\n\e[1;32mADD TO\e[1;35m *.html\e[1;32m:\e[0m\n\n'
+printf '<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-180.png">
+<link rel="icon" href="/images/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/images/favicon.svg" color="!!INSERTTHEMECOLOR!!">
+<meta name="theme-color" content="!!INSERTTHEMECOLOR!!">'
+
+printf '\n\n'

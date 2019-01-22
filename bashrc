@@ -283,6 +283,12 @@ fi
 # bats (Bash Automated Testing System)
 [ -x "$(command -v bats)" ] && alias bats='time bats'
 
+# cat
+if [ -x "$(command -v bat)" ]; then
+	alias cat='bat --style="changes,header,numbers"'
+	alias less='cat'
+fi
+
 # cd
 alias ..='cd ..'
 alias cd..='cd ..'
@@ -295,6 +301,46 @@ alias .-='cd -'
 if [ -x "$(command -v vim)" ]; then
 	alias vi='vim'
 	export EDITOR='vim'
+fi
+
+# forensics
+## Capture-With-Hash
+## Captures the output of a command, with the sha256 hash of the output
+## $1: command to run
+## $2: name for capture files (default first word of $1)
+if ! command -v cwh; then
+	cwh() {
+		local _name
+		if [ $# -gt 1 ]; then
+			_name="$2"
+		else
+			_name="$(echo "$1" | cut -f1 -d' ')"
+		fi
+		"$1" | tee "$_name.txt" | sha256sum > "$_name.sha256"
+	}
+fi
+
+## Exfil
+## Sends output of command over netcat
+## $1: command to run
+## $2: capture machine host
+## $3: capture machine port (default 46400)
+## NOTE: Run Receive-Capture-With-Hash (below) on capture machine PRIOR to this command
+if ! command -v exfil; then
+	exfil() {
+		$1 | nc -c "$2" "${3:-46400}"
+	}
+fi
+
+## Receive-Capture-With-Hash
+## Receive and capture outputs over netcat
+## $1: name of capture files (default "capture")
+## $2: port to listen on (default 46400)
+## NOTE: Run Exfil (above) once this server is listening
+if ! command -v rcwh; then
+	rcwh() {
+		nc -l -p "${2:-46400}" | tee "${1:-capture}.txt" | sha256sum > "${1:-capture}.sha256"
+	}
 fi
 
 # git
@@ -397,21 +443,28 @@ fi
 
 # tmux
 # https://www.nathankowald.com/blog/2014/03/tmux-attach-session-alias/
-if [ -x "$(command -v tmux)" ] && [ ! -x "$(command -v tmax)" ]; then
-	tmax() {
-		if ((${#1} > 0)); then
-			tmux attach -t "$1" 2>/dev/null || tmux new -s "$1"
-		else
-			tmux attach 2>/dev/null || tmux new
-		fi
-	}
-	_tmax() {
-		read -ra COMPREPLY <<< "$(compgen -W "$(tmux ls -F '#S' | xargs)" -- \
-			"${COMP_WORDS[COMP_CWORD]}")"
-	}
-	complete -F _tmax tmax
+if [ -x "$(command -v tmux)" ]; then
+	if [ ! -x "$(command -v tmax)" ]; then
+		tmax() {
+			if (($# > 0)); then
+				tmux attach -t "$1" 2>/dev/null || tmux new -s "$@" 
+			else
+				tmux attach 2>/dev/null || tmux new
+			fi
+		}
+		_tmax() {
+			read -ra COMPREPLY <<< "$(compgen -W "$(tmux ls -F '#S' | xargs)" \
+				-- "${COMP_WORDS[COMP_CWORD]}")"
+		}
+		complete -F _tmax tmax
+	fi
+	[ ! -x "$(command -v tmls)" ] && alias tmls='tmux ls'
+	if [ -x "$(command -v vim)" ]; then
+		vi() {
+			tmux new "vim $*"
+		}
+	fi
 fi
-[ ! -x "$(command -v tmls)" ] && alias tmls='tmux ls'
 
 # wget
 [ -x "$(command -v wget)" ] && alias wget='wget -c'
@@ -459,7 +512,7 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 	if [ -x "$(command -v pacman)" ]; then
 
 		# Reflector
-		[ -x "$(command -v reflector)" ] && alias reflect='sudo printf "Updating Mirrorlist..." && sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
+		[ -x "$(command -v reflector)" ] && alias reflect='sudo printf "Updating Mirrorlist...\n" && sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
 
 		# Powerpill or Pacman
 		if [ -x "$(command -v powerpill)" ]; then

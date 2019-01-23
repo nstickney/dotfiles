@@ -1,6 +1,6 @@
 # dotfiles
 
-[![unlicense](https://img.shields.io/badge/un-license-green.svg?style=flat)](http://unlicense.org) [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
+[![MPL-2.0](https://img.shields.io/github/license/nstickney/dotfiles.svg)](LICENSE) [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
 > @nstickney's configuration files
 
@@ -81,4 +81,4 @@ I welcome [issues](docs/issue_template.md "Issue template"), but I prefer [pull 
 
 ## License
 
-This code is [set free](LICENSE).
+Where not otherwise noted, this repository is licensed under the [Mozilla Public License 2.0](LICENSE).

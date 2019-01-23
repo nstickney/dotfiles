@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+echo "This is the host you passed me: $1"
+echo "This is the port you passed me: $2"

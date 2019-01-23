@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+for i in 'a' 'b' 'c' 'd' 'e' 'f'; do
+	printf 'Gathering data for answer 2%s...\n' "$i"
+	nc -l -p "$1" | tee "a2$i.txt" | sha256sum > "a2$i.sha256"
+done
+
+printf 'sudo dd if=/dev/sda bs=512M count=1' > a3.mbr.cmd
+nc -l -p "$1" | bzip2 -d | dd bs=16M of=a3.mbr.data
+sha256sum a3.mbr.data > a3.mbr.sha256

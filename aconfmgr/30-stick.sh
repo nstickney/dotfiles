@@ -1,7 +1,6 @@
 AddPackage alacritty # A cross-platform, GPU-accelerated terminal emulator
 AddPackage --foreign bitwarden-bin # A secure and free password manager for all of your devices.
 AddPackage --foreign exercism-cli # Command line client for exercism.io
-AddPackage --foreign fslint # A utility to find and clean various forms of lint on a filesystem
 AddPackage gramps # Genealogy program, which helps you track your family tree
 AddPackage gtkspell3 # opt dep for gramps
 AddPackage hugo # Fast and Flexible Static Site Generator in Go
@@ -18,6 +17,7 @@ AddPackage thunderbird # Standalone mail and news reader from mozilla.org
 AddPackage truecrypt # Free open-source cross-platform disk encryption software
 AddPackage --foreign zotero # Zotero Standalone, a free, easy-to-use tool to help you collect, organize, cite, and share your research sources
 
+# AddPackage --foreign fslint # A utility to find and clean various forms of lint on a filesystem
 # AddPackage keepassxc # Cross-platform community-driven port of Keepass password manager
 # AddPackage rxvt-unicode # Unicode enabled rxvt-clone terminal emulator (urxvt)
 # AddPackage urxvt-perls # URL and Mouseless text selection for rxvt-unicode

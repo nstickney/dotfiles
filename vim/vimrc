@@ -20,7 +20,7 @@ nnoremap <C-G> :bprev<CR>               " move to previous buffer
 
 " Clipboard
 set clipboard=unnamed                   " use the copy-on-select clipboard
-"set clipboard=unnamedplus              " use the system clipboard
+set clipboard+=unnamedplus              " use the system clipboard
 
 " Encoding (set to UTF-8 where available)
 if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"

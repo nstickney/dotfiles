@@ -355,6 +355,12 @@ fi
 [ ! -x "$(command -v rebase)" ] && alias rebase='git rebase -i'
 [ ! -x "$(command -v reflog)" ] && alias reflog='git reflog'
 
+if [ ! -x "$(command -v hubcreate)" ]; then
+	hubcreate() {
+		curl -H "Authorization: token $HUBKEY" https://api.github.com/user/repos -d "{\"name\":\"$1\",\"description\":\"$2\"}"
+	}
+fi
+
 # https://help.github.com/articles/removing-sensitive-data-from-a-repository/
 if [ ! -x "$(command -v repoclean)" ]; then
 	repoclean() {

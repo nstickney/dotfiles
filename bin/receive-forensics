@@ -13,6 +13,7 @@ while true; do
 	((_i++))
 	_cmd="$(nc -l -p "$_port")"
 	printf ' -> Capturing %s' "$_cmd"
+	_cmd="${_cmd##sudo }"
 	_cmd="${_cmd%% *}"
 	_cmd="${_cmd##*/}"
 	nc -l -p "$_port" > "$_cmd$_i.data"

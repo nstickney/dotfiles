@@ -11,8 +11,8 @@ printf 'Sending to %s on port %s:\n' "$_host" "$_port"
 
 _report() {
 	printf ' -> %s...\n' "$1"
-	echo "$1" | nc -c "$_host" "$_port"
-	eval "$1" | nc -c "$_host" "$_port"
+	echo "$*" | nc -c "$_host" "$_port"
+	eval "$*" | nc -c "$_host" "$_port"
 }
 
 for i in '/usr/bin/date' \

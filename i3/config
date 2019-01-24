@@ -5,7 +5,6 @@
 
 ### Variables #####
 set $i3dir  ~/dotfiles/i3
-set $bgdir ~/SafeDepositBox/$USER/backgrounds
 
 ### Appearance #####
 
@@ -49,10 +48,10 @@ exec --no-startup-id gnome-power-manager
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Fix monitors
-exec_always --no-startup-id [ -x "$HOME"/SafeDepositBox/"$USER"/xrandr-setup ] && "$HOME"/SafeDepositBox/"$USER"/xrandr-setup
+exec_always --no-startup-id [ -x "$HOME/SafeDepositBox/$USER/xrandr-setup" ] && "$HOME/SafeDepositBox/$USER/xrandr-setup"
 
 # Set the root background
-exec_always --no-startup-id feh --bg-scale $bgdir/current.png
+exec_always --no-startup-id feh --randomize --bg-scale "$HOME"/.wallpaper/*
 
 # Start compositor
 exec --no-startup-id compton -bCG -e 0.8 -i 0.8

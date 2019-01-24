@@ -29,7 +29,7 @@ AddPackage openssh # Free version of the SSH connectivity tools
 AddPackage openvpn # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
 AddPackage python2-dbus # avahi optionally requires python2-dbus: avahi-discover
 AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
-AddPackage --foreign signal # Signal Private Messenger for the Desktop
+AddPackage --foreign signal-desktop-bin # Private messaging from your desktop
 AddPackage --foreign slack-desktop # Slack Desktop (Beta) for Linux
 AddPackage sniffglue # Secure multithreaded packet sniffer
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol

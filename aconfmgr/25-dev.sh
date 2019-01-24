@@ -1,4 +1,5 @@
 # Basic tools
+AddPackage bat # Cat clone with syntax highlighting and git integration
 AddPackage cloc # Count lines of code
 AddPackage code # The Open Source build of Visual Studio Code (vscode) editor
 AddPackage fd # Simple, fast and user-friendly alternative to find

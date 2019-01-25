@@ -81,4 +81,6 @@ I welcome [issues](docs/issue_template.md "Issue template"), but I prefer [pull 
 
 ## License
 
+Copyright &copy; 2019 @nstickney
+
 Where not otherwise noted, this repository is licensed under the [Mozilla Public License 2.0](LICENSE).

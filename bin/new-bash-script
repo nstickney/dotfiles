@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+cp "$HOME"/dotfiles/bin/new-bash-script "$1"
+truncate -s -"$(tail -4 "$1" | wc -c)" "$1"
+"$EDITOR" "$1"

@@ -48,7 +48,7 @@ exec --no-startup-id gnome-power-manager
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Fix monitors
-exec_always --no-startup-id [ -x "$HOME/SafeDepositBox/$USER/xrandr-setup" ] && "$HOME/SafeDepositBox/$USER/xrandr-setup"
+exec_always --no-startup-id [ -x "$HOME/SafeDepositBox/xrandr-setup" ] && "$HOME/SafeDepositBox/xrandr-setup"
 
 # Set the root background
 exec_always --no-startup-id feh --randomize --bg-scale "$HOME"/.wallpaper/*

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
-# set -eEuo pipefail
-# trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 
 _port="${1:-46400}"
 
@@ -10,13 +10,13 @@ printf 'Starting netcat listener...\n'
 
 _i=0
 while true; do
-	((_i++))
-	_cmd="$(nc -l -p "$_port")"
+	((_i++)) || [ $? -eq 1 ]
+	_cmd="$(nc -l -p "$_port" || [ $? -eq 1 ])"
 	printf ' -> Capturing %s' "$_cmd"
 	_cmd="${_cmd##sudo }"
 	_cmd="${_cmd%% *}"
 	_cmd="${_cmd##*/}"
-	nc -l -p "$_port" > "$_cmd$_i.data"
+	nc -l -p "$_port" > "$_cmd$_i.data" || [ $? -eq 1 ]
 	sha256sum "$_cmd$_i.data"  > "$_cmd$_i.sha256"
 	printf ' ...%s%s\n' "$_cmd" "$_i"
 done

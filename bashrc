@@ -303,46 +303,6 @@ if [ -x "$(command -v vim)" ]; then
 	export EDITOR='vim'
 fi
 
-# forensics
-## Capture-With-Hash
-## Captures the output of a command, with the sha256 hash of the output
-## $1: command to run
-## $2: name for capture files (default first word of $1)
-if ! command -v cwh; then
-	cwh() {
-		local _name
-		if [ $# -gt 1 ]; then
-			_name="$2"
-		else
-			_name="$(echo "$1" | cut -f1 -d' ')"
-		fi
-		"$1" | tee "$_name.txt" | sha256sum > "$_name.sha256"
-	}
-fi
-
-## Exfil
-## Sends output of command over netcat
-## $1: command to run
-## $2: capture machine host
-## $3: capture machine port (default 46400)
-## NOTE: Run Receive-Capture-With-Hash (below) on capture machine PRIOR to this command
-if ! command -v exfil; then
-	exfil() {
-		$1 | nc -c "$2" "${3:-46400}"
-	}
-fi
-
-## Receive-Capture-With-Hash
-## Receive and capture outputs over netcat
-## $1: name of capture files (default "capture")
-## $2: port to listen on (default 46400)
-## NOTE: Run Exfil (above) once this server is listening
-if ! command -v rcwh; then
-	rcwh() {
-		nc -l -p "${2:-46400}" | tee "${1:-capture}.txt" | sha256sum > "${1:-capture}.sha256"
-	}
-fi
-
 # git
 [ ! -x "$(command -v addall)" ] && alias addall='git add -A && git status'
 [ ! -x "$(command -v amend)" ] && alias amend='git commit --amend'
@@ -408,6 +368,13 @@ fi
 # networking
 [ ! -x "$(command -v ipme)" ] && alias ipme='curl ifconfig.me'
 [ ! -x "$(command -v pinc)" ] && alias pinc='ping -c'
+
+# pacman
+if [ -x "$(command -v pacman)" ]; then
+	pacowns() {
+		pacman -Qo "$(which $1)"
+	}
+fi
 
 # ps
 [ ! -x "$(command -v pf)" ] && alias pf='ps auxf'

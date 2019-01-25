@@ -521,4 +521,4 @@ fi
 
 # Import bash secrets from protected file
 # shellcheck source=/dev/null
-[ -f "$HOME"/SafeDepositBox/"$USER"/bash-secrets.sh ] && source "$HOME"/SafeDepositBox/"$USER"/bash-secrets.sh
+[ -f "$HOME"/SafeDepositBox//bash-secrets.sh ] && source "$HOME"/SafeDepositBox//bash-secrets.sh

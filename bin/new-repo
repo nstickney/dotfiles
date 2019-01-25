@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+_private="true"
+if [ "$1" == "--public" ]; then
+	_private="false"
+	shift
+fi
+
+_repo="${1##*/}"
+printf 'Creating new repo %s at %s\n' "$_repo" "$1"
+
+mkdir -pv "$1"
+cd "$1"
+git init
+
+# Create repos on GitLab (push/pull), BitBucket (pull), & GitHub (pull)
+if [ "$_private" == "true" ]; then
+	curl -u "$USER:$BUCKETKEY" \
+		https://api.bitbucket.org/2.0/repositories/"$USER"/"$_repo" -d \
+		"{\"scm\":\"git\",\"is_private\":\"true\",\"fork_policy\":\"no_forks\"}"
+	curl -H "Authorization: token $HUBKEY" \
+		https://api.github.com/user/repos -d \
+		"{\"name\":\"$1\",\"description\":\"$2\",\"private\":\"true\"}"
+	curl -H "Content-Type: application/json" -H "Private-Token: $LABKEY" \
+		https://gitlab.com/api/v4/projects -d \
+		"{\"name\":\"$1\",\"description\":\"$2\",\"visibility\":\"private\"}"
+else
+	curl -u "$USER:$BUCKETKEY" \
+		https://api.bitbucket.org/2.0/repositories/"$USER"/"$_repo" -d \
+		"{\"scm\":\"git\",\"is_private\":\"false\",\"fork_policy\":\"allow_forks\"}"
+	curl -H "Authorization: token $HUBKEY" \
+		https://api.github.com/user/repos -d \
+		"{\"name\":\"$1\",\"description\":\"$2\"}"
+	curl -H "Content-Type: application/json" -H "Private-Token: $LABKEY" \
+		https://gitlab.com/api/v4/projects -d \
+		"{\"name\":\"$1\",\"description\":\"$2\",\"visibility\":\"public\"}"
+fi
+
+# Add the basics
+aria2c https://raw.githubusercontent.com/RichardLitt/standard-readme/master/example-readmes/maximal-readme.md -o README.md
+sed -i "s/Title/$_repo/g" README.md 
+aria2c https://www.mozilla.org/media/MPL/2.0/index.815ca599c9df.txt -o LICENSE

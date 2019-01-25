@@ -432,8 +432,8 @@ if [ -x "$(command -v tmux)" ]; then
 		complete -F _tmax tmax
 	fi
 	[ ! -x "$(command -v tmls)" ] && alias tmls='tmux ls'
-	if [ -x "$(command -v vim)" ]; then
-		vi() {
+	if [ ! -x "$(command -v tv)" ]; then
+		tv() {
 			tmux new "vim $*"
 		}
 	fi

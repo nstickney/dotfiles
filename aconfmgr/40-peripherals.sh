@@ -1,5 +1,6 @@
 # shellcheck disable=SC2148
-if [[ "$HOSTNAME" == "elisha" ]]
+if [[ "$HOSTNAME" == "elisha" || \
+	  "$HOSTNAME" == "elias" ]]
 then
 	AddPackage android-tools # Android platform tools
 	AddPackage arduino-avr-core # Arduino AVR core with upstream avr-gcc and avrdude

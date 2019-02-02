@@ -286,7 +286,6 @@ fi
 # cat
 if [ -x "$(command -v bat)" ]; then
 	alias cat='bat --style="changes,header,numbers"'
-	alias less='cat'
 fi
 
 # cd
@@ -351,7 +350,7 @@ fi
 [ ! -x "$(command -v sl)" ] && alias sl='ls'
 
 # less is more
-alias more='less'
+[ -x "$(command -v less)" ] && alias more='less'
 
 # mkdir
 alias mkdir='mkdir -pv'
@@ -372,7 +371,7 @@ fi
 # pacman
 if [ -x "$(command -v pacman)" ]; then
 	pacowns() {
-		pacman -Qo "$(which $1)"
+		pacman -Qo "$(command -v "$1")"
 	}
 fi
 
@@ -439,8 +438,13 @@ if [ -x "$(command -v tmux)" ]; then
 	fi
 fi
 
-# wget
+# wget, curl, aria2c
 [ -x "$(command -v wget)" ] && alias wget='wget -c'
+if [ ! -x "$(command -v ttfb)" ]; then
+	ttfb() {
+		curl -o /dev/null -w "Connect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} \n" "$1"
+	}
+fi
 
 # sudo (only run this part if we're not root, and sudo is installed)
 if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then

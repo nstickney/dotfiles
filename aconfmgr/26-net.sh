@@ -16,6 +16,7 @@ AddPackage iproute2 # IP Routing Utilities
 AddPackage iputils # Network monitoring tools, including ping
 AddPackage irssi # Modular text mode IRC client with Perl scripting
 AddPackage lynx # A text browser for the World Wide Web
+AddPackage mtr # Combines the functionality of traceroute and ping into one tool (CLI version)
 AddPackage netctl # Profile based systemd network management
 AddPackage networkmanager # Network connection manager and user applications
 CreateLink /etc/systemd/system/multi-user.target.wants/NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
@@ -23,6 +24,7 @@ AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnec
 AddPackage networkmanager-openvpn # NetworkManager VPN plugin for OpenVPN
 AddPackage nftables # Netfilter tables userspace tools
 CreateLink /etc/systemd/system/multi-user.target.wants/nftables.service /usr/lib/systemd/system/nftables.service
+AddPackage ngrep # A grep-like utility that allows you to search for network packets on an interface.
 AddPackage nss-mdns # glibc plugin providing host name resolution via mDNS
 AddPackage obs-studio # Free, open source software for live streaming and recording
 AddPackage openssh # Free version of the SSH connectivity tools

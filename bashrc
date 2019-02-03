@@ -302,49 +302,6 @@ if [ -x "$(command -v vim)" ]; then
 	export EDITOR='vim'
 fi
 
-# git
-[ ! -x "$(command -v addall)" ] && alias addall='git add -A && git status'
-[ ! -x "$(command -v amend)" ] && alias amend='git commit --amend'
-[ ! -x "$(command -v commit)" ] && alias commit='git commit -m'
-[ ! -x "$(command -v ignored)" ] && alias ignored='git ls-files --others -i --exclude-standard'
-[ ! -x "$(command -v pull)" ] && alias pull='git pull origin master'
-[ ! -x "$(command -v purr)" ] && alias purr='git pull --recurse-submodules -r origin master'
-[ ! -x "$(command -v push)" ] && alias push='git push origin master'
-[ ! -x "$(command -v puff)" ] && alias puff='git push -f origin master'
-[ ! -x "$(command -v rebase)" ] && alias rebase='git rebase -i'
-[ ! -x "$(command -v reflog)" ] && alias reflog='git reflog'
-
-if [ ! -x "$(command -v hubcreate)" ]; then
-	hubcreate() {
-		curl -H "Authorization: token $HUBKEY" https://api.github.com/user/repos -d "{\"name\":\"$1\",\"description\":\"$2\"}"
-	}
-fi
-
-# https://help.github.com/articles/removing-sensitive-data-from-a-repository/
-if [ ! -x "$(command -v repoclean)" ]; then
-	repoclean() {
-		git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '"$*" --prune-empty --tag-name-filter cat -- --all
-		git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
-		git reflog expire --expire=now --all
-		git gc --prune=now
-	}
-fi
-
-# https://twitter.com/aran384/status/1046487063489437696
-if [ ! -x "$(command -v tableflip)" ]; then
-	tableflip() {
-		while true; do
-			read -r -p "Really throw it all away? [y/N]: " -n 1 yn
-			printf '\n'
-			case $yn in
-				[Yy]* ) git fetch && git reset --hard && git clean -dfx; break;;
-				[Nn]* ) break;;
-				"" ) break;;
-			esac
-		done
-	}
-fi
-
 # ls
 [ ! -x "$(command -v ll)" ] && alias ll='ls -la'
 [ ! -x "$(command -v sl)" ] && alias sl='ls'

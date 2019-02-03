@@ -9,3 +9,21 @@
     excludesfile = ~/dotfiles/gitignore
 [commit]
 	gpgsign = true
+[alias]
+	aa = ! git add -A && git status
+	am = commit --amend
+	br = branch
+	cm = commit -m
+	co = checkout
+	ig = ls-files --others -i --exclude-standard
+	lc = log -1 HEAD
+	pl = pull origin master
+	pr = pull --recurse-submodules -r origin master
+	ps = push origin master
+	pf = push -f origin master
+	rc = "!f(){ git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '\"$*\" --prune-empty --tag-name-filter cat -- --all; git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all; git gc --prune=now; }; f"
+	rf = reflog
+	ri = rebase -i
+	st = status
+	tf = "!f(){ while :; do read -r -p 'Really throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch && git reset --hard && git clean -dfx; break;; [Nn]* ) break;; '' ) break;; esac done; }; f"
+	un = reset HEAD --

@@ -22,8 +22,10 @@
 	ps = push origin master
 	pf = push -f origin master
 	rc = "!f(){ git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '\"$*\" --prune-empty --tag-name-filter cat -- --all; git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all; git gc --prune=now; }; f"
-	rf = reflog
+	rf = "!f(){ git rm -rf \"$*\" && git status; }; f"s
+	rh = rebase -i HEAD~
 	ri = rebase -i
+	ru = "!f(){ git fetch upstream && git rebase upstream/master; }; f"
 	st = status
 	tf = "!f(){ while :; do read -r -p 'Really throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch && git reset --hard && git clean -dfx; break;; [Nn]* ) break;; '' ) break;; esac done; }; f"
 	un = reset HEAD --

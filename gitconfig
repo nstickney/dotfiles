@@ -25,6 +25,7 @@
 	rf = "!f(){ git rm -rf \"$*\" && git status; }; f"s
 	rh = rebase -i HEAD~
 	ri = rebase -i
+	ro = "!f(){ git fetch origin && git rebase origin/master; }; f"
 	ru = "!f(){ git fetch upstream && git rebase upstream/master; }; f"
 	st = status
 	tf = "!f(){ while :; do read -r -p 'Really throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch && git reset --hard && git clean -dfx; break;; [Nn]* ) break;; '' ) break;; esac done; }; f"

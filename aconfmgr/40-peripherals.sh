@@ -2,12 +2,13 @@
 if [[ "$HOSTNAME" == "elisha" || \
 	  "$HOSTNAME" == "elias" ]]
 then
-	AddPackage android-tools # Android platform tools
+	# AddPackage android-tools # Android platform tools
+	AddPackage arduino # Arduino prototyping platform SDK
 	AddPackage arduino-avr-core # Arduino AVR core with upstream avr-gcc and avrdude
 	AddPackage teensy-loader-cli # Command line loader for the teensy microprocessor boards
 
-	AddPackage --foreign android-sdk-platform-tools # Platform-Tools for Google Android SDK (adb and fastboot)
-	AddPackage --foreign heimdall-git # A cross-platform open-source utility to flash firmware (aka ROMs) onto Samsung Galaxy S devices.
+	# AddPackage --foreign android-sdk-platform-tools # Platform-Tools for Google Android SDK (adb and fastboot)
+	# AddPackage --foreign heimdall-git # A cross-platform open-source utility to flash firmware (aka ROMs) onto Samsung Galaxy S devices.
 fi
 
 if [[ "$HOSTNAME" == "elisha" || \

@@ -10,24 +10,51 @@
 [commit]
 	gpgsign = true
 [alias]
-	aa = ! git add -A && git status
-	am = commit --amend
-	br = branch
-	cm = commit -m
-	co = checkout
-	ig = ls-files --others -i --exclude-standard
-	lc = log -1 HEAD
-	pf = push -f origin master
-	po = pull origin master
-	ps = push origin master
-	pu = pull upstream master
-	pr = pull --recurse-submodules -r origin master
-	rc = "!f(){ git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '\"$*\" --prune-empty --tag-name-filter cat -- --all && git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all && git gc --prune=now; }; f"
-	rf = "!f(){ git rm -rf \"$*\" && git status; }; f"s
-	rh = rebase -i HEAD~
-	ri = rebase -i
-	ro = "!f(){ git fetch origin && git rebase origin/master; }; f"
-	ru = "!f(){ git fetch upstream && git rebase upstream/master; }; f"
-	st = status
-	tf = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch && git reset --hard && git clean -dfx; break;; * ) break;; esac; }; f"
-	un = reset HEAD --
+	# Add All
+	AA = ! git add -A && git status
+	# Amend Commit
+	AC = commit --amend
+	# BRanch
+	BR = branch
+	# Commit with Message
+	CM = commit -m
+	# CLone
+	CL = clone
+	# CheckOut
+	CO = checkout
+	# Clone with Submodules
+	CS = clone --recurse-submodules -j8
+	# Fetch All
+	FA = fetch --all
+	# Fetch all with Submodules
+	FS = fetch --all --recurse-submodules -j8
+	# Last Commit
+	LC = log -1 HEAD
+	# List Ignored
+	LI = ls-files --others -i --exclude-standard
+	# Push (Force)
+	PF = push -f origin master
+	# Pull Origin
+	PO = pull origin master
+	# PuSh
+	PS = push origin master
+	# Pull Upstream
+	PU = pull upstream master
+	# Pull (Recurse)
+	PR = pull --recurse-submodules -r origin master
+	# Repo Clean (removes a file or set of files from all commits in a repo)
+	RC = "!f(){ git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '\"$*\" --prune-empty --tag-name-filter cat -- --all && git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all && git gc --prune=now; }; f"
+	# Remove (Force)
+	RF = "!f(){ git rm -rf \"$*\" && git status; }; f"s
+	# Rebase Interactively
+	RI = rebase -i
+	# Rebase Origin
+	RO = "!f(){ git fetch origin && git rebase origin/master; }; f"
+	# Rebase Upstream
+	RU = "!f(){ git fetch upstream && git rebase upstream/master; }; f"
+	# STatus
+	ST = status
+	# TableFlip (start over from whatever is in the remote)
+	TF = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch --all --force -j8 && git reset --hard && git clean -dfx; break;; * ) break;; esac; }; f"
+	# UNdo
+	UN = reset HEAD --

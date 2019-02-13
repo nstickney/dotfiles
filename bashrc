@@ -302,6 +302,18 @@ if [ -x "$(command -v vim)" ]; then
 	export EDITOR='vim'
 fi
 
+# git
+if [ -x "$(command -v git)" ]; then
+	# https://unix.stackexchange.com/a/97958
+	git() {
+		/usr/bin/git "$@" 
+		if [ "$1" = 'clone' ] || [ "$1" = 'CL' ]; then
+			local _repo="${*: -1}"
+			cd "${_repo##*/}" || exit
+		fi
+	}
+fi
+
 # ls
 [ ! -x "$(command -v ll)" ] && alias ll='ls -la'
 [ ! -x "$(command -v sl)" ] && alias sl='ls'

@@ -38,24 +38,30 @@ if [ "$_remotes" == "true" ]; then
 		curl -u "$USER:$BUCKETKEY" \
 			https://api.bitbucket.org/2.0/repositories/"$USER"/"$_repo" -d \
 			"{\"scm\": \"git\", \"is_private\": \"true\", \
-			\"fork_policy\": \"no_forks\", \"description\": \"$_desc\"}"
+			\"fork_policy\": \"no_forks\", \"description\": \"$_desc\"}" \
+			>/dev/null
 		curl -H "Authorization: token $HUBKEY" \
 			https://api.github.com/user/repos -d \
-			"{\"name\": \"$1\", \"description\": \"$_desc\", \"private\": \"true\"}"
+			"{\"name\": \"$1\", \"description\": \"$_desc\", \"private\": \"true\"}" \
+			>/dev/null
 		curl -H "Content-Type: application/json" -H "Private-Token: $LABKEY" \
 			https://gitlab.com/api/v4/projects -d \
-			"{\"name\": \"$1\", \"description\": \"$_desc\", \"visibility\": \"private\"}"
+			"{\"name\": \"$1\", \"description\": \"$_desc\", \"visibility\": \"private\"}" \
+			>/dev/null
 	else
 		curl -u "$USER:$BUCKETKEY" \
 			https://api.bitbucket.org/2.0/repositories/"$USER"/"$_repo" -d \
 			"{\"scm\": \"git\", \"is_private\": \"false\", \
-			\"fork_policy\": \"allow_forks\", \"description\": \"$_desc\"}"
+			\"fork_policy\": \"allow_forks\", \"description\": \"$_desc\"}" \
+			>/dev/null
 		curl -H "Authorization: token $HUBKEY" \
 			https://api.github.com/user/repos -d \
-			"{\"name\": \"$1\", \"description\": \"$_desc\"}"
+			"{\"name\": \"$1\", \"description\": \"$_desc\"}" \
+			>/dev/null
 		curl -H "Content-Type: application/json" -H "Private-Token: $LABKEY" \
 			https://gitlab.com/api/v4/projects -d \
-			"{\"name\": \"$1\", \"description\": \"$_desc\", \"visibility\": \"public\"}"
+			"{\"name\": \"$1\", \"description\": \"$_desc\", \"visibility\": \"public\"}" \
+			>/dev/null
 	fi
 fi
 
@@ -105,3 +111,7 @@ aria2c https://raw.githubusercontent.com/ruby/www.ruby-lang.org/master/en/conduc
 tail -n 10 RUBY_CONDUCT.md > CONDUCT.md
 rm RUBY_CONDUCT.md
 sed -i 's/Ruby/'"$_repo"'/g' CONDUCT.md
+
+## Stage it all
+git add -A
+git status

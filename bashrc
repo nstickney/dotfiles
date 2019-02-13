@@ -306,8 +306,8 @@ fi
 if [ -x "$(command -v git)" ]; then
 	# https://unix.stackexchange.com/a/97958
 	git() {
-		/usr/bin/git "$@" 
-		if [ "$1" = 'clone' ] || [ "$1" = 'CL' ] || [ "$1" = 'CS' ] ; then
+		# For information on CL and CS, see the gitconfig file
+		/usr/bin/git "$@" && if [ "$1" = 'clone' ] || [ "$1" = 'CL' ] || [ "$1" = 'CS' ] ; then
 			local _repo="${*: -1}"
 			cd "${_repo##*/}" || exit
 		fi

@@ -11,7 +11,7 @@
 	gpgsign = true
 [alias]
 	# Add All
-	AA = ! git add -A && git status
+	AA = ! git add -A && git ST
 	# Amend Commit
 	AC = commit --amend
 	# BRanch
@@ -45,7 +45,7 @@
 	# Repo Clean (removes a file or set of files from all commits in a repo)
 	RC = "!f(){ git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '\"$*\" --prune-empty --tag-name-filter cat -- --all && git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all && git gc --prune=now; }; f"
 	# Remove (Force)
-	RF = "!f(){ git rm -rf \"$*\" && git status; }; f"s
+	RF = "!f(){ git rm -rf \"$*\" && git status; }; f"
 	# Rebase Interactively
 	RI = rebase -i
 	# Rebase Origin
@@ -53,9 +53,9 @@
 	# Rebase Upstream
 	RU = "!f(){ git fetch upstream && git rebase upstream/master; }; f"
 	# STatus
-	ST = status
+	ST = status -sb
 	# TableFlip (start over from whatever is in the remote)
-	TF = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch --all --force --jobs 8 && git reset --hard && git clean -dfx; break;; * ) break;; esac; }; f"
+	TF = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch --all --force --jobs 8 && git reset --hard origin/\"$(git rev-parse --abbrev-ref HEAD)\" && git clean -dfx; break;; * ) break;; esac; }; f"
 	# UNdo
 	UN = reset HEAD --
 	# Update Submodules

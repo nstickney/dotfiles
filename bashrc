@@ -30,9 +30,9 @@ git_status() {
 	# ? untracked files are present
 	# - changes have been stashed
 	# ^ local commits need to be pushed to the remote
-	local status=''
+	local status
 	status="$(git status --porcelain 2>/dev/null)"
-	local output=''
+	local output
 	grep -q '^[MADRC]' <<<"$status" && output="$output+"
 	grep -q '^.[MD]' <<<"$status" && output="$output*"
 	grep -q '^??' <<<"$status" && output="$output?"
@@ -47,11 +47,11 @@ git_color() {
 	# - Red if there are uncommitted changes with nothing staged
 	# - Yellow if there are both staged and unstaged changes
 	# - Blue if there are unpushed commits
-	local staged=''
+	local staged
 	staged=$([[ $1 =~ \+ ]] && printf '%s' "yes")
-	local dirty=''
+	local dirty
 	dirty=$([[ $1 =~ [*\?] ]] && printf '%s' "yes")
-	local needs_push=''
+	local needs_push
 	needs_push=$([[ $1 = *"^" ]] && printf '%s' "yes")
 	if [[ -n $staged ]] && [[ -n $dirty ]]; then
 		printf '\033[1;33m'  # bold yellow
@@ -68,17 +68,17 @@ git_color() {
 
 git_prompt() {
 	# First, get the branch name...
-	local branch=''
+	local branch
 	branch=$(git_branch)
 	# Empty output? Then we're not in a Git repository, so bypass the rest
 	# of the function, producing no output
 	if [[ -n "$branch" ]]; then
-		local state=''
+		local state
 		state=$(git_status)
-		local color=''
+		local color
 		color=$(git_color "$state")
 		# Now output the actual code to insert the branch and status
-		printf ' \x01%s\x02%s\x01\033[00m\x02' "$color" "($branch$state)" # last bit resets color
+		printf ' (\x01%s\x02%s\x01\033[00m\x02)' "$color" "$branch$state" # last bit resets color
 	fi
 }
 
@@ -88,7 +88,7 @@ bash_prompt_command() {
 	# How many characters of the $PWD should be kept
 	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER} - ${#GTBR}))
 	# Indicate that there has been dir truncation
-	local trunc_symbol="..."
+	local trunc_symbol='...'
 	local dir=${PWD##*/}
 	pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
 	CPWD=${PWD/#$HOME/\~}
@@ -113,7 +113,7 @@ bash_prompt() {
 	local EC="\\[\\e[1;36m\\]" # bold cyan
 
 	local UC=$EY                # user's color
-	[ $UID -eq "0" ] && UC=$ER  # root's color
+	[ $UID -eq '0' ] && UC=$ER  # root's color
 
 	PS1="\\n    \\D{%a %Y.%m.%d %T}\\n    ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\${GTBR}\\n[${G}\\s \\V${U}] ${UC}\\$ ${U}"
 }
@@ -125,7 +125,7 @@ unset bash_prompt
 # COLORIZE EVERYTHING #########################################################
 
 # the tty/framebuffer console
-if [ "$TERM" = "linux" ]; then
+if [ "$TERM" = 'linux' ]; then
 	printf "\\e]P0303030" # black
 	printf "\\e]P1D73753" # red
 	printf "\\e]P2907234" # green
@@ -146,7 +146,7 @@ if [ "$TERM" = "linux" ]; then
 fi
 
 # ls
-if [ "$(uname -s)" == "Darwin" ]; then
+if [ "$(uname -s)" == 'Darwin' ]; then
 	alias ls='ls -G'
 else
 	alias ls='ls --color=auto'
@@ -156,8 +156,8 @@ alias vdir='vdir --color=auto'
 [ -x "$(command -v dircolors)" ] && eval "$(dircolors -b)"
 
 # grep
-export GREP_COLOR="1;33"
-if grep --color "a" <<< "a" &>/dev/null; then
+export GREP_COLOR='1;33'
+if grep --color 'a' <<< 'a' &>/dev/null; then
 	alias grep='grep --color=auto'
 	alias fgrep='fgrep --color=auto'
 	alias egrep='egrep --color=auto'
@@ -266,7 +266,7 @@ path_append "$HOME/dotfiles/bin"
 
 # SPELLING ####################################################################
 shopt -s cdspell
-[ "$(uname -s)" != "Darwin" ] && shopt -s dirspell
+[ "$(uname -s)" != 'Darwin' ] && shopt -s dirspell
 
 # TABS ########################################################################
 [ -x "$(command -v tabs)" ] && tabs 4
@@ -297,6 +297,7 @@ alias .-='cd -'
 [ ! -x "$(command -v dh)" ] && alias dh='df -Tha --total'
 
 # editor
+[ -x "$(command -v vi)" ] && export EDITOR='vi'
 if [ -x "$(command -v vim)" ]; then
 	alias vi='vim'
 	export EDITOR='vim'
@@ -348,7 +349,7 @@ fi
 [ ! -x "$(command -v pf)" ] && alias pf='ps auxf'
 [ ! -x "$(command -v pg)" ] && alias pg='ps aux | grep -v grep | grep -i -e'
 
-if [ ! -x "$(command -v kp)" ]; then
+if [ ! -x "$(command -v kp)" ] && [ -x "$(command -v fzf)" ]; then
 	kp() {
 		local pid
 		pid=$(ps -ef | sed 1d | eval "fzf -m --header='[kill:process]'" | awk '{print $2}')
@@ -402,7 +403,7 @@ if [ -x "$(command -v tmux)" ]; then
 	[ ! -x "$(command -v tmls)" ] && alias tmls='tmux ls'
 	if [ ! -x "$(command -v tv)" ]; then
 		tv() {
-			tmux new "vim $*"
+			tmux new "$EDITOR $*"
 		}
 	fi
 fi
@@ -411,7 +412,7 @@ fi
 [ -x "$(command -v wget)" ] && alias wget='wget -c'
 if [ ! -x "$(command -v ttfb)" ]; then
 	ttfb() {
-		curl -o /dev/null -w "Connect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} \n" "$1"
+		curl -sSo /dev/null -w "Connect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} \n" "$1"
 	}
 fi
 

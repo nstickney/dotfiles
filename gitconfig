@@ -23,11 +23,11 @@
 	# CheckOut
 	CO = checkout
 	# Clone with Submodules
-	CS = clone --recurse-submodules -j8
+	CS = clone --recurse-submodules --jobs 8
 	# Fetch All
 	FA = fetch --all
 	# Fetch all with Submodules
-	FS = fetch --all --recurse-submodules -j8
+	FS = fetch --all --recurse-submodules --jobs 8
 	# Last Commit
 	LC = log -1 HEAD
 	# List Ignored
@@ -55,6 +55,8 @@
 	# STatus
 	ST = status
 	# TableFlip (start over from whatever is in the remote)
-	TF = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch --all --force -j8 && git reset --hard && git clean -dfx; break;; * ) break;; esac; }; f"
+	TF = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch --all --force --jobs 8 && git reset --hard && git clean -dfx; break;; * ) break;; esac; }; f"
 	# UNdo
 	UN = reset HEAD --
+	# Update Submodules
+	US = submodule update --init --recursive --remote --jobs 8

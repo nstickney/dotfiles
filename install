@@ -5,12 +5,6 @@ set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 IFS=$'\n\t'
 
-printf '%s\n' "Initializing and updating submodules..."
-
-git submodule init && git submodule update --recursive --remote
-
-printf '%s\n' "Linking configuration files/directories for..."
-
 backup_or_remove() {
 	if [ -L "$1" ]; then
 		rm "$1"
@@ -20,7 +14,7 @@ backup_or_remove() {
 		fi
 		mv "$1" "$1".old
 	fi
-}
+	}
 
 ensure_dir_exists() {
 	if [ ! -d "$1" ]; then
@@ -28,24 +22,35 @@ ensure_dir_exists() {
 	fi
 }
 
-if [ -x "$(command -v aconfmgr)" ]; then
-	printf '%s\n' "  aconfmgr..."
-	ensure_dir_exists "$HOME"/.config
-	backup_or_remove "$HOME"/.config/aconfmgr
-	ln -s "$HOME"/dotfiles/aconfmgr "$HOME"/.config/aconfmgr
-fi
+declare -A programs
+programs['aconfmgr']="$HOME"/.config/aconfmgr
+programs['alacritty']="$HOME"/.config/alacritty
+programs['gdb']="$HOME"/.gdbinit
+programs['git']="$HOME"/.gitconfig
+programs['i3']="$HOME"/.i3
+programs['tmux']="$HOME"/.tmux.conf
+programs['vim']="$HOME"/.vim
 
-if [ -x "$(command -v alacritty)" ]; then
-	printf '%s\n' "  alacritty..."
-	ensure_dir_exists "$HOME"/.config
-	backup_or_remove "$HOME"/.config/alacritty
-	ln -s "$HOME"/dotfiles/alacritty "$HOME"/.config/alacritty
-fi
+printf '%s\n' "Initializing and updating submodules..."
+git submodule update --init --jobs 8 --recursive --remote
+printf '%s\n' "Linking configuration files/directories for..."
+
+for i in "${!programs[@]}"; do
+	if [ -x "$(command -v "$i")" ]; then
+		printf '  %s...\n' "$i"
+		_dir="${programs[$i]}"
+		_dir="${_dir%/*}"
+		ensure_dir_exists "$_dir"
+		backup_or_remove "${programs[$i]}"
+		ln -s "$HOME"/dotfiles/"$i" "${programs[$i]}"
+	fi
+done
 
 if [ -x "$(command -v bash)" ]; then
-	printf '%s\n' "  bash (and readline)..."
+	printf '  bash (and readline)...\n'
 	backup_or_remove "$HOME"/.bashrc
 	ln -s "$HOME"/dotfiles/bashrc "$HOME"/.bashrc
+	# shellcheck disable=1090
 	source "$HOME"/.bashrc
 	backup_or_remove "$HOME"/.bash_profile
 	ln -s "$HOME"/dotfiles/bash_profile "$HOME"/.bash_profile
@@ -53,66 +58,18 @@ if [ -x "$(command -v bash)" ]; then
 	ln -s "$HOME"/dotfiles/inputrc "$HOME"/.inputrc
 fi
 
-if [ "nstickney" = "$USER" ] || [ "stickneyn" = "$USER" ]; then
-	if [ -x "$(command -v git)" ]; then
-		printf '%s\n' "  git..."
-		backup_or_remove "$HOME"/.gitconfig
-		ln -s "$HOME"/dotfiles/gitconfig "$HOME"/.gitconfig
-	fi
-fi
-
-if [ -x "$(command -v i3)" ]; then
-	printf '%s\n' "  i3wm..."
-	backup_or_remove "$HOME"/.i3
-	ln -s "$HOME"/dotfiles/i3 "$HOME"/.i3
-fi
-
-if [ -x "$(command -v tmux)" ]; then
-	printf '%s\n' "  tmux..."
-	backup_or_remove "$HOME"/.tmux.conf
-	ln -s "$HOME"/dotfiles/tmux.conf "$HOME"/.tmux.conf
-fi
-
-if [ -x "$(command -v vim)" ]; then
-	printf '%s\n' "  vim..."
-	backup_or_remove "$HOME"/.vimrc
-	backup_or_remove "$HOME"/.vim
-	ln -s "$HOME"/dotfiles/vim "$HOME"/.vim
-fi
-
 if [ -x "$(command -v rofi)" ] || [ -x "$(command -v urxvt)" ]; then
-	printf '%s\n' "  X.Org (rofi)..."
+	printf '  X.org...\n'
 	backup_or_remove "$HOME"/.Xresources
 	ln -s "$HOME"/dotfiles/Xresources "$HOME"/.Xresources
 	[ -x "$(command -v xrdb)" ] && xrdb "$HOME"/.Xresources
 fi
-printf '%s\n' "    ...Complete!"
-
-if [ -L "$HOME/.config/autostart" ]; then
-	printf '%s' "Removing old autostart symlink..."
-	rm -rf "$HOME"/.config/autostart
-	printf '%s\n' " Done!"
-fi
-if [ -L "$HOME/.config/dconf" ]; then
-	printf '%s' "Removing old dconf symlink..."
-	rm -rf "$HOME"/.config/dconf
-	printf '%s\n' " Done!"
-fi
-if [ -L "$HOME/.config/gtk-3.0" ]; then
-	printf '%s' "Removing old gtk-3.0 symlink..."
-	rm -rf "$HOME"/.config/gtk-3.0
-	printf '%s\n' " Done!"
-fi
-if [ -L "$HOME/.config/gtk-4.0" ]; then
-	printf '%s' "Removing old gtk-4.0 symlink..."
-	rm -rf "$HOME"/.config/gtk-4.0
-	printf '%s\n' " Done!"
-fi
+printf '    ...Complete!\n'
 
 if [ -x "$(command -v sudo)" ]; then
 	if [ -x "$(command -v iptables)" ]; then
 		while true; do
-			read -r -p "Install iptables configuration? [y/N]: " -n 1 yn
+			read -r -p 'Install iptables configuration? [y/N]: ' -n 1 yn
 			printf '\n'
 			case $yn in
 				[Yy]* ) "$HOME"/dotfiles/bin/iptables-init; break;;
@@ -123,7 +80,7 @@ if [ -x "$(command -v sudo)" ]; then
 	fi
 	if [ -x "$(command -v nft)" ]; then
 		while true; do
-			read -r -p "Install nftables configuration? [y/N]: " -n 1 yn
+			read -r -p 'Install nftables configuration? [y/N]: ' -n 1 yn
 			printf '\n'
 			case $yn in
 				[Yy]* ) "$HOME"/dotfiles/bin/nftables-init; break;;

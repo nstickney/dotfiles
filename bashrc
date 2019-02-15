@@ -193,6 +193,14 @@ man() {
 # Find-The-Command
 [ -r /usr/share/doc/find-the-command/ftc.bash ] && source /usr/share/doc/find-the-command/ftc.bash
 
+# History search
+if [[ $- == *i* ]]; then
+    bind '"\e[A": history-search-backward'
+    bind '"\e[B": history-search-forward'
+    bind '"\e[5~": previous-history'
+	bind '"\e[6~": next-history'
+fi
+
 # Sudo Completion
 [ -x "$(command -v sudo)" ] && complete -cf sudo
 

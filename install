@@ -3,67 +3,48 @@
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
 set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
-IFS=$'\n\t'
 
 backup_or_remove() {
 	if [ -L "$1" ]; then
 		rm "$1"
 	elif [ -e "$1" ]; then
-		if [ -e "$1".old ]; then
-			rm -rf "$1".old
+		if [ -e "$1".backup ]; then
+			rm -rf "$1".backup
 		fi
-		mv "$1" "$1".old
-	fi
-	}
-
-ensure_dir_exists() {
-	if [ ! -d "$1" ]; then
-		mkdir -p "$1"
+		mv "$1" "$1".backup
 	fi
 }
 
-declare -A programs
-programs['aconfmgr']="$HOME"/.config/aconfmgr
-programs['alacritty']="$HOME"/.config/alacritty
-programs['gdb']="$HOME"/.gdbinit
-programs['git']="$HOME"/.gitconfig
-programs['i3']="$HOME"/.i3
-programs['tmux']="$HOME"/.tmux.conf
-programs['vim']="$HOME"/.vim
+link_configs() {
+	printf '  %s (%s)...\n' "$1" "$2"
+	local _dir="$HOME/$2"                # All config files are in $HOME
+	backup_or_remove "$_dir"             # Save old files/directories (once)
+	local _file="${_dir##*/.}"           # Find config file name
+	_file="${_file##*/}"                 # Cut unneeded directory from name
+	_dir="${_dir%/*}"                    # Find config file directory
+	mkdir -p "$HOME/$_dir"               # Directory must exist
+	ln -s "$HOME/$3/$_file" "$HOME/$2"
+}
+declare -A confs # Match software to its config file/dir location within $HOME
+confs['aconfmgr']='.config/aconfmgr'
+confs['alacritty']='.config/alacritty'
+confs['bash']='.bashrc'
+confs['gdb']='.gdbinit'
+confs['git']='.gitconfig'
+confs['i3']='.i3'
+confs['rofi']='.Xresources'
+confs['tmux']='.tmux.conf'
+confs['urxvt']='.Xresources'
+confs['vim']='.vim'
 
 printf '%s\n' "Initializing and updating submodules..."
 git submodule update --init --jobs 8 --recursive --remote
 printf '%s\n' "Linking configuration files/directories for..."
 
-for i in "${!programs[@]}"; do
-	if [ -x "$(command -v "$i")" ]; then
-		printf '  %s...\n' "$i"
-		_dir="${programs[$i]}"
-		_dir="${_dir%/*}"
-		ensure_dir_exists "$_dir"
-		backup_or_remove "${programs[$i]}"
-		ln -s "$HOME"/dotfiles/"$i" "${programs[$i]}"
-	fi
+for i in "${!confs[@]}"; do
+	[ -x "$(command -v "$i")" ] && link_configs "$i" "${confs[$i]}" 'dotfiles'
 done
-
-if [ -x "$(command -v bash)" ]; then
-	printf '  bash (and readline)...\n'
-	backup_or_remove "$HOME"/.bashrc
-	ln -s "$HOME"/dotfiles/bashrc "$HOME"/.bashrc
-	# shellcheck disable=1090
-	source "$HOME"/.bashrc
-	backup_or_remove "$HOME"/.bash_profile
-	ln -s "$HOME"/dotfiles/bash_profile "$HOME"/.bash_profile
-	backup_or_remove "$HOME"/.inputrc
-	ln -s "$HOME"/dotfiles/inputrc "$HOME"/.inputrc
-fi
-
-if [ -x "$(command -v rofi)" ] || [ -x "$(command -v urxvt)" ]; then
-	printf '  X.org...\n'
-	backup_or_remove "$HOME"/.Xresources
-	ln -s "$HOME"/dotfiles/Xresources "$HOME"/.Xresources
-	[ -x "$(command -v xrdb)" ] && xrdb "$HOME"/.Xresources
-fi
+[ -x "$(command -v xrdb)" ] && xrdb "$HOME/.Xresources"
 printf '    ...Complete!\n'
 
 if [ -x "$(command -v sudo)" ]; then
@@ -72,7 +53,7 @@ if [ -x "$(command -v sudo)" ]; then
 			read -r -p 'Install iptables configuration? [y/N]: ' -n 1 yn
 			printf '\n'
 			case $yn in
-				[Yy]* ) "$HOME"/dotfiles/bin/iptables-init; break;;
+				[Yy]* ) "$HOME/dotfiles/bin/iptables-init"; break;;
 				[Nn]* ) break;;
 				"" ) break;;
 			esac
@@ -83,7 +64,7 @@ if [ -x "$(command -v sudo)" ]; then
 			read -r -p 'Install nftables configuration? [y/N]: ' -n 1 yn
 			printf '\n'
 			case $yn in
-				[Yy]* ) "$HOME"/dotfiles/bin/nftables-init; break;;
+				[Yy]* ) "$HOME/dotfiles/bin/nftables-init"; break;;
 				[Nn]* ) break;;
 				"" ) break;;
 			esac

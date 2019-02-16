@@ -291,11 +291,6 @@ fi
 # bats (Bash Automated Testing System)
 [ -x "$(command -v bats)" ] && alias bats='time bats'
 
-# cat
-if [ -x "$(command -v bat)" ]; then
-	alias cat='bat --style="changes,header,numbers"'
-fi
-
 # cd
 alias ..='cd ..'
 alias cd..='cd ..'
@@ -318,6 +313,7 @@ if [ -x "$(command -v git)" ]; then
 		# For information on CL and CS, see the gitconfig file
 		/usr/bin/git "$@" && if [ "$1" = 'clone' ] || [ "$1" = 'CL' ] || [ "$1" = 'CS' ] ; then
 			local _repo="${*: -1}"
+			_repo="${_repo%.git}"
 			cd "${_repo##*/}" || exit
 		fi
 	}

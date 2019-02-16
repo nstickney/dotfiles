@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+main() {
+	ssh-keygen -f "$HOME/.ssh/$1" -a 100 -t ed25519 -C "$2-$(date +%Y-%m-%d)"
+}
+
+[ ! "$#" -eq 2 ] && printf 'Usage: new-ssh-key <keyname> <comment>' >&2; exit
+main "$@"

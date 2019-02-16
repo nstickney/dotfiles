@@ -49,6 +49,8 @@ main() {
 	git submodule update --init --jobs 8 --recursive --remote
 	printf 'Linking configuration files/directories for...\n'
 
+	link_configs 'shell profile' '.profile' 'dotfiles'
+
 	for i in "${!confs[@]}"; do
 		[ -x "$(command -v "$i")" ] && link_configs "$i" "${confs[$i]}" 'dotfiles'
 	done

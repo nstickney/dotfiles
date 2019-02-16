@@ -4,6 +4,12 @@
 set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 
+usage() {
+	printf 'Usage: %s\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
 backup_or_remove() {
 	if [ -L "$1" ]; then
 		rm "$1"
@@ -25,49 +31,61 @@ link_configs() {
 	mkdir -p "$HOME/$_dir"               # Directory must exist
 	ln -s "$HOME/$3/$_file" "$HOME/$2"
 }
-declare -A confs # Match software to its config file/dir location within $HOME
-confs['aconfmgr']='.config/aconfmgr'
-confs['alacritty']='.config/alacritty'
-confs['bash']='.bashrc'
-confs['gdb']='.gdbinit'
-confs['git']='.gitconfig'
-confs['i3']='.i3'
-confs['rofi']='.Xresources'
-confs['tmux']='.tmux.conf'
-confs['urxvt']='.Xresources'
-confs['vim']='.vim'
 
-printf '%s\n' "Initializing and updating submodules..."
-git submodule update --init --jobs 8 --recursive --remote
-printf '%s\n' "Linking configuration files/directories for..."
+main() {
+	declare -A confs # Match software to its config file/dir location within $HOME
+	confs['aconfmgr']='.config/aconfmgr'
+	confs['alacritty']='.config/alacritty'
+	confs['bash']='.bashrc'
+	confs['gdb']='.gdbinit'
+	confs['git']='.gitconfig'
+	confs['i3']='.i3'
+	confs['rofi']='.Xresources'
+	confs['tmux']='.tmux.conf'
+	confs['urxvt']='.Xresources'
+	confs['vim']='.vim'
 
-for i in "${!confs[@]}"; do
-	[ -x "$(command -v "$i")" ] && link_configs "$i" "${confs[$i]}" 'dotfiles'
+	printf 'Initializing and updating submodules...\n'
+	git submodule update --init --jobs 8 --recursive --remote
+	printf 'Linking configuration files/directories for...\n'
+
+	for i in "${!confs[@]}"; do
+		[ -x "$(command -v "$i")" ] && link_configs "$i" "${confs[$i]}" 'dotfiles'
+	done
+	[ -x "$(command -v xrdb)" ] && xrdb "$HOME/.Xresources"
+	printf '    ...Complete!\n'
+
+	if [ -x "$(command -v sudo)" ]; then
+		if [ -x "$(command -v iptables)" ]; then
+			while true; do
+				read -r -p 'Install iptables configuration? [y/N]: ' -n 1 yn
+				printf '\n'
+				case $yn in
+					[Yy]* ) "$HOME/dotfiles/bin/iptables-init"; break;;
+					[Nn]* ) break;;
+					"" ) break;;
+				esac
+			done
+		fi
+		if [ -x "$(command -v nft)" ]; then
+			while true; do
+				read -r -p 'Install nftables configuration? [y/N]: ' -n 1 yn
+				printf '\n'
+				case $yn in
+					[Yy]* ) "$HOME/dotfiles/bin/nftables-init"; break;;
+					[Nn]* ) break;;
+					"" ) break;;
+				esac
+			done
+		fi
+	fi
+}
+
+_pos_args=()
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
+	esac
 done
-[ -x "$(command -v xrdb)" ] && xrdb "$HOME/.Xresources"
-printf '    ...Complete!\n'
-
-if [ -x "$(command -v sudo)" ]; then
-	if [ -x "$(command -v iptables)" ]; then
-		while true; do
-			read -r -p 'Install iptables configuration? [y/N]: ' -n 1 yn
-			printf '\n'
-			case $yn in
-				[Yy]* ) "$HOME/dotfiles/bin/iptables-init"; break;;
-				[Nn]* ) break;;
-				"" ) break;;
-			esac
-		done
-	fi
-	if [ -x "$(command -v nft)" ]; then
-		while true; do
-			read -r -p 'Install nftables configuration? [y/N]: ' -n 1 yn
-			printf '\n'
-			case $yn in
-				[Yy]* ) "$HOME/dotfiles/bin/nftables-init"; break;;
-				[Nn]* ) break;;
-				"" ) break;;
-			esac
-		done
-	fi
-fi
+main "${_pos_args[@]}"

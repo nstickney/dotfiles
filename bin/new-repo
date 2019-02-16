@@ -2,7 +2,7 @@
 
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+# file, you can obtain one at http://mozilla.org/MPL/2.0/.
 
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
 set -eEuo pipefail
@@ -10,108 +10,119 @@ trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 
 _private="true"
 _remotes="false"
-_positional=()
+
+usage() {
+	printf 'Usage: %s repo-name\n' "$(basename "$0")" >&2
+	printf ' -r --remotes : create remotes on Bitbucket, GitHub, and GitLab\n' >&2
+	printf ' -p --public : remotes created will be made public\n' >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+main() {
+	local _repo="${1##*/}"
+	local _desc="${2:-'TBP'}"
+	printf 'Creating new repo %s at %s...\n' "$_repo" "$1"
+	mkdir -pv "$1"
+	cd "$1"
+	git init
+
+	# Create repos on GitLab (push/pull), BitBucket (pull), & GitHub (pull)
+	if [ "$_remotes" == "true" ]; then
+		if [ "$_private" == "true" ]; then
+			curl -u "$USER:$BUCKETKEY" \
+				https://api.bitbucket.org/2.0/repositories/"$USER"/"$_repo" -d \
+				"{\"scm\": \"git\", \"is_private\": \"true\", \
+				\"fork_policy\": \"no_forks\", \"description\": \"$_desc\"}" \
+				>/dev/null
+			curl -H "Authorization: token $HUBKEY" \
+				https://api.github.com/user/repos -d \
+				"{\"name\": \"$1\", \"description\": \"$_desc\", \"private\": \"true\"}" \
+				>/dev/null
+			curl -H "Content-Type: application/json" -H "Private-Token: $LABKEY" \
+				https://gitlab.com/api/v4/projects -d \
+				"{\"name\": \"$1\", \"description\": \"$_desc\", \"visibility\": \"private\"}" \
+				>/dev/null
+		else
+			curl -u "$USER:$BUCKETKEY" \
+				https://api.bitbucket.org/2.0/repositories/"$USER"/"$_repo" -d \
+				"{\"scm\": \"git\", \"is_private\": \"false\", \
+				\"fork_policy\": \"allow_forks\", \"description\": \"$_desc\"}" \
+				>/dev/null
+			curl -H "Authorization: token $HUBKEY" \
+				https://api.github.com/user/repos -d \
+				"{\"name\": \"$1\", \"description\": \"$_desc\"}" \
+				>/dev/null
+			curl -H "Content-Type: application/json" -H "Private-Token: $LABKEY" \
+				https://gitlab.com/api/v4/projects -d \
+				"{\"name\": \"$1\", \"description\": \"$_desc\", \"visibility\": \"public\"}" \
+				>/dev/null
+		fi
+	fi
+
+	# Set up the remotes
+	git remote add origin "$LAB/$_repo"
+	git remote set-url --add origin "$BUCKET/$_repo"
+	git remote set-url --add origin "$HUB/$_repo"
+
+	# Add the basics
+	## README from Standard-Readme
+	aria2c https://raw.githubusercontent.com/RichardLitt/standard-readme/master/example-readmes/maximal-readme.md -o STANDARD_README.md
+	sed -i 's/Title/'"$_repo"'/g' STANDARD_README.md
+	sed -i 's/:repo/'"$_repo"'/g' STANDARD_README.md
+	sed -i 's/:user/'"$USER"'/g' STANDARD_README.md
+	sed -i '/maximal/s/.*/> '"$_desc"'/' STANDARD_README.md
+	sed -i '/description/s/.*/'"$_desc"'/' STANDARD_README.md
+	sed -i '/optional/d' STANDARD_README.md
+	sed -i '/Markdown/d' STANDARD_README.md
+	# shellcheck disable=2016
+	sed -i '/```/d' STANDARD_README.md
+	truncate -s -"$(tail -10 STANDARD_README.md | wc -c)" STANDARD_README.md
+	{
+		cat <<- EOF
+		> Contributors to this project adhere to the [Code of Conduct](CONDUCT.md).
+
+		I welcome [issues](https://gitlab.com/$USER/$_repo/issues "Issues"), but I prefer [pull requests](https://gitlab.com/$USER/$_repo/merge_requests "Pull requests")!
+		See the [contribution guidelines](CONTRIBUTING.md "Contributing") for more information.
+
+		## LICENSE
+
+		Copyright &copy; $(date +%Y) $USER.
+		Where not otherwise specified, this repository is licensed under the [Mozilla Public License 2.0](LICENSE).
+		EOF
+	} >> STANDARD_README.md
+	uniq STANDARD_README.md > README.md
+	rm STANDARD_README.md
+
+	## The Mozilla Public License 2.0
+	aria2c https://www.mozilla.org/media/MPL/2.0/index.815ca599c9df.txt -o LICENSE
+
+	## Gitignore suitable for most projects and major editors/IDEs 
+	aria2c https://www.gitignore.io/api/vim,emacs,eclipse,archives,executable,sublimetext,jetbrains+all,visualstudiocode -o .gitignore
+
+	## Project logo (Git logo) for GitLab
+	aria2c https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png -o logo.png
+
+	## Code of Conduct (Ruby)
+	aria2c https://raw.githubusercontent.com/ruby/www.ruby-lang.org/master/en/conduct/index.md -o RUBY_CONDUCT.md
+	tail -n 10 RUBY_CONDUCT.md > CONDUCT.md
+	rm RUBY_CONDUCT.md
+	sed -i 's/Ruby/'"$_repo"'/g' CONDUCT.md
+
+	## Stage it all
+	git add -A
+	git status
+}
+
+_pos_args=()
 while [ "$#" -gt 0 ]; do
 	case "$1" in
-		"--public") _private="false"; shift;;
-		"--remotes") _remotes="true"; shift;;
-		*) _positional+=("$1"); shift;;
+		'--public'|'-p') _private="false"; shift;;
+		'--remotes'|'-r') _remotes="true"; shift;;
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
 	esac
 done
-set -- "${_positional[@]}"
+main "${_pos_args[@]}" >&2
 
-_repo="${1##*/}"
-printf 'Creating new repo %s at %s...\n' "$_repo" "$1"
-
-_desc="TBP"
-if [ "$#" -gt 1 ]; then
-	_desc="$2"
-fi
-
-mkdir -pv "$1"
-cd "$1"
-git init
-
-# Create repos on GitLab (push/pull), BitBucket (pull), & GitHub (pull)
-if [ "$_remotes" == "true" ]; then
-	if [ "$_private" == "true" ]; then
-		curl -u "$USER:$BUCKETKEY" \
-			https://api.bitbucket.org/2.0/repositories/"$USER"/"$_repo" -d \
-			"{\"scm\": \"git\", \"is_private\": \"true\", \
-			\"fork_policy\": \"no_forks\", \"description\": \"$_desc\"}" \
-			>/dev/null
-		curl -H "Authorization: token $HUBKEY" \
-			https://api.github.com/user/repos -d \
-			"{\"name\": \"$1\", \"description\": \"$_desc\", \"private\": \"true\"}" \
-			>/dev/null
-		curl -H "Content-Type: application/json" -H "Private-Token: $LABKEY" \
-			https://gitlab.com/api/v4/projects -d \
-			"{\"name\": \"$1\", \"description\": \"$_desc\", \"visibility\": \"private\"}" \
-			>/dev/null
-	else
-		curl -u "$USER:$BUCKETKEY" \
-			https://api.bitbucket.org/2.0/repositories/"$USER"/"$_repo" -d \
-			"{\"scm\": \"git\", \"is_private\": \"false\", \
-			\"fork_policy\": \"allow_forks\", \"description\": \"$_desc\"}" \
-			>/dev/null
-		curl -H "Authorization: token $HUBKEY" \
-			https://api.github.com/user/repos -d \
-			"{\"name\": \"$1\", \"description\": \"$_desc\"}" \
-			>/dev/null
-		curl -H "Content-Type: application/json" -H "Private-Token: $LABKEY" \
-			https://gitlab.com/api/v4/projects -d \
-			"{\"name\": \"$1\", \"description\": \"$_desc\", \"visibility\": \"public\"}" \
-			>/dev/null
-	fi
-fi
-
-# Set up the remotes
-git remote add origin "$LAB/$_repo"
-git remote set-url --add origin "$BUCKET/$_repo"
-git remote set-url --add origin "$HUB/$_repo"
-
-# Add the basics
-## README from Standard-Readme
-aria2c https://raw.githubusercontent.com/RichardLitt/standard-readme/master/example-readmes/maximal-readme.md -o STANDARD_README.md
-sed -i 's/Title/'"$_repo"'/g' STANDARD_README.md
-sed -i '/maximal/s/.*/> '"$_desc"'/' STANDARD_README.md
-sed -i '/description/s/.*/'"$_desc"'/' STANDARD_README.md
-sed -i '/optional/d' STANDARD_README.md
-sed -i '/Markdown/d' STANDARD_README.md
-# shellcheck disable=2016
-sed -i '/```/d' STANDARD_README.md
-truncate -s -"$(tail -10 STANDARD_README.md | wc -c)" STANDARD_README.md
-{
-	cat <<- EOF
-	> Contributors to this project adhere to the [Code of Conduct](CONDUCT.md).
-
-	I welcome [issues](https://gitlab.com/$USER/$_repo/issues "Issues"), but I prefer [pull requests](https://gitlab.com/$USER/$_repo/merge_requests "Pull requests")!
-	See the [contribution guidelines](CONTRIBUTING.md "Contributing") for more information.
-
-	## LICENSE
-
-	Copyright &copy; $(date +%Y) $USER.
-	Where not otherwise specified, this repository is licensed under the [Mozilla Public License 2.0](LICENSE).
-	EOF
-} >> STANDARD_README.md
-uniq STANDARD_README.md > README.md
-rm STANDARD_README.md
-
-## The Mozilla Public License 2.0
-aria2c https://www.mozilla.org/media/MPL/2.0/index.815ca599c9df.txt -o LICENSE
-
-## Gitignore suitable for most projects and major editors/IDEs 
-aria2c https://www.gitignore.io/api/vim,emacs,eclipse,archives,executable,sublimetext,jetbrains+all,visualstudiocode -o .gitignore
-
-## Project logo (Git logo) for GitLab
-aria2c https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png -o logo.png
-
-## Code of Conduct (Ruby)
-aria2c https://raw.githubusercontent.com/ruby/www.ruby-lang.org/master/en/conduct/index.md -o RUBY_CONDUCT.md
-tail -n 10 RUBY_CONDUCT.md > CONDUCT.md
-rm RUBY_CONDUCT.md
-sed -i 's/Ruby/'"$_repo"'/g' CONDUCT.md
-
-## Stage it all
-git add -A
-git status
+pwd

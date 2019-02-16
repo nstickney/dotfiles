@@ -317,6 +317,12 @@ if [ -x "$(command -v git)" ]; then
 			cd "${_repo##*/}" || exit
 		fi
 	}
+
+	if [ -x "$(command -v new-repo)" ]; then
+		tkrepo() {
+			cd "$(new-repo "$@")" || exit
+		}
+	fi
 fi
 
 # ls
@@ -329,8 +335,8 @@ fi
 # mkdir
 alias mkdir='mkdir -pv'
 
-if [ ! -x "$(command -v mkcd)" ]; then
-	mkcd() {
+if [ ! -x "$(command -v tkdir)" ]; then
+	tkdir() {
 		mkdir -pv "$@" && cd "$_" || exit
 	}
 fi

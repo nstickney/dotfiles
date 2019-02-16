@@ -2,15 +2,34 @@
 
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
-# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+# file, you can obtain one at http://mozilla.org/MPL/2.0/.
 
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
 set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 
-main() {
-	ssh-keygen -f "$HOME/.ssh/$1" -a 100 -t ed25519 -C "$2-$(date +%Y-%m-%d)"
+_type=('-t' 'ed25519')
+
+usage() {
+	printf 'Usage: %s keyname [comment]\n' "$(basename "$0")" >&2
+	printf '    --legacy : use 4096-bit RSA instead of ED25519\n' >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
 }
 
-[ ! "$#" -eq 2 ] && printf 'Usage: new-ssh-key <keyname> <comment>' >&2; exit
-main "$@"
+main() {
+	[ "$#" -lt 1 ] && usage
+	local _c="${2:-$USER@$HOSTNAME}"
+	ssh-keygen -f "$HOME/.ssh/$1" -a 256 "${_type[@]}" -C "$_c-$(date +%Y-%m-%d)"
+	chmod go-rwx "$HOME/.ssh/$1{,.pub}"
+}
+
+_pos_args=()
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		'--legacy') _type=('-t' 'rsa' '-b' '4096'); shift;;
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
+	esac
+done
+main "${_pos_args[@]}"

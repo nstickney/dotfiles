@@ -57,6 +57,8 @@
 	SA = stash
 	# Stash Pop
 	SP = stash pop
+	# Shrink Repo
+	SR = ! git reflog expire --expire=now --all && git gc --prune=now --aggressive
 	# STatus
 	ST = status -sb
 	# Submodule Update

@@ -53,11 +53,17 @@
 	RO = "!f(){ git fetch origin && git rebase origin/master; }; f"
 	# Rebase Upstream
 	RU = "!f(){ git fetch upstream && git rebase upstream/master; }; f"
+	# Stash Add
+	SA = stash
+	# Stash Pop
+	SP = stash pop
 	# STatus
 	ST = status -sb
+	# Submodule Update
+	SU = submodule update --init --recursive --remote --jobs 8
 	# TableFlip (start over from whatever is in the remote)
 	TF = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch --all --force --jobs 8 && git reset --hard origin/\"$(git rev-parse --abbrev-ref HEAD)\" && git clean -dfx; break;; * ) break;; esac; }; f"
-	# UNdo
-	UN = reset HEAD --
-	# Update Submodules
-	US = submodule update --init --recursive --remote --jobs 8
+	# Undo changes
+	UC = clean -dfi
+	# Un-stage
+	US = reset HEAD --

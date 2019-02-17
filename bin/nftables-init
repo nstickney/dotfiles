@@ -3,7 +3,24 @@
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
 set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
-IFS=$'\n\t'
+
+usage() {
+	printf 'Usage: %s\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+user_confirm() {
+	while true; do
+		read -r -p "$1 [y/N]: " -n 1 yn
+		printf '\n'
+		case $yn in
+			[Yy]* ) eval "$2"; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
+}
 
 add_ip_chain() {
 	sudo nft add chain ip filter "$@"
@@ -29,17 +46,7 @@ add_bittorrent_incoming() {
 add_bittorrent_rules() {
 	add_ip_rule output tcp dport \{ 6969, 8999, 51413 \} accept
 	add_ip_rule output udp dport \{ 6969, 8999, 51413 \} accept
-
-	# Allow incoming bittorrent connections?
-	while true; do
-		read -r -p "Allow BitTorrent inbound? [y/N]: " -n 1 mc
-		printf '\n'
-		case $mc in
-			[Yy]* ) add_bittorrent_incoming; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Allow BitTorrent inbound?' add_bittorrent_incoming
 }
 
 add_printing_rules() {
@@ -65,51 +72,13 @@ add_workstation_rules() {
 
 	# Allow needed workstation outbound access
 	add_ip_rule output tcp dport \{ ircd, 6697, rsync, ssh, whois \} accept
-
-	# Allow printing to intranet?
-	while true; do
-		read -r -p "Does this computer use network printers? [y/N]: " -n 1 np
-		printf '\n'
-		case $np in
-			[Yy]* ) add_printing_rules; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
-
-	# Allow Minecraft outbound?
-	while true; do
-		read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
-		printf '\n'
-		case $mc in
-			[Yy]* ) add_ip_rule output tcp dport \{ 25565, 27094 \} accept; \
-				break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
-
-	# Allow ProxMox outbound?
-	while true; do
-		read -r -p "Is this computer used to access ProxMox? [y/N]: " -n 1 pm
-		printf '\n'
-		case $pm in
-			[Yy]* ) add_ip_rule output tcp dport 8006 accept; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
-
-	# Allow vSphere outbound?
-	while true; do
-		read -r -p "Is this computer used to access vSphere? [y/N]: " -n 1 vs
-		printf '\n'
-		case $vs in
-			[Yy]* ) add_ip_rule output tcp dport 9443 accept; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Does this computer use network printers?' add_printing_rules
+	user_confirm 'Is this computer used to play Minecraft?' \
+		'add_ip_rule output tcp dport { 25565, 27094 } accept'
+	user_confirm 'Is this computer used to access ProxMox?' \
+		'add_ip_rule output tcp dport 8006 accept'
+	user_confirm 'Is this computer used to access vSphere?' \
+		'add_ip_rule output tcp dport 9443 accept'
 }
 
 save_permanent_nftables() {
@@ -230,39 +199,11 @@ main() {
 	# Allow required services outbound
 	add_ip_rule output tcp dport \{ http, https \} accept
 	add_ip_rule output udp dport \{ domain, https, ntp \} accept
-
-	# Allow BitTorrent?
-	while true; do
-		read -r -p "Allow BitTorrent? [y/N]: " -n 1 bt
-		printf '\n'
-		case $bt in
-			[Yy]* ) add_bittorrent_rules; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
-
-	# Allow OpenVPN outbound?
-	while true; do
-		read -r -p "Does this computer use OpenVPN? [y/N]: " -n 1 ov
-		printf '\n'
-		case $ov in
-			[Yy]* ) add_openvpn_rules; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Allow BitTorrent?' add_bittorrent_rules
+	user_confirm 'Does this computer use OpenVPN?' add_openvpn_rules
 
 	# Workstation?
-	while true; do
-		read -r -p "Is this machine a workstation? [y/N]: " -n 1 wk
-		printf '\n'
-		case $wk in
-			[Yy]* ) add_workstation_rules; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Is this machine a workstation?' add_workstation_rules
 
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "NFT rules implemented:"
@@ -270,28 +211,11 @@ main() {
 	printf '\n'
 
 	# Save to /etc/nftables.conf
-	while true; do
-		read -r -p "Save to /etc/nftables.conf? [y/N]: " -n 1 yn
-		printf '\n'
-		case $yn in
-			[Yy]* ) save_permanent_nftables; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Save to /etc/nftables.conf?' save_permanent_nftables
 
 	# Start nftables at boot
-	if [ -x "$(command -v systemctl)" ]; then
-		while true; do
-			read -r -p "Start nftables at boot? [y/N]: " -n 1 yn
-			printf '\n'
-			case $yn in
-				[Yy]* ) sudo systemctl enable nftables; break;;
-				[Nn]* ) break;;
-				"" ) break;;
-			esac
-		done
-	fi
+	[ -x "$(command -v systemctl)" ] && user_confirm 'Start nftables at boot?' \
+		'sudo systemctl enable nftables'
 }
 
 main "$@"

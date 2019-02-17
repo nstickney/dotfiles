@@ -17,17 +17,7 @@ add_bittorrent_rules() {
 	sudo iptables -A OUTPUT -p udp -m udp --dport 6969 -j ACCEPT
 	sudo iptables -A OUTPUT -p udp -m udp --dport 8999 -j ACCEPT
 	sudo iptables -A OUTPUT -p udp -m udp --dport 51413 -j ACCEPT
-
-	# Allow incoming bittorrent connections?
-	while true; do
-		read -r -p "Allow BitTorrent inbound? [y/N]: " -n 1 mc
-		printf '\n'
-		case $mc in
-			[Yy]* ) add_bittorrent_incoming; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Allow BitTorrent inbound?' add_bittorrent_incoming
 }
 
 add_minecraft_rules() {
@@ -60,52 +50,12 @@ add_workstation_rules() {
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT # WHOIS
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT # RSYNC
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6667 -j ACCEPT # IRC
-
-	# Allow printing to intranet?
-	while true; do
-		read -r -p "Does this computer use network printers? [y/N]: " -n 1 np
-		printf '\n'
-		case $np in
-			[Yy]* ) add_printing_rules; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
-
-	# Allow Minecraft outbound?
-	while true; do
-		read -r -p "Is this computer used to play Minecraft? [y/N]: " -n 1 mc
-		printf '\n'
-		case $mc in
-			[Yy]* ) add_minecraft_rules; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
-
-	# Allow ProxMox outbound?
-	while true; do
-		read -r -p "Is this computer used to access ProxMox? [y/N]: " -n 1 ov
-		printf '\n'
-		case $ov in
-			[Yy]* ) sudo iptables -A OUTPUT -p tcp -m tcp --dport 8006 -j \
-				ACCEPT; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
-
-	# Allow vSphere outbound?
-	while true; do
-		read -r -p "Is this computer used to access vSphere? [y/N]: " -n 1 vs
-		printf '\n'
-		case $vs in
-			[Yy]* ) sudo iptables -A OUTPUT -p tcp -m tcp --dport 9443 -j \
-				ACCEPT; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Does this computer use network printers?' add_printing_rules
+	user_confirm 'Is this computer used to play Minecraft?' add_minecraft_rules
+	user_confirm 'Is this computer used to access ProxMox?' \
+		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 8006 -j ACCEPT'
+	user_confirm 'Is this computer used to access vSphere?' \
+		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT'
 }
 
 save_permanent_iptables() {
@@ -145,30 +95,14 @@ main() {
 
 	# firewalld sanity check
 	if [ -x "$(command -v firewall-cmd)" ]; then
-		while true; do
-			printf 'firewalld conflicts with these settings.\n'
-			read -r -p "Continue with iptables? [y/N]: " -n 1 yn
-			printf '\n'
-			case $yn in
-				[Yy]* ) break;;
-				[Nn]* ) exit;;
-				"" ) exit;;
-			esac
-		done
+		printf 'firewalld conflicts with these settings.\n'
+		user_confirm 'Abort setting up iptables?' 'exit 1'
 	fi
 
 	# nftables sanity check
 	if [ -x "$(command -v nft)" ]; then
-		while true; do
-			printf 'You have nftables installed. It supercedes iptables.\n'
-			read -r -p "Continue with iptables? [y/N]: " -n 1 yn
-			printf '\n'
-			case $yn in
-				[Yy]* ) break;;
-				[Nn]* ) exit;;
-				"" ) exit;;
-			esac
-		done
+		printf 'You have nftables installed. It supercedes iptables.\n'
+		user_confirm 'Abort setting up iptables?' 'exit 1'
 	fi
 
 	# sudo check
@@ -178,7 +112,7 @@ main() {
 	fi
 
 	# Don't run with sudo! Need to preserve $SSH_CLIENT in some situations
-	if (( "$(id -u)" == 0 )) && [ ! -z "$SUDO_COMMAND" ]; then
+	if (( "$(id -u)" == 0 )) && [ -n "$SUDO_COMMAND" ]; then
 		printf 'Do not run this as root (sudo); it invokes sudo as required.\n'
 		exit 1
 	fi
@@ -190,7 +124,7 @@ main() {
 	INTRANET="$(ip addr | grep "$IFACE" | awk 'FNR==2{print $2}')" # Intranet
 	local INTRANET_ADDR
 	INTRANET_ADDR="$(printf '%s' "$INTRANET" | awk -F/ '{print $1}')"
-	if [ ! -z "${SSH_CLIENT+x}" ]; then
+	if [ -n "${SSH_CLIENT+x}" ]; then
 		local SSH_ADDR
 		SSH_ADDR="$(echo "$SSH_CLIENT" | cut -d' ' -f1)"
 	fi
@@ -280,37 +214,13 @@ main() {
 	sudo iptables -A OUTPUT -p udp -m udp --dport 123 -j ACCEPT # NTP
 
 	# Allow BitTorrent?
-	while true; do
-		read -r -p "Allow BitTorrent? [y/N]: " -n 1 bt
-		printf '\n'
-		case $bt in
-			[Yy]* ) add_bittorrent_rules; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Allow BitTorrent?' add_bittorrent_rules
 
 	# Allow OpenVPN outbound?
-	while true; do
-		read -r -p "Does this computer use OpenVPN? [y/N]: " -n 1 ov
-		printf '\n'
-		case $ov in
-			[Yy]* ) add_openvpn_rules; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Does this computer use OpenVPN?' add_openvpn_rules
 
 	# Workstation?
-	while true; do
-		read -r -p "Is this machine a workstation? [y/N]: " -n 1 wk
-		printf '\n'
-		case $wk in
-			[Yy]* ) add_workstation_rules; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Is this machine a workstation?' add_workstation_rules
 
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"
@@ -318,28 +228,11 @@ main() {
 	printf '\n'
 
 	# Make rules persistent
-	while true; do
-		read -r -p "Save rules persistently? [y/N]: " -n 1 yn
-		printf '\n'
-		case $yn in
-			[Yy]* ) save_permanent_iptables; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
+	user_confirm 'Save rules persistently?' save_permanent_iptables
 
 	# Start iptables at boot
-	if [ -x "$(command -v systemctl)" ]; then
-		while true; do
-			read -r -p "Start iptables at boot? [y/N]: " -n 1 yn
-			printf '\n'
-			case $yn in
-				[Yy]* ) sudo systemctl enable iptables; break;;
-				[Nn]* ) break;;
-				"" ) break;;
-			esac
-		done
-	fi
+	[ -x "$(command -v systemctl)" ] && user_confirm 'Start iptables at boot?' \
+		'sudo systemctl enable iptables'
 }
 
 main "$@"

@@ -25,7 +25,7 @@ link_configs() {
 	printf '  %s (%s)...\n' "$1" "$2"
 	local _file="$HOME/$2"              # All config files are in $HOME
 	backup_or_remove "$_file"           # Save old files/directories (once)
-	mkdir -p "${_file%/*}"              # Ensure directory exists
+	mkdir -p "${_file%/*}"              # Ensure parent directory exists
 	_file="${_file##*/.}"               # Find dotfile name
 	ln -s "$HOME/$3/${_file##*/}" "$HOME/$2"
 }

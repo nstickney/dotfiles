@@ -23,13 +23,11 @@ backup_or_remove() {
 
 link_configs() {
 	printf '  %s (%s)...\n' "$1" "$2"
-	local _dir="$HOME/$2"                # All config files are in $HOME
-	backup_or_remove "$_dir"             # Save old files/directories (once)
-	local _file="${_dir##*/.}"           # Find config file name
-	_file="${_file##*/}"                 # Cut unneeded directory from name
-	_dir="${_dir%/*}"                    # Find config file directory
-	mkdir -p "$HOME/$_dir"               # Directory must exist
-	ln -s "$HOME/$3/$_file" "$HOME/$2"
+	local _file="$HOME/$2"              # All config files are in $HOME
+	backup_or_remove "$_file"           # Save old files/directories (once)
+	mkdir -p "${_file%/*}"              # Ensure directory exists
+	_file="${_file##*/.}"               # Find dotfile name
+	ln -s "$HOME/$3/${_file##*/}" "$HOME/$2"
 }
 
 main() {

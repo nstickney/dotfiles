@@ -30,6 +30,18 @@ link_configs() {
 	ln -s "$HOME/$3/${_file##*/}" "$HOME/$2"
 }
 
+user_confirm() {
+	while true; do
+		read -r -p "$1 [y/N]: " -n 1 yn
+		printf '\n'
+		case $yn in
+			[Yy]* ) "$2"; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
+}
+
 main() {
 	declare -A confs # Match software to its config file/dir location within $HOME
 	confs['aconfmgr']='.config/aconfmgr'
@@ -57,26 +69,12 @@ main() {
 
 	if [ -x "$(command -v sudo)" ]; then
 		if [ -x "$(command -v iptables)" ]; then
-			while true; do
-				read -r -p 'Install iptables configuration? [y/N]: ' -n 1 yn
-				printf '\n'
-				case $yn in
-					[Yy]* ) "$HOME/dotfiles/bin/iptables-init"; break;;
-					[Nn]* ) break;;
-					"" ) break;;
-				esac
-			done
+			user_confirm 'Install iptables configuration?' \
+				"$HOME/dotfiles/bin/iptables-init";
 		fi
 		if [ -x "$(command -v nft)" ]; then
-			while true; do
-				read -r -p 'Install nftables configuration? [y/N]: ' -n 1 yn
-				printf '\n'
-				case $yn in
-					[Yy]* ) "$HOME/dotfiles/bin/nftables-init"; break;;
-					[Nn]* ) break;;
-					"" ) break;;
-				esac
-			done
+			user_confirm 'Install nftables configuration?' \
+				"$HOME/dotfiles/bin/nftables-init";
 		fi
 	fi
 }

@@ -218,4 +218,11 @@ main() {
 		'sudo systemctl enable nftables'
 }
 
-main "$@"
+_pos_args=()
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
+	esac
+done
+main "${_pos_args[@]}"

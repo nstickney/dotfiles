@@ -35,7 +35,7 @@ user_confirm() {
 		read -r -p "$1 [y/N]: " -n 1 yn
 		printf '\n'
 		case $yn in
-			[Yy]* ) "$2"; break;;
+			[Yy]* ) eval "$2"; break;;
 			[Nn]* ) break;;
 			"" ) break;;
 		esac

@@ -5,6 +5,24 @@ set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 IFS=$'\n\t'
 
+usage() {
+	printf 'Usage: %s\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+user_confirm() {
+	while true; do
+		read -r -p "$1 [y/N]: " -n 1 yn
+		printf '\n'
+		case $yn in
+			[Yy]* ) eval "$2"; break;;
+			[Nn]* ) break;;
+			"" ) break;;
+		esac
+	done
+}
+
 add_bittorrent_incoming() {
 	sudo iptables -A INPUT -p tcp -m tcp --dport 8999 -j ACCEPT
 	sudo iptables -A INPUT -p udp -m udp --dport 8999 -j ACCEPT
@@ -235,4 +253,12 @@ main() {
 		'sudo systemctl enable iptables'
 }
 
-main "$@"
+
+_pos_args=()
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
+	esac
+done
+main "${_pos_args[@]}"

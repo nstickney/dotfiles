@@ -1,9 +1,5 @@
 AddPackage aria2 # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
 AddPackage avahi # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
-CopyFile /etc/avahi/avahi-daemon.conf
-CreateLink /etc/systemd/system/dbus-org.freedesktop.Avahi.service /usr/lib/systemd/system/avahi-daemon.service
-CreateLink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service /usr/lib/systemd/system/avahi-daemon.service
-CreateLink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket /usr/lib/systemd/system/avahi-daemon.socket
 AddPackage bind-tools # The ISC DNS tools
 AddPackage chromium # A web browser built for speed, simplicity, and security
 AddPackage dhcpcd # RFC2131 compliant DHCP client daemon
@@ -49,4 +45,10 @@ AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 # CopyFile /etc/privoxy/config
 # AddPackage tor # Anonymizing overlay network
 
+ip a | grep -q '192.168.156.' && CopyFile /etc/hosts
+
+CopyFile /etc/avahi/avahi-daemon.conf
 CopyFile /etc/sysctl.d/51-net.conf
+CreateLink /etc/systemd/system/dbus-org.freedesktop.Avahi.service /usr/lib/systemd/system/avahi-daemon.service
+CreateLink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service /usr/lib/systemd/system/avahi-daemon.service
+CreateLink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket /usr/lib/systemd/system/avahi-daemon.socket

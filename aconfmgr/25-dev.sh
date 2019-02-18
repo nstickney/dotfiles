@@ -4,11 +4,13 @@ AddPackage cloc # Count lines of code
 AddPackage code # The Open Source build of Visual Studio Code (vscode) editor
 AddPackage fd # Simple, fast and user-friendly alternative to find
 AddPackage fzf # Command-line fuzzy finder
+AddPackage gdb # The GNU Debugger
 AddPackage git # the fast distributed version control system
 AddPackage git-crypt # Transparent file encryption in Git
 AddPackage --foreign hyperfine # A command-line benchmarking tool
 AddPackage namcap # A Pacman package analyzer
 AddPackage parallel # A shell tool for executing jobs in parallel
+AddPackage peda # Python Exploit Development Assistance for GDB
 AddPackage ripgrep # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rsync # A file transfer program to keep remote files in sync
 AddPackage tig # Text-mode interface for Git.
@@ -17,6 +19,11 @@ AddPackage tree # A directory listing program displaying a depth indented list o
 AddPackage valgrind # Tool to help find memory-management problems in programs
 AddPackage vim # Vi Improved, a highly configurable, improved version of the vi text editor
 AddPackage vim-spell-en # Language files for Vim spell checking
+
+# Remote admin
+if [[ "$HOSTNAME" == "elisha" || "$HOSTNAME" == "elias" ]]; then
+	AddPackage terraform # Tool for building, changing, and versioning infrastructure safely and efficiently
+fi
 
 # Network Testing
 AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
@@ -37,7 +44,6 @@ AddPackage shellharden # Bash linter and syntax highlighter
 AddPackage cmake # A cross-platform open-source make system
 AddPackage cppcheck # A tool for static C/C++ code analysis
 AddPackage flawfinder # Searches through source code for potential security flaws
-AddPackage gdb # The GNU Debugger
 AddPackage vim-omnicppcomplete # vim c++ completion omnifunc with a ctags database
 
 ### Go

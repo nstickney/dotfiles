@@ -55,7 +55,6 @@ AddPackage net-tools # Configuration tools for Linux networking
 AddPackage neofetch # A CLI system information tool written in BASH that supports displaying images.
 AddPackage nilfs-utils # A log-structured file system supporting continuous snapshotting (userspace utils)
 AddPackage ntfs-3g # NTFS filesystem driver and utilities
-AddPackage openntpd # Free, easy to use implementation of the Network Time Protocol
 AddPackage pacman # A library-based package manager with dependency support
 AddPackage patch # A utility to apply patch files to original sources
 AddPackage pciutils # PCI bus configuration space access library and tools
@@ -88,14 +87,11 @@ AddPackage --foreign aurman # AUR helper with almost pacman syntax
 AddPackage --foreign aurvote # Vote for your favorite AUR packages
 AddPackage --foreign find-the-command # Interactive command-not-found hook for bash and zsh using the power of pacman
 
-CopyFile /etc/bash.bashrc
 CopyFile /etc/makepkg.conf
-CopyFile /etc/ntpd.conf
 CopyFile /etc/pacman.conf
 CopyFile /etc/pacman.d/hooks/mirrorupgrade.hook
 CopyFile /etc/profile.d/powerpill.sh
 
-CreateLink /etc/systemd/system/multi-user.target.wants/openntpd.service /usr/lib/systemd/system/openntpd.service
 CreateLink /etc/systemd/user/sockets.target.wants/dirmngr.socket /usr/lib/systemd/user/dirmngr.socket
 CreateLink /etc/systemd/user/sockets.target.wants/gpg-agent-browser.socket /usr/lib/systemd/user/gpg-agent-browser.socket
 CreateLink /etc/systemd/user/sockets.target.wants/gpg-agent-extra.socket /usr/lib/systemd/user/gpg-agent-extra.socket

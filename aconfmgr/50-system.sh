@@ -1,5 +1,7 @@
 # shellcheck disable=SC2148
 
+AddPackage chrony # Lightweight NTP client and server
+
 # Virtual Machine (any type)
 if sudo dmesg | grep -q "Hypervisor detected"; then
 	CopyFile /etc/gdm/custom.conf
@@ -53,13 +55,34 @@ then
 	AddPackage nvidia-340xx # NVIDIA drivers for linux, 340xx legacy branch
 fi
 
-CopyFile /etc/locale.conf
+# https://wiki.archlinux.org/index.php/Getty#Have_boot_messages_stay_on_tty1
+cat > "$(CreateFile /etc/systemd/system/getty@tty1.service.d/noclear.conf)" <<EOF
+[Service]
+TTYVTDisallocate=no
+EOF
 
+# Enable Magic SysRq
+echo "kernel.sysrq = 1" > "$(CreateFile /etc/sysctl.d/99-sysrq.conf)"
+
+# Reduce timeouts to sane variables
+cat >> "$(GetPackageOriginalFile systemd /etc/systemd/system.conf)" <<EOF
+RuntimeWatchdogSec=10min
+ShutdownWatchdogSec=10min
+DefaultTimeoutStartSec=30s
+DefaultTimeoutStopSec=30s
+EOF
+
+# Specify locales
+f="$(GetPackageOriginalFile glibc /etc/locale.gen)"
+sed -i 's/^#\(en_US.UTF-8\)/\1/g' "$f"
+
+CopyFile /etc/chrony.conf
+CopyFile /etc/locale.conf
 CreateLink /etc/localtime /usr/share/zoneinfo/US/Eastern
 CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
 CreateLink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service /usr/lib/systemd/system/NetworkManager-dispatcher.service
 CreateLink /etc/systemd/system/display-manager.service /usr/lib/systemd/system/gdm.service
 CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/systemd/system/getty@.service
+CreateLink /etc/systemd/system/multi-user.target.wants/chronyd.service /usr/lib/systemd/system/chronyd.service
 CreateLink /etc/systemd/system/multi-user.target.wants/remote-fs.target /usr/lib/systemd/system/remote-fs.target
-CreateLink /etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service /usr/lib/systemd/system/systemd-timesyncd.service
 CreateLink /etc/systemd/user/default.target.wants/xdg-user-dirs-update.service /usr/lib/systemd/user/xdg-user-dirs-update.service

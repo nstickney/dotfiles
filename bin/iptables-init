@@ -72,6 +72,8 @@ add_workstation_rules() {
 	user_confirm 'Is this computer used to play Minecraft?' add_minecraft_rules
 	user_confirm 'Is this computer used to access ProxMox?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 8006 -j ACCEPT'
+	user_confirm 'Is this computer used to access Remote Desktop (RDP)?' \
+		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 3389 -j ACCEPT'
 	user_confirm 'Is this computer used to access vSphere?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT'
 }

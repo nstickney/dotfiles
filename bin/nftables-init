@@ -77,6 +77,8 @@ add_workstation_rules() {
 		'add_ip_rule output tcp dport { 25565, 27094 } accept'
 	user_confirm 'Is this computer used to access ProxMox?' \
 		'add_ip_rule output tcp dport 8006 accept'
+	user_confirm 'Is this computer used to access Remote Desktop (RDP)?' \
+		'add_ip_rule output tcp dport 3389 accept'
 	user_confirm 'Is this computer used to access vSphere?' \
 		'add_ip_rule output tcp dport 9443 accept'
 }

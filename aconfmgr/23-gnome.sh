@@ -80,6 +80,7 @@ AddPackage seahorse-nautilus # PGP encryption and signing for nautilus
 AddPackage sushi # A quick previewer for Nautilus
 AddPackage unace # An extraction tool for the proprietary ace archive format
 AddPackage unrar # The RAR uncompression programs
+AddPackage vinagre # A VNC Client for the GNOME desktop
 AddPackage xdg-user-dirs-gtk # Creates user dirs and asks to relocalize them
 
 AddPackage --foreign gnome-terminal-transparency # The GNOME Terminal Emulator, with background transparency

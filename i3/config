@@ -19,12 +19,12 @@ font pango:Source Code Pro, Font Awesome 5 Free Solid 12
 
 ## Colors (see http://i3wm.org/docs/userguide.html#_changing_colors)
 set $fore   #e2e2e2
-set $fade   #e2e2e280
+set $fade   #e2e2e295
 set $back   #1b1b1b
-set $bact   #1b1b1b80
+set $bact   #1b1b1b95
 set $trns   #00000000
 set $acto   #852000
-set $actt   #85200080
+set $actt   #85200095
 set $hint   #9a0027
 
 # Window Class          Border  Background  Text    Indicator   Child Border
@@ -54,7 +54,7 @@ exec_always --no-startup-id [ -x "$HOME/SafeDepositBox/xrandr-setup" ] && "$HOME
 exec_always --no-startup-id feh --randomize --bg-scale "$HOME"/.wallpaper/*
 
 # Start compositor
-exec --no-startup-id compton -bCG -e 0.8 -i 0.8
+exec --no-startup-id compton -bCG -e 0.95 -i 0.95
 
 # Turn on numlock
 exec --no-startup-id numlockx

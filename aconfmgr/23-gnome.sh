@@ -1,15 +1,3 @@
-# shellcheck disable=SC2148
-if [[ "$HOSTNAME" == "elisha" || \
-	  "$HOSTNAME" == "elizabeth" || \
-	  "$HOSTNAME" == "elijah" || \
-	  "$HOSTNAME" == "eli" || \
-	  "$HOSTNAME" == "elisheba" ]]
-then
-	AddPackage adwaita-icon-theme # Adwaita icon theme
-	AddPackage dconf-editor # dconf Editor
-	AddPackage gedit # A text editor for GNOME
-	AddPackage gedit-code-assistance # Code assistance for gedit
-	AddPackage gnome-backgrounds # Background images and data for GNOME
 	AddPackage gnome-calculator # GNOME Scientific calculator
 	AddPackage gnome-characters # A character map application
 	AddPackage gnome-contacts # Contacts Manager for GNOME
@@ -36,7 +24,6 @@ then
 	AddPackage mutter # A window manager for GNOME
 	AddPackage mx # A widget toolkit using Clutter
 	AddPackage tracker # Desktop-neutral user information store, search tool and indexer
-	AddPackage vinagre # A VNC Client for the GNOME desktop
 fi
 
 ### GNOME-ish stuff used outside GNOME

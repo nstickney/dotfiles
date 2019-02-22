@@ -326,7 +326,7 @@ if [ -x "$(command -v git)" ]; then
 fi
 
 # ls
-[ ! -x "$(command -v ll)" ] && alias ll='ls -la'
+[ ! -x "$(command -v ll)" ] && alias ll='ls -ahl'
 [ ! -x "$(command -v sl)" ] && alias sl='ls'
 
 # less is more
@@ -447,7 +447,7 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 	elif [ -x "$(command -v netstat)" ]; then
 		alias ss='sudo netstat'
 	fi
-	[ "$(type -t ss)" == "alias" ] && alias sl='ss -ltunp'
+	[ "$(type -t ss)" == "alias" ] && alias sl='ss -lnptu'
 
 	# Package Managers
 

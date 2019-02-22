@@ -27,6 +27,8 @@
 	CS = clone --recurse-submodules --jobs 8
 	# Fetch All
 	FA = fetch --all
+	# Fire Drill
+	FD = ! git add -A && git commit -m 'wip: fire drill!' && git push
 	# Fetch all with Submodules
 	FS = fetch --all --recurse-submodules --jobs 8
 	# Last Commit
@@ -38,7 +40,7 @@
 	# Pull Origin
 	PO = pull origin master
 	# PuSh
-	PS = push origin master
+	PS = push
 	# Pull Upstream
 	PU = pull upstream master
 	# Pull (Recurse)

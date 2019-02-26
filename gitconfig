@@ -59,6 +59,8 @@
 	SA = stash
 	# Stash Pop
 	SP = stash pop
+	# SQuash
+	SQ = ! git commit --squash=HEAD && git rebase --autosquash
 	# Shrink Repo
 	SR = ! git reflog expire --expire=now --all && git gc --prune=now --aggressive
 	# STatus

@@ -87,16 +87,13 @@ bash_prompt_command() {
 	GTBR=$(git_prompt)
 	# How many characters of the $PWD should be kept
 	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER} - ${#GTBR}))
-	# Indicate that there has been dir truncation
-	local trunc_symbol='...'
 	local dir=${PWD##*/}
 	pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
 	CPWD=${PWD/#$HOME/\~}
 	local pwdoffset=$(( ${#CPWD} - pwdmaxlen ))
-	if [ ${pwdoffset} -gt "0" ]
-	then
+	if [ ${pwdoffset} -gt "0" ]; then
 		CPWD=${CPWD:$pwdoffset:$pwdmaxlen}
-		CPWD=${trunc_symbol}/${CPWD#*/}
+		CPWD='.../'"${CPWD#*/}"
 	fi
 }
 

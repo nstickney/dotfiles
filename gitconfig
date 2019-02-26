@@ -67,6 +67,8 @@
 	SU = submodule update --init --recursive --remote --jobs 8
 	# TableFlip (start over from whatever is in the remote)
 	TF = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch --all --force --jobs 8 && git reset --hard origin/\"$(git rev-parse --abbrev-ref HEAD)\" && git clean -dfx; break;; * ) break;; esac; }; f"
+	# Track Master (force local branch to track origin/master)
+	TM = branch -u origin/master
 	# Undo changes
 	UC = clean -dfi
 	# Un-stage

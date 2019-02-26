@@ -83,7 +83,8 @@ main() {
 		> Contributors to this project adhere to the [Code of Conduct](CONDUCT.md).
 
 		I welcome [issues](https://gitlab.com/$USER/$_repo/issues "Issues"), but I prefer [pull requests](https://gitlab.com/$USER/$_repo/merge_requests "Pull requests")!
-		See the [contribution guidelines](CONTRIBUTING.md "Contributing") for more information.
+		We follow the [trunk-based development](https://trunkbaseddevelopment.com/) model (where your fork is a "feature branch").
+		Contributions should [use git with discipline](https://drewdevault.com/2019/02/25/Using-git-with-discipline.html).
 
 		## LICENSE
 
@@ -117,8 +118,8 @@ main() {
 _pos_args=()
 while [ "$#" -gt 0 ]; do
 	case "$1" in
-		'--public'|'-p') _private="false"; shift;;
 		'--remotes'|'-r') _remotes="true"; shift;;
+		'--public'|'-p') _private="false"; shift;;
 		'--help'|'-h') usage;;
 		*) _pos_args+=("$1"); shift;;
 	esac

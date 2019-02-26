@@ -17,6 +17,11 @@ else
 	CreateLink /etc/systemd/system/multi-user.target.wants/lm_sensors.service /usr/lib/systemd/system/lm_sensors.service
 fi
 
+# AMD CPU
+if grep -q AMD /proc/cpuinfo 2>/dev/null; then
+	AddPackage amd-ucode # Microcode update files for AMD CPUs
+fi
+
 # Intel CPU/Video
 if grep -q Intel /proc/cpuinfo 2>/dev/null; then
 	AddPackage intel-ucode # Microcode update files for Intel CPUs

@@ -1,3 +1,4 @@
+if [ "$HOSTNAME" == 'elisha' ]; then
 	AddPackage gnome-calculator # GNOME Scientific calculator
 	AddPackage gnome-characters # A character map application
 	AddPackage gnome-contacts # Contacts Manager for GNOME

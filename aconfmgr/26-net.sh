@@ -45,8 +45,6 @@ AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 # CopyFile /etc/privoxy/config
 # AddPackage tor # Anonymizing overlay network
 
-ip a | grep -q '192.168.156.' && CopyFile /etc/hosts
-
 CopyFile /etc/avahi/avahi-daemon.conf
 CopyFile /etc/sysctl.d/51-net.conf
 CreateLink /etc/systemd/system/dbus-org.freedesktop.Avahi.service /usr/lib/systemd/system/avahi-daemon.service

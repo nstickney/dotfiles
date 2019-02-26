@@ -14,6 +14,6 @@ then
 	AddPackage --foreign minecraft # An open-world game whose gameplay revolves around breaking and placing blocks
 	# AddPackage --foreign runescape-launcher # RuneScape Game Client (NXT)
 	# AddPackage --foreign terasology # Yet another high resolution game with blocks like Minecraft!
-	AddPackage --foreign tome4 # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
+	# AddPackage --foreign tome4 # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
 	# AddPackage --foreign wolfenstein3d # Wolfenstein 3D, cult first person shooter video game from id Software and Apogee
 fi

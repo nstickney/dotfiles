@@ -13,11 +13,15 @@
 [alias]
 	# Add All
 	AA = ! git add -A && git ST
+	# Add Patches
+	AP = ! git add -p && git ST
 	# Amend Commit
 	AC = commit --amend
 	# BRanch
 	BR = branch
-	# Commit with Message
+	# Commit and write the message in Editor
+	CE = commit
+	# Commit with Message (requires message argument)
 	CM = commit -m
 	# CLone
 	CL = clone

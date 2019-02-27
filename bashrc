@@ -273,6 +273,12 @@ path_append "$HOME/dotfiles/bin"
 shopt -s cdspell
 [ "$(uname -s)" != 'Darwin' ] && shopt -s dirspell
 
+# SSH-AGENT ###################################################################
+if [ -x "$(command -v ssh-agent)" ]; then
+	eval "$(ssh-agent -t 240)" >/dev/null
+	trap '[ -n "$SSH_AGENT_PID" ] && eval $(ssh-agent -k); exit' EXIT
+fi
+
 # TABS ########################################################################
 [ -x "$(command -v tabs)" ] && tabs 4
 

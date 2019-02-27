@@ -75,6 +75,7 @@ main() {
 	sed -i '/description/s/.*/'"$_desc"'/' STANDARD_README.md
 	sed -i '/optional/d' STANDARD_README.md
 	sed -i '/Markdown/d' STANDARD_README.md
+	sed -i '/should be updated/d' STANDARD_README.md
 	# shellcheck disable=2016
 	sed -i '/```/d' STANDARD_README.md
 	truncate -s -"$(tail -10 STANDARD_README.md | wc -c)" STANDARD_README.md
@@ -88,7 +89,7 @@ main() {
 
 		## LICENSE
 
-		Copyright &copy; $(date +%Y) $USER.
+		Copyright &copy; $(date +%Y) @$USER.
 		Where not otherwise specified, this repository is licensed under the [Mozilla Public License 2.0](LICENSE).
 		EOF
 	} >> STANDARD_README.md
@@ -108,7 +109,7 @@ main() {
 	aria2c https://raw.githubusercontent.com/ruby/www.ruby-lang.org/master/en/conduct/index.md -o RUBY_CONDUCT.md
 	tail -n 10 RUBY_CONDUCT.md > CONDUCT.md
 	rm RUBY_CONDUCT.md
-	sed -i 's/Ruby/'"$_repo"'/g' CONDUCT.md
+	sed -i 's/the[[:space:]]Ruby/this project or its/g' CONDUCT.md
 
 	## Stage it all
 	git add -A

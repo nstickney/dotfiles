@@ -1,6 +1,7 @@
 # dotfiles
 
-[![MPL-2.0](https://img.shields.io/github/license/nstickney/dotfiles.svg)](LICENSE) [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
+[![license](https://img.shields.io/github/license/nstickney/dotfiles.svg)](LICENSE)
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 > @nstickney's configuration files
 
@@ -69,18 +70,19 @@ The included i3wm configuration requires the following packages as dependencies 
 
 ## Usage
 
-I typically use `gdm` to handle workstation login, and `i3-gnome` [AUR](https://aur.archlinux.org/packages/i3-gnome/) as the default window session. Both are included in the `aconfmgr` configuration.
-
 If you install new software on the list of included configurations, re-run the `install` script to link the required configuration files.
 
-## Contribute
+I typically use `gdm` to handle workstation login; it is included in the `aconfmgr` configuration.
 
-> Contributors to this project are expected to adhere to our [Code of Conduct](CODE_OF_CONDUCT.md "Code of Conduct").
+## Contributing
 
-I welcome [issues](docs/issue_template.md "Issue template"), but I prefer [pull requests](dosc/pull_request_template.md "Pull request template")! See the [contribution guidelines](docs/contributing.md "Contributing") for more information.
+> Contributors to this project adhere to the [Code of Conduct](CONDUCT.md).
 
-## License
+I welcome [issues](https://gitlab.com/nstickney/dotfiles/issues "Issues"), but I prefer [pull requests](https://gitlab.com/nstickney/dotfiles/merge_requests "Pull requests")!
+We follow the [trunk-based development](https://trunkbaseddevelopment.com/) model (where your fork is a "feature branch").
+Contributions should [use git with discipline](https://drewdevault.com/2019/02/25/Using-git-with-discipline.html).
 
-Copyright &copy; 2019 @nstickney
+## LICENSE
 
-Where not otherwise noted, this repository is licensed under the [Mozilla Public License 2.0](LICENSE).
+Copyright &copy; 2017-2019 @nstickney.
+Where not otherwise specified, this repository is licensed under the [Mozilla Public License 2.0](LICENSE).

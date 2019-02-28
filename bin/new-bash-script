@@ -27,6 +27,6 @@ while [ "$#" -gt 0 ]; do
 done
 main "${_pos_args[@]}"
 
-cp "$0" "$1"
-truncate -s -"$(tail -4 "$1" | wc -c)" "$1"
-"$EDITOR" "$1"
+cp "$0" "${_pos_args[0]}"
+truncate -s -"$(tail -4 "${_pos_args[0]}" | wc -c)" "${_pos_args[0]}"
+"$EDITOR" "${_pos_args[0]}"

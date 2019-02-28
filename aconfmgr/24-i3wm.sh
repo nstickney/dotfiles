@@ -12,7 +12,8 @@ AddPackage playerctl # mpris media player controller and lib for spotify, vlc, a
 AddPackage polkit-gnome # Legacy polkit authentication agent for GNOME
 AddPackage rofi # Popup window switcher roughly based on superswitcher, requiring only xlib and xft
 AddPackage xautolock # An automatic X screen-locker/screen-saver
+AddPackage xdg-utils # Command line tools that assist applications with a variety of desktop integration tasks
 
-AddPackage --foreign i3-gnome # Starts i3 inside a gnome session.
+# AddPackage --foreign i3-gnome # Starts i3 inside a gnome session.
 AddPackage --foreign i3status-rust-git # Very resourcefriendly and feature-rich replacement for i3status, written in pure Rust
 AddPackage alsa-utils # Opt dep for i3status-rust-git

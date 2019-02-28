@@ -7,12 +7,16 @@ AddPackage hugo # Fast and Flexible Static Site Generator in Go
 AddPackage --foreign lbry-app-bin # The LBRY app built using electron
 AddPackage libgexiv2 # opt dep for gramps
 AddPackage osm-gps-map # opt dep for gramps
+AddPackage --foreign pandoc-bin # Pandoc - executable only, without 750MB Haskell depends/makedepends
+AddPackage --foreign pandoc-citeproc-bin # Pandoc Cite Processor - executable only, without 750MB Haskell depends/makedepends
 AddPackage --foreign protonmail-bridge # Application to use IMAP/SMTP with your paid ProtonMail account
 AddPackage python-pyicu # opt dep for gramps
 AddPackage rcs # opt dep for gramps
 AddPackage rmlint # Tool to remove duplicates and other lint, being much faster than fdupes
 AddPackage rmlint-shredder # Graphical user interface for rmlint
 AddPackage texlive-bin # opt dep for evince/vim/python
+AddPackage texlive-core # TeX Live core distribution
+AddPackage texlive-latexextra # TeX Live - Large collection of add-on packages for LaTeX
 AddPackage thunderbird # Standalone mail and news reader from mozilla.org
 AddPackage truecrypt # Free open-source cross-platform disk encryption software
 AddPackage --foreign zotero # Zotero Standalone, a free, easy-to-use tool to help you collect, organize, cite, and share your research sources

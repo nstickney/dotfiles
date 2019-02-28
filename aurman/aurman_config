@@ -1,0 +1,7 @@
+[miscellaneous]
+cache_dir=/tmp/aurman
+keyserver=hkp://keyserver.ubuntu.com:80
+pgp_fetch
+skip_news
+skip_new_locations
+sort_by_name

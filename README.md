@@ -18,6 +18,7 @@
 Includes configuration for:
 * `aconfmgr`
 * `alacritty`
+* `aurman`
 * `bash`
 * `dconf` (GNOME/GTK)
 * `i3` (`i3-gaps`)

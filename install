@@ -46,6 +46,7 @@ main() {
 	declare -A confs # Match software to its config file/dir location within $HOME
 	confs['aconfmgr']='.config/aconfmgr'
 	confs['alacritty']='.config/alacritty'
+	confs['aurman']='.config/aurman'
 	confs['bash']='.bashrc'
 	confs['gdb']='.gdbinit'
 	confs['git']='.gitconfig'

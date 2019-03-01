@@ -22,8 +22,8 @@ then
 	AddPackage pcsc-tools # PC/SC Architecture smartcard tools
 	AddPackage pulseaudio-bluetooth # Bluetooth support for PulseAudio
 
-	#CreateLink /etc/systemd/system/bluetooth.target.wants/bluetooth.service /usr/lib/systemd/system/bluetooth.service
-	#CreateLink /etc/systemd/system/dbus-org.bluez.service /usr/lib/systemd/system/bluetooth.service
+	CreateLink /etc/systemd/system/bluetooth.target.wants/bluetooth.service /usr/lib/systemd/system/bluetooth.service
+	CreateLink /etc/systemd/system/dbus-org.bluez.service /usr/lib/systemd/system/bluetooth.service
 fi
 
 if [[ "$HOSTNAME" == "elisha" || \

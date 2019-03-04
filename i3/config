@@ -88,15 +88,15 @@ bar {
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod1+Return exec [ -x "$(command -v alacritty)" ] && alacritty || urxvt
-bindsym Super_L exec [ -x "$(command -v alacritty)" ] && alacritty || urxvt
+bindsym Mod1+Return exec ~/dotfiles/bin/start-gui-term
+bindsym Menu exec ~/dotfiles/bin/start-gui-term
+bindsym Super_R exec ~/dotfiles/bin/start-gui-term
 
 # kill focused window
 bindsym Mod1+Shift+q kill
 
 # start rofi (a program launcher)
-bindsym Menu exec rofi -show combi
-bindsym Super_R exec rofi -show combi
+bindsym Super_L exec rofi -show combi
 bindsym Mod1+Tab exec rofi -show combi
 
 # change focus

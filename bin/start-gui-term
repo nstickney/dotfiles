@@ -16,14 +16,7 @@ usage() {
 
 main() {
 	for term in alacritty uxrvt gnome-terminal xterm; do
-		if [ -x "$(command -v $term)" ]; then
-			if [ -x "$(command -v tmux)" ]; then
-				$term -e tmux
-			else
-				$term
-			fi
-			break
-		fi
+		[ -x "$(command -v $term)" ] && $term "$@"; break
 	done
 }
 

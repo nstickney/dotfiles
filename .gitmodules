@@ -37,3 +37,6 @@
 [submodule "vim/pack/stick/start/vim-abolish"]
 	path = vim/pack/stick/start/vim-abolish
 	url = https://github.com/tpope/vim-abolish
+[submodule "vim/pack/stick/start/vim-css-color"]
+	path = vim/pack/stick/start/vim-css-color
+	url = https://github.com/ap/vim-css-color

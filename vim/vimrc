@@ -162,6 +162,10 @@ filetype plugin on                      " detect file type from file name extens
 filetype indent on                      " indent based on detected file type
 syntax on                               " use syntax highlighting for detected file type
 
+" Timestamp (press <F3>)
+nmap <F3> i<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
+imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
+
 " Undo
 set undodir=/tmp//                      " stored by full file path in /tmp
 set undofile                            " enable persistent undo

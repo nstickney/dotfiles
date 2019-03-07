@@ -48,7 +48,7 @@
 	# Pull Origin
 	PO = pull origin master
 	# PuSh
-	PS = push
+	PS = ! git push || git push --set-upstream origin master
 	# Pull Upstream
 	PU = pull upstream master
 	# Pull (Recurse)

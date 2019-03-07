@@ -244,7 +244,7 @@ main() {
 
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"
-	sudo iptables -L
+	sudo iptables -L | sed 's/^/  /'
 	printf '\n'
 
 	# Make rules persistent

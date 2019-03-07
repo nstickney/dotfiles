@@ -209,7 +209,7 @@ main() {
 
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "NFT rules implemented:"
-	sudo nft list ruleset
+	sudo nft list ruleset | sed 's/^/  /'
 	printf '\n'
 
 	# Save to /etc/nftables.conf

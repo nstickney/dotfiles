@@ -317,6 +317,7 @@ if [ -x "$(command -v git)" ]; then
 		/usr/bin/git "$@" && if [ "$1" = 'clone' ] || [ "$1" = 'CL' ] || [ "$1" = 'CS' ] ; then
 			local _repo="${*: -1}"
 			_repo="${_repo%.git}"
+			_repo="${_repo##*:}"
 			cd "${_repo##*/}" || exit
 		fi
 	}

@@ -37,6 +37,7 @@ AddPackage geoip-database-extra # wireshark-gtk opt dep
 
 ### Bash
 AddPackage bash-bats # Bash Automated Testing System
+AddPackage checkbashisms # Debian script that checks for bashisms
 AddPackage shellcheck # Shell script analysis tool
 AddPackage shellharden # Bash linter and syntax highlighter
 
@@ -52,6 +53,7 @@ AddPackage go # Core compiler tools for the Go programming language
 
 ### Java
 # AddPackage intellij-idea-community-edition # IDE for Java, Groovy and other programming languages with advanced refactoring features
+# AddPackage maven # Java project management and project comprehension tool
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
 ### HTML

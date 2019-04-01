@@ -33,6 +33,7 @@ fi
 # Host Security
 # AddPackage aide # A file integrity checker and intrusion detection program.
 AddPackage fail2ban # Bans IPs after too many failed authentication attempts
+AddPackage lynis # Security and system auditing tool to harden Unix/Linux systems
 AddPackage rkhunter # Checks machines for the presence of rootkits and other unwanted tools
 
 # Log Management

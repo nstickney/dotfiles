@@ -6,6 +6,7 @@ AddPackage gtkspell3 # opt dep for gramps
 AddPackage hugo # Fast and Flexible Static Site Generator in Go
 AddPackage --foreign lbry-app-bin # The LBRY app built using electron
 AddPackage libgexiv2 # opt dep for gramps
+AddPackage ncdu # Disk usage analyzer with an ncurses interface
 AddPackage osm-gps-map # opt dep for gramps
 AddPackage --foreign pandoc-bin # Pandoc - executable only, without 750MB Haskell depends/makedepends
 AddPackage --foreign pandoc-citeproc-bin # Pandoc Cite Processor - executable only, without 750MB Haskell depends/makedepends

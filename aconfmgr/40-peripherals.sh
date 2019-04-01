@@ -15,7 +15,7 @@ if [[ "$HOSTNAME" == "elisha" || \
 	  "$HOSTNAME" == "elizabeth" ]]
 then
 	AddPackage blueman # GTK+ Bluetooth Manager
-	AddPackage bluez-firmware # Firmwares for Broadcom BCM203x and STLC2300 Bluetooth chips
+	AddPackage --foreign bluez-firmware # Firmwares for Broadcom BCM203x and STLC2300 Bluetooth chips
 	AddPackage bluez-utils # Development and debugging utilities for the bluetooth protocol stack
 	AddPackage ccid # A generic USB Chip/Smart Card Interface Devices driver
 	AddPackage opensc # Tools and libraries for smart cards

@@ -1,6 +1,7 @@
 AddPackage aria2 # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
 AddPackage avahi # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
 AddPackage bind-tools # The ISC DNS tools
+AddPackage geoip-database-extra # bind-tools opt dep
 AddPackage chromium # A web browser built for speed, simplicity, and security
 AddPackage dhcpcd # RFC2131 compliant DHCP client daemon
 AddPackage dnsmasq # Lightweight, easy to configure DNS forwarder and DHCP server
@@ -28,7 +29,6 @@ AddPackage openvpn # An easy-to-use, robust and highly configurable VPN (Virtual
 AddPackage python2-dbus # avahi optionally requires python2-dbus: avahi-discover
 AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
 AddPackage --foreign signal-desktop-bin # Private messaging from your desktop
-AddPackage --foreign slack-desktop # Slack Desktop (Beta) for Linux
 AddPackage sniffglue # Secure multithreaded packet sniffer
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 AddPackage tcpdump # Powerful command-line packet analyzer
@@ -40,6 +40,7 @@ AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 
 # AddPackage --foreign chromium-widevine # A browser plugin designed for the viewing of premium video content
 # AddPackage --foreign discord #
+# AddPackage --foreign slack-desktop # Slack Desktop (Beta) for Linux
 # AddPackage icedtea-web # Free web browser plugin to run applets written in Java and an implementation of Java Web Start
 # AddPackage privoxy # A web proxy with advanced filtering capabilities.
 # CopyFile /etc/privoxy/config

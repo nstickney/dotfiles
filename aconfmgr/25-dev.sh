@@ -30,8 +30,6 @@ AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
 AddPackage ipguard # arp<->ip relation checking tool
 AddPackage nmap # Utility for network discovery and security auditing
 AddPackage vegeta # HTTP load testing tool
-AddPackage wireshark-gtk # a free network protocol analyzer for Unix/Linux and Windows - GTK frontend
-AddPackage geoip-database-extra # wireshark-gtk opt dep
 
 # Programming Languages
 
@@ -53,7 +51,7 @@ AddPackage go # Core compiler tools for the Go programming language
 
 ### Java
 # AddPackage intellij-idea-community-edition # IDE for Java, Groovy and other programming languages with advanced refactoring features
-# AddPackage maven # Java project management and project comprehension tool
+AddPackage maven # Java project management and project comprehension tool
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
 ### HTML

@@ -14,7 +14,6 @@ AddPackage pavucontrol # PulseAudio Volume Control
 AddPackage pulseaudio # A featureful, general-purpose sound server
 AddPackage simplescreenrecorder # A feature-rich screen recorder that supports X11 and OpenGL.
 AddPackage vlc # A multi-platform MPEG, VCD/DVD, and DivX player
-AddPackage qt4 # vlc opt dep
 
 CopyFile /etc/pulse/default.pa
 CreateLink /etc/systemd/user/sockets.target.wants/pipewire.socket /usr/lib/systemd/user/pipewire.socket

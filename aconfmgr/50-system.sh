@@ -1,6 +1,7 @@
 # shellcheck disable=SC2148
 
 AddPackage chrony # Lightweight NTP client and server
+CopyFile /etc/locale.gen
 
 # Virtual Machine (any type)
 if sudo dmesg | grep -q "Hypervisor detected"; then
@@ -76,10 +77,6 @@ ShutdownWatchdogSec=10min
 DefaultTimeoutStartSec=30s
 DefaultTimeoutStopSec=30s
 EOF
-
-# Specify locales
-f="$(GetPackageOriginalFile glibc /etc/locale.gen)"
-sed -i 's/^#\(en_US.UTF-8\)/\1/g' "$f"
 
 CopyFile /etc/chrony.conf
 CopyFile /etc/locale.conf

@@ -32,7 +32,7 @@ client.background       $bact
 # Startup Actions #############################################################
 
 # Finalize host-specific configuration of status bar
-exec_always --no-startup-id $_CONFIG_DIR/bar/bar-config $_CONFIG_DIR
+exec --no-startup-id $_CONFIG_DIR/bar-config $_CONFIG_DIR
 
 # Lock screen after 3 minutes inactivity
 # exec --no-startup-id xautolock -corners ---- -time 10 -locker ~/dotfiles/bin/i3locker

@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+IFS=$'\n\t'
+
+_file="$1"/status.toml
+
+# Remove the existing i3status-rust configuration
+[ -e "$_file" ] && rm "$_file" -rf
+
+# Start with the beginning of a new bar
+{
+	cat <<- EOF
+	[icons]
+	name = "awesome"
+	[icons.overrides]
+	cpu = "  "
+	memory_mem = "  "
+
+	[theme]
+	name = "plain"
+	[theme.overrides]
+	idle_bg = "#1b1b1b"
+	idle_fg = "#e2e2e2"
+	info_bg = "#1b1b1b"
+	info_fg = "#e2e2e2"
+	good_bg = "#1b1b1b"
+	good_fg = "#86b693"
+	warning_bg = "#1b1b1b"
+	warning_fg = "#c8a565"
+	critical_bg = "#1b1b1b"
+	critical_fg = "#ff7384"
+	separator = ""
+	separator_bg = "auto"
+	separator_fg = "auto"
+	alternating_tint_bg = "#1b1b1b"
+
+	[[block]]
+	block = "focused_window"
+	max_width = 100
+
+	[[block]]
+	block = "custom"
+	interval = 1000
+	cycle = ["echo  $(hostname -i)", "echo  $(uname -n)", "echo  $(uname -r)", "echo  $(whoami)"]
+
+	[[block]]
+	block = "pacman"
+
+	[[block]]
+	block = "cpu"
+
+	[[block]]
+	block = "temperature"
+
+	[[block]]
+	block = "memory"
+	display_type = "memory"
+	format_mem = "{MFg}GB"
+	format_swap = "{SFg}GB"
+
+	EOF
+} >> "$_file"
+
+# Add all mounted drives to the configuration
+for i in $(mount | grep -e vfat -e ext4 | cut -f3 -d' '); do
+	{
+		cat <<- EOF
+		[[block]]
+		block = "disk_space"
+		path = "$i"
+		alias = "$i"
+
+		EOF
+	} >> "$_file"
+done
+
+# If not in a virtual machine, add the xrandr block
+if [ "$(systemd-detect-virt)" == "none" ] && [ -x "$(command -v xrandr)" ]; then
+	{
+		cat <<- EOF
+		[[block]]
+		block = "xrandr"
+
+		EOF
+	} >> "$_file"
+fi
+
+# If there is a battery, add the battery block
+if [ -d /sys/class/power_supply/BAT0/ ]; then
+	{
+	cat <<- EOF
+		[[block]]
+		block = "battery"
+
+		EOF
+	} >> "$_file"
+fi
+
+# Add the ending of the bar
+{
+	cat <<- EOF
+	[[block]]
+	block = "sound"
+
+	[[block]]
+	block = "time"
+	interval = 1
+	format = "%a %Y.%m.%d %T"
+
+	[[block]]
+	block = "custom"
+	interval = 1
+	command = "echo  $(~/dotfiles/bin/lockleds)"
+	EOF
+} >> "$_file"

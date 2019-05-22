@@ -1,5 +1,6 @@
 # shellcheck disable=SC2148
 AddPackage alsa-utils # An alternative implementation of Linux sound support
+AddPackage asciinema # Record and share terminal sessions
 AddPackage gimp # GNU Image Manipulation Program
 AddPackage gst-libav # Gstreamer libav Plugin
 AddPackage gst-plugins-bad # GStreamer Multimedia Framework Bad Plugins

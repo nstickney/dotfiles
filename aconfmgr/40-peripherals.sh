@@ -4,6 +4,7 @@ if [[ "$HOSTNAME" == "elisha" || \
 then
 	# AddPackage android-tools # Android platform tools
 	AddPackage arduino # Arduino prototyping platform SDK
+	AddPackage --foreign brother-mfc-j480dw # LPR and CUPS driver for the Brother MFC-j480DW
 	AddPackage arduino-avr-core # Arduino AVR core with upstream avr-gcc and avrdude
 	AddPackage teensy-loader-cli # Command line loader for the teensy microprocessor boards
 
@@ -41,7 +42,6 @@ AddPackage cups # The CUPS Printing System - daemon package
 AddPackage cups-pdf # PDF printer for cups
 AddPackage mtpfs # A FUSE filesystem that supports reading and writing from any MTP device
 AddPackage solaar # Device manager for Logitech's Unifying receiver peripherals
-# AddPackage --foreign brother-mfc-j480dw # LPR and CUPS driver for the Brother MFC-j480DW
 
 CopyFile /etc/nsswitch.conf
 

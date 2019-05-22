@@ -1,23 +1,15 @@
-### i3 config file #####
-# i3 config file (v4)
-# Please see http://i3wm.org/docs/userguide.html for a complete reference.
-# This file assumes i3-gaps support (https://github.com/Airblader/i3).
+set $_CONFIG_DIR  $HOME/dotfiles/sway
+set $_BG_DIR $HOME/SafeDepositBox/backgrounds/public
 
-### Variables #####
-set $i3dir  ~/dotfiles/i3
-
-### Appearance #####
-
-## Window borders/titlebars (none)
+# Appearance ##################################################################
 for_window [class="^.*"] border pixel 1
-
-## Gaps between windows
 gaps inner 2
-
-## Font (window titles and bar)
-font pango:Source Code Pro, Font Awesome 5 Free Solid 0
+font monospace 0
 titlebar_border_thickness 1
 titlebar_padding 1
+
+## Background
+output * bg "$($HOME/dotfiles/bin/random-wallpaper $_BG_DIR)" fill
 
 ## Colors (see http://i3wm.org/docs/userguide.html#_changing_colors)
 set $fore   #e2e2e2
@@ -29,7 +21,7 @@ set $acto   #852000
 set $actt   #85200095
 set $hint   #9a0027
 
-# Window Class          Border  Background  Text    Indicator   Child Border
+### Class               Border  Background  Text    Indicator   Child Border
 client.unfocused        $back   $bact       $fade   $bact       $back
 client.focused_inactive $actt   $actt       $fade   $actt       $actt
 client.focused          $acto   $acto       $fore   $acto       $acto
@@ -37,45 +29,20 @@ client.urgent           $hint   $hint       $back   $hint       $hint
 client.placeholder      $back   $bact       $fade   $bact       $back
 client.background       $bact
 
-### Startup Actions #####
+# Startup Actions #############################################################
 
 # Finalize host-specific configuration of status bar
-exec_always --no-startup-id $i3dir/bar/i3bar-configure $i3dir
-
-# Get GNOME settings working
-# exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings
-# exec --no-startup-id gnome-power-manager
-
-# Start PolKit
-# exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
-# Fix monitors
-# exec_always --no-startup-id [ -x "$HOME/SafeDepositBox/xrandr-setup" ] && "$HOME/SafeDepositBox/xrandr-setup"
-
-# Set the root background
-# exec_always --no-startup-id feh --randomize --bg-scale "$HOME"/.wallpaper/*
-output * bg "$($HOME/dotfiles/bin/random-wallpaper $HOME/SafeDepositBox/backgrounds/public)" fill
-
-# Start compositor
-# exec --no-startup-id compton -bCG -e 0.95 -i 0.95
-
-# Turn on numlock
-exec --no-startup-id numlockx
+exec_always --no-startup-id $_CONFIG_DIR/bar/bar-config $_CONFIG_DIR
 
 # Lock screen after 3 minutes inactivity
 # exec --no-startup-id xautolock -corners ---- -time 10 -locker ~/dotfiles/bin/i3locker
 
 # Start a bunch of stuff
-exec --no-startup-id bitwarden-bin
-exec --no-startup-id nm-applet # NetworkManager
-# exec --no-startup-id ripcord
-exec --no-startup-id signal-desktop --start-in-tray
+# exec --no-startup-id bitwarden-bin
+exec --no-startup-id signal-desktop
 
 # Make an information bar
 bar {
-    position top
-    # i3bar_command i3bar -t
-    status_command i3status-rs $i3dir/status.toml
     colors {
         # Item              Border  Background  Text
         background                  $trns
@@ -85,9 +52,11 @@ bar {
         urgent_workspace    $hint   $hint       $back
     }
 	font pango:Source Code Pro, Font Awesome 5 Free Solid 12
+    position top
+    status_command i3status-rs $_CONFIG_DIR/status.toml
 }
 
-### Key and mouse bindings #####
+# Bindings ####################################################################
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
 
@@ -97,7 +66,7 @@ bindsym Menu exec ~/dotfiles/bin/start-gui-term
 bindsym Super_R exec ~/dotfiles/bin/start-gui-term
 
 # kill focused window
-bindsym Mod1+Shift+q kill
+bindsym Mod1+c kill
 
 # start rofi (a program launcher)
 bindsym Super_L exec rofi -show combi
@@ -105,28 +74,45 @@ bindsym Mod1+Tab exec rofi -show combi
 
 # change focus
 bindsym Mod1+Left focus left
+bindsym Mod1+s focus left
+bindsym Mod1+h focus left
 bindsym Mod1+Down focus down
+bindsym Mod1+d focus down
+bindsym Mod1+j focus down
 bindsym Mod1+Up focus up
+bindsym Mod1+e focus up
+bindsym Mod1+k focus up
 bindsym Mod1+Right focus right
+bindsym Mod1+f focus right
+bindsym Mod1+l focus right
+
 # move focused window
 bindsym Mod1+Shift+Left move left
+bindsym Mod1+Shift+s move left
+bindsym Mod1+Shift+h move left
 bindsym Mod1+Shift+Down move down
+bindsym Mod1+Shift+d move down
+bindsym Mod1+Shift+j move down
 bindsym Mod1+Shift+Up move up
+bindsym Mod1+Shift+e move up
+bindsym Mod1+Shift+k move up
 bindsym Mod1+Shift+Right move right
+bindsym Mod1+Shift+f move right
+bindsym Mod1+Shift+l move right
 
 # split in horizontal orientation
-bindsym Mod1+h split h
+bindsym Mod1+b h
 
 # split in vertical orientation
 bindsym Mod1+v split v
 
 # enter fullscreen mode for the focused container
-bindsym Mod1+f fullscreen toggle
+bindsym Mod1+F11 fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym Mod1+s layout stacking
-bindsym Mod1+w layout tabbed
-bindsym Mod1+e layout toggle split
+# bindsym Mod1+q layout stacking
+bindsym Mod1+u layout tabbed
+bindsym Mod1+y layout toggle split
 
 # toggle tiling / floating
 bindsym Mod1+Shift+space floating toggle
@@ -135,10 +121,10 @@ bindsym Mod1+Shift+space floating toggle
 bindsym Mod1+space focus mode_toggle
 
 # focus the parent container
-bindsym Mod1+a focus parent
+bindsym Mod1+t focus parent
 
 # focus the child container
-bindsym Mod1+d focus child
+bindsym Mod1+g focus child
 
 # move the currently focused window to the scratchpad
 bindsym Mod1+Shift+minus move scratchpad
@@ -180,9 +166,11 @@ bindsym Mod1+Shift+z move container to workspace back_and_forth; workspace back_
 bindsym Mod1+x [urgent=latest] focus
 
 # reload the configuration file
-bindsym Mod1+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym Mod1+Shift+r reload
+
+# restart
 # bindsym Mod1+Shift+r restart
+
 # exit i3 (logs you out of your X session)
 set $_LOGOUT swaynag -t warning -m 'Exit i3?' -b 'Exit i3' 'swaymsg exit'
 bindsym Mod1+Shift+q exec --no-startup-id $_LOGOUT

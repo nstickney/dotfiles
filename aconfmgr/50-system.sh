@@ -4,7 +4,7 @@ AddPackage chrony # Lightweight NTP client and server
 CopyFile /etc/locale.gen
 
 # Virtual Machine (any type)
-if sudo dmesg | grep -q "Hypervisor detected"; then
+if sudo dmesg | grep -q "Hypervisor detected" && [ -d /etc/gdm ]; then
 	CopyFile /etc/gdm/custom.conf
 fi
 
@@ -83,7 +83,6 @@ CopyFile /etc/locale.conf
 CreateLink /etc/localtime /usr/share/zoneinfo/US/Eastern
 CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
 CreateLink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service /usr/lib/systemd/system/NetworkManager-dispatcher.service
-CreateLink /etc/systemd/system/display-manager.service /usr/lib/systemd/system/gdm.service
 CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/systemd/system/getty@.service
 CreateLink /etc/systemd/system/multi-user.target.wants/chronyd.service /usr/lib/systemd/system/chronyd.service
 CreateLink /etc/systemd/system/multi-user.target.wants/remote-fs.target /usr/lib/systemd/system/remote-fs.target

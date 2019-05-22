@@ -1,7 +1,10 @@
-if [ "$HOSTNAME" == 'elisha' ]; then
+if [ "$HOSTNAME" == 'elisha' ] || \
+	[ "$HOSTNAME" == 'elizabeth' ]; then
+	AddPackage gdm # Display manager and login screen
 	AddPackage gnome-calculator # GNOME Scientific calculator
 	AddPackage gnome-characters # A character map application
 	AddPackage gnome-contacts # Contacts Manager for GNOME
+	AddPackage gnome-control-center # GNOME's main interface to configure various aspects of the desktop
 	AddPackage gnome-desktop # Library with common API for various GNOME modules
 	AddPackage gnome-dictionary # Look up words in dictionary sources
 	AddPackage gnome-documents # A document manager application for GNOME
@@ -12,8 +15,14 @@ if [ "$HOSTNAME" == 'elisha' ]; then
 	AddPackage gnome-photos # Access, organize, and share your photos on GNOME
 	AddPackage gnome-screenshot # Take pictures of your screen
 	AddPackage gnome-search-tool # Utility to search for files
+	AddPackage gnome-session # The GNOME Session Handler
+	AddPackage gnome-settings-daemon # The GNOME Settings daemon
 	AddPackage gnome-shell # The next generation GNOME Shell
 	AddPackage gnome-shell-extensions # Extensions for GNOME shell, including classic mode
+	AddPackage gnome-system-log # View your system logs
+	AddPackage gnome-system-monitor # View current processes and monitor system state
+	AddPackage gnome-terminal # The GNOME Terminal Emulator
+	AddPackage gnome-tweaks # Graphical interface for advanced GNOME 3 settings (Tweak Tool)
 	AddPackage gnome-video-effects # Effects for Cheese, etc
 	AddPackage gnome-user-docs # User documentation for GNOME
 	AddPackage gnome-user-share # Easy to use user-level file sharing for GNOME
@@ -24,7 +33,8 @@ if [ "$HOSTNAME" == 'elisha' ]; then
 	AddPackage mousetweaks # Mouse accessibility enhancements
 	AddPackage mutter # A window manager for GNOME
 	AddPackage mx # A widget toolkit using Clutter
-	AddPackage tracker # Desktop-neutral user information store, search tool and indexer
+
+	CreateLink /etc/systemd/system/display-manager.service /usr/lib/systemd/system/gdm.service
 fi
 
 ### GNOME-ish stuff used outside GNOME
@@ -35,15 +45,7 @@ AddPackage eog-plugins # Plugins for Eye of Gnome
 AddPackage evince # Document viewer (PDF, Postscript, djvu, tiff, dvi, XPS, SyncTex support with gedit, comics books (cbr,cbz,cb7 and cbt))
 AddPackage file-roller # Create and modify archives
 AddPackage filemanager-actions # File-manager extension which offers user configurable context menu actions
-AddPackage gdm # Display manager and login screen
-AddPackage gnome-calculator # GNOME Scientific calculator
-AddPackage gnome-control-center # GNOME's main interface to configure various aspects of the desktop
 AddPackage gnome-disk-utility # Disk Management Utility for GNOME
-AddPackage gnome-session # The GNOME Session Handler
-AddPackage gnome-settings-daemon # The GNOME Settings daemon
-AddPackage gnome-system-log # View your system logs
-AddPackage gnome-system-monitor # View current processes and monitor system state
-AddPackage gnome-tweaks # Graphical interface for advanced GNOME 3 settings (Tweak Tool)
 AddPackage gparted # A Partition Magic clone, frontend to GNU Parted
 AddPackage gucharmap # Gnome Unicode Charmap
 AddPackage gvfs # Virtual filesystem implementation for GIO
@@ -66,9 +68,8 @@ AddPackage rhythmbox # Music playback and management application
 AddPackage seahorse # GNOME application for managing PGP keys.
 AddPackage seahorse-nautilus # PGP encryption and signing for nautilus
 AddPackage sushi # A quick previewer for Nautilus
+AddPackage tracker # Desktop-neutral user information store, search tool and indexer
 AddPackage unace # An extraction tool for the proprietary ace archive format
 AddPackage unrar # The RAR uncompression programs
 AddPackage vinagre # A VNC Client for the GNOME desktop
 AddPackage xdg-user-dirs-gtk # Creates user dirs and asks to relocalize them
-
-AddPackage --foreign gnome-terminal-transparency # The GNOME Terminal Emulator, with background transparency

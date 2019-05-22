@@ -184,21 +184,21 @@ bindsym Mod1+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 # bindsym Mod1+Shift+r restart
 # exit i3 (logs you out of your X session)
-set $LogoutMsg swaynag -t warning -m 'Exit i3?' -b 'Exit i3' 'i3-msg exit'
-bindsym Mod1+Shift+e exec --no-startup-id $LogoutMsg
+set $_LOGOUT swaynag -t warning -m 'Exit i3?' -b 'Exit i3' 'swaymsg exit'
+bindsym Mod1+Shift+q exec --no-startup-id $_LOGOUT
 
 # shutdown, reboot, lock menu from https://wiki.archlinux.org/index.php/I3
-set $Locker exec swaylock -f -c 000000
-set $RebootMsg swaynag -t warning -m 'Reboot?' -b 'Reboot' 'systemctl reboot'
-set $ShutdownMsg swaynag -t warning -m 'Power off?' -b 'Power off' 'systemctl poweroff -i'
+set $_LOCK exec swaylock -f -c 000000
+set $_REBOOT swaynag -t warning -m 'Reboot?' -b 'Reboot' 'systemctl reboot'
+set $_SHUTDOWN swaynag -t warning -m 'Power off?' -b 'Power off' 'systemctl poweroff -i'
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
-    bindsym l exec --no-startup-id $Locker, mode "default"
-    bindsym e exec --no-startup-id $LogoutMsg, mode "default"
-    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id $RebootMsg, mode "default"
-    bindsym Shift+s exec --no-startup-id $ShutdownMsg, mode "default"
+    bindsym l exec --no-startup-id $_LOCK, mode "default"
+    bindsym e exec --no-startup-id $_LOGOUT, mode "default"
+    bindsym s exec --no-startup-id $_LOCK && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $_LOCK && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id $_REBOOT, mode "default"
+    bindsym Shift+s exec --no-startup-id $_SHUTDOWN, mode "default"
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -206,14 +206,14 @@ mode "$mode_system" {
 bindsym Control+Mod1+Delete mode "$mode_system"
 
 # lock screen with ALT+L
-bindsym Mod1+l $Locker
+bindsym Mod2+l $_LOCK
 
 # power management
 exec --no-startup-id swayidle -w \
-		 timeout 300  "$Locker" \
+		 timeout 300  "$_LOCK" \
 		 timeout 600  'swaymsg "output * dpms off"' \
 		 resume       'swaymsg "output * dpms on" \
-		 before-sleep "$Locker"
+		 before-sleep "$_LOCK"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

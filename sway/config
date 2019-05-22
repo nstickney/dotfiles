@@ -1,5 +1,10 @@
 set $_CONFIG_DIR  $HOME/dotfiles/sway
 set $_BG_DIR $HOME/SafeDepositBox/backgrounds/public
+set $_LOGOUT swaynag -t warning -m 'Exit i3?' -b 'Exit i3' 'swaymsg exit'
+set $_LOCK exec swaylock -f -c 000000
+set $_REBOOT swaynag -t warning -m 'Reboot?' -b 'Reboot' 'systemctl reboot'
+set $_SHUTDOWN swaynag -t warning -m 'Power off?' -b 'Power off' 'systemctl poweroff -i'
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 
 # Appearance ##################################################################
 for_window [class="^.*"] border pixel 1
@@ -32,14 +37,15 @@ client.background       $bact
 # Startup Actions #############################################################
 
 # Finalize host-specific configuration of status bar
-exec --no-startup-id $_CONFIG_DIR/bar-config $_CONFIG_DIR
-
-# Lock screen after 3 minutes inactivity
-# exec --no-startup-id xautolock -corners ---- -time 10 -locker ~/dotfiles/bin/i3locker
+exec $_CONFIG_DIR/bar-config $_CONFIG_DIR
 
 # Start a bunch of stuff
 # exec --no-startup-id bitwarden-bin
-exec --no-startup-id signal-desktop
+exec signal-desktop
+
+# Power management
+exec --no-startup-id swayidle -w timeout 300 "$_LOCK"
+
 
 # Make an information bar
 bar {
@@ -61,9 +67,9 @@ bar {
 floating_modifier Mod1
 
 # start a terminal
-bindsym Mod1+Return exec ~/dotfiles/bin/start-gui-term
-bindsym Menu exec ~/dotfiles/bin/start-gui-term
-bindsym Super_R exec ~/dotfiles/bin/start-gui-term
+bindsym Mod1+Return exec $HOME/dotfiles/bin/start-gui-term
+bindsym Menu exec $HOME/dotfiles/bin/start-gui-term
+bindsym Super_R exec $HOME/dotfiles/bin/start-gui-term
 
 # kill focused window
 bindsym Mod1+c kill
@@ -172,14 +178,9 @@ bindsym Mod1+Shift+r reload
 # bindsym Mod1+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-set $_LOGOUT swaynag -t warning -m 'Exit i3?' -b 'Exit i3' 'swaymsg exit'
 bindsym Mod1+Shift+q exec --no-startup-id $_LOGOUT
 
 # shutdown, reboot, lock menu from https://wiki.archlinux.org/index.php/I3
-set $_LOCK exec swaylock -f -c 000000
-set $_REBOOT swaynag -t warning -m 'Reboot?' -b 'Reboot' 'systemctl reboot'
-set $_SHUTDOWN swaynag -t warning -m 'Power off?' -b 'Power off' 'systemctl poweroff -i'
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $_LOCK, mode "default"
     bindsym e exec --no-startup-id $_LOGOUT, mode "default"
@@ -195,13 +196,6 @@ bindsym Control+Mod1+Delete mode "$mode_system"
 
 # lock screen with ALT+L
 bindsym Mod2+l $_LOCK
-
-# power management
-exec --no-startup-id swayidle -w \
-		 timeout 300  "$_LOCK" \
-		 timeout 600  'swaymsg "output * dpms off"' \
-		 resume       'swaymsg "output * dpms on" \
-		 before-sleep "$_LOCK"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -227,7 +221,7 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 
 # Touchpad controls
-bindsym XF86TouchpadToggle exec ~/dotfiles/bin/toggletouchpad # toggle touchpad
+bindsym XF86TouchpadToggle exec $HOME/dotfiles/bin/toggletouchpad # toggle touchpad
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -236,5 +230,5 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
 # Screenshots
-bindsym Print exec sleep 3 && grim ~/Pictures/Screenshots/`uname -n`-`date +%Y%m%d-%R:%S`.png
-bindsym Mod1+Print exec grim -g "$(slurp)" ~/Pictures/Screenshots/`uname -n`-`date +%Y%m%d-%R:%S`.png
+bindsym Print exec sleep 3 && grim $HOME/Pictures/Screenshots/`uname -n`-`date +%Y%m%d-%R:%S`.png
+bindsym Mod1+Print exec grim -g "$(slurp)" $HOME/Pictures/Screenshots/`uname -n`-`date +%Y%m%d-%R:%S`.png

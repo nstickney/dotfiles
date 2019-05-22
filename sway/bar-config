@@ -43,7 +43,7 @@ _file="$1"/status.toml
 
 	[[block]]
 	block = "custom"
-	interval = 1000
+	interval = 60
 	cycle = ["echo  $(hostname -i)", "echo  $(uname -n)", "echo  $(uname -r)", "echo  $(whoami)"]
 
 	[[block]]

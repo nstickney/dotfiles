@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+IFS=$'\n\t'
+
+# Remove the existing i3status-rust configuration
+[ ! -e "$1"/status.toml ] && rm -rf "$1"/status.toml
+
+# Start with the beginning of a new bar
+cp "$1"/bar/start.toml "$1"/status.toml
+
+# If /home is mounted, add it to the configuration
+if mount | grep -q " /home "; then
+	cat "$1"/bar/home.toml >> "$1"/status.toml
+fi
+
+# If /home/$USER/SafeDepositBox is mounted, add it to the configuration
+if mount | grep -q " /home/$USER/SafeDepositBox "; then
+	cat "$1"/bar/SafeDepositBox.toml >> "$1"/status.toml
+fi
+
+# If not in a virtual machine, add the xrandr block
+[ "$(systemd-detect-virt)" == "none" ] && cat "$1"/bar/xrandr.toml >> "$1"/status.toml
+
+# If there is a battery, add the battery block
+[ -d /sys/class/power_supply/BAT0/ ] && cat "$1"/bar/battery.toml >> "$1"/status.toml
+
+# Add the ending of the bar
+cat "$1"/bar/end.toml >> "$1"/status.toml
+

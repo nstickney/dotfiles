@@ -52,6 +52,7 @@ main() {
 	confs['git']='.gitconfig'
 	confs['i3']='.i3'
 	confs['rofi']='.Xresources'
+	confs['sway']='.config/sway'
 	confs['tmux']='.tmux.conf'
 	confs['urxvt']='.Xresources'
 	confs['vim']='.vim'

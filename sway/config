@@ -1,0 +1,252 @@
+### i3 config file #####
+# i3 config file (v4)
+# Please see http://i3wm.org/docs/userguide.html for a complete reference.
+# This file assumes i3-gaps support (https://github.com/Airblader/i3).
+
+### Variables #####
+set $i3dir  ~/dotfiles/i3
+
+### Appearance #####
+
+## Window borders/titlebars (none)
+for_window [class="^.*"] border pixel 1
+
+## Gaps between windows
+gaps inner 2
+
+## Font (window titles and bar)
+font pango:Source Code Pro, Font Awesome 5 Free Solid 0
+titlebar_border_thickness 1
+titlebar_padding 1
+
+## Colors (see http://i3wm.org/docs/userguide.html#_changing_colors)
+set $fore   #e2e2e2
+set $fade   #e2e2e295
+set $back   #1b1b1b
+set $bact   #1b1b1b95
+set $trns   #00000000
+set $acto   #852000
+set $actt   #85200095
+set $hint   #9a0027
+
+# Window Class          Border  Background  Text    Indicator   Child Border
+client.unfocused        $back   $bact       $fade   $bact       $back
+client.focused_inactive $actt   $actt       $fade   $actt       $actt
+client.focused          $acto   $acto       $fore   $acto       $acto
+client.urgent           $hint   $hint       $back   $hint       $hint
+client.placeholder      $back   $bact       $fade   $bact       $back
+client.background       $bact
+
+### Startup Actions #####
+
+# Finalize host-specific configuration of status bar
+exec_always --no-startup-id $i3dir/bar/i3bar-configure $i3dir
+
+# Get GNOME settings working
+# exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings
+# exec --no-startup-id gnome-power-manager
+
+# Start PolKit
+# exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# Fix monitors
+# exec_always --no-startup-id [ -x "$HOME/SafeDepositBox/xrandr-setup" ] && "$HOME/SafeDepositBox/xrandr-setup"
+
+# Set the root background
+# exec_always --no-startup-id feh --randomize --bg-scale "$HOME"/.wallpaper/*
+output * bg "$($HOME/dotfiles/bin/random-wallpaper $HOME/SafeDepositBox/backgrounds/public)" fill
+
+# Start compositor
+# exec --no-startup-id compton -bCG -e 0.95 -i 0.95
+
+# Turn on numlock
+exec --no-startup-id numlockx
+
+# Lock screen after 3 minutes inactivity
+# exec --no-startup-id xautolock -corners ---- -time 10 -locker ~/dotfiles/bin/i3locker
+
+# Start a bunch of stuff
+exec --no-startup-id bitwarden-bin
+exec --no-startup-id nm-applet # NetworkManager
+# exec --no-startup-id ripcord
+exec --no-startup-id signal-desktop --start-in-tray
+
+# Make an information bar
+bar {
+    position top
+    # i3bar_command i3bar -t
+    status_command i3status-rs $i3dir/status.toml
+    colors {
+        # Item              Border  Background  Text
+        background                  $trns
+        focused_workspace   $acto   $acto       $fore
+        active_workspace    $back   $acto       $fore
+        inactive_workspace  $back   $back       $fade
+        urgent_workspace    $hint   $hint       $back
+    }
+	font pango:Source Code Pro, Font Awesome 5 Free Solid 12
+}
+
+### Key and mouse bindings #####
+# use Mouse+Mod1 to drag floating windows to their wanted position
+floating_modifier Mod1
+
+# start a terminal
+bindsym Mod1+Return exec ~/dotfiles/bin/start-gui-term
+bindsym Menu exec ~/dotfiles/bin/start-gui-term
+bindsym Super_R exec ~/dotfiles/bin/start-gui-term
+
+# kill focused window
+bindsym Mod1+Shift+q kill
+
+# start rofi (a program launcher)
+bindsym Super_L exec rofi -show combi
+bindsym Mod1+Tab exec rofi -show combi
+
+# change focus
+bindsym Mod1+Left focus left
+bindsym Mod1+Down focus down
+bindsym Mod1+Up focus up
+bindsym Mod1+Right focus right
+# move focused window
+bindsym Mod1+Shift+Left move left
+bindsym Mod1+Shift+Down move down
+bindsym Mod1+Shift+Up move up
+bindsym Mod1+Shift+Right move right
+
+# split in horizontal orientation
+bindsym Mod1+h split h
+
+# split in vertical orientation
+bindsym Mod1+v split v
+
+# enter fullscreen mode for the focused container
+bindsym Mod1+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym Mod1+s layout stacking
+bindsym Mod1+w layout tabbed
+bindsym Mod1+e layout toggle split
+
+# toggle tiling / floating
+bindsym Mod1+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym Mod1+space focus mode_toggle
+
+# focus the parent container
+bindsym Mod1+a focus parent
+
+# focus the child container
+bindsym Mod1+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym Mod1+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym Mod1+minus scratchpad show
+
+# switch to workspace
+bindsym Mod1+1 workspace 1
+bindsym Mod1+2 workspace 2
+bindsym Mod1+3 workspace 3
+bindsym Mod1+4 workspace 4
+bindsym Mod1+5 workspace 5
+bindsym Mod1+6 workspace 6
+bindsym Mod1+7 workspace 7
+bindsym Mod1+8 workspace 8
+bindsym Mod1+9 workspace 9
+bindsym Mod1+0 workspace 10
+
+# move focused container to workspace
+bindsym Mod1+Shift+1 move container to workspace 1
+bindsym Mod1+Shift+2 move container to workspace 2
+bindsym Mod1+Shift+3 move container to workspace 3
+bindsym Mod1+Shift+4 move container to workspace 4
+bindsym Mod1+Shift+5 move container to workspace 5
+bindsym Mod1+Shift+6 move container to workspace 6
+bindsym Mod1+Shift+7 move container to workspace 7
+bindsym Mod1+Shift+8 move container to workspace 8
+bindsym Mod1+Shift+9 move container to workspace 9
+bindsym Mod1+Shift+0 move container to workspace 10
+
+# move back and forth
+workspace_auto_back_and_forth yes
+bindsym Mod1+z workspace back_and_forth
+bindsym Mod1+Shift+z move container to workspace back_and_forth; workspace back_and_forth
+
+# move to urgent window
+bindsym Mod1+x [urgent=latest] focus
+
+# reload the configuration file
+bindsym Mod1+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# bindsym Mod1+Shift+r restart
+# exit i3 (logs you out of your X session)
+set $LogoutMsg swaynag -t warning -m 'Exit i3?' -b 'Exit i3' 'i3-msg exit'
+bindsym Mod1+Shift+e exec --no-startup-id $LogoutMsg
+
+# shutdown, reboot, lock menu from https://wiki.archlinux.org/index.php/I3
+set $Locker exec swaylock -f -c 000000
+set $RebootMsg swaynag -t warning -m 'Reboot?' -b 'Reboot' 'systemctl reboot'
+set $ShutdownMsg swaynag -t warning -m 'Power off?' -b 'Power off' 'systemctl poweroff -i'
+set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id $LogoutMsg, mode "default"
+    bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id $RebootMsg, mode "default"
+    bindsym Shift+s exec --no-startup-id $ShutdownMsg, mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym Control+Mod1+Delete mode "$mode_system"
+
+# lock screen with ALT+L
+bindsym Mod1+l $Locker
+
+# power management
+exec --no-startup-id swayidle -w \
+		 timeout 300  "$Locker" \
+		 timeout 600  'swaymsg "output * dpms off"' \
+		 resume       'swaymsg "output * dpms on" \
+		 before-sleep "$Locker"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym Left        resize shrink width 10 px or 1 ppt
+        bindsym Down        resize grow height 100 px or 1 ppt
+        bindsym Up          resize shrink height 10 px or 1 ppt
+        bindsym Right       resize grow width 100 px or 1 ppt
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym Mod1+r mode "resize"
+
+# PulseAudio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+
+# Touchpad controls
+bindsym XF86TouchpadToggle exec ~/dotfiles/bin/toggletouchpad # toggle touchpad
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Screenshots
+bindsym Print exec sleep 3 && grim ~/Pictures/Screenshots/`uname -n`-`date +%Y%m%d-%R:%S`.png
+bindsym Mod1+Print exec grim -g "$(slurp)" ~/Pictures/Screenshots/`uname -n`-`date +%Y%m%d-%R:%S`.png

@@ -63,6 +63,8 @@
 	RO = "!f(){ git fetch origin && git rebase origin/master; }; f"
 	# Rebase Upstream
 	RU = "!f(){ git fetch upstream && git rebase upstream/master; }; f"
+	# Remotes Verbose
+	RV = remote -v
 	# Stash Add
 	SA = stash
 	# Stash Pop

@@ -1,11 +1,6 @@
 set $_CONFIG_DIR  $HOME/dotfiles/sway
 set $_BG_DIR $HOME/SafeDepositBox/backgrounds/public
-set $_LOGOUT swaynag -t warning -m 'Log off?' -b 'Log Off' 'swaymsg exit'
 set $_LOCK exec swaylock -f -c 000000
-set $_REBOOT swaynag -t warning -m 'Reboot?' -b 'Reboot' 'systemctl reboot'
-set $_SHUTDOWN swaynag -t warning -m 'Power off?' -b 'Power off' 'systemctl poweroff -i'
-set $_CAD_MENU System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
-
 include $_CONFIG_DIR/"$(hostname)".config
 
 # Appearance ##################################################################
@@ -51,8 +46,6 @@ exec signal-desktop
 # Power management
 exec --no-startup-id swayidle -w timeout 300 "$_LOCK"
 
-
-# Make an information bar
 bar {
 	colors {
 		# Item              Border  Background  Text
@@ -179,31 +172,67 @@ bindsym Mod1+x [urgent=latest] focus
 # reload the configuration file
 bindsym Mod1+Shift+r reload
 
-# restart
-# bindsym Mod1+Shift+r restart
+# lock screen with ALT+L
+bindsym Mod4+l $_LOCK
 
-# exit i3 (logs you out of your X session)
-bindsym Mod1+Shift+q exec --no-startup-id $_LOGOUT
+set $_CAD_MENU (L)ock screen  (E)xit sway  (S)uspend  (H)ibernate  (R)eboot  (P)oweroff  (C)ancel
+set $_EXIT_MENU CONFIRM: (E)xit sway or (C)ancel
+set $_SUS_MENU CONFIRM: (S)uspend to RAM or (C)ancel
+set $_HIB_MENU CONFIRM: (H)ibernate or (C)ancel
+set $_REBOOT_MENU CONFIRM: (R)eboot or (C)ancel
+set $_OFF_MENU CONFIRM: (P)oweroff or (C)ancel
 
-# shutdown, reboot, lock menu from https://wiki.archlinux.org/index.php/I3
 mode "$_CAD_MENU" {
-	bindsym l exec --no-startup-id $_LOCK, mode "default"
-	bindsym e exec --no-startup-id $_LOGOUT, mode "default"
-	bindsym s exec --no-startup-id $_LOCK && systemctl suspend, mode "default"
-	bindsym h exec --no-startup-id $_LOCK && systemctl hibernate, mode "default"
-	bindsym r exec --no-startup-id $_REBOOT, mode "default"
-	bindsym Shift+s exec --no-startup-id $_SHUTDOWN, mode "default"
+	bindsym l exec $_LOCK, mode "default"
+	bindsym e mode "$_EXIT_MENU"
+	bindsym s mode "$_SUS_MENU"
+	bindsym h mode "$_HIB_MENU"
+	bindsym r mode "$_REBOOT_MENU"
+	bindsym p mode "$_OFF_MENU"
+	bindsym c mode "default"
 	# back to normal: Enter or Escape
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
 bindsym Control+Mod1+Delete mode "$_CAD_MENU"
 
-# lock screen with ALT+L
-bindsym Mod4+l $_LOCK
+mode "$_EXIT_MENU" {
+	bindsym e exec 'swaymsg exit', mode "default"
+	bindsym c mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym Mod1+Shift+q mode "$_EXIT_MENU"
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
+mode "$_SUS_MENU" {
+	bindsym s exec $_LOCK && systemctl suspend, mode "default"
+	bindsym c mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "$_HIB_MENU" {
+	bindsym h exec $_LOCK && systemctl hibernate, mode "default"
+	bindsym c mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "$_REB_MENU" {
+	bindsym r exec systemctl reboot, mode "default"
+	bindsym c mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "$_OFF_MENU" {
+	bindsym p exec systemctl poweroff, mode "default"
+	bindsym c mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "Resize" {
 	# These bindings trigger as soon as you enter the resize mode
 	# Pressing left will shrink the window’s width.
 	# Pressing right will grow the window’s width.
@@ -217,8 +246,7 @@ mode "resize" {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
-
-bindsym Mod1+r mode "resize"
+bindsym Mod1+r mode "Resize"
 
 # PulseAudio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%

@@ -1,6 +1,5 @@
 set $_CONFIG_DIR  $HOME/dotfiles/sway
 set $_BG_DIR $HOME/SafeDepositBox/backgrounds/public
-set $_LOCK exec swaylock -f -c 000000
 include $_CONFIG_DIR/"$(hostname)".config
 
 # Appearance ##################################################################
@@ -19,9 +18,9 @@ set $fade   #e2e2e295
 set $back   #1b1b1b
 set $bact   #1b1b1b95
 set $trns   #00000000
-set $acto   #852000
-set $actt   #85200095
-set $hint   #9a0027
+set $acto   #c15522
+set $actt   #c1552295
+set $hint   #d73753
 
 ### Class               Border  Background  Text    Indicator   Child Border
 client.unfocused        $back   $bact       $fade   $bact       $back
@@ -173,6 +172,7 @@ bindsym Mod1+x [urgent=latest] focus
 bindsym Mod1+Shift+r reload
 
 # lock screen with ALT+L
+set $_LOCK exec swaylock -f -c $act
 bindsym Mod4+l $_LOCK
 
 set $_CAD_MENU (L)ock screen  (E)xit sway  (S)uspend  (H)ibernate  (R)eboot  (P)oweroff  (C)ancel

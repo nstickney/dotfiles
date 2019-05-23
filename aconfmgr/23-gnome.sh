@@ -63,6 +63,7 @@ AddPackage nautilus # Default file manager for GNOME
 AddPackage nautilus-image-converter # Nautilus extension to rotate/resize image files
 AddPackage nautilus-sendto # Easily send files via mail
 AddPackage nautilus-share # Nautilus extension to share folder using Samba
+AddPackage polkit-gnome # Legacy polkit authentication agent for GNOME
 AddPackage p7zip # Command-line file archiver with high compression ratio
 AddPackage rhythmbox # Music playback and management application
 AddPackage seahorse # GNOME application for managing PGP keys.

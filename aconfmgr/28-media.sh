@@ -13,7 +13,6 @@ AddPackage openshot # an open-source, non-linear video editor for Linux based on
 AddPackage optipng # Compresses PNG files to a smaller size, without losing any information.
 AddPackage pavucontrol # PulseAudio Volume Control
 AddPackage pulseaudio # A featureful, general-purpose sound server
-AddPackage simplescreenrecorder # A feature-rich screen recorder that supports X11 and OpenGL.
 AddPackage vlc # A multi-platform MPEG, VCD/DVD, and DivX player
 
 CopyFile /etc/pulse/default.pa

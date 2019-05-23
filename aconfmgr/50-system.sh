@@ -29,36 +29,11 @@ if grep -q Intel /proc/cpuinfo 2>/dev/null; then
 	AddPackage xf86-video-intel # X.org Intel i810/i830/i915/945G/G965+ video drivers
 fi
 
-if [[ "$HOSTNAME" == "elisha" || \
-	  "$HOSTNAME" == "elizabeth" ]]
-then
+# Nvidia (Nouveau)
+if lspci -v | grep -q nvidia; then
+	AddPackage xf86-video-nouveau # Open Source 3D acceleration driver for nVidia cards
 	CopyFile /etc/modprobe.d/blacklist.conf
-fi
-
-# Nvidia
-if [[ "$HOSTNAME" == "elisha" || \
-	"$HOSTNAME" == "elizabeth" || \
-	"$HOSTNAME" == "eli" || \
-	"$HOSTNAME" == "elisheba" ]]
-then
-	AddPackage nvidia # NVIDIA drivers for linux
-fi
-
-# Nvidia with bumblebee/primus (Optimus)
-if [[ "$HOSTNAME" == "eli" || \
-	  "$HOSTNAME" == "elisheba" ]]
-then
-	AddPackage bbswitch # Kernel module allowing to switch dedicated graphics card on Optimus laptops
-	AddPackage bumblebee # NVIDIA Optimus support for Linux through VirtualGL
-	AddPackage primus # Faster OpenGL offloading for Bumblebee
-	AddPackage xf86-input-synaptics # Synaptics driver for notebook touchpads
-	CreateLink /etc/systemd/system/graphical.target.wants/bumblebeed.service /usr/lib/systemd/system/bumblebeed.service
-fi
-
-# Nvidia old
-if [[ "$HOSTNAME" == "elijah" ]]
-then
-	AddPackage nvidia-340xx # NVIDIA drivers for linux, 340xx legacy branch
+	CopyFile /etc/X11/xorg.conf.d/20-nouveau.conf
 fi
 
 # https://wiki.archlinux.org/index.php/Getty#Have_boot_messages_stay_on_tty1

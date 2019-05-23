@@ -3,16 +3,16 @@ set $_BG_DIR $HOME/SafeDepositBox/backgrounds/public
 include $_CONFIG_DIR/"$(hostname)".config
 
 # Appearance ##################################################################
-for_window [class="^.*"] border pixel 1
-gaps inner 2
+default_border pixel 1
 font monospace 0
+gaps inner 1
 titlebar_border_thickness 1
 titlebar_padding 1
 
 ## Background
 output * bg "$($HOME/dotfiles/bin/random-wallpaper $_BG_DIR)" fill
 
-## Colors (see http://i3wm.org/docs/userguide.html#_changing_colors)
+## Colors
 set $fore   #e2e2e2
 set $fade   #e2e2e295
 set $back   #1b1b1b
@@ -31,12 +31,15 @@ client.placeholder      $back   $bact       $fade   $bact       $back
 client.background       $bact
 
 ## Orientation
-default_orientation vertical
+default_orientation horizontal
 
 # Startup Actions #############################################################
 
 # Finalize host-specific configuration of status bar
 exec $_CONFIG_DIR/bar-config $_CONFIG_DIR
+
+# Numlock
+input "*" xkb_numlock enable
 
 # Start a bunch of stuff
 # exec --no-startup-id bitwarden-bin

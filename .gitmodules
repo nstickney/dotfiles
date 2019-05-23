@@ -40,3 +40,6 @@
 [submodule "vim/pack/stick/start/vim-css-color"]
 	path = vim/pack/stick/start/vim-css-color
 	url = https://github.com/ap/vim-css-color
+[submodule "vim/pack/stick/start/sway-vim-syntax"]
+	path = vim/pack/stick/start/sway-vim-syntax
+	url = https://github.com/aouelete/sway-vim-syntax

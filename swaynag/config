@@ -1,4 +1,4 @@
-font pango:Source Code Pro, Font Awesome 5 Free Solid 12
+font=pango:Source Code Pro 12
 
 [warning]
 background=C15522

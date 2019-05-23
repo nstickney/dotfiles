@@ -1,10 +1,12 @@
 set $_CONFIG_DIR  $HOME/dotfiles/sway
 set $_BG_DIR $HOME/SafeDepositBox/backgrounds/public
-set $_LOGOUT swaynag -t warning -m 'Exit i3?' -b 'Exit i3' 'swaymsg exit'
+set $_LOGOUT swaynag -t warning -m 'Log off?' -b 'Log Off' 'swaymsg exit'
 set $_LOCK exec swaylock -f -c 000000
 set $_REBOOT swaynag -t warning -m 'Reboot?' -b 'Reboot' 'systemctl reboot'
 set $_SHUTDOWN swaynag -t warning -m 'Power off?' -b 'Power off' 'systemctl poweroff -i'
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+set $_CAD_MENU System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
+
+include $_CONFIG_DIR/"$(hostname)".config
 
 # Appearance ##################################################################
 for_window [class="^.*"] border pixel 1
@@ -34,6 +36,9 @@ client.urgent           $hint   $hint       $back   $hint       $hint
 client.placeholder      $back   $bact       $fade   $bact       $back
 client.background       $bact
 
+## Orientation
+default_orientation vertical
+
 # Startup Actions #############################################################
 
 # Finalize host-specific configuration of status bar
@@ -49,17 +54,17 @@ exec --no-startup-id swayidle -w timeout 300 "$_LOCK"
 
 # Make an information bar
 bar {
-    colors {
-        # Item              Border  Background  Text
-        background                  $trns
-        focused_workspace   $acto   $acto       $fore
-        active_workspace    $back   $acto       $fore
-        inactive_workspace  $back   $back       $fade
-        urgent_workspace    $hint   $hint       $back
-    }
+	colors {
+		# Item              Border  Background  Text
+		background                  $trns
+		focused_workspace   $acto   $acto       $fore
+		active_workspace    $back   $acto       $fore
+		inactive_workspace  $back   $back       $fade
+		urgent_workspace    $hint   $hint       $back
+	}
 	font pango:Source Code Pro, Font Awesome 5 Free Solid 12
-    position top
-    status_command i3status-rs $_CONFIG_DIR/status.toml
+	position top
+	status_command i3status-rs $_CONFIG_DIR/status.toml
 }
 
 # Bindings ####################################################################
@@ -75,34 +80,34 @@ bindsym Super_R exec $HOME/dotfiles/bin/start-gui-term
 bindsym Mod1+c kill
 
 # start rofi (a program launcher)
-bindsym Super_L exec rofi -show combi
+bindsym --release Super_L exec rofi -show combi
 bindsym Mod1+Tab exec rofi -show combi
 
 # change focus
-bindsym Mod1+Left focus left
+bindsym Mod1+left focus left
 bindsym Mod1+s focus left
 bindsym Mod1+h focus left
-bindsym Mod1+Down focus down
+bindsym Mod1+down focus down
 bindsym Mod1+d focus down
 bindsym Mod1+j focus down
-bindsym Mod1+Up focus up
+bindsym Mod1+up focus up
 bindsym Mod1+e focus up
 bindsym Mod1+k focus up
-bindsym Mod1+Right focus right
+bindsym Mod1+right focus right
 bindsym Mod1+f focus right
 bindsym Mod1+l focus right
 
 # move focused window
-bindsym Mod1+Shift+Left move left
+bindsym Mod1+Shift+left move left
 bindsym Mod1+Shift+s move left
 bindsym Mod1+Shift+h move left
-bindsym Mod1+Shift+Down move down
+bindsym Mod1+Shift+down move down
 bindsym Mod1+Shift+d move down
 bindsym Mod1+Shift+j move down
-bindsym Mod1+Shift+Up move up
+bindsym Mod1+Shift+up move up
 bindsym Mod1+Shift+e move up
 bindsym Mod1+Shift+k move up
-bindsym Mod1+Shift+Right move right
+bindsym Mod1+Shift+right move right
 bindsym Mod1+Shift+f move right
 bindsym Mod1+Shift+l move right
 
@@ -113,7 +118,7 @@ bindsym Mod1+b h
 bindsym Mod1+v split v
 
 # enter fullscreen mode for the focused container
-bindsym Mod1+F11 fullscreen toggle
+bindsym Mod1+f11 fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 # bindsym Mod1+q layout stacking
@@ -181,36 +186,36 @@ bindsym Mod1+Shift+r reload
 bindsym Mod1+Shift+q exec --no-startup-id $_LOGOUT
 
 # shutdown, reboot, lock menu from https://wiki.archlinux.org/index.php/I3
-mode "$mode_system" {
-    bindsym l exec --no-startup-id $_LOCK, mode "default"
-    bindsym e exec --no-startup-id $_LOGOUT, mode "default"
-    bindsym s exec --no-startup-id $_LOCK && systemctl suspend, mode "default"
-    bindsym h exec --no-startup-id $_LOCK && systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id $_REBOOT, mode "default"
-    bindsym Shift+s exec --no-startup-id $_SHUTDOWN, mode "default"
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+mode "$_CAD_MENU" {
+	bindsym l exec --no-startup-id $_LOCK, mode "default"
+	bindsym e exec --no-startup-id $_LOGOUT, mode "default"
+	bindsym s exec --no-startup-id $_LOCK && systemctl suspend, mode "default"
+	bindsym h exec --no-startup-id $_LOCK && systemctl hibernate, mode "default"
+	bindsym r exec --no-startup-id $_REBOOT, mode "default"
+	bindsym Shift+s exec --no-startup-id $_SHUTDOWN, mode "default"
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
-bindsym Control+Mod1+Delete mode "$mode_system"
+bindsym Control+Mod1+Delete mode "$_CAD_MENU"
 
 # lock screen with ALT+L
-bindsym Mod2+l $_LOCK
+bindsym Mod4+l $_LOCK
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym Left        resize shrink width 10 px or 1 ppt
-        bindsym Down        resize grow height 100 px or 1 ppt
-        bindsym Up          resize shrink height 10 px or 1 ppt
-        bindsym Right       resize grow width 100 px or 1 ppt
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+	# These bindings trigger as soon as you enter the resize mode
+	# Pressing left will shrink the window’s width.
+	# Pressing right will grow the window’s width.
+	# Pressing up will shrink the window’s height.
+	# Pressing down will grow the window’s height.
+	bindsym left        resize shrink width 10 px or 1 ppt
+	bindsym down        resize grow height 100 px or 1 ppt
+	bindsym up          resize shrink height 10 px or 1 ppt
+	bindsym right       resize grow width 100 px or 1 ppt
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 bindsym Mod1+r mode "resize"
@@ -232,3 +237,5 @@ bindsym XF86AudioPrev exec playerctl previous
 # Screenshots
 bindsym Print exec sleep 3 && grim $HOME/Pictures/Screenshots/`uname -n`-`date +%Y%m%d-%R:%S`.png
 bindsym Mod1+Print exec grim -g "$(slurp)" $HOME/Pictures/Screenshots/`uname -n`-`date +%Y%m%d-%R:%S`.png
+
+# vim: filetype=sway

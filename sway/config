@@ -74,9 +74,11 @@ bindsym Super_R exec $HOME/dotfiles/bin/start-gui-term
 # kill focused window
 bindsym Mod1+c kill
 
-# start rofi (a program launcher)
-bindsym --release Super_L exec rofi -show combi
-bindsym Mod1+Tab exec rofi -show combi
+# launcher
+set $_LAUNCHER exec alacritty -t launcher -e "$HOME/dotfiles/bin/sway-launcher"
+for_window [title="^launcher$"] floating enable, border none
+bindsym --release Super_L $_LAUNCHER
+bindsym Mod1+Tab $_LAUNCHER
 
 # change focus
 bindsym Mod1+left focus left

@@ -182,16 +182,16 @@ bindsym Mod4+l $_LOCK
 
 set $_CAD_MENU (L)ock screen  (E)xit sway  (S)uspend  (H)ibernate  (R)eboot  (P)oweroff  (C)ancel
 set $_EXIT_MENU CONFIRM: (E)xit sway or (C)ancel
-set $_SUS_MENU CONFIRM: (S)uspend to RAM or (C)ancel
-set $_HIB_MENU CONFIRM: (H)ibernate or (C)ancel
+set $_SUSPEND_MENU CONFIRM: (S)uspend to RAM or (C)ancel
+set $_HIBERNATE_MENU CONFIRM: (H)ibernate or (C)ancel
 set $_REBOOT_MENU CONFIRM: (R)eboot or (C)ancel
 set $_OFF_MENU CONFIRM: (P)oweroff or (C)ancel
 
 mode "$_CAD_MENU" {
 	bindsym l exec $_LOCK, mode "default"
 	bindsym e mode "$_EXIT_MENU"
-	bindsym s mode "$_SUS_MENU"
-	bindsym h mode "$_HIB_MENU"
+	bindsym s mode "$_SUSPEND_MENU"
+	bindsym h mode "$_HIBERNATE_MENU"
 	bindsym r mode "$_REBOOT_MENU"
 	bindsym p mode "$_OFF_MENU"
 	bindsym c mode "default"
@@ -209,21 +209,21 @@ mode "$_EXIT_MENU" {
 }
 bindsym Mod1+Shift+q mode "$_EXIT_MENU"
 
-mode "$_SUS_MENU" {
+mode "$_SUSPEND_MENU" {
 	bindsym s exec $_LOCK && systemctl suspend, mode "default"
 	bindsym c mode "default"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
 
-mode "$_HIB_MENU" {
+mode "$_HIBERNATE_MENU" {
 	bindsym h exec $_LOCK && systemctl hibernate, mode "default"
 	bindsym c mode "default"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
 
-mode "$_REB_MENU" {
+mode "$_REBOOT_MENU" {
 	bindsym r exec systemctl reboot, mode "default"
 	bindsym c mode "default"
 	bindsym Return mode "default"

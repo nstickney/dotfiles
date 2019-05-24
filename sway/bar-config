@@ -77,17 +77,6 @@ for i in $(mount | grep -e vfat -e ext4 | cut -f3 -d' '); do
 	} >> "$_file"
 done
 
-# If not in a virtual machine, add the xrandr block
-if [ "$(systemd-detect-virt)" == "none" ] && [ -x "$(command -v xrandr)" ]; then
-	{
-		cat <<- EOF
-		[[block]]
-		block = "xrandr"
-
-		EOF
-	} >> "$_file"
-fi
-
 # If there is a battery, add the battery block
 if [ -d /sys/class/power_supply/BAT0/ ]; then
 	{

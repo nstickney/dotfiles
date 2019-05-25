@@ -1,6 +1,5 @@
 # shellcheck disable=SC2148
 AddPackage afpfs-ng # A client for the Apple Filing Protocol (AFP)
-#AddPackage antergos-keyring # Antergos PGP keyring
 AddPackage arch-audit # An utility like pkg-audit based on Arch CVE Monitoring Team data
 AddPackage autoconf # A GNU tool for automatically configuring source code
 AddPackage automake # A GNU tool for automatically creating Makefiles

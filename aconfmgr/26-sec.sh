@@ -7,16 +7,16 @@ if [[ "$HOSTNAME" == "elisha" || "$HOSTNAME" == "elias" ]]; then
 
 	# Forensics
 	# AddPackage --foreign autopsy # The Autopsy Forensic Browser is a GUI for The Sleuth Kit.
-	AddPackage extundelete # Utility for recovering deleted files from ext2, ext3 or ext4 partitions by parsing the journal
+	# AddPackage extundelete # Utility for recovering deleted files from ext2, ext3 or ext4 partitions by parsing the journal
 	# AddPackage foremost # A console program to recover files based on their headers, footers, and internal data structures
 	# AddPackage sleuthkit # File system and media management forensic analysis tools
 
 	# Network/Scanning Tools
 	# AddPackage badtouch # Scriptable network authentication cracker
-	AddPackage bettercap # Swiss army knife for network attacks and monitoring
+	# AddPackage bettercap # Swiss army knife for network attacks and monitoring
 	AddPackage masscan # TCP port scanner, spews SYN packets asynchronously, scanning entire Internet in under 5 minutes
 	# AddPackage metasploit # Advanced open-source platform for developing, testing, and using exploit code
-	AddPackage --foreign termshark-bin # A terminal UI for tshark, inspired by Wireshark
+	# AddPackage --foreign termshark-bin # A terminal UI for tshark, inspired by Wireshark
 	AddPackage vulscan # A module which enhances nmap to a vulnerability scanner
 	AddPackage wireshark-qt # Network traffic and protocol analyzer/sniffer - Qt GUI
 
@@ -31,7 +31,7 @@ if [[ "$HOSTNAME" == "elisha" || "$HOSTNAME" == "elias" ]]; then
 	AddPackage testssl.sh # Testing TLS/SSL encryption
 
 	# Signal analysis
-	AddPackage --foreign inspectrum # SDR signal analyzer
+	# AddPackage --foreign inspectrum # SDR signal analyzer
 fi
 
 # Host Security

@@ -8,17 +8,12 @@ AddPackage filemanager-actions # File-manager extension which offers user config
 AddPackage gdm # Display manager and login screen
 AddPackage gnome-calculator # GNOME Scientific calculator
 AddPackage gnome-characters # A character map application
-AddPackage gnome-contacts # Contacts Manager for GNOME
 AddPackage gnome-control-center # GNOME's main interface to configure various aspects of the desktop
 AddPackage gnome-desktop # Library with common API for various GNOME modules
-AddPackage gnome-dictionary # Look up words in dictionary sources
 AddPackage gnome-documents # A document manager application for GNOME
 AddPackage gnome-font-viewer # A font viewer utility for GNOME
 AddPackage gnome-keyring # Stores passwords and encryption keys
-AddPackage gnome-maps # A simple GNOME 3 maps application
-AddPackage gnome-music # Music player and management application
 AddPackage gnome-disk-utility # Disk Management Utility for GNOME
-AddPackage gnome-photos # Access, organize, and share your photos on GNOME
 AddPackage gnome-screenshot # Take pictures of your screen
 AddPackage gnome-search-tool # Utility to search for files
 AddPackage gnome-session # The GNOME Session Handler
@@ -32,7 +27,6 @@ AddPackage gnome-tweaks # Graphical interface for advanced GNOME 3 settings (Twe
 AddPackage gnome-video-effects # Effects for Cheese, etc
 AddPackage gnome-user-docs # User documentation for GNOME
 AddPackage gnome-user-share # Easy to use user-level file sharing for GNOME
-AddPackage gnome-weather # Access current weather conditions and forecasts
 AddPackage gparted # A Partition Magic clone, frontend to GNU Parted
 AddPackage grilo # Framework that provides access to various sources of multimedia content
 AddPackage grilo-plugins # Plugins for Grilo

@@ -1,16 +1,18 @@
 AddPackage --foreign bitwarden-bin # A secure and free password manager for all of your devices.
+AddPackage boinc # Berkeley Open Infrastructure for Network Computing for desktop
 AddPackage --foreign exercism-cli # Command line client for exercism.io
 AddPackage hugo # Fast and Flexible Static Site Generator in Go
 AddPackage --foreign lbry-app-bin # The LBRY app built using electron
+AddPackage libreoffice-fresh # LibreOffice branch which contains new features and program enhancements
+AddPackage coin-or-mp # libreoffice-fresh opt dep
+AddPackage pstoedit # libreoffice-fresh opt dep
 AddPackage ncdu # Disk usage analyzer with an ncurses interface
 AddPackage --foreign pandoc-bin # Pandoc - executable only, without 750MB Haskell depends/makedepends
-AddPackage --foreign pandoc-citeproc-bin # Pandoc Cite Processor - executable only, without 750MB Haskell depends/makedepends
+AddPackage --foreign pandoc-citeproc-bin # pandoc-bin opt dep
+AddPackage texlive-core # pandoc-bin opt dep
 AddPackage --foreign protonmail-bridge # Application to use IMAP/SMTP with your paid ProtonMail account
 AddPackage rmlint # Tool to remove duplicates and other lint, being much faster than fdupes
 AddPackage rmlint-shredder # Graphical user interface for rmlint
-AddPackage texlive-bin # opt dep for evince/vim/python
-AddPackage texlive-core # TeX Live core distribution
-AddPackage texlive-latexextra # TeX Live - Large collection of add-on packages for LaTeX
 AddPackage thunderbird # Standalone mail and news reader from mozilla.org
 AddPackage truecrypt # Free open-source cross-platform disk encryption software
 
@@ -22,4 +24,6 @@ AddPackage truecrypt # Free open-source cross-platform disk encryption software
 # AddPackage python-pyicu # opt dep for gramps
 # AddPackage rcs # opt dep for gramps
 # AddPackage --foreign zotero # Zotero Standalone, a free, easy-to-use tool to help you collect, organize, cite, and share your research sources
-# AddPackage xpdf # opt dep for Zotero
+# AddPackage xpdf # opt dep for zotero
+
+CreateLink /etc/systemd/system/multi-user.target.wants/boinc.service /usr/lib/systemd/system/boinc.service

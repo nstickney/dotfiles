@@ -18,6 +18,3 @@ AddPackage vlc # A multi-platform MPEG, VCD/DVD, and DivX player
 CopyFile /etc/pulse/default.pa
 CreateLink /etc/systemd/user/sockets.target.wants/pipewire.socket /usr/lib/systemd/user/pipewire.socket
 CreateLink /etc/systemd/user/sockets.target.wants/pulseaudio.socket /usr/lib/systemd/user/pulseaudio.socket
-
-# AddPackage --foreign archlinux-artwork # Official logos, icons, CD labels and other artwork for Arch Linux
-

@@ -46,7 +46,3 @@ IgnorePath '/usr/bin/vue'
 IgnorePath '/usr/lib*'
 IgnorePath '/usr/share/*'
 IgnorePath '/var/*'
-
-IgnorePath '*.bak'
-IgnorePath '*.pacnew'
-IgnorePath '*.pacsave'

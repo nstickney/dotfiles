@@ -21,13 +21,15 @@ AddPackage otf-font-awesome # Iconic font designed for Bootstrap
 AddPackage powerline-fonts # patched fonts for powerline
 
 # Unicode coverage
-AddPackage adobe-source-han-sans-cn-fonts # Simplified Chinese OpenType/CFF fonts
-AddPackage adobe-source-han-sans-jp-fonts # Japanese OpenType/CFF fonts
-AddPackage adobe-source-han-sans-kr-fonts # Korean OpenType/CFF fonts
-AddPackage adobe-source-han-sans-otc-fonts # Pan-CJK OpenType/CFF Collection fonts
-AddPackage adobe-source-han-sans-tw-fonts # Traditional Chinese OpenType/CFF fonts
-AddPackage adobe-source-han-serif-cn-fonts # Simplified Chinese OpenType/CFF fonts
-AddPackage adobe-source-han-serif-jp-fonts # Japanese OpenType/CFF fonts
-AddPackage adobe-source-han-serif-kr-fonts # Korean OpenType/CFF fonts
-AddPackage adobe-source-han-serif-otc-fonts # Pan-CJK OpenType/CFF Collection fonts
-AddPackage adobe-source-han-serif-tw-fonts # Traditional Chinese OpenType/CFF fonts
+if [ "$USER" == 'nstickney' ]; then
+	AddPackage adobe-source-han-sans-cn-fonts # Simplified Chinese OpenType/CFF fonts
+	AddPackage adobe-source-han-sans-jp-fonts # Japanese OpenType/CFF fonts
+	AddPackage adobe-source-han-sans-kr-fonts # Korean OpenType/CFF fonts
+	AddPackage adobe-source-han-sans-otc-fonts # Pan-CJK OpenType/CFF Collection fonts
+	AddPackage adobe-source-han-sans-tw-fonts # Traditional Chinese OpenType/CFF fonts
+	AddPackage adobe-source-han-serif-cn-fonts # Simplified Chinese OpenType/CFF fonts
+	AddPackage adobe-source-han-serif-jp-fonts # Japanese OpenType/CFF fonts
+	AddPackage adobe-source-han-serif-kr-fonts # Korean OpenType/CFF fonts
+	AddPackage adobe-source-han-serif-otc-fonts # Pan-CJK OpenType/CFF Collection fonts
+	AddPackage adobe-source-han-serif-tw-fonts # Traditional Chinese OpenType/CFF fonts
+fi

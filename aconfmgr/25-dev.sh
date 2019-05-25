@@ -21,7 +21,7 @@ AddPackage vim # Vi Improved, a highly configurable, improved version of the vi 
 AddPackage vim-spell-en # Language files for Vim spell checking
 
 # Remote admin
-if [[ "$HOSTNAME" == "elisha" || "$HOSTNAME" == "elias" ]]; then
+if [ "$USER" == 'nstickney' ]; then
 	AddPackage terraform # Tool for building, changing, and versioning infrastructure safely and efficiently
 fi
 
@@ -50,13 +50,11 @@ AddPackage delve # A debugger for the Go programming language.
 AddPackage go # Core compiler tools for the Go programming language
 
 ### Java
-# AddPackage intellij-idea-community-edition # IDE for Java, Groovy and other programming languages with advanced refactoring features
 AddPackage maven # Java project management and project comprehension tool
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
 ### HTML
 AddPackage tidy # A tool to tidy down your HTML code to a clean style
-# AddPackage --foreign minify # Minifier CLI for HTML, CSS, JS, JSON, SVG and XML
 
 ### Multi-language
 AddPackage astyle # A free, fast and small automatic formatter for C, C++, C#, and Java source code.

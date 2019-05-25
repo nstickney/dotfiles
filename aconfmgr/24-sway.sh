@@ -3,6 +3,7 @@ AddPackage sway # Tiling Wayland compositor and replacement for the i3 window ma
 AddPackage swayidle # Idle management daemon for Wayland
 AddPackage swaylock # Screen locker for Wayland
 
+AddPackage alacritty # A cross-platform, GPU-accelerated terminal emulator
 AddPackage grim # Screenshot utility that works under Wayland
 AddPackage slurp # Select a region in a Wayland compositor
 AddPackage playerctl # mpris media player controller and lib for spotify, vlc, audacious, bmp, xmms2, and others.

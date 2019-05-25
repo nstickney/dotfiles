@@ -2,6 +2,7 @@
 
 AddPackage chrony # Lightweight NTP client and server
 CopyFile /etc/locale.gen
+CopyFile /etc/modprobe.d/blacklist.conf
 
 # Virtual Machine (any type)
 if sudo dmesg | grep -q "Hypervisor detected" && [ -d /etc/gdm ]; then
@@ -9,7 +10,7 @@ if sudo dmesg | grep -q "Hypervisor detected" && [ -d /etc/gdm ]; then
 fi
 
 # VirtualBox
-if systemd-detect-virt | grep -q oracle; then
+if systemd-detect-virt | grep -i -q oracle; then
 	AddPackage virtualbox-guest-modules-arch # Virtualbox guest kernel modules for Arch Kernel
 	AddPackage virtualbox-guest-utils # VirtualBox Guest userspace utilities
 	CreateLink /etc/systemd/system/multi-user.target.wants/vboxservice.service /usr/lib/systemd/system/vboxservice.service
@@ -19,21 +20,19 @@ else
 fi
 
 # AMD CPU
-if grep -q AMD /proc/cpuinfo 2>/dev/null; then
+if grep -i -q AMD /proc/cpuinfo 2>/dev/null; then
 	AddPackage amd-ucode # Microcode update files for AMD CPUs
 fi
 
 # Intel CPU/Video
-if grep -q Intel /proc/cpuinfo 2>/dev/null; then
+if grep -i -q Intel /proc/cpuinfo 2>/dev/null; then
 	AddPackage intel-ucode # Microcode update files for Intel CPUs
 	AddPackage xf86-video-intel # X.org Intel i810/i830/i915/945G/G965+ video drivers
 fi
 
 # Nvidia (Nouveau)
-if lspci -v | grep -q nvidia; then
+if lspci -v | grep -i -q nvidia; then
 	AddPackage xf86-video-nouveau # Open Source 3D acceleration driver for nVidia cards
-	CopyFile /etc/modprobe.d/blacklist.conf
-	CopyFile /etc/X11/xorg.conf.d/20-nouveau.conf
 fi
 
 # https://wiki.archlinux.org/index.php/Getty#Have_boot_messages_stay_on_tty1

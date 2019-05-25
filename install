@@ -50,11 +50,9 @@ main() {
 	confs['bash']='.bashrc'
 	confs['gdb']='.gdbinit'
 	confs['git']='.gitconfig'
-	confs['rofi']='.Xresources'
 	confs['sway']='.config/sway'
 	confs['swaylock']='.config/swaylock'
 	confs['tmux']='.tmux.conf'
-	confs['urxvt']='.Xresources'
 	confs['vim']='.vim'
 
 	printf 'Initializing and updating submodules...\n'

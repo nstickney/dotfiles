@@ -52,6 +52,7 @@ main() {
 	confs['git']='.gitconfig'
 	confs['rofi']='.Xresources'
 	confs['sway']='.config/sway'
+	confs['swaylock']='.config/swaylock'
 	confs['tmux']='.tmux.conf'
 	confs['urxvt']='.Xresources'
 	confs['vim']='.vim'

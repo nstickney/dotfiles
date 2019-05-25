@@ -177,7 +177,7 @@ bindsym Mod1+x [urgent=latest] focus
 bindsym Mod1+Shift+r reload
 
 # lock screen with ALT+L
-set $_LOCK exec swaylock -f -c $act
+set $_LOCK exec $HOME/dotfiles/bin/sway-pixelate-and-lock
 bindsym Mod4+l $_LOCK
 
 set $_CAD_MENU (L)ock screen  (E)xit sway  (S)uspend  (H)ibernate  (R)eboot  (P)oweroff  (C)ancel

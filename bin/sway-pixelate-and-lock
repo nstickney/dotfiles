@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, you can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+usage() {
+	printf 'Usage: %s\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+main() {
+	# Get the names of the displays
+	local _displays
+	_displays="$(swaymsg -t get_outputs | grep name | cut -f2 -d':')"
+	_displays="${_displays//[ \",]/}"
+
+	# Take a screenshot and pixelate it 10x
+	local _image
+	local _final=()
+	for i in $_displays; do
+		_image="/tmp/screen_locked_$i.png"
+		grim -o "$i" -s 0.1 "$_image"
+		_final+=('-i')
+		_final+=("$i:$_image")
+	done
+
+	swaylock -f -e -F "${_final[@]}"
+}
+
+_pos_args=()
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
+	esac
+done
+main "${_pos_args[@]}"
+

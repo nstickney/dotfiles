@@ -28,7 +28,11 @@ if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
 endif
 
 " Eye Candy
-hi Normal guibg=NONE ctermbg=NONE       " transparent background
+hi Normal     ctermbg=NONE cterm=bold guibg=NONE gui=NONE
+hi SignColumn ctermbg=NONE cterm=bold guibg=NONE gui=NONE
+hi DiffAdd    ctermbg=NONE cterm=bold guibg=NONE gui=NONE
+hi DiffChange ctermbg=NONE cterm=bold guibg=NONE gui=NONE
+hi DiffDelete ctermbg=NONE cterm=bold guibg=NONE gui=NONE
 set t_Co=16                             " use (only) the 16 basic terminal colors
 
 " Faster
@@ -39,6 +43,13 @@ set ttyfast                             " faster redraw
 set foldmethod=indent                   " fold based on indent
 set foldnestmax=3                       " deepest fold is 3 levels
 set nofoldenable                        " don't fold by default
+
+" Git
+let g:signify_realtime = 1              " more aggressive sign updates
+let g:signify_cursorhold_normal = 0     " avoid auto-saving buffer
+let g:signify_cursorhold_insert = 0     " avoid auto-saving buffer
+nmap <Leader>t <Plug>(signify-prev-hunk)
+nmap <Leader>g <Plug>(signify-next-hunk)
 
 " Indentation
 nnoremap p p=`]<C-o>                    " auto-indent pasted text

@@ -78,10 +78,10 @@ hi CursorLineNr ctermfg=8               " set the current line number color to g
 
 "" @cur33's Line Numbers function
 function! LineNumberToggle()
-	if(&relativenumber != 1)
-		set number!
-	endif
-	set relativenumber!
+if(&relativenumber != 1)
+	set number!
+endif
+set relativenumber!
 endfunc
 nnoremap <C-n> :call LineNumberToggle()<cr>
 call LineNumberToggle()
@@ -90,9 +90,8 @@ call LineNumberToggle()
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%severity%][%linter%]% code:% %s'
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-hi SignColumn ctermbg=None
+nmap <C-k> <Plug>(ale_previous_wrap)
+nmap <C-j> <Plug>(ale_next_wrap)
 
 " Miscellaneous
 let g:vim_markdown_conceal=0            " turn off conceal in Markdown
@@ -145,11 +144,11 @@ let g:lightline = {
 			\ },
 			\}
 let g:lightline.separator = {
-	\   'left': '', 'right': ''
-  \}
+			\   'left': '', 'right': ''
+			\}
 let g:lightline.subseparator = {
-	\   'left': '', 'right': ''
-  \}
+			\   'left': '', 'right': ''
+			\}
 let g:lightline.tabline = {
   			\   'left': [ ['buffers'] ],
   			\   'right': [ ['fileformat', 'fileencoding', 'filetype'] ],

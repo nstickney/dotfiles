@@ -12,6 +12,7 @@ AddPackage iproute2 # IP Routing Utilities
 AddPackage iputils # Network monitoring tools, including ping
 AddPackage irssi # Modular text mode IRC client with Perl scripting
 AddPackage lynx # A text browser for the World Wide Web
+AddPackage mosh # Mobile shell, surviving disconnects with local echo and line editing
 AddPackage mtr # Combines the functionality of traceroute and ping into one tool (CLI version)
 AddPackage networkmanager # Network connection manager and user applications
 AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnect

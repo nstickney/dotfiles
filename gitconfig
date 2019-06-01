@@ -48,7 +48,7 @@
 	# Pull Origin
 	PO = pull origin master
 	# PuSh
-	PS = ! git push || git push --set-upstream origin master
+	PS = "!f(){ git push || git push -u origin "$(git branch | cut -f2 -d' ')"; }; f"
 	# Pull Upstream
 	PU = pull upstream master
 	# Pull (Recurse)

@@ -14,7 +14,6 @@ set showmatch                           " highlight matching [{()}]
 set showcmd                             " show commands in bottom bar
 
 " Buffers
-set hidden                              " buffers can exist without being in a window
 nnoremap <C-T> :bnext<CR>               " move to next buffer
 nnoremap <C-G> :bprev<CR>               " move to previous buffer
 
@@ -33,7 +32,7 @@ hi SignColumn ctermbg=NONE cterm=bold guibg=NONE gui=NONE
 hi DiffAdd    ctermbg=NONE cterm=bold guibg=NONE gui=NONE
 hi DiffChange ctermbg=NONE cterm=bold guibg=NONE gui=NONE
 hi DiffDelete ctermbg=NONE cterm=bold guibg=NONE gui=NONE
-set t_Co=16                             " use (only) the 16 basic terminal colors
+set t_Co=16                             " use (only) the 16 terminal colors
 
 " Faster
 set lazyredraw                          " redraw only as needed
@@ -110,6 +109,10 @@ if executable('rg')                     " use ripgrep if available
 	let g:ackprg = 'rg --vimgrep'
 endif
 
+" Shortcuts
+nnoremap <Leader>- :nohlsearch<cr>
+nnoremap <Leader><cr> :write<cr>
+
 " Spellcheck
 set spelllang=en_us                     "
 set spellfile=$HOME/dotfiles/vim/stick.utf-8.add
@@ -175,6 +178,14 @@ syntax on                               " use syntax highlighting for detected f
 " Timestamp (press <F3>)
 nmap <F3> i<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
+
+" Typos
+command-bang Q q<bang>
+command-bang QW wq<bang>
+command-bang Qw wq<bang>
+command-bang W w<bang>
+command-bang WQ wq<bang>
+command-bang Wq wq<bang>
 
 " Undo
 set undodir=/tmp//                      " stored by full file path in /tmp

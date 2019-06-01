@@ -64,7 +64,6 @@ main() {
 	for i in "${!confs[@]}"; do
 		[ -x "$(command -v "$i")" ] && link_configs "$i" "${confs[$i]}" 'dotfiles'
 	done
-	[ -x "$(command -v xrdb)" ] && xrdb "$HOME/.Xresources"
 	printf '    ...Complete!\n'
 
 	if [ -x "$(command -v sudo)" ]; then

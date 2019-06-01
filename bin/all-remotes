@@ -27,7 +27,7 @@ main() {
 		_repo="${_repo##*/}"
 
 		# Reset the origin for both push and fetch
-		git remote rm origin
+		git remote -v | grep -q 'origin' && git remote rm origin
 		git remote add origin "$1/$_repo"
 
 		# Prefix aur repos

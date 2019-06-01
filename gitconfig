@@ -67,6 +67,8 @@
 	RV = remote -v
 	# Stash Add
 	SA = stash
+	# Show Changes
+	SC = diff --cached
 	# Stash Pop
 	SP = stash pop
 	# SQuash

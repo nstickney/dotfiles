@@ -1,5 +1,7 @@
-set $_CONFIG_DIR  $HOME/dotfiles/sway
 set $_BG_DIR $HOME/SafeDepositBox/backgrounds/public
+set $_CONFIG_DIR $HOME/dotfiles/sway
+set $_LOCK exec $HOME/dotfiles/bin/sway-pixelate-and-lock
+
 include $_CONFIG_DIR/"$(hostname)".config
 
 # Appearance ##################################################################
@@ -38,15 +40,19 @@ default_orientation horizontal
 # Finalize host-specific configuration of status bar
 exec $_CONFIG_DIR/bar-config $_CONFIG_DIR
 
-# Numlock
-input "*" xkb_numlock enable
-
-# Start a bunch of stuff
+# Applications
 # exec --no-startup-id bitwarden-bin
 exec signal-desktop
 
+# Numlock
+input "*" xkb_numlock enable
+
 # Power management
-exec --no-startup-id swayidle -w timeout 300 "$_LOCK"
+exec --no-startup-id swayidle -w \
+		 timeout 300 "$_LOCK" \
+		 timeout 360 'swaymsg "output * dpms off"' \
+		 resume 'swaymsg "output * dpms on"' \
+		 before-sleep "$_LOCK"
 
 bar {
 	colors {
@@ -177,7 +183,6 @@ bindsym Mod1+x [urgent=latest] focus
 bindsym Mod1+Shift+r reload
 
 # lock screen with ALT+L
-set $_LOCK exec $HOME/dotfiles/bin/sway-pixelate-and-lock
 bindsym Mod4+l $_LOCK
 
 set $_CAD_MENU (L)ock screen  (E)xit sway  (S)uspend  (H)ibernate  (R)eboot  (P)oweroff  (C)ancel

@@ -25,7 +25,7 @@ main() {
 	local _final=()
 	for i in $_displays; do
 		_image="/tmp/screen_locked_$i.png"
-		grim -o "$i" -s 0.1 "$_image"
+		grim -o "$i" -s 0.05 "$_image"
 		_final+=('-i')
 		_final+=("$i:$_image")
 	done

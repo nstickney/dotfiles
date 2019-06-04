@@ -455,48 +455,62 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 
 	# Package Managers
 
-	### Apt (Apt-Metalink)
+	### Apt
 	if [ -x "$(command -v apt)" ]; then
 		alias apt='sudo apt'
-		alias aptup='apt update && apt dist-upgrade && apt autoremove'
+		export _UPDATE='apt update && apt dist-upgrade && apt autoremove'
 	fi
 
 	### DNF/Yum
-	if [ -x "$(command -v dnf)" ]; then
-		alias dnf='sudo dnf'
-	elif [ -x "$(command -v yum)" ]; then
-		alias dnf='sudo yum'
-	fi
-	[ "$(type -t dnf)" == "alias" ] && alias dnfup='dnf -y update'
+	[ -x "$(command -v yum)" ] && alias dnf='sudo yum'
+	[ -x "$(command -v dnf)" ] && alias dnf='sudo dnf'
+	[ "$(type -t dnf)" == "alias" ] && export _UPDATE='dnf -y update'
 
 	### Pacman (Reflector/Powerpill/Aurman)
 	if [ -x "$(command -v pacman)" ]; then
 
 		# Reflector
-		[ -x "$(command -v reflector)" ] && alias reflect='sudo printf "Updating Mirrorlist...\n" && sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
+		if [ -x "$(command -v reflector)" ]; then
+			export _REFLECT='sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
+			alias update_mirrors='$_REFLECT'
+		fi
 
 		# Powerpill or Pacman
 		if [ -x "$(command -v powerpill)" ]; then
 			PACMAN="$(command -v powerpill)"
-			alias pac='sudo powerpill'
+			export _PAC='sudo powerpill'
 		else
 			PACMAN="$(command -v pacman)"
-			alias pac='sudo pacman'
+			export _PAC='sudo pacman'
 		fi
 		export PACMAN
-		alias pacup='yes | pac -Syyu --noconfirm'
-		alias pacout='pac -Runcs $(pac -Qdtq)'
+		export _UPDATE="yes | $_PAC -Syyu --noconfirm"
 
 		# Aurman
 		if [ -x "$(command -v aurman)" ]; then
-			alias pac='aurman'
-			alias pacup='yes | pac -Syyu --noedit --noconfirm --devel'
+			export _PAC='aurman'
+			export _UPDATE="yes | $_PAC -Syyu --noedit --noconfirm --devel"
 		fi
 
-		# Combos
-		if [ "$(type reflect 2>/dev/null)" ]; then
-			alias rpac='reflect && pac'
-			alias rpacup='reflect && pacup'
+		# Aliases
+		alias pac='$_PAC'
+		alias pacup='$_UPDATE'
+		alias pacout='$_PAC -Runcs $($_PAC -Qdtq)'
+	fi
+
+	# Combos(
+	if [ -n "$_UPDATE" ]; then
+		if [ -n "$_REFLECT" ]; then
+			export _FULL_UPDATE="$_REFLECT && $_UPDATE"
+		else
+			export _FULL_UPDATE="$_UPDATE"
+		fi
+		alias rpacup='$_FULL_UPDATE'
+		# Tmux
+		if [ -x "$(command -v tmux)" ] && \
+			[ ! -x "$(command -v tu)" ] && \
+			[ -n "$(command -v rpacup)" ]; then
+					alias tu='tmux new "$_FULL_UPDATE"'
 		fi
 	fi
 

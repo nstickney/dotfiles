@@ -123,7 +123,7 @@ unset bash_prompt
 
 # the tty/framebuffer console
 if [ "$TERM" = 'linux' ]; then
-	printf "\\e]P0303030" # black
+	printf "\\e]P01B1B1B" # black
 	printf "\\e]P1D73753" # red
 	printf "\\e]P2907234" # green
 	printf "\\e]P3C15522" # brown
@@ -138,7 +138,7 @@ if [ "$TERM" = 'linux' ]; then
 	printf "\\e]PCB497FF" # bright blue
 	printf "\\e]PDEC8BCA" # bright magenta
 	printf "\\e]PE86B693" # bright cyan
-	printf "\\e]PFFFFFFF" # white
+	printf "\\e]PFE2E2E2" # white
 	clear # fix artifacts
 fi
 

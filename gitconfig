@@ -13,10 +13,14 @@
 [alias]
 	# Add All
 	AA = ! git add -A && git ST
-	# Add Patches
-	AP = ! git add -p && git ST
 	# Amend Commit
 	AC = commit --amend
+	# Add Patches
+	AP = ! git add -p && git ST
+	# Add Submodule
+	AS = "!f(){ git submodule add -b master "$1" "$2" && git submodule update --remote; }; f"
+	# Branch Here
+	BH = "!f(){ git branch --no-color | grep "\\*" | cut -f2 -d' '; }; f"
 	# BRanch
 	BR = branch
 	# Commit and write the message in Editor
@@ -44,15 +48,15 @@
 	# List Ignored
 	LI = ls-files --others -i --exclude-standard
 	# Push (Force)
-	PF = push -f origin master
+	PF = ! git push -f origin "$(git BH)"
 	# Pull Origin
-	PO = pull origin master
+	PO = ! git pull origin "$(git BH)"
 	# PuSh
-	PS = "!f(){ git push || git push -u origin "$(git branch | cut -f2 -d' ')"; }; f"
+	PS = ! git push || git push -u origin "$(git BH)"
 	# Pull Upstream
-	PU = pull upstream master
-	# Pull (Recurse)
-	PR = pull --recurse-submodules -r origin master
+	PU = ! git pull upstream "$(git BH)"
+	# Pull (Recurse) (requires remote to pull from as argument)
+	PR = "!f(){ git pull --recurse-submodules -r "$1" "$(git BH)"; }; f"
 	# Repo Clean (removes a file or set of files from all commits in a repo)
 	RC = "!f(){ git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '\"$*\" --prune-empty --tag-name-filter cat -- --all && git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all && git gc --prune=now; }; f"
 	# Remove (Force)
@@ -81,8 +85,8 @@
 	SU = submodule update --init --recursive --remote --jobs 8
 	# TableFlip (start over from whatever is in the remote)
 	TF = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch --all --force --jobs 8 && git reset --hard origin/\"$(git rev-parse --abbrev-ref HEAD)\" && git clean -dfx; break;; * ) break;; esac; }; f"
-	# Track Master (force local branch to track origin/master)
-	TM = branch -u origin/master
+	# Track Master (force local branch to track origin)
+	TM = ! git branch -u origin/"$(git BH)"
 	# Undo changes
 	UC = clean -dfi
 	# Un-stage

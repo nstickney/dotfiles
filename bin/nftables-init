@@ -72,7 +72,8 @@ add_workstation_rules() {
 
 	# Allow needed workstation outbound access
 	# I use 59999 for mosh
-	add_ip_rule output tcp dport \{ ircd, 6697, rsync, ssh, whois, 59999 \} accept
+	add_ip_rule output tcp dport \{ ircd, 6697, rsync, ssh, whois \} accept
+	add_ip_rule output udp dport 59999 accept
 	user_confirm 'Does this computer use network printers?' add_printing_rules
 	user_confirm 'Is this computer used to play Minecraft?' \
 		'add_ip_rule output tcp dport { 25565, 27094 } accept'
@@ -192,6 +193,8 @@ main() {
 	# Uncomment the lines below as needed to make services available
 	# add_ip_rule input ip saddr "$INTRANET" tcp dport ssh accept # SSH
 	# add_ip_rule input tcp dport ssh accept # SSH (DANGER)
+	# add_ip_rule input ip saddr "$INTRANET" udp dport 59999 accept # MOSH
+	# add_ip_rule input udp dport 59999 accept # MOSH (DANGER)
 	# add_ip_rule input tcp dport http accept # HTTP
 	# add_ip_rule input tcp dport https accept # HTTPS
 	# add_ip_rule input udp dport https accept # HTTP/2

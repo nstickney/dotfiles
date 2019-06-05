@@ -67,7 +67,7 @@ set softtabstop=4
 set list lcs=tab:\│\                    " indentation guide character
 hi SpecialKey ctermfg=0                 " indentation guide color
 let g:indentLine_char = '┆'             " soft tab indentation guide character
-let g:indentLine_color_term=0           " soft tab indentation guide color
+let g:indentLine_color_term = 0         " soft tab indentation guide color
 
 " Line Numbers
 hi LineNr ctermfg=0                     " set the line numbers color to dark grey
@@ -93,7 +93,8 @@ nmap <C-k> <Plug>(ale_previous_wrap)
 nmap <C-j> <Plug>(ale_next_wrap)
 
 " Miscellaneous
-let g:vim_markdown_conceal=0            " turn off conceal in Markdown
+let g:vim_markdown_conceal = 0          " turn off conceal in Markdown
+set conceallevel=0                      " no really, stop hiding stuff
 
 " Scrolling
 set scrolloff=8                         " start scrolling 8 lines away from margins

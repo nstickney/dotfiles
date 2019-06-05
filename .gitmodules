@@ -1,6 +1,3 @@
-[submodule "vim/pack/stick/start/vim-polyglot"]
-	path = vim/pack/stick/start/vim-polyglot
-	url = https://github.com/sheerun/vim-polyglot
 [submodule "vim/pack/stick/start/lightline"]
 	path = vim/pack/stick/start/lightline
 	url = https://github.com/itchyny/lightline.vim
@@ -16,9 +13,6 @@
 [submodule "vim/pack/stick/start/tcomment_vim"]
 	path = vim/pack/stick/start/tcomment_vim
 	url = https://github.com/tomtom/tcomment_vim
-[submodule "vim/pack/stick/start/ctrlp.vim"]
-	path = vim/pack/stick/start/ctrlp.vim
-	url = https://github.com/ctrlpvim/ctrlp.vim
 [submodule "vim/pack/stick/start/vim-ripgrep"]
 	path = vim/pack/stick/start/vim-ripgrep
 	url = https://github.com/jremmen/vim-ripgrep
@@ -28,12 +22,6 @@
 [submodule "vim/pack/stick/start/lightline-bufferline"]
 	path = vim/pack/stick/start/lightline-bufferline
 	url = https://github.com/mgee/lightline-bufferline
-[submodule "vim/pack/stick/start/emmet"]
-	path = vim/pack/stick/start/emmet
-	url = https://github.com/mattn/emmet-vim
-[submodule "vim/pack/stick/start/targets.vim"]
-	path = vim/pack/stick/start/targets.vim
-	url = https://github.com/wellle/targets.vim
 [submodule "vim/pack/stick/start/vim-abolish"]
 	path = vim/pack/stick/start/vim-abolish
 	url = https://github.com/tpope/vim-abolish

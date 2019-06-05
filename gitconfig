@@ -18,7 +18,7 @@
 	# Add Patches
 	AP = ! git add -p && git ST
 	# Add Submodule
-	AS = "!f(){ git submodule add -b master "$1" "$2" && git submodule update --remote; }; f"
+	AS = "!f(){ git submodule add -b "$(git BH)" "$1" "$2" && git submodule update --remote; }; f"
 	# Branch Here
 	BH = "!f(){ git branch --no-color | grep "\\*" | cut -f2 -d' '; }; f"
 	# BRanch

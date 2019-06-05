@@ -42,7 +42,7 @@ exec $_CONFIG_DIR/bar-config $_CONFIG_DIR
 
 # Applications
 # exec --no-startup-id bitwarden-bin
-exec --no-startup-id protonmail-bridge
+exec --no-startup-id protonmail-bridge --no-window
 exec --no-startup-id signal-desktop
 
 # Numlock

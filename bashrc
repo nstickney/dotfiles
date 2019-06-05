@@ -348,6 +348,11 @@ fi
 # makepkg
 [ -x "$(command -v makepkg)" ] && alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 
+# mosh
+if [ -x "$(command -v mosh)" ] && [ ! -v "$(command -v mop)" ]; then
+	alias mop='mosh -p 59999'
+fi
+
 # networking
 [ ! -x "$(command -v ipme)" ] && alias ipme='curl ifconfig.me'
 [ ! -x "$(command -v pinc)" ] && alias pinc='ping -c'

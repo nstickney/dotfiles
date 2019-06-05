@@ -71,7 +71,8 @@ add_workstation_rules() {
 		destination-unreachable \} accept
 
 	# Allow needed workstation outbound access
-	add_ip_rule output tcp dport \{ ircd, 6697, rsync, ssh, whois \} accept
+	# I use 59999 for mosh
+	add_ip_rule output tcp dport \{ ircd, 6697, rsync, ssh, whois, 59999 \} accept
 	user_confirm 'Does this computer use network printers?' add_printing_rules
 	user_confirm 'Is this computer used to play Minecraft?' \
 		'add_ip_rule output tcp dport { 25565, 27094 } accept'

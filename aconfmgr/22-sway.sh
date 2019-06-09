@@ -2,6 +2,7 @@
 AddPackage sway # Tiling Wayland compositor and replacement for the i3 window manager
 AddPackage swayidle # Idle management daemon for Wayland
 AddPackage swaylock # Screen locker for Wayland
+AddPackage wmname # A utility to set the name of your window manager
 
 AddPackage alacritty # A cross-platform, GPU-accelerated terminal emulator
 AddPackage grim # Screenshot utility that works under Wayland

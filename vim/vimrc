@@ -208,3 +208,9 @@ set wildignore+=*.gem
 set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
+
+" Per-filetype settings
+autocmd Filetype html       setlocal sts=2 sw=2 ts=2 expandtab
+autocmd Filetype javascript setlocal sts=2 sw=2 ts=2 expandtab
+autocmd Filetype python     setlocal sts=4 sw=4 ts=4 expandtab
+autocmd Filetype vue        setlocal sts=2 sw=2 ts=2 expandtab

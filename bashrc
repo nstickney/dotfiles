@@ -306,6 +306,7 @@ alias .-='cd -'
 [ -x "$(command -v vi)" ] && export EDITOR='vi'
 if [ -x "$(command -v vim)" ]; then
 	alias vi='vim'
+	alias vimrc='vi $HOME/.vim/vimrc'
 	export EDITOR='vim'
 fi
 

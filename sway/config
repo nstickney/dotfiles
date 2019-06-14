@@ -12,9 +12,6 @@ gaps inner 1
 titlebar_border_thickness 1
 titlebar_padding 1
 
-## Background
-output * bg "$($HOME/dotfiles/bin/random-wallpaper $_BG_DIR)" fill
-
 ## Colors
 set $fore   #e2e2e2
 set $fade   #e2e2e295
@@ -43,6 +40,10 @@ exec $_CONFIG_DIR/bar-config $_CONFIG_DIR
 
 # Fix blank application window in java applications
 exec_always wmname LG3D
+
+# Set wallpaper
+set $_WALLPAPER $_BIN_DIR/sway-random-wallpaper $_BG_DIR $back
+exec_always $_WALLPAPER
 
 # Applications
 # exec --no-startup-id bitwarden-bin
@@ -149,6 +150,9 @@ bindsym Mod1+q kill
 
 # reload the configuration file
 bindsym Mod1+Shift+r reload
+
+# get new wallpaper
+bindsym Mod1+Comma exec $_WALLPAPER
 
 # launcher
 set $_LAUNCHER exec alacritty -t launcher -e "$_BIN_DIR/sway-launcher"

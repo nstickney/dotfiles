@@ -15,7 +15,11 @@ usage() {
 }
 
 main() {
-	find "$1" ! -name "$(basename "$1")" | shuf -n 1
+	for i in $("$HOME"/dotfiles/bin/sway-get-active-outputs); do
+		local _img
+		_img="$(find "$1" ! -name "$(basename "$1")" | shuf -n 1)"
+		swaymsg "output $i bg $_img fill ${2:-#111111}"
+	done
 }
 
 _pos_args=()

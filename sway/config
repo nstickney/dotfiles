@@ -1,7 +1,7 @@
 set $_BG_DIR $HOME/SafeDepositBox/backgrounds/public
 set $_BIN_DIR $HOME/dotfiles/bin
 set $_CONFIG_DIR $HOME/dotfiles/sway
-set $_LOCK exec $_BIN_DIR/sway-pixelate-and-lock
+set $_LOCK $_BIN_DIR/sway-pixelate-and-lock
 
 include $_CONFIG_DIR/"$(hostname)".config
 
@@ -84,52 +84,52 @@ set $_OFF_MENU CONFIRM: (P)oweroff or (C)ancel
 
 mode "$_CAD_MENU" {
 	bindsym l exec $_LOCK, mode "default"
-		bindsym e mode "$_EXIT_MENU"
-		bindsym s mode "$_SUSPEND_MENU"
-		bindsym h mode "$_HIBERNATE_MENU"
-		bindsym r mode "$_REBOOT_MENU"
-		bindsym p mode "$_OFF_MENU"
-		bindsym c mode "default"
-# back to normal: Enter or Escape
-		bindsym Return mode "default"
-		bindsym Escape mode "default"
+	bindsym e mode "$_EXIT_MENU"
+	bindsym s mode "$_SUSPEND_MENU"
+	bindsym h mode "$_HIBERNATE_MENU"
+	bindsym r mode "$_REBOOT_MENU"
+	bindsym p mode "$_OFF_MENU"
+	bindsym c mode "default"
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 bindsym Control+Mod1+Delete mode "$_CAD_MENU"
 
 mode "$_EXIT_MENU" {
-	bindsym e exec 'swaymsg exit', mode "default"
-		bindsym c mode "default"
-		bindsym Return mode "default"
-		bindsym Escape mode "default"
+	bindsym e exit, mode "default"
+	bindsym c mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 bindsym Mod1+Shift+q mode "$_EXIT_MENU"
 
 mode "$_SUSPEND_MENU" {
 	bindsym s exec $_LOCK && systemctl suspend, mode "default"
-		bindsym c mode "default"
-		bindsym Return mode "default"
-		bindsym Escape mode "default"
+	bindsym c mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 mode "$_HIBERNATE_MENU" {
 	bindsym h exec $_LOCK && systemctl hibernate, mode "default"
-		bindsym c mode "default"
-		bindsym Return mode "default"
-		bindsym Escape mode "default"
+	bindsym c mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 mode "$_REBOOT_MENU" {
 	bindsym r exec systemctl reboot, mode "default"
-		bindsym c mode "default"
-		bindsym Return mode "default"
-		bindsym Escape mode "default"
+	bindsym c mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 mode "$_OFF_MENU" {
 	bindsym p exec systemctl poweroff, mode "default"
-		bindsym c mode "default"
-		bindsym Return mode "default"
-		bindsym Escape mode "default"
+	bindsym c mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 # Bindings ####################################################################
@@ -262,7 +262,7 @@ bindsym Mod1+Shift+z move container to workspace back_and_forth; workspace back_
 bindsym Mod1+x [urgent=latest] focus
 
 # lock screen with Super+L
-bindsym Mod4+l $_LOCK
+bindsym Mod4+l exec $_LOCK
 
 mode "Resize" {
 	# These bindings trigger as soon as you enter the resize mode

@@ -54,8 +54,8 @@ input "*" xkb_numlock enable
 # Power management
 exec --no-startup-id swayidle -w \
 		 timeout 300 "$_LOCK" \
-		 timeout 360 'swaymsg "output * dpms off"' \
-		 resume 'swaymsg "output * dpms on"' \
+		 timeout 360 "$HOME/dotfiles/bin/sway-dpms off" \
+		 resume "$HOME/dotfiles/bin/sway-dpms on" \
 		 before-sleep "$_LOCK"
 
 bar {
@@ -75,6 +75,10 @@ bar {
 # Bindings ####################################################################
 # use Mouse+Mod1 to drag floating windows to their wanted position
 floating_modifier Mod1
+
+# laptop lid switch
+bindswitch --locked lid:on output $_LAPTOP disable
+bindswitch --locked lid:off output $_LAPTOP enable
 
 # start a terminal
 bindsym Mod1+Return exec $HOME/dotfiles/bin/start-gui-term

@@ -6,6 +6,7 @@ AddPackage wmname # A utility to set the name of your window manager
 
 AddPackage alacritty # A cross-platform, GPU-accelerated terminal emulator
 AddPackage grim # Screenshot utility that works under Wayland
+AddPackage jq # Command-line JSON processor
 AddPackage mesa-demos # Mesa demos and tools
 AddPackage slurp # Select a region in a Wayland compositor
 AddPackage playerctl # mpris media player controller and lib for spotify, vlc, audacious, bmp, xmms2, and others.

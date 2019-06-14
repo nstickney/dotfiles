@@ -11,14 +11,15 @@ HIST_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/sway-launcher-history.txt"
 
 # Get shell command list
 # This may include the occasional non-executable file
+# shellcheck disable=2086
 command_list=$({ IFS=:; ls -H $PATH; } | grep -v '/.*' | sort -u)
 
-# read existing command history
-if [ -f "$HIST_FILE" ]; then
-    command_history=$(cat "$HIST_FILE")
-else
-    command_history=""
-fi
+# read existing command history (and check if still executable)
+command_history=$(\
+    while read -r cmd; do
+    	_cmd="${cmd#* }"
+    	[ -x "$(command -v "${_cmd%% *}")" ] && printf '%s\n' "$cmd";
+    done < "$HIST_FILE")
 
 # search command list
 command_str=$(printf "%s\n" "${command_history}" "${command_list}" | \

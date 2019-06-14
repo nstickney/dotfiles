@@ -32,8 +32,12 @@ if [ "$command_str" = "" ]; then
 fi
 # echo "Command: $command_str"
 
+# using \E flag from perl regex
+test "${command_str#*\\E}" != "$command_str" && echo "command can't contain '\E'"
+test "${command_str#*\\E}" != "$command_str" && exit 1
+
 # get full line from history (with count number)
-hist_line=$(echo "$command_history" | grep --fixed-strings "$command_str")
+hist_line=$(echo "$command_history" | grep -Pe "^[0-9]+ \Q$command_str\E$")
 # echo "Hist Line: $hist_line"
 
 if [ "$hist_line" = "" ]; then
@@ -45,7 +49,7 @@ else
     # delete line, to add updated later
     # echo "Hist Before: $command_history"
     command_history=$(echo "$command_history" | \
-	grep --fixed-strings --invert-match "$command_str")
+        grep --invert-match -Pe "^[0-9]+ \Q$command_str\E$")
     # echo "Hist After: $command_history"
 fi
 

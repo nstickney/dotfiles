@@ -16,7 +16,7 @@ usage() {
 
 main() {
 	for i in $("$HOME"/dotfiles/bin/sway-get-active-outputs); do
-		swaymsg "output $i dmps $1"
+		swaymsg "output $i dpms $1"
 	done
 }
 

@@ -17,7 +17,7 @@ if sudo dmesg | grep -q "Hypervisor detected"; then
 
 # Not a virtual machine
 else
-	if [ "$USER" == 'nstickney' ]; then
+	if [ "$USER" == 'stick' ]; then
 		# Bluetooth
 		AddPackage blueman # GTK+ Bluetooth Manager
 		AddPackage --foreign bluez-firmware # Firmwares for Broadcom BCM203x and STLC2300 Bluetooth chips

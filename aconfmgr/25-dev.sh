@@ -21,7 +21,7 @@ AddPackage vim # Vi Improved, a highly configurable, improved version of the vi 
 AddPackage vim-spell-en # Language files for Vim spell checking
 
 # Remote admin
-if [ "$USER" == 'nstickney' ]; then
+if [ "$USER" == 'stick' ]; then
 	AddPackage terraform # Tool for building, changing, and versioning infrastructure safely and efficiently
 fi
 

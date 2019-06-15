@@ -5,13 +5,13 @@ AddPackage hugo # Fast and Flexible Static Site Generator in Go
 AddPackage --foreign lbry-app-bin # The LBRY app built using electron
 AddPackage libreoffice-fresh # LibreOffice branch which contains new features and program enhancements
 AddPackage coin-or-mp # libreoffice-fresh opt dep
+AddPackage --foreign hydroxide-git # A third-party, open-source ProtonMail CardDAV, IMAP and SMTP bridge
 AddPackage pstoedit # libreoffice-fresh opt dep
 AddPackage ncdu # Disk usage analyzer with an ncurses interface
 AddPackage pandoc # Conversion between markup formats
 AddPackage pandoc-citeproc # Supports using pandoc with citeproc (pandoc opt dep)
 AddPackage pandoc-crossref # Pandoc filter for cross-references (pandoc opt dep)
 AddPackage texlive-core # pandoc opt dep
-AddPackage --foreign protonmail-bridge # Application to use IMAP/SMTP with your paid ProtonMail account
 AddPackage rmlint # Tool to remove duplicates and other lint, being much faster than fdupes
 AddPackage rmlint-shredder # Graphical user interface for rmlint
 AddPackage thunderbird # Standalone mail and news reader from mozilla.org

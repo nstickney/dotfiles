@@ -421,7 +421,7 @@ if [ -n "$(command -v tmux)" ]; then
 			if (($# > 0)); then
 				tmux attach -t "$1" 2>/dev/null || tmux new -s "$@" 
 			else
-				tmux attach 2>/dev/null || tmux new
+				tmux attach 2>/dev/null || tmux new "$@"
 			fi
 		}
 		_tmax() {
@@ -430,8 +430,11 @@ if [ -n "$(command -v tmux)" ]; then
 		}
 		complete -F _tmax tmax
 	fi
-	[ ! -x "$(command -v tmls)" ] && alias tmls='tmux ls'
-	if [ ! -x "$(command -v tv)" ]; then
+	[ -z "$(command -v tmls)" ] && alias tmls='tmux ls'
+	if [ -n "$(command -v aerc)" ] && [ -z "$(command -v ta)" ]; then
+		alias ta='tmax aerc aerc'
+	fi
+	if [ -z "$(command -v tv)" ]; then
 		tv() {
 			tmux new "$EDITOR $*"
 		}

@@ -3,7 +3,6 @@
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
 set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
-IFS=$'\n\t'
 
 usage() {
 	printf 'Usage: %s\n' "$(basename "$0")" >&2
@@ -68,6 +67,7 @@ add_workstation_rules() {
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT # WHOIS
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT # RSYNC
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6667 -j ACCEPT # IRC
+	sudo iptables -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
 	user_confirm 'Does this computer use network printers?' add_printing_rules
 	user_confirm 'Is this computer used to play Minecraft?' add_minecraft_rules
 	user_confirm 'Is this computer used to access ProxMox?' \
@@ -174,7 +174,7 @@ main() {
 	sudo iptables -A BASE -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 	# Allow loopback in and out
-	sudo iptables -A BASE -i lo -j ACCEPT
+	sudo iptables -A BASE -i lo -o lo -j ACCEPT
 	sudo iptables -A BASE -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
 
 	# Jump back after the base chain
@@ -183,19 +183,6 @@ main() {
 	# Anti-lockout rule (allow SSH from current connection)
 	[ -z "${SSH_ADDR+x}" ] || sudo iptables -A INPUT -s "$SSH_ADDR" -p tcp \
 		-m tcp --dport 22 -j ACCEPT
-
-	# Set default policy for all chains to DROP
-	sudo iptables -P INPUT DROP
-	sudo iptables -P FORWARD DROP
-	sudo iptables -P OUTPUT DROP
-
-	# Also drop IPv6
-	if [ -x "$(command -v ip6tables)" ]; then
-		sudo ip6tables -F
-		sudo ip6tables -P INPUT DROP
-		sudo ip6tables -P FORWARD DROP
-		sudo ip6tables -P OUTPUT DROP
-	fi
 
 	# Prevent host spoofing
 	sudo iptables -A INPUT -s "$INTRANET_ADDR" -j DROP
@@ -209,6 +196,9 @@ main() {
 
 	# Allow mDNS from intranet for zeroconf
 	sudo iptables -A INPUT -s "$INTRANET" -p udp -m udp --dport 5353 -j ACCEPT
+	sudo iptables -A INPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT
+	sudo iptables -A OUTPUT -d "$INTRANET" -p udp -m udp --dport 5353 -j ACCEPT
+	sudo iptables -A OUTPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT
 
 	# Allow ping from intranet
 	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT   # echo request
@@ -221,8 +211,10 @@ main() {
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
 	# sudo iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
-	# sudo iptables -A INPUT -p tcp -m tcp --dport 25565 -j ACCEPT # Minecraft
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 25565 -j ACCEPT # Minecraft
+	# sudo iptables -A INPUT -s "$INTRANET" -p udp -m udp --dport 59999 -j ACCEPT # MOSH
+	# sudo iptables -A INPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH (DANGER)
 
 	# Allow required services outbound (TCP)
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
@@ -241,6 +233,19 @@ main() {
 
 	# Workstation?
 	user_confirm 'Is this machine a workstation?' add_workstation_rules
+
+	# Set default policy for all chains to DROP
+	sudo iptables -P INPUT DROP
+	sudo iptables -P FORWARD DROP
+	sudo iptables -P OUTPUT DROP
+
+	# Also drop IPv6
+	if [ -x "$(command -v ip6tables)" ]; then
+		sudo ip6tables -F
+		sudo ip6tables -P INPUT DROP
+		sudo ip6tables -P FORWARD DROP
+		sudo ip6tables -P OUTPUT DROP
+	fi
 
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"

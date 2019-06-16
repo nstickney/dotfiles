@@ -64,11 +64,11 @@ add_openvpn_rules() {
 add_workstation_rules() {
 
 	# Allow ping to intranet
-	add_ip_rule output ip protocol icmp ip saddr "$INTRANET" icmp type \
-		echo-request accept
 	add_ip_rule input ip protocol icmp ip saddr "$INTRANET" icmp type \
 		\{ echo-reply, time-exceeded, parameter-problem, \
 		destination-unreachable \} accept
+	add_ip_rule output ip protocol icmp ip saddr "$INTRANET" icmp type \
+		echo-request accept
 
 	# Allow needed workstation outbound access
 	# I use 59999 for mosh
@@ -155,19 +155,6 @@ main() {
 	[ -n "${SSH_ADDR+x}" ] && add_ip_rule input ip saddr "$SSH_ADDR" tcp -m \
 		--dport ssh accept
 
-	# Set default policy for all chains to DROP
-	add_ip_chain input \{ policy drop\; \}
-	add_ip_chain forward \{ policy drop\; \}
-	add_ip_chain output \{ policy drop\; \}
-
-	# Also drop IPv6
-	sudo nft add table ip6 filter
-	add_ip6_chain input \{ type filter hook input priority 0\; policy drop\; \}
-	add_ip6_chain forward \{ type filter hook forward priority 0\; \
-		policy drop\; \}
-	add_ip6_chain output \{ type filter hook output priority 0\; \
-		policy drop\; \}
-
 	# Prevent host spoofing
 	add_ip_rule input ip saddr "$INTRANET_ADDR" drop
 	add_ip_rule forward ip saddr "$INTRANET_ADDR" drop
@@ -210,6 +197,19 @@ main() {
 
 	# Workstation?
 	user_confirm 'Is this machine a workstation?' add_workstation_rules
+
+	# Set default policy for all chains to DROP
+	add_ip_chain input \{ policy drop\; \}
+	add_ip_chain forward \{ policy drop\; \}
+	add_ip_chain output \{ policy drop\; \}
+
+	# Also drop IPv6
+	sudo nft add table ip6 filter
+	add_ip6_chain input \{ type filter hook input priority 0\; policy drop\; \}
+	add_ip6_chain forward \{ type filter hook forward priority 0\; \
+		policy drop\; \}
+			add_ip6_chain output \{ type filter hook output priority 0\; \
+				policy drop\; \}
 
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "NFT rules implemented:"

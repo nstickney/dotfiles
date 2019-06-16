@@ -2,10 +2,10 @@ AddPackage --foreign bitwarden-bin # A secure and free password manager for all 
 AddPackage boinc # Berkeley Open Infrastructure for Network Computing for desktop
 AddPackage --foreign exercism-cli # Command line client for exercism.io
 AddPackage hugo # Fast and Flexible Static Site Generator in Go
-AddPackage --foreign lbry-app-bin # The LBRY app built using electron
+AddPackage --foreign hydroxide-git # A third-party, open-source ProtonMail CardDAV, IMAP and SMTP bridge
+# AddPackage --foreign lbry-app-bin # The LBRY app built using electron
 AddPackage libreoffice-fresh # LibreOffice branch which contains new features and program enhancements
 AddPackage coin-or-mp # libreoffice-fresh opt dep
-AddPackage --foreign hydroxide-git # A third-party, open-source ProtonMail CardDAV, IMAP and SMTP bridge
 AddPackage pstoedit # libreoffice-fresh opt dep
 AddPackage ncdu # Disk usage analyzer with an ncurses interface
 AddPackage pandoc # Conversion between markup formats

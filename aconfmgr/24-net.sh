@@ -18,14 +18,12 @@ AddPackage mtr # Combines the functionality of traceroute and ping into one tool
 AddPackage networkmanager # Network connection manager and user applications
 AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnect
 AddPackage networkmanager-openvpn # NetworkManager VPN plugin for OpenVPN
-AddPackage nftables # Netfilter tables userspace tools
 AddPackage ngrep # A grep-like utility that allows you to search for network packets on an interface.
 AddPackage nss-mdns # glibc plugin providing host name resolution via mDNS
 AddPackage obs-studio # Free, open source software for live streaming and recording
 AddPackage openssh # Free version of the SSH connectivity tools
 AddPackage openvpn # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
 AddPackage python2-dbus # avahi optionally requires python2-dbus: avahi-discover
-AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
 AddPackage --foreign signal-desktop-bin # Private messaging from your desktop
 AddPackage sniffglue # Secure multithreaded packet sniffer
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
@@ -45,6 +43,6 @@ CopyFile /etc/avahi/avahi-daemon.conf
 CopyFile /etc/sysctl.d/51-net.conf
 CreateLink /etc/systemd/system/dbus-org.freedesktop.Avahi.service /usr/lib/systemd/system/avahi-daemon.service
 CreateLink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service /usr/lib/systemd/system/avahi-daemon.service
+CreateLink /etc/systemd/system/multi-user.target.wants/iptables.service /usr/lib/systemd/system/iptables.service
 CreateLink /etc/systemd/system/multi-user.target.wants/NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
-CreateLink /etc/systemd/system/multi-user.target.wants/nftables.service /usr/lib/systemd/system/nftables.service
 CreateLink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket /usr/lib/systemd/system/avahi-daemon.socket

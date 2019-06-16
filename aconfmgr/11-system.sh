@@ -54,8 +54,17 @@ else
 	CreateLink /etc/systemd/system/sockets.target.wants/org.cups.cupsd.socket /usr/lib/systemd/system/org.cups.cupsd.socket
 	CopyFile /etc/nsswitch.conf
 
-	### QEMU
+	### KVM/QEMU
+	AddPackage bridge-utils # Utilities for configuring the Linux ethernet bridge
+	AddPackage dmidecode # Desktop Management Interface table related utilities
+	AddPackage ebtables # Ethernet bridge filtering utilities
+	AddPackage libvirt # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
 	AddPackage qemu # A generic and open source machine emulator and virtualizer
+	AddPackage virt-manager # Desktop user interface for managing virtual machines
+	AddPackage virt-viewer # A lightweight interface for interacting with the graphical display of virtualized guest OS.
+	CreateLink /etc/systemd/system/multi-user.target.wants/libvirtd.service /usr/lib/systemd/system/libvirtd.service
+	CreateLink /etc/systemd/system/sockets.target.wants/virtlockd.socket /usr/lib/systemd/system/virtlockd.socket
+	CreateLink /etc/systemd/system/sockets.target.wants/virtlogd.socket /usr/lib/systemd/system/virtlogd.socket
 
 	### VirtualBox
 	# AddPackage packer-io # tool for creating identical machine images for multiple platforms from a single source configuration

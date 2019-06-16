@@ -304,6 +304,12 @@ fi
 alias ..='cd ..'
 alias cd..='cd ..'
 alias .-='cd -'
+if [ -d "$HOME"/dotfiles ] && [ -z "$(command -v dotfiles)" ]; then
+	alias dotfiles='cd $HOME/dotfiles'
+fi
+if [ -d "$HOME"/safe ] && [ -z "$(command -v safe)" ]; then
+	alias safe='cd $HOME/safe'
+fi
 
 # df
 [ -z "$(command -v dh)" ] && alias dh='df -Tha --total'

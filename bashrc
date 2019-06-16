@@ -78,7 +78,8 @@ git_prompt() {
 		local color
 		color=$(git_color "$state")
 		# Now output the actual code to insert the branch and status
-		printf ' (\x01%s\x02%s\x01\033[00m\x02)' "$color" "$branch$state" # last bit resets color
+		# last bit of format string resets color
+		printf ' (\x01%s\x02%s\x01\033[00m\x02)' "$color" "$branch$state"
 	fi
 }
 
@@ -150,7 +151,7 @@ else
 fi
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
-[ -x "$(command -v dircolors)" ] && eval "$(dircolors -b)"
+[ -n "$(command -v dircolors)" ] && eval "$(dircolors -b)"
 
 # grep
 export GREP_COLOR='1;33'
@@ -161,7 +162,7 @@ if grep --color 'a' <<< 'a' &>/dev/null; then
 fi
 
 # diff
-[ -x "$(command -v colordiff)" ] && alias diff='colordiff'
+[ -n "$(command -v colordiff)" ] && alias diff='colordiff'
 
 # less
 if [ -e /usr/bin/source-higthlight-esc.sh ]; then
@@ -185,10 +186,12 @@ man() {
 # COMPLETION ##################################################################
 
 # Bash completion where available
-[ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
+[ -r /usr/share/bash-completion/bash_completion ] && \
+	. /usr/share/bash-completion/bash_completion
 
 # Find-The-Command
-[ -r /usr/share/doc/find-the-command/ftc.bash ] && source /usr/share/doc/find-the-command/ftc.bash
+[ -r /usr/share/doc/find-the-command/ftc.bash ] && \
+	. /usr/share/doc/find-the-command/ftc.bash
 
 # History search
 if [[ $- == *i* ]]; then
@@ -199,16 +202,19 @@ if [[ $- == *i* ]]; then
 fi
 
 # Sudo Completion
-[ -x "$(command -v sudo)" ] && complete -cf sudo
+[ -n "$(command -v sudo)" ] && complete -cf sudo
 
 # DEFEAT LOGGING ##############################################################
 
-# Defeat Snoopy logging (http://blog.rchapman.org/posts/Bypassing_snoopy_logging/)
+# Defeat Snoopy logging
+# http://blog.rchapman.org/posts/Bypassing_snoopy_logging/
 [ ! -f "$HOME"/dotfiles/bin/bypass.so ] && \
 	[ -x "$(command -v gcc)" ] && \
 	[ -f "$HOME"/dotfiles/bin/bypass.c ] && \
-	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/dotfiles/bin/bypass.c -o "$HOME"/dotfiles/bin/bypass.so -ldl -Wall -Wextra
-	[ -x "$HOME"/dotfiles/bin/bypass.so ] && export LD_PRELOAD=$HOME/dotfiles/bin/bypass.so
+	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/dotfiles/bin/bypass.c -o \
+	"$HOME"/dotfiles/bin/bypass.so -ldl -Wall -Wextra
+	[ -x "$HOME"/dotfiles/bin/bypass.so ] && export \
+		LD_PRELOAD=$HOME/dotfiles/bin/bypass.so
 
 # GPG KEY #####################################################################
 GPG_TTY="$(tty)"
@@ -222,7 +228,7 @@ export HISTIGNORE="clear:bg:fg:cd:cd -:exit:date:poweroff:reboot:* --help"
 # Avoid duplicates, and share history across terminals
 export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
-PROMPT_COMMAND="history -n; history -w; history -c; history -r; $PROMPT_COMMAND"
+PROMPT_COMMAND="history -n;history -w;history -c;history -r;$PROMPT_COMMAND"
 
 # Date and time format
 #export HISTTIMEFORMAT='%Y.%m.%d %T  '
@@ -274,25 +280,25 @@ shopt -s cdspell
 [ "$(uname -s)" != 'Darwin' ] && shopt -s dirspell
 
 # SSH-AGENT ###################################################################
-if [ -x "$(command -v ssh-agent)" ]; then
+if [ -n "$(command -v ssh-agent)" ]; then
 	eval "$(ssh-agent -t 240)" >/dev/null
 	trap '[ -n "$SSH_AGENT_PID" ] && eval $(ssh-agent -k); exit' EXIT
 fi
 
 # TABS ########################################################################
-[ -x "$(command -v tabs)" ] && tabs 4
+[ -n "$(command -v tabs)" ] && tabs 4
 
 # USEFUL ALIASES ##############################################################
 
 # aurvote
-if [ -x "$(command -v aurvote)" ]; then
+if [ -n "$(command -v aurvote)" ]; then
 	aurvoteall() {
 		pacman -Qm | cut -f1 -d' ' | xargs aurvote
 	}
 fi
 
 # bats (Bash Automated Testing System)
-[ -x "$(command -v bats)" ] && alias bats='time bats'
+[ -n "$(command -v bats)" ] && alias bats='time bats'
 
 # cd
 alias ..='cd ..'
@@ -300,22 +306,23 @@ alias cd..='cd ..'
 alias .-='cd -'
 
 # df
-[ ! -x "$(command -v dh)" ] && alias dh='df -Tha --total'
+[ -z "$(command -v dh)" ] && alias dh='df -Tha --total'
 
 # editor
-[ -x "$(command -v vi)" ] && export EDITOR='vi'
-if [ -x "$(command -v vim)" ]; then
+[ -n "$(command -v vi)" ] && export EDITOR='vi'
+if [ -n "$(command -v vim)" ]; then
 	alias vi='vim'
 	alias vimrc='vi $HOME/.vim/vimrc'
 	export EDITOR='vim'
 fi
 
 # git
-if [ -x "$(command -v git)" ]; then
+if [ -n "$(command -v git)" ]; then
 	# https://unix.stackexchange.com/a/97958
 	git() {
 		# For information on CL and CS, see the gitconfig file
-		/usr/bin/git "$@" && if [ "$1" = 'clone' ] || [ "$1" = 'CL' ] || [ "$1" = 'CS' ] ; then
+		/usr/bin/git "$@" && if [ "$1" = 'clone' ] || [ "$1" = 'CL' ] || \
+			[ "$1" = 'CS' ] ; then
 			local _repo="${*: -1}"
 			_repo="${_repo%.git}"
 			_repo="${_repo##*:}"
@@ -323,7 +330,7 @@ if [ -x "$(command -v git)" ]; then
 		fi
 	}
 
-	if [ -x "$(command -v new-repo)" ]; then
+	if [ -n "$(command -v new-repo)" ]; then
 		tkrepo() {
 			cd "$(new-repo "$@")" || exit
 		}
@@ -331,48 +338,50 @@ if [ -x "$(command -v git)" ]; then
 fi
 
 # ls
-[ ! -x "$(command -v ll)" ] && alias ll='ls -ahl'
-[ ! -x "$(command -v sl)" ] && alias sl='ls'
+[ -z "$(command -v ll)" ] && alias ll='ls -ahl'
+[ -z "$(command -v sl)" ] && alias sl='ls'
 
 # less is more
-[ -x "$(command -v less)" ] && alias more='less'
+[ -n "$(command -v less)" ] && alias more='less'
 
 # mkdir
 alias mkdir='mkdir -pv'
 
-if [ ! -x "$(command -v tkdir)" ]; then
+if [ -z "$(command -v tkdir)" ]; then
 	tkdir() {
 		mkdir -pv "$@" && cd "$_" || exit
 	}
 fi
 
 # makepkg
-[ -x "$(command -v makepkg)" ] && alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
+[ -n "$(command -v makepkg)" ] && \
+	alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 
 # mosh
-if [ -x "$(command -v mosh)" ] && [ ! -v "$(command -v mop)" ]; then
+if [ -n "$(command -v mosh)" ] && [ ! -v "$(command -v mop)" ]; then
 	alias mop='mosh -p 59999'
 fi
 
 # networking
-[ ! -x "$(command -v ipme)" ] && alias ipme='curl ifconfig.me'
-[ ! -x "$(command -v pinc)" ] && alias pinc='ping -c'
+[ -z "$(command -v ipme)" ] && alias ipme='curl ifconfig.me'
+[ -z "$(command -v pinc)" ] && alias pinc='ping -c'
 
 # pacman
-if [ -x "$(command -v pacman)" ]; then
+if [ -n "$(command -v pacman)" ]; then
 	pacowns() {
 		pacman -Qo "$(command -v "$1")"
 	}
 fi
 
 # ps
-[ ! -x "$(command -v pf)" ] && alias pf='ps auxf'
-[ ! -x "$(command -v pg)" ] && alias pg='ps aux | grep -v grep | grep -i -e'
+[ -z "$(command -v pf)" ] && alias pf='ps auxf'
+[ -z "$(command -v pg)" ] && alias pg='ps aux | grep -v grep | grep -i -e'
 
-if [ ! -x "$(command -v kp)" ] && [ -x "$(command -v fzf)" ]; then
+if [ -z "$(command -v kp)" ] && [ -n "$(command -v fzf)" ]; then
 	kp() {
 		local pid
-		pid=$(ps -ef | sed 1d | eval "fzf -m --header='[kill:process]'" | awk '{print $2}')
+		pid=$(ps -ef | sed 1d | eval "fzf -m --header='[kill:process]'" | awk \
+			'{print $2}')
 
 		if [ "x$pid" != "x" ]; then
 			echo "$pid" | xargs kill -"${1:-9}"
@@ -382,7 +391,7 @@ if [ ! -x "$(command -v kp)" ] && [ -x "$(command -v fzf)" ]; then
 fi
 
 # ssh
-if [ -x "$(command -v ssh)" ] && [ ! -x "$(command -v tunnel)" ]; then
+if [ -n "$(command -v ssh)" ] && [ -z "$(command -v tunnel)" ]; then
 	# Create ssh tunnel on port $2 (default 19998) to server $1
 	tunnel() {
 		ssh -f -N -D "${2:-19998}" -4 "$1"
@@ -391,7 +400,8 @@ if [ -x "$(command -v ssh)" ] && [ ! -x "$(command -v tunnel)" ]; then
 	# Kill the ssh tunnel running on server or port $1 (default all tunnels)
 	kill_tunnel() {
 		local PID
-		PID="$(pgrep -a ssh | grep "\-f \-N \-D .*$1.*" | cut -f1 -d' ' | xargs)"
+		PID="$(pgrep -a ssh | grep "\-f \-N \-D .*$1.*" | cut -f1 -d' ' | \
+			xargs)"
 		if ((${#PID} > 0)); then
 			kill "$PID"
 		else
@@ -401,12 +411,12 @@ if [ -x "$(command -v ssh)" ] && [ ! -x "$(command -v tunnel)" ]; then
 fi
 
 # tar
-[ ! -x "$(command -v untar)" ] && alias untar='tar -zxvf'
+[ -z "$(command -v untar)" ] && alias untar='tar -zxvf'
 
 # tmux
 # https://www.nathankowald.com/blog/2014/03/tmux-attach-session-alias/
-if [ -x "$(command -v tmux)" ]; then
-	if [ ! -x "$(command -v tmax)" ]; then
+if [ -n "$(command -v tmux)" ]; then
+	if [ -z "$(command -v tmax)" ]; then
 		tmax() {
 			if (($# > 0)); then
 				tmux attach -t "$1" 2>/dev/null || tmux new -s "$@" 
@@ -429,32 +439,33 @@ if [ -x "$(command -v tmux)" ]; then
 fi
 
 # wget, curl, aria2c
-[ -x "$(command -v wget)" ] && alias wget='wget -c'
-if [ ! -x "$(command -v ttfb)" ]; then
+[ -n "$(command -v wget)" ] && alias wget='wget -c'
+if [ -z "$(command -v ttfb)" ]; then
 	ttfb() {
-		curl -sSo /dev/null -w "Connect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} \n" "$1"
+		curl -sSo /dev/null -w "Connect: %{time_connect} TTFB: '\
+			'%{time_starttransfer} Total time: %{time_total} \n" "$1"
 	}
 fi
 
 # sudo (only run this part if we're not root, and sudo is installed)
-if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
+if [ "$(id -u)" != 0 ] && [ -n "$(command -v sudo)" ]; then
 
-	[ ! -x "$(command -v please)" ] && alias please="sudo !!"
+	[ -z "$(command -v please)" ] && alias please="sudo !!"
 
 	# Editor
-	[ -x "$(command -v vim)" ] && alias svi="sudo vim"
+	[ -n "$(command -v vim)" ] && alias svi="sudo vim"
 
 	# Networking
 
 	### firewalls
-	[ -x "$(command -v firewall-cmd)" ] && alias sfw='sudo firewall-cmd'
-	[ -x "$(command -v iptables)" ] && alias sipt='sudo iptables'
-	[ -x "$(command -v nft)" ] && alias snft='sudo nft'
+	[ -n "$(command -v firewall-cmd)" ] && alias sfw='sudo firewall-cmd'
+	[ -n "$(command -v iptables)" ] && alias sipt='sudo iptables'
+	[ -n "$(command -v nft)" ] && alias snft='sudo nft'
 
 	### SS / Netstat
-	if [ -x "$(command -v ss)" ]; then
+	if [ -n "$(command -v ss)" ]; then
 		alias ss='sudo ss'
-	elif [ -x "$(command -v netstat)" ]; then
+	elif [ -n "$(command -v netstat)" ]; then
 		alias ss='sudo netstat'
 	fi
 	[ "$(type -t ss)" == "alias" ] && alias sl='ss -lnptu'
@@ -462,27 +473,29 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 	# Package Managers
 
 	### Apt
-	if [ -x "$(command -v apt)" ]; then
+	if [ -n "$(command -v apt)" ]; then
 		alias apt='sudo apt'
 		export _UPDATE='apt update && apt dist-upgrade && apt autoremove'
 	fi
 
 	### DNF/Yum
-	[ -x "$(command -v yum)" ] && alias dnf='sudo yum'
-	[ -x "$(command -v dnf)" ] && alias dnf='sudo dnf'
+	[ -n "$(command -v yum)" ] && alias dnf='sudo yum'
+	[ -n "$(command -v dnf)" ] && alias dnf='sudo dnf'
 	[ "$(type -t dnf)" == "alias" ] && export _UPDATE='dnf -y update'
 
 	### Pacman (Reflector/Powerpill/Aurman)
-	if [ -x "$(command -v pacman)" ]; then
+	if [ -n "$(command -v pacman)" ]; then
 
 		# Reflector
-		if [ -x "$(command -v reflector)" ]; then
-			export _REFLECT='sudo reflector -l 50 -a 12 -p https --sort rate --save /etc/pacman.d/mirrorlist'
+		if [ -n "$(command -v reflector)" ]; then
+			_RO='-l 50 -a 12 -p https --sort rate'
+			_ML='/etc/pacman.d/mirrorlist'
+			export _REFLECT="sudo reflector $_RO --save $_ML"
 			alias update_mirrors='$_REFLECT'
 		fi
 
 		# Powerpill or Pacman
-		if [ -x "$(command -v powerpill)" ]; then
+		if [ -n "$(command -v powerpill)" ]; then
 			PACMAN="$(command -v powerpill)"
 			export _PAC='sudo powerpill'
 		else
@@ -493,7 +506,7 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 		export _UPDATE="yes | $_PAC -Syyu --noconfirm"
 
 		# Aurman
-		if [ -x "$(command -v aurman)" ]; then
+		if [ -n "$(command -v aurman)" ]; then
 			export _PAC='aurman'
 			export _UPDATE="yes | $_PAC -Syyu --noedit --noconfirm --devel"
 		fi
@@ -513,16 +526,16 @@ if [ "$(id -u)" != 0 ] && [ -x "$(command -v sudo)" ]; then
 		fi
 		alias rpacup='$_FULL_UPDATE'
 		# Tmux
-		if [ -x "$(command -v tmux)" ] && \
-			[ ! -x "$(command -v tu)" ] && \
+		if [ -n "$(command -v tmux)" ] && \
+			[ -z "$(command -v tu)" ] && \
 			[ -n "$(command -v rpacup)" ]; then
 					alias tu='tmux new "$_FULL_UPDATE"'
 		fi
 	fi
 
 	# System
-	[ -x "$(command -v su)" ] && alias su='sudo su'
-	[ -x "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
+	[ -n "$(command -v su)" ] && alias su='sudo su'
+	[ -n "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
 fi
 
 # USER ALIASES ################################################################

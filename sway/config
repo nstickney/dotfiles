@@ -23,7 +23,7 @@ set $actt   #c1552295
 set $hint   #d73753
 
 ### Background
-output * bg $back solid_color
+# output * bg $back solid_color
 
 ### Window Class        Border  Background  Text    Indicator   Child Border
 client.unfocused        $back   $bact       $fade   $bact       $back

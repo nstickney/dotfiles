@@ -304,11 +304,30 @@ fi
 alias ..='cd ..'
 alias cd..='cd ..'
 alias .-='cd -'
+if [ -z "$(command -v pd)" ]; then
+	pd(){
+		if [ -n "$1" ]; then
+			pushd "$1" || exit
+		else
+			popd || exit
+		fi
+	}
+fi
 if [ -d "$HOME"/dotfiles ] && [ -z "$(command -v dotfiles)" ]; then
-	alias dotfiles='cd $HOME/dotfiles'
+	alias dotfiles='cd $HOME/dotfiles || exit'
 fi
 if [ -d "$HOME"/safe ] && [ -z "$(command -v safe)" ]; then
-	alias safe='cd $HOME/safe'
+	alias safe='cd $HOME/safe || exit'
+fi
+if [ -d "$HOME"/Projects ]; then
+	for i in "$HOME"/Projects/*; do
+		_dir="${i##*/}"
+		_dir="${_dir%% *}"
+		if [ -d "$HOME"/Projects/"$_dir" ] && [ -z "$(command -v "$_dir")" ]; then
+			# shellcheck disable=2139,2140
+			alias "$_dir"="cd $HOME/Projects/$_dir || exit"
+		fi
+	done
 fi
 
 # df

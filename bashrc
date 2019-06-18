@@ -459,7 +459,7 @@ fi
 # sudo (only run this part if we're not root, and sudo is installed)
 if [ "$(id -u)" != 0 ] && [ -n "$(command -v sudo)" ]; then
 
-	[ -z "$(command -v please)" ] && alias please="sudo !!"
+	[ -z "$(command -v please)" ] && alias please='sudo $(history -p !!)'
 
 	# Editor
 	[ -n "$(command -v vim)" ] && alias svi="sudo vim"

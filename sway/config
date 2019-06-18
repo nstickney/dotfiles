@@ -83,7 +83,7 @@ bar {
 }
 
 # Transparency
-exec --no-startup-id $_BIN_DIR/sway-inactive-transparency.py 1.0 0.9
+exec --no-startup-id $_BIN_DIR/sway-focus-opacity.py
 
 # Power Menu ##################################################################
 set $_CAD_MENU (L)ock screen  (E)xit sway  (S)uspend  (H)ibernate  (R)eboot  (P)oweroff  (C)ancel

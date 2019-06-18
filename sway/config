@@ -165,6 +165,9 @@ bindsym Mod1+Shift+r reload
 # get new wallpaper
 bindsym Mod1+Comma exec $_WALLPAPER
 
+# set all windows fully opaque
+bindsym Mod1+Shift+o exec $_BIN_DIR/sway-set-opacity.py -a
+
 # launcher
 set $_LAUNCHER exec alacritty -t launcher -e "$_BIN_DIR/sway-launcher"
 for_window [title="^launcher$"] floating enable, border none

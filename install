@@ -55,16 +55,15 @@ main() {
 	confs['tmux']='.tmux.conf'
 	confs['vim']='.vim'
 
-	printf 'Initializing and updating submodules...\n'
-	git submodule update --init --jobs 8 --recursive --remote
 	printf 'Linking configuration files/directories for...\n'
-
 	link_configs 'shell profile' '.profile' 'dotfiles'
-
 	for i in "${!confs[@]}"; do
 		[ -x "$(command -v "$i")" ] && link_configs "$i" "${confs[$i]}" 'dotfiles'
 	done
 	printf '    ...Complete!\n'
+
+	printf 'Initializing and updating submodules...\n'
+	git submodule update --init --jobs 8 --recursive --remote
 
 	if [ -x "$(command -v sudo)" ]; then
 		if [ -x "$(command -v iptables)" ]; then

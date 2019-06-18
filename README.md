@@ -27,7 +27,7 @@ Includes configuration for:
 * `tmux`
 * `vim` (including plugins as submodules)
 
-Also includes a set of scripts and small executables used throughout the configuration (```./bin/`).
+Also includes a set of scripts and small executables used throughout the configuration (`./bin/`).
 
 ### Acknowledgements:
 
@@ -50,6 +50,7 @@ The included sway configuration requires the following packages as dependencies 
 * `alacritty` (terminal emulator)
 * `i3ipc-python` (used in scripts interacting with sway) ([AUR](https://aur.archlinux.org/packages/i3ipc-python))
 * `i3status-rust` (information bar) ([AUR](https://aur.archlinux.org/packages/i3status-rust/))
+* `jq` (used in scripts interacting with sway)
 * `otf-font-awesome` (used in info bar)
 * `polkit-gnome` (PolicyKit integration)
 

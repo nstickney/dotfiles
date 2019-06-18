@@ -6,6 +6,8 @@
 # file, you can obtain one at http://mozilla.org/MPL/2.0/.
 
 __author__ = 'Stick'
+__email__ = 'stick@stma.is'
+__credits__ = ['https://www.python-boilerplate.com/']
 __license__ = 'Mozilla PL'
 
 from os import chmod

@@ -48,6 +48,7 @@ The included sway configuration requires the following packages as dependencies 
 
 * `sway` (window manager)
 * `alacritty` (terminal emulator)
+* `i3ipc-python` (used in scripts interacting with sway) ([AUR](https://aur.archlinux.org/packages/i3ipc-python))
 * `i3status-rust` (information bar) ([AUR](https://aur.archlinux.org/packages/i3status-rust/))
 * `otf-font-awesome` (used in info bar)
 * `polkit-gnome` (PolicyKit integration)

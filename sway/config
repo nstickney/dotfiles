@@ -82,6 +82,9 @@ bar {
 	status_command i3status-rs $_CONFIG_DIR/status.toml
 }
 
+# Transparency
+exec --no-startup-id $_BIN_DIR/sway-inactive-transparency.py 1.0 0.9
+
 # Power Menu ##################################################################
 set $_CAD_MENU (L)ock screen  (E)xit sway  (S)uspend  (H)ibernate  (R)eboot  (P)oweroff  (C)ancel
 set $_EXIT_MENU CONFIRM: (E)xit sway or (C)ancel

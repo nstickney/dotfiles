@@ -5,6 +5,9 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Vi mode
+set -o vi
+
 # Check window size after each command and update $LINES and $COLUMNS as needed
 [ "$DISPLAY" ] && shopt -s checkwinsize
 

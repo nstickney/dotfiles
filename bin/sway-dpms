@@ -15,9 +15,9 @@ usage() {
 }
 
 main() {
-	for i in $("$HOME"/dotfiles/bin/sway-get-active-outputs); do
-		swaymsg "output $i dpms $1"
-	done
+	while read -r _display; do
+		swaymsg "output $_display dpms $1"
+	done <<< "$("$HOME"/dotfiles/bin/sway-get-active-outputs.py)"
 }
 
 _pos_args=()

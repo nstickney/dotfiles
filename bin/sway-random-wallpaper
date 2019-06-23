@@ -15,13 +15,13 @@ usage() {
 }
 
 main() {
-	for i in $("$HOME"/dotfiles/bin/sway-get-active-outputs); do
+	while read -r _display; do
 		local _dir
 		_dir="$(realpath "$1")"
 		local _img
 		_img="$(find "$_dir" ! -wholename "$_dir" | shuf -n 1)"
-		swaymsg "output $i bg $_img fill ${2:-#111111}"
-	done
+		swaymsg "output $_display bg $_img fill ${2:-#111111}"
+	done <<< "$("$HOME"/dotfiles/bin/sway-get-active-outputs.py)"
 }
 
 _pos_args=()

@@ -53,6 +53,9 @@ AddPackage go # Core compiler tools for the Go programming language
 AddPackage maven # Java project management and project comprehension tool
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
+### Javascript
+AddPackage npm # A package manager for javascript
+
 ### HTML
 AddPackage tidy # A tool to tidy down your HTML code to a clean style
 

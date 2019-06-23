@@ -1,6 +1,7 @@
 # shellcheck disable=SC2148
 AddPackage afpfs-ng # A client for the Apple Filing Protocol (AFP)
 AddPackage arch-audit # An utility like pkg-audit based on Arch CVE Monitoring Team data
+AddPackage arch-install-scripts # Scripts to aid in installing Arch Linux
 AddPackage autoconf # A GNU tool for automatically configuring source code
 AddPackage automake # A GNU tool for automatically creating Makefiles
 AddPackage bash # The GNU Bourne Again shell

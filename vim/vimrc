@@ -96,6 +96,10 @@ nmap <C-j> <Plug>(ale_next_wrap)
 let g:vim_markdown_conceal = 0          " turn off conceal in Markdown
 let g:vim_markdown_conceal_code_blocks = 0  " don't conceal Markdown code fences
 
+" Modeline
+" https://nvd.nist.gov/vuln/detail/CVE-2019-12735
+set nomodelineexpr                      " this is default, but let's be sure
+
 " Scrolling
 set scrolloff=8                         " start scrolling 8 lines away from margins
 set sidescrolloff=15

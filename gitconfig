@@ -1,8 +1,8 @@
 # vim: set ft=gitconfig:
 [user]
 	name = Stick
-	email = nstickney@pm.me
-	signingkey = 1FEE51A9DEDCCD04A30356F1BCB707F25AD86199
+	email = stick@stma.is
+	signingkey = 0A3BAF89EFE25F0D55C5571DEC1B22A58EEB3DFC
 [credential]
 	helper = cache --timeout=3600
 [core]

@@ -9,7 +9,6 @@ set backspace=indent,eol,start whichwrap+=<,>,[,]   " backspace/cursor keys wrap
 set colorcolumn=80,90,100,120           " add markers to determine line length
 hi ColorColumn ctermbg=0                " set the color column to dark grey
 set history=1000                        " store lots of history
-set mouse=a                             " make the dadgum mouse work
 set showmatch                           " highlight matching [{()}]
 set showcmd                             " show commands in bottom bar
 
@@ -99,6 +98,11 @@ let g:vim_markdown_conceal_code_blocks = 0  " don't conceal Markdown code fences
 " Modeline
 " https://nvd.nist.gov/vuln/detail/CVE-2019-12735
 set nomodelineexpr                      " this is default, but let's be sure
+
+" Mouse
+set mouse=a                             " make the dadgum mouse work
+set mousefocus                          " focus follows mouse
+set mousehide                           " hide the pointer when typing does
 
 " Scrolling
 set scrolloff=8                         " start scrolling 8 lines away from margins

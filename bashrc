@@ -464,7 +464,7 @@ if [ -n "$(command -v tmux)" ]; then
 	fi
 	if [ -z "$(command -v tv)" ]; then
 		tv() {
-			tmux new "$EDITOR $*"
+			tmux attach -t 'tv' 2>/dev/null || tmux new -s 'tv' "$EDITOR $*"
 		}
 	fi
 fi

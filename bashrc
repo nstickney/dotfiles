@@ -462,9 +462,11 @@ if [ -n "$(command -v tmux)" ]; then
 	if [ -n "$(command -v aerc)" ] && [ -z "$(command -v ta)" ]; then
 		alias ta='tmax aerc aerc'
 	fi
-	if [ -z "$(command -v tv)" ]; then
+	if [ "$(type -t tmax)" == 'function' ] && \
+		[ -z "$(command -v tv)" ] && \
+		[ -n "$EDITOR" ]; then
 		tv() {
-			tmux attach -t 'tv' 2>/dev/null || tmux new -s 'tv' "$EDITOR $*"
+			tmax 'editor' "$EDITOR $*"
 		}
 	fi
 fi
@@ -557,10 +559,12 @@ if [ "$(id -u)" != 0 ] && [ -n "$(command -v sudo)" ]; then
 		fi
 		alias rpacup='$_FULL_UPDATE'
 		# Tmux
-		if [ -n "$(command -v tmux)" ] && \
+		if [ "$(type -t tmax)" == 'function' ] && \
 			[ -z "$(command -v tu)" ] && \
-			[ -n "$(command -v rpacup)" ]; then
-					alias tu='tmux new "$_FULL_UPDATE"'
+			[ -n "$_FULL_UPDATE" ]; then
+			tu() {
+				tmax 'sysupdate' "$_FULL_UPDATE"
+			}
 		fi
 	fi
 

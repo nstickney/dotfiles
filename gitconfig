@@ -17,8 +17,12 @@
 	AC = commit --amend
 	# Add Patches
 	AP = ! git add -p && git ST
+	# Add Remote
+	AR = remote add
 	# Add Submodule
 	AS = "!f(){ git submodule add -b "$(git BH)" "$1" "$2" && git submodule update --remote; }; f"
+	# Add remote URL
+	AU = remote set-url --add
 	# Branch Here
 	BH = "!f(){ git branch --no-color | grep "\\*" | cut -f2 -d' '; }; f"
 	# BRanch
@@ -35,6 +39,10 @@
 	CS = clone --recurse-submodules --jobs 8
 	# Check Whitespace (http://peter.eisentraut.org/blog/2014/11/04/checking-whitespace-with-git/)
 	CW = ! git diff-tree --check $(git hash-object -t tree /dev/null) HEAD
+	# Delete Ignored
+	DI = clean -dX
+	# Delete Untracked
+	DU = clean -d
 	# Diff Whitespace
 	DW = diff --check
 	# Fetch All

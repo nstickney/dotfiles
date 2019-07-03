@@ -81,7 +81,7 @@ if(&relativenumber != 1)
 endif
 set relativenumber!
 endfunc
-nnoremap <C-n> :call LineNumberToggle()<cr>
+nnoremap <C-n> :call LineNumberToggle()<CR>
 call LineNumberToggle()
 
 " Linting (ALE)
@@ -119,8 +119,8 @@ if executable('rg')                     " use ripgrep if available
 endif
 
 " Shortcuts
-nnoremap <Leader>- :nohlsearch<cr>
-nnoremap <Leader><cr> :write<cr>
+nnoremap <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
+nnoremap <Leader><CR> :write<CR>
 
 " Spellcheck
 set spelllang=en_us                     "

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Prepare a CentOS7 machine as server, from minimal installation
+# `curl -s https://gitlab.com/nstickney/dotfiles/raw/master/bin/centos7-init | bash -s`
 
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
 set -eEuo pipefail
@@ -27,14 +28,15 @@ sudo yum -y install epel-release
 sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
 
 # Remove unwanted items
-sudo yum -y erase aic94xx-firmware alsa* chrony firewalld iwl*firmware postfix 
+sudo yum -y erase aic94xx-firmware alsa* firewalld iwl*firmware postfix 
 
 # Update everything
+sudo yum -y install deltarpm
 sudo yum -y update
 
 # Install necessary items
-sudo yum -y install aide aria2 bash-completion bind-utils deltarpm fail2ban git htop \
-	iptables-services lsof ntp psmisc ripgrep vim-enhanced tmux yum-{cron,utils}
+sudo yum -y install aide aria2 bash-completion bind-utils fail2ban git htop \
+	iptables-services lsof psmisc ripgrep vim-enhanced tmux yum-{cron,utils}
 
 # Install VM tools as needed
 if sudo dmesg | grep -q "Hypervisor detected: KVM"; then
@@ -44,42 +46,6 @@ elif sudo dmidecode | grep -q "VirtualBox"; then
 	printf '\e[1;31m%s\e[0m\n' "Please install the VirtualBox Guest Additions!"
 	printf '%s\n' " => https://wiki.centos.org/HowTos/Virtualization/VirtualBox/CentOSguest"
 fi
-
-# Function to install Filebeat (Elastic Stack)
-install_filebeat() {
-	sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
-	cat | sudo tee /etc/yum.repos.d/elastic.6.repo >/dev/null <<EOL
-[elastic-6.x]
-name=Elastic repository for 6.x packages
-baseurl=https://artifacts.elastic.co/packages/6.x/yum
-gpgcheck=1
-gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
-enabled=1
-autorefresh=1
-type=rpm-md
-EOL
-	sudo yum -y install filebeat
-	while true; do
-		read -r -p "Start Filebeat at next boot? [y/N]: " -n 1 ins
-		printf '\n'
-		case $ins in
-			[Yy]* ) sudo systemctl enable filebeat; break;;
-			[Nn]* ) break;;
-			"" ) break;;
-		esac
-	done
-}
-
-# Install Filebeat as desired
-while true; do
-	read -r -p "Install Filebeat for Elastic Stack? [y/N]: " -n 1 ins
-	printf '\n'
-	case $ins in
-		[Yy]* ) install_filebeat; break;;
-		[Nn]* ) break;;
-		"" ) break;;
-	esac
-done
 
 # Git the dotfiles
 dir="$(pwd)"

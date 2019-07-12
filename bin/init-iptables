@@ -154,11 +154,8 @@ main() {
 	fi
 
 	# Ensure iptables service is running
-	if [ -x "$(command -v systemctl)" ]; then
-		sudo systemctl restart iptables
-	elif [ -x "$(command -v rc-service)" ]; then
-		sudo rc-service iptables restart
-	fi
+	# If this is an Alpine system, don't start iptables until the end
+	[ -x "$(command -v systemctl)" ] && sudo systemctl restart iptables
 
 	# Clear initial rules (set all policies to ACCEPT and delete extra chains)
 	sudo iptables -P INPUT ACCEPT
@@ -271,6 +268,8 @@ main() {
 
 	# Make rules persistent
 	user_confirm 'Save rules persistently?' save_permanent_iptables
+	# Alpine only: actually start the service
+	[ -x "$(command -v rc-service)" ] && sudo rc-service iptables restart
 
 	# Start iptables at boot
 	if [ -x "$(command -v systemctl)" ]; then

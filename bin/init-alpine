@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, you can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+usage() {
+	cat << EOF
+Usage: $(basename "$0")
+ -h --help : display this message\n'
+
+Try the following command:
+ curl -fsSL https://stma.is/script/init-alpine | bash -s -- $USER
+EOF
+	exit
+}
+
+main() {
+	# Enable community repo
+	sed -i '/^#.v3.*community/^#//' /etc/apk/repositories
+
+	# Update packages
+	apk update
+	apk upgrade
+
+	# If given a username, set them up as an administrator
+	if [ "$#" -gt 1 ]; then
+		apk add sudo vim
+		adduser "$1"
+		addgroup "$1" wheel
+		echo '%wheel ALL=(ALL) ALL' > wheel
+		visudo -c -q -f wheel && \
+			chmod 440 wheel && \
+			mv wheel /etc/sudoers.d/
+	fi
+
+	# Change MOTD
+	echo 'Welcome to Alpine!' > /etc/motd
+	
+	cat << EOF
+
+SSH configuration in Alpine 3.10 allows password login by default. If you would
+like to change that (and you should), then use ssh-copy-id (on your client
+machine) to copy your user's public key to this server, then change the
+appropriate line in /etc/ssh/sshd_config to disable password login.
+
+EOF
+}
+
+_pos_args=()
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
+	esac
+done
+main "${_pos_args[@]}"

@@ -18,6 +18,7 @@ AddPackage mtr # Combines the functionality of traceroute and ping into one tool
 AddPackage networkmanager # Network connection manager and user applications
 AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnect
 AddPackage networkmanager-openvpn # NetworkManager VPN plugin for OpenVPN
+AddPackage --foreign networkmanager-wireguard-git # NetworkManager VPN plugin for WireGuard - git
 AddPackage ngrep # A grep-like utility that allows you to search for network packets on an interface.
 AddPackage nss-mdns # glibc plugin providing host name resolution via mDNS
 AddPackage obs-studio # Free, open source software for live streaming and recording
@@ -29,8 +30,9 @@ AddPackage sniffglue # Secure multithreaded packet sniffer
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 AddPackage tcpdump # Powerful command-line packet analyzer
 AddPackage traceroute # Tracks the route taken by packets over an IP network
-AddPackage whois # Intelligent WHOIS client
 AddPackage wget # A network utility to retrieve files from the Web
+AddPackage whois # Intelligent WHOIS client
+AddPackage wireguard-arch # Wireguard module for Arch Kernel
 AddPackage youtube-dl # A small command-line program to download videos from YouTube.com and a few more sites
 AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 

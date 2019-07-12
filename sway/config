@@ -49,10 +49,11 @@ set $_WALLPAPER $_BIN_DIR/sway-random-wallpaper $_BG_DIR $back
 exec_always $_WALLPAPER
 
 # Applications
-# exec --no-startup-id bitwarden-bin
+#exec --no-startup-id bitwarden-bin
 #exec --no-startup-id hydroxide imap
 exec --no-startup-id hydroxide smtp
 exec --no-startup-id keybase-gui
+exec --no-startup-id nm-applet --indicator
 exec --no-startup-id protonmail-bridge --no-window
 exec --no-startup-id signal-desktop
 

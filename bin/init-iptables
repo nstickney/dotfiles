@@ -28,12 +28,10 @@ add_bittorrent_incoming() {
 }
 
 add_bittorrent_rules() {
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6969 -j ACCEPT
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 8999 -j ACCEPT
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 51413 -j ACCEPT
-	sudo iptables -A OUTPUT -p udp -m udp --dport 6969 -j ACCEPT
-	sudo iptables -A OUTPUT -p udp -m udp --dport 8999 -j ACCEPT
-	sudo iptables -A OUTPUT -p udp -m udp --dport 51413 -j ACCEPT
+	for i in 6969 8999 51413; do
+		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
+		sudo iptables -A OUTPUT -p udp -m udp --dport "$i" -j ACCEPT
+	done
 	user_confirm 'Allow BitTorrent inbound?' add_bittorrent_incoming
 }
 
@@ -43,9 +41,9 @@ add_minecraft_rules() {
 }
 
 add_printing_rules() {
-	sudo iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 161 -j ACCEPT
-	sudo iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 515 -j ACCEPT
-	sudo iptables -A OUTPUT -d "$INTRANET" -p tcp -m tcp --dport 631 -j ACCEPT
+	for i in 161 515 631; do
+		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
+	done
 }
 
 add_openvpn_rules() {
@@ -55,12 +53,12 @@ add_openvpn_rules() {
 
 add_workstation_rules() {
 
-	# Allow ping to intranet
-	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT  # echo reply
-	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 3 -j ACCEPT  # unreachable
-	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 11 -j ACCEPT # time exceeded
-	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 12 -j ACCEPT # parameter problem
-	sudo iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT # echo request
+	# Allow ping
+	sudo iptables -A INPUT -p icmp --icmp-type 0 -j ACCEPT  # echo reply
+	sudo iptables -A INPUT -p icmp --icmp-type 3 -j ACCEPT  # unreachable
+	sudo iptables -A INPUT -p icmp --icmp-type 11 -j ACCEPT # time exceeded
+	sudo iptables -A INPUT -p icmp --icmp-type 12 -j ACCEPT # parameter problem
+	sudo iptables -A OUTPUT -p icmp --icmp-type 8 -j ACCEPT # echo request
 
 	# Allow needed workstation outbound access
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH
@@ -82,6 +80,11 @@ add_workstation_rules() {
 }
 
 save_permanent_iptables() {
+
+	# On an Alpine machine:
+	if [ -x "$(command -v rc-service)" ]; then
+		sudo rc-service iptables save
+	fi
 
 	# On an Arch machine:
 	if [ -x "$(command -v pacman)" ] && \
@@ -141,12 +144,10 @@ main() {
 	fi
 
 	# Find necessary information
-	local IFACE
-	IFACE="$(ip route | grep default | awk '{print $5}')"
-	local INTRANET
-	INTRANET="$(ip addr | grep "$IFACE" | awk 'FNR==2{print $2}')" # Intranet
-	local INTRANET_ADDR
-	INTRANET_ADDR="$(printf '%s' "$INTRANET" | awk -F/ '{print $1}')"
+	local _NETS
+	_NETS="$(ip a | grep 'inet ' | grep -v 'inet 127\.' | \
+		sed 's/  //g; s/inet //g; s/ .*//g')"
+
 	if [ -n "${SSH_CLIENT+x}" ]; then
 		local SSH_ADDR
 		SSH_ADDR="$(echo "$SSH_CLIENT" | cut -d' ' -f1)"
@@ -155,6 +156,8 @@ main() {
 	# Ensure iptables service is running
 	if [ -x "$(command -v systemctl)" ]; then
 		sudo systemctl restart iptables
+	elif [ -x "$(command -v rc-service)" ]; then
+		sudo rc-service iptables restart
 	fi
 
 	# Clear initial rules (set all policies to ACCEPT and delete extra chains)
@@ -187,28 +190,36 @@ main() {
 	[ -z "${SSH_ADDR+x}" ] || sudo iptables -A INPUT -s "$SSH_ADDR" -p tcp \
 		-m tcp --dport 22 -j ACCEPT
 
-	# Prevent host spoofing
-	sudo iptables -A INPUT -s "$INTRANET_ADDR" -j DROP
-	sudo iptables -A FORWARD -s "$INTRANET_ADDR" -j DROP
-	sudo iptables -A FORWARD -d "$INTRANET_ADDR" -j DROP
-	sudo iptables -A OUTPUT -d "$INTRANET_ADDR" -j DROP
+	for _NET in $_NETS; do
+		local _ADDR="${_NET%%/*}"
+		# Prevent host spoofing
+		sudo iptables -A INPUT -s "$_ADDR" -j DROP
+		sudo iptables -A OUTPUT -d "$_ADDR" -j DROP
+		
+		# Allow DHCP for faster renewals
+		sudo iptables -A INPUT -s "$_NET" -p udp -m udp --sport 67 -m udp \
+			--dport 68 -j ACCEPT
 
-	# Allow DHCP from intranet for faster renewals
-	sudo iptables -A INPUT -s "$INTRANET" -p udp -m udp --sport 67 -m udp \
-		--dport 68 -j ACCEPT
+		# Allow mDNS for zeroconf
+		sudo iptables -A INPUT -s "$_NET" -p udp -m udp --dport 5353 -j ACCEPT
+		sudo iptables -A OUTPUT -d "$_NET" -p udp -m udp --dport 5353 -j ACCEPT
 
-	# Allow mDNS from intranet for zeroconf
-	sudo iptables -A INPUT -s "$INTRANET" -p udp -m udp --dport 5353 -j ACCEPT
+		# Allow Mosh
+		sudo iptables -A INPUT -s "$_NET" -p udp -m udp --dport 59999 -j ACCEPT
+
+		# Allow ping
+		sudo iptables -A INPUT -s "$_NET" -p icmp --icmp-type 8 -j ACCEPT   # req
+		sudo iptables -A OUTPUT -d "$_NET" -p icmp --icmp-type 0 -j ACCEPT  # rep
+
+		# Allow ssh
+		sudo iptables -A INPUT -s "$_NET" -p tcp -m tcp --dport 22 -j ACCEPT
+	done
+
+	# mDNS
 	sudo iptables -A INPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT
-	sudo iptables -A OUTPUT -d "$INTRANET" -p udp -m udp --dport 5353 -j ACCEPT
 	sudo iptables -A OUTPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT
 
-	# Allow ping from intranet
-	sudo iptables -A INPUT -s "$INTRANET" -p icmp --icmp-type 8 -j ACCEPT   # echo request
-	sudo iptables -A OUTPUT -s "$INTRANET" -p icmp --icmp-type 0 -j ACCEPT  # echo reply
-
 	# Uncomment the lines below as needed to make services available
-	# sudo iptables -A INPUT -s "$INTRANET" -p tcp -m tcp --dport 22 -j ACCEPT # SSH
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH (DANGER)
 	# sudo iptables -A INPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
@@ -216,7 +227,6 @@ main() {
 	# sudo iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 25565 -j ACCEPT # Minecraft
-	# sudo iptables -A INPUT -s "$INTRANET" -p udp -m udp --dport 59999 -j ACCEPT # MOSH
 	# sudo iptables -A INPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH (DANGER)
 
 	# Allow required services outbound (TCP)
@@ -233,6 +243,10 @@ main() {
 
 	# Allow OpenVPN outbound?
 	user_confirm 'Does this computer use OpenVPN?' add_openvpn_rules
+
+	# Allow WireGuard outbound?
+	user_confirm 'Does this computer use WireGuard?' \
+		'sudo iptables -A OUTPUT -p udp -m udp --dport 51820 -j ACCEPT'
 
 	# Workstation?
 	user_confirm 'Is this machine a workstation?' add_workstation_rules
@@ -259,8 +273,11 @@ main() {
 	user_confirm 'Save rules persistently?' save_permanent_iptables
 
 	# Start iptables at boot
-	[ -x "$(command -v systemctl)" ] && user_confirm 'Start iptables at boot?' \
-		'sudo systemctl enable iptables'
+	if [ -x "$(command -v systemctl)" ]; then
+		user_confirm 'Start iptables at boot?' 'sudo systemctl enable iptables'
+	elif [ -x "$(command -v rc-update)" ]; then
+		user_confirm 'Start iptables at boot?' 'sudo rc-update add iptables'
+	fi
 }
 
 

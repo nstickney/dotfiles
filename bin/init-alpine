@@ -40,15 +40,31 @@ main() {
 
 	# Change MOTD
 	echo 'Welcome to Alpine!' > /etc/motd
-	
-	cat << EOF
 
+	# Display message to warn about sshd_config
+	cat << EOF
 SSH configuration in Alpine 3.10 allows password login by default. If you would
 like to change that (and you should), then use ssh-copy-id (on your client
 machine) to copy your user's public key to this server, then change the
 appropriate line in /etc/ssh/sshd_config to disable password login.
-
 EOF
+
+	# TODO:
+	#
+	# Determine if QEMU, then:
+	# apk add haveged qemu-guest-agent
+	# rc-update add haveged
+	# rc-update add qemu-guest-agent
+	# /etc/init.d/haveged start
+	# /etc/init.d/qemu-guest-agent start
+	#
+	# Disable root:
+	# sudo 
+	# sudo passwd -l root
+	#
+	# Destroy history (last thing):
+	# sudo shred -u /root/.ash_history && sudo touch /root/.ash_history
+	# shred -u .ash_history && touch .ash_history
 }
 
 _pos_args=()

@@ -84,10 +84,9 @@ save_permanent_iptables() {
 	# On an Alpine machine:
 	if [ -x "$(command -v rc-service)" ]; then
 		sudo rc-service iptables save
-	fi
 
 	# On an Arch machine:
-	if [ -x "$(command -v pacman)" ] && \
+	elif [ -x "$(command -v pacman)" ] && \
 		[ -x "$(command -v iptables-save)" ]; then
 		sudo iptables-save | sudo tee /etc/iptables/iptables.rules >/dev/null
 

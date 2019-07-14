@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -6,11 +6,12 @@
 
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
 set -eEuo pipefail
-trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 
 usage() {
-	cat << EOF
-Usage: $(basename "$0")
+	cat << EOF >&2
+Usage: $(basename "$0") [-n --host <hostname>] [-u --user <username>]
+    --host : optionally change the system hostname
+    --user : optionally create this user, with sudo privileges
  -h --help : display this message\n'
 
 Try the following command:
@@ -21,25 +22,33 @@ EOF
 
 main() {
 	# Enable community repo
-	sed -i '/^#.v3.*community/^#//' /etc/apk/repositories
+	sed -i '/.v[0-9]\.[0-9]*\/.*community/s/^#//' /etc/apk/repositories
 
 	# Update packages
 	apk update
 	apk upgrade
 
+	# If given a hostname, set it
+	if [ "$#" -gt 0 ]; then
+		printf '%s\n' "$1" > /etc/hostname
+		hostname -F /etc/hostname
+		sed -i '/hostname/d' /etc/network/interfaces
+		# Change MOTD
+		printf 'Welcome to %s\n' "$1" > /etc/motd
+	fi
+
 	# If given a username, set them up as an administrator
 	if [ "$#" -gt 1 ]; then
-		apk add sudo vim
-		adduser "$1"
-		addgroup "$1" wheel
+		apk add bash sudo vim
+		adduser "$2"
+		addgroup "$2" wheel
 		echo '%wheel ALL=(ALL) ALL' > wheel
 		visudo -c -q -f wheel && \
 			chmod 440 wheel && \
 			mv wheel /etc/sudoers.d/
+		sudo passwd -l root
 	fi
 
-	# Change MOTD
-	echo 'Welcome to Alpine!' > /etc/motd
 
 	# Display message to warn about sshd_config
 	cat << EOF
@@ -49,29 +58,47 @@ machine) to copy your user's public key to this server, then change the
 appropriate line in /etc/ssh/sshd_config to disable password login.
 EOF
 
-	# TODO:
-	#
-	# Determine if QEMU, then:
-	# apk add haveged qemu-guest-agent
-	# rc-update add haveged
-	# rc-update add qemu-guest-agent
-	# /etc/init.d/haveged start
-	# /etc/init.d/qemu-guest-agent start
-	#
-	# Disable root:
-	# sudo 
-	# sudo passwd -l root
-	#
-	# Destroy history (last thing):
-	# sudo shred -u /root/.ash_history && sudo touch /root/.ash_history
-	# shred -u .ash_history && touch .ash_history
+	if apk -vv info | grep -q linux-virt; then
+		apk add haveged qemu-guest-agent
+		rc-update add haveged
+		rc-update add qemu-guest-agent
+		# https://bugs.alpinelinux.org/issues/8894
+		_VPORT="$(find /dev/ -maxdepth 1 -name 'vport*' | head -n1)"
+		sed -i "s/GA_PATH:-.*\}/GA_PATH:-$_VPORT\}/g" \
+			/etc/init.d/qemu-guest-agent
+		/etc/init.d/haveged start
+		/etc/init.d/qemu-guest-agent start
+	fi
 }
 
-_pos_args=()
-while [ "$#" -gt 0 ]; do
-	case "$1" in
-		'--help'|'-h') usage;;
-		*) _pos_args+=("$1"); shift;;
+host=
+user=
+
+while :; do
+	case $1 in
+		-h|-\?|--help) usage;;
+		-n|--host)
+			if [ -n "$2" ]; then
+				host="$2"
+				shift
+			else
+				printf 'ERROR: "--host" requires non-empty argument\n\n' >&2
+				usage
+			fi
+			;;
+		-u|--user)
+			if [ -n "$2" ]; then
+				user="$2"
+				shift
+			else
+				printf 'ERROR: "--user" requires non-empty argument\n\n' >&2
+				usage
+			fi
+			;;
+		--) shift; break;;
+		*) break;;
 	esac
+	shift
 done
-main "${_pos_args[@]}"
+
+main "$host" "$user"

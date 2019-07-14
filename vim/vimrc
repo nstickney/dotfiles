@@ -97,7 +97,11 @@ let g:vim_markdown_conceal_code_blocks = 0  " don't conceal Markdown code fences
 
 " Modeline
 " https://nvd.nist.gov/vuln/detail/CVE-2019-12735
-set nomodelineexpr                      " this is default, but let's be sure
+if v:version > 801 || (v:version == 801 && has("patch1136"))
+	set nomodelineexpr                      " (usually) default
+else
+	set nomodeline
+endif
 
 " Mouse
 set mouse=a                             " make the dadgum mouse work
@@ -123,11 +127,13 @@ nnoremap <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 nnoremap <Leader><CR> :write<CR>
 
 " Spellcheck
-set spelllang=en_us                     "
-set spellfile=$HOME/dotfiles/vim/stick.utf-8.add
-set spell
-hi clear SpellBad
-hi SpellBad cterm=underline
+if has('spell')
+	set spelllang=en_us                     "
+	set spellfile=$HOME/dotfiles/vim/stick.utf-8.add
+	set spell
+	hi clear SpellBad
+	hi SpellBad cterm=underline
+endif
 
 " Status (lightline + lightline-ale)
 set laststatus=2

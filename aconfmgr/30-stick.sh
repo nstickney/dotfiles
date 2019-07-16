@@ -15,7 +15,7 @@ AddPackage pandoc # Conversion between markup formats
 AddPackage pandoc-citeproc # Supports using pandoc with citeproc (pandoc opt dep)
 AddPackage pandoc-crossref # Pandoc filter for cross-references (pandoc opt dep)
 AddPackage texlive-core # pandoc opt dep
-AddPackage --foreign protonmail-bridge # Integrate ProtonMail paid account with any program that supports IMAP and SMTP
+# AddPackage --foreign protonmail-bridge # Integrate ProtonMail paid account with any program that supports IMAP and SMTP
 AddPackage rmlint # Tool to remove duplicates and other lint, being much faster than fdupes
 AddPackage rmlint-shredder # Graphical user interface for rmlint
 AddPackage thunderbird # Standalone mail and news reader from mozilla.org

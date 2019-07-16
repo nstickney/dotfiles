@@ -50,11 +50,10 @@ exec_always $_WALLPAPER
 
 # Applications
 #exec --no-startup-id bitwarden-bin
-#exec --no-startup-id hydroxide imap
-exec --no-startup-id hydroxide smtp
+exec --no-startup-id hydroxide serve
 exec --no-startup-id keybase-gui
 exec --no-startup-id nm-applet --indicator
-exec --no-startup-id protonmail-bridge --no-window
+# exec --no-startup-id protonmail-bridge --no-window
 exec --no-startup-id signal-desktop
 
 # Numlock
@@ -66,8 +65,6 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # Power management
 exec --no-startup-id swayidle -w \
 		 timeout 300  "$_LOCK" \
-		 timeout 360  "$_BIN_DIR/sway-dpms off" \
-		 resume       "$_BIN_DIR/sway-dpms on" \
 		 before-sleep "$_LOCK"
 
 bar {

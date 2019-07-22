@@ -1,0 +1,21 @@
+<svg version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+		<radialGradient id="og" r="1" fx="0.3" fy="0.3">
+			<stop offset="0" stop-color="#c40" />
+			<stop offset="1" stop-color="#310" />
+		</radialGradient>
+		<radialGradient id="fg" r="1" fx="0.3" fy="0.3">
+			<stop offset="0" stop-color="#fff" />
+			<stop offset="1" stop-color="#eee" />
+		</radialGradient>
+	</defs>
+	<path fill="url(#og)"
+		d="M 0,50
+		C 0,0 0,0 50,0
+		100,0 100,0 100,50
+		100,100 100,100 50,100
+		0,100 0,100 0,50" />
+	<text x="50" y="50" dominant-baseline="middle" fill="url(#fg)"
+		font-family="Source Sans Pro" font-size="55" font-weight="bold"
+		text-anchor="middle">~/.*</text>
+</svg>

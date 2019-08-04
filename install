@@ -68,11 +68,11 @@ main() {
 	if [ -x "$(command -v sudo)" ]; then
 		if [ -x "$(command -v iptables)" ]; then
 			user_confirm 'Install iptables configuration?' \
-				"$HOME/dotfiles/bin/iptables-init";
+				"$HOME/dotfiles/bin/init-iptables";
 		fi
 		if [ -x "$(command -v nft)" ]; then
 			user_confirm 'Install nftables configuration?' \
-				"$HOME/dotfiles/bin/nftables-init";
+				"$HOME/dotfiles/bin/init-nftables";
 		fi
 	fi
 }

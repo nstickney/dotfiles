@@ -39,12 +39,31 @@ _file="$1"/status.toml
 
 	[[block]]
 	block = "focused_window"
-	max_width = 100
+	EOF
+} >> "$_file"
 
-	[[block]]
-	block = "custom"
-	interval = 60
-	cycle = ["echo  $(hostname -i)", "echo  $(uname -n)", "echo  $(uname -r)", "echo  $(whoami)"]
+# Add network blocks for each interface
+for i in /sys/class/net/*; do
+	_iface="${i##*/}"
+	if [ "$_iface" != 'lo' ]; then
+		{
+			cat <<-EOF
+
+			[[block]]
+			block = "net"
+			device = "$_iface"
+			ip = true
+			ssid = false
+			speed_up = false
+			speed_down = false
+			EOF
+		} >> "$_file"
+	fi
+done
+
+# Add some more basics
+{
+	cat <<- EOF
 
 	[[block]]
 	block = "pacman"
@@ -60,7 +79,6 @@ _file="$1"/status.toml
 	display_type = "memory"
 	format_mem = "{MFg}GB"
 	format_swap = "{SFg}GB"
-
 	EOF
 } >> "$_file"
 
@@ -68,11 +86,11 @@ _file="$1"/status.toml
 for i in $(mount | grep -e vfat -e ext4 | cut -f3 -d' '); do
 	{
 		cat <<- EOF
+
 		[[block]]
 		block = "disk_space"
 		path = "$i"
 		alias = "$i"
-
 		EOF
 	} >> "$_file"
 done
@@ -80,10 +98,10 @@ done
 # If there is a battery, add the battery block
 if [ -d /sys/class/power_supply/BAT0/ ]; then
 	{
-	cat <<- EOF
+		cat <<- EOF
+
 		[[block]]
 		block = "battery"
-
 		EOF
 	} >> "$_file"
 fi
@@ -91,6 +109,7 @@ fi
 # Add the ending of the bar
 {
 	cat <<- EOF
+
 	[[block]]
 	block = "sound"
 

@@ -43,30 +43,34 @@ _file="$1"/status.toml
 } >> "$_file"
 
 # Add network blocks for each interface
-for i in /sys/class/net/*; do
-	_iface="${i##*/}"
-	if [ "$_iface" != 'lo' ]; then
-		{
-			cat <<-EOF
-
-			[[block]]
-			block = "net"
-			device = "$_iface"
-			ip = true
-			ssid = false
-			speed_up = false
-			speed_down = false
-			EOF
-		} >> "$_file"
-	fi
-done
+# for i in /sys/class/net/*; do
+# 	_iface="${i##*/}"
+# 	_wifi='false'
+# 	[[ "$_iface" =~ ^wlp ]] && _wifi='true'
+# 	if [ "$_iface" != 'lo' ]; then
+# 		{
+# 			cat <<-EOF
+#
+# 			[[block]]
+# 			block = "net"
+# 			device = "$_iface"
+# 			ip = true
+# 			ssid = $_wifi
+# 			speed_up = false
+# 			speed_down = false
+# 			EOF
+# 		} >> "$_file"
+# 	fi
+# done
 
 # Add some more basics
 {
-	cat <<- EOF
-
+	cat <<- 'EOF'
+	
 	[[block]]
-	block = "pacman"
+	block = "custom"
+	cycle = ["echo  $(hostname -i)", "echo  $(nmcli -t connection show --active | grep wireless | cut -f1 -d':' | xargs)", "echo  $(uname -n)", "echo  $(uname -r)", "echo  $(whoami)", "echo  $(checkupdates | wc -l)"]
+	interval = 60
 
 	[[block]]
 	block = "cpu"
@@ -95,20 +99,35 @@ for i in $(mount | grep -e vfat -e ext4 | cut -f3 -d' '); do
 	} >> "$_file"
 done
 
-# If there is a battery, add the battery block
-if [ -d /sys/class/power_supply/BAT0/ ]; then
+# If there are batteries, add the battery block(s)
+for i in /sys/class/power_supply/*; do
+	if [[ ! "$i" =~ AC$ ]]; then
+		{
+			cat <<- EOF
+
+			[[block]]
+			block = "battery"
+			device = "${i##*/}"
+			EOF
+		} >> "$_file"
+	fi
+done
+
+# If there are backlights available, add them
+for i in /sys/class/backlight/*; do
 	{
 		cat <<- EOF
 
 		[[block]]
-		block = "battery"
+		block = "backlight"
+		device = "${i##*/}"
 		EOF
 	} >> "$_file"
-fi
+done
 
 # Add the ending of the bar
 {
-	cat <<- EOF
+	cat <<- 'EOF'
 
 	[[block]]
 	block = "sound"

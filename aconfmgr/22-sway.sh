@@ -16,3 +16,4 @@ AddPackage xorg-xev # Print contents of X events
 
 AddPackage --foreign i3status-rust-git # Very resourcefriendly and feature-rich replacement for i3status, written in pure Rust
 AddPackage alsa-utils # Opt dep for i3status-rust-git
+AddPackage pacman-contrib # used in i3status-rust-git config

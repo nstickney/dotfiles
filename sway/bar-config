@@ -100,30 +100,34 @@ for i in $(mount | grep -e vfat -e ext4 | cut -f3 -d' '); do
 done
 
 # If there are batteries, add the battery block(s)
-for i in /sys/class/power_supply/*; do
-	if [[ ! "$i" =~ AC$ ]]; then
+if [ "$(ls -A /sys/class/power_supply)" ]; then
+	for i in /sys/class/power_supply/*; do
+		if [[ ! "$i" =~ AC$ ]]; then
+			{
+				cat <<- EOF
+
+				[[block]]
+				block = "battery"
+				device = "${i##*/}"
+				EOF
+			} >> "$_file"
+		fi
+	done
+fi
+
+# If there are backlights available, add them
+if [ "$(ls -A /sys/class/backlight)" ]; then 
+	for i in /sys/class/backlight/*; do
 		{
 			cat <<- EOF
 
 			[[block]]
-			block = "battery"
+			block = "backlight"
 			device = "${i##*/}"
 			EOF
 		} >> "$_file"
-	fi
-done
-
-# If there are backlights available, add them
-for i in /sys/class/backlight/*; do
-	{
-		cat <<- EOF
-
-		[[block]]
-		block = "backlight"
-		device = "${i##*/}"
-		EOF
-	} >> "$_file"
-done
+	done
+fi
 
 # Add the ending of the bar
 {

@@ -18,7 +18,7 @@ AddPackage mtr # Combines the functionality of traceroute and ping into one tool
 AddPackage networkmanager # Network connection manager and user applications
 AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnect
 AddPackage networkmanager-openvpn # NetworkManager VPN plugin for OpenVPN
-AddPackage --foreign networkmanager-wireguard-git # NetworkManager VPN plugin for WireGuard - git
+# AddPackage --foreign networkmanager-wireguard-git # NetworkManager VPN plugin for WireGuard - git
 AddPackage ngrep # A grep-like utility that allows you to search for network packets on an interface.
 AddPackage nss-mdns # glibc plugin providing host name resolution via mDNS
 AddPackage obs-studio # Free, open source software for live streaming and recording
@@ -36,7 +36,7 @@ AddPackage wireguard-arch # Wireguard module for Arch Kernel
 AddPackage wireguard-tools # next generation secure network tunnel
 AddPackage openresolv # wireguard opt dep
 AddPackage youtube-dl # A small command-line program to download videos from YouTube.com and a few more sites
-AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
+AddPackage zerotier-one # Creates virtual Ethernet networks of almost unlimited size.
 
 # AddPackage --foreign chromium-widevine # A browser plugin designed for the viewing of premium video content
 # AddPackage privoxy # A web proxy with advanced filtering capabilities.

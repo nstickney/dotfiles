@@ -7,7 +7,7 @@ AddPackage fzf # Command-line fuzzy finder
 AddPackage gdb # The GNU Debugger
 AddPackage git # the fast distributed version control system
 AddPackage git-crypt # Transparent file encryption in Git
-AddPackage --foreign hyperfine # A command-line benchmarking tool
+AddPackage hyperfine # A command-line benchmarking tool
 AddPackage namcap # A Pacman package analyzer
 AddPackage parallel # A shell tool for executing jobs in parallel
 AddPackage peda # Python Exploit Development Assistance for GDB

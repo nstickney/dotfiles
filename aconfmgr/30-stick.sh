@@ -1,6 +1,6 @@
 AddPackage --foreign bitwarden-bin # A secure and free password manager for all of your devices.
 AddPackage boinc # Berkeley Open Infrastructure for Network Computing for desktop
-AddPackage --foreign exercism-cli # Command line client for exercism.io
+AddPackage --foreign exercism-bin # Command line client for exercism.io
 AddPackage hugo # Fast and Flexible Static Site Generator in Go
 AddPackage --foreign hydroxide-git # A third-party, open-source ProtonMail CardDAV, IMAP and SMTP bridge
 # AddPackage --foreign lbry-app-bin # The LBRY app built using electron

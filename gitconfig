@@ -61,6 +61,8 @@
 	PO = ! git pull origin "$(git BH)"
 	# PuSh
 	PS = ! git push || git push -u origin "$(git BH)"
+	# Push to Top
+	PT = ! git FA && git RO && git PS
 	# Pull Upstream
 	PU = ! git pull upstream "$(git BH)"
 	# Pull (Recurse) (requires remote to pull from as argument)
@@ -90,7 +92,7 @@
 	# STatus
 	ST = status -sb
 	# Submodule Update
-	SU = submodule update --init --recursive --remote --jobs 8
+	SU = submodule foreach 'git checkout master && git pull'
 	# TableFlip (start over from whatever is in the remote)
 	TF = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch --all --force --jobs 8 && git reset --hard origin/\"$(git rev-parse --abbrev-ref HEAD)\" && git clean -dfx; break;; * ) break;; esac; }; f"
 	# Track Master (force local branch to track origin)

@@ -39,7 +39,7 @@ default_orientation horizontal
 # Startup Actions #############################################################
 
 # Finalize host-specific configuration of status bar
-exec $_CONFIG_DIR/bar-config $_CONFIG_DIR
+exec_always $_CONFIG_DIR/bar-config $_CONFIG_DIR
 
 # Fix blank application window in java applications
 exec_always wmname LG3D

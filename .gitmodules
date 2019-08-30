@@ -35,3 +35,6 @@
 	path = vim/pack/stick/start/vim-polyglot
 	url = https://github.com/sheerun/vim-polyglot
 	branch = master
+[submodule "vim/pack/stick/start/fzf.vim"]
+	path = vim/pack/stick/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim

@@ -196,6 +196,12 @@ man() {
 [ -r /usr/share/doc/find-the-command/ftc.bash ] && \
 	. /usr/share/doc/find-the-command/ftc.bash
 
+# Fuzzy Finder
+[ -r /usr/share/fzf/completion.bash ] && \
+	. /usr/share/fzf/completion.bash
+[ -r /usr/share/fzf/key-bindings.bash ] && \
+	. /usr/share/fzf/key-bindings.bash
+
 # History search
 if [[ $- == *i* ]]; then
     bind '"\e[A": history-search-backward'

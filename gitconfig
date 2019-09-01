@@ -36,7 +36,7 @@
 	# CheckOut
 	CO = checkout
 	# Clone with Submodules
-	CS = clone --recurse-submodules --jobs 8
+	CS = clone --recurse-submodules
 	# Check Whitespace (http://peter.eisentraut.org/blog/2014/11/04/checking-whitespace-with-git/)
 	CW = ! git diff-tree --check $(git hash-object -t tree /dev/null) HEAD
 	# Delete Ignored
@@ -50,7 +50,7 @@
 	# Fire Drill
 	FD = ! git add -A && git commit -m 'wip: fire drill!' && git push
 	# Fetch all with Submodules
-	FS = fetch --all --recurse-submodules --jobs 8
+	FS = fetch --all --recurse-submodules
 	# Last Commit
 	LC = log -1 HEAD
 	# List Ignored
@@ -89,10 +89,12 @@
 	SQ = ! git commit --squash=HEAD && git rebase --autosquash
 	# Shrink Repo
 	SR = ! git reflog expire --expire=now --all && git gc --prune=now --aggressive
+	# Set up Submodules
+	SS = submodule update --init --recursive --remote
 	# STatus
 	ST = status -sb
 	# Submodule Update
-	SU = submodule foreach 'git checkout master && git pull'
+	SU = submodule foreach --recursive 'git checkout master && git pull'
 	# TableFlip (start over from whatever is in the remote)
 	TF = "!f(){ read -r -p 'Throw it all away? [y/N]: ' -n 1 yn; printf '\n'; case $yn in [Yy]* ) git fetch --all --force --jobs 8 && git reset --hard origin/\"$(git rev-parse --abbrev-ref HEAD)\" && git clean -dfx; break;; * ) break;; esac; }; f"
 	# Track Master (force local branch to track origin)

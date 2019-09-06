@@ -87,9 +87,14 @@ git_prompt() {
 	fi
 }
 
-bash_prompt_command() {
+__prompt_command() {
+
+	# Start with exit status of previous command, and date
+	PS1="\\n  [\$?] \\D{%a %Y.%m.%d %T}\\n"
+
 	# Git
-	GTBR=$(git_prompt)
+	GTBR="$(git_prompt)"
+
 	# How many characters of the $PWD should be kept
 	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER} - ${#GTBR}))
 	local dir=${PWD##*/}
@@ -100,29 +105,34 @@ bash_prompt_command() {
 		CPWD=${CPWD:$pwdoffset:$pwdmaxlen}
 		CPWD='.../'"${CPWD#*/}"
 	fi
-}
 
-bash_prompt() {
+	# Colors
 	local U="\\[\\e[0m\\]"     # default foreground color
 
-	# regular colors
+	## regular colors
 	local G="\\[\\e[0;32m\\]"  # green
 
-	# emphasized (bolded) colors
+	## emphasized (bolded) colors
 	local ER="\\[\\e[1;31m\\]" # bold red
 	local EY="\\[\\e[1;33m\\]" # bold yellow
 	local EB="\\[\\e[1;34m\\]" # bold blue
 	local EC="\\[\\e[1;36m\\]" # bold cyan
 
 	local UC=$EY                # user's color
-	[ $UID -eq '0' ] && UC=$ER  # root's color
+	local UP="$"                # user's prompt
+	if [ "$(id -u)" -eq '0' ]; then
+		UC=$ER                  # root's color
+		UP="#"                  # root's prompt
+	fi
 
-	PS1="\\n    \\D{%a %Y.%m.%d %T}\\n    ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\${GTBR}\\n[${G}\\s \\V${U}] ${UC}\\$ ${U}"
+	# Next line shows username, hostname, current working directory, git status
+	PS1+="    ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\${GTBR}\\n"
+
+	# Last line shows bash version and prompt level (root vs nonroot)
+	PS1+="[${G}\\s \\V${U}] ${UC}${UP} ${U}"
 }
 
-PROMPT_COMMAND=bash_prompt_command
-bash_prompt
-unset bash_prompt
+PROMPT_COMMAND=__prompt_command
 
 # COLORIZE EVERYTHING #########################################################
 

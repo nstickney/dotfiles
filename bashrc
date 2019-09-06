@@ -21,6 +21,7 @@ fi
 export LC_ALL=en_US.UTF-8
 
 # BASH PROMPT #################################################################
+
 # https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
 
 git_branch() {
@@ -34,7 +35,7 @@ git_status() {
 	# - changes have been stashed
 	# ^ local commits need to be pushed to the remote
 	local status
-	status="$(git status --porcelain 2>/dev/null)"
+	status="$(git status --porcelain --no-ahead-behind 2>/dev/null)"
 	local output
 	grep -q '^[MADRC]' <<<"$status" && output="$output+"
 	grep -q '^.[MD]' <<<"$status" && output="$output*"

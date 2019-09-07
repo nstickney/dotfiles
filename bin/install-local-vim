@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# https://superuser.com/a/1423505
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, you can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+usage() {
+	printf 'Usage: %s filename\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+main() {
+	# ensure ~/.local exists
+	mkdir -p "$HOME"/.local
+
+	# install ncurses
+	cd /tmp
+	wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.1.tar.gz
+	tar -xzf ncurses-6.1.tar.gz
+	cd ncurses-6.1
+	./configure --prefix="$HOME"/.local
+	make
+	make install
+
+	# install vim
+	cd /tmp
+	git clone https://github.com/vim/vim.git
+	cd vim/src
+	LDFLAGS=-L"$HOME"/.local/lib ./configure --prefix="$HOME"/.local
+	make
+	make install
+
+	# ensure ~/.local/bin is in your path!
+	# export PATH=$PATH:$HOME/.local/bin
+}
+
+_pos_args=()
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
+	esac
+done
+main ${_pos_args[@]:+"${_pos_args[@]}"}

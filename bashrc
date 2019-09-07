@@ -159,6 +159,7 @@ fi
 
 # ls
 if [ "$(uname -s)" == 'Darwin' ]; then
+	# shellcheck disable=2032
 	alias ls='ls -G'
 else
 	alias ls='ls --color=auto'
@@ -470,6 +471,7 @@ if [ -n "$(command -v tmux)" ]; then
 			fi
 		}
 		_tmax() {
+			# shellcheck disable=2033
 			read -ra COMPREPLY <<< "$(compgen -W "$(tmux ls -F '#S' | xargs)" \
 				-- "${COMP_WORDS[COMP_CWORD]}")"
 		}

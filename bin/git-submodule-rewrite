@@ -23,7 +23,7 @@ function abort {
 }
 
 function request_confirmation {
-    read -p "$(tput setaf 4)$1 (y/n) $(tput sgr0)"
+    read -pr "$(tput setaf 4)$1 (y/n) $(tput sgr0)"
     [ "$REPLY" == "y" ] || abort "Aborted!"
 }
 
@@ -56,11 +56,13 @@ EOF
 }
 
 function git_version_lte() {
+  # shellcheck disable=2046,2183
   OP_VERSION=$(printf "%03d%03d%03d%03d" $(echo "$1" | tr '.' '\n' | head -n 4))
   GIT_VERSION=$(git version)
+  # shellcheck disable=2046,2183
   GIT_VERSION=$(printf "%03d%03d%03d%03d" $(echo "${GIT_VERSION#git version }" | sed -E "s/([0-9.]*).*/\1/" | tr '.' '\n' | head -n 4))
   echo -e "${GIT_VERSION}\n${OP_VERSION}" | sort | head -n1
-  [ ${GIT_VERSION} -le ${OP_VERSION} ]
+  [ "${GIT_VERSION}" -le "${OP_VERSION}" ]
 }
 
 # Convert a url to an absolute url
@@ -75,9 +77,9 @@ function absolute_url {
   local base=$2
 
   if [[ $url =~ \.\. ]]; then
-    echo "$base/$(basename $url)"
+    echo "$base/$(basename "$url")"
   else
-    echo $url
+    echo "$url"
   fi
 }
 
@@ -100,10 +102,12 @@ function main() {
   rm -rf ".git/modules/${sub}"
 
   # Rewrite submodule history
-  local tmpdir="$(mktemp -d -t submodule-rewrite-XXXXXX)"
+  local tmpdir
+  tmpdir="$(mktemp -d -t submodule-rewrite-XXXXXX)"
   git clone -b "${branch}" "${url}" "${tmpdir}"
   pushd "${tmpdir}"
-  local tab="$(printf '\t')"
+  local tab
+  tab="$(printf '\t')"
   local filter="git ls-files -s | sed \"s:${tab}:${tab}${path}/:\" | GIT_INDEX_FILE=\${GIT_INDEX_FILE}.new git update-index --index-info && mv \${GIT_INDEX_FILE}.new \${GIT_INDEX_FILE} || true"
   git filter-branch --index-filter "${filter}" HEAD
   popd
@@ -129,17 +133,17 @@ function main() {
 
   # Transfer its own submodules to the parent
   add_submod_cmds=""
-  if [ -f ${path}/.gitmodules ]; then
-    sub_names=$(git config -f ${path}/.gitmodules --get-regex path | sed 's/.* \(.*\)$/\1/g')
+  if [ -f "${path}"/.gitmodules ]; then
+    sub_names=$(git config -f "${path}"/.gitmodules --get-regex path | sed 's/.* \(.*\)$/\1/g')
 
     for sub_name in ${sub_names}; do
-      sub_branch=$(git config -f ${path}/.gitmodules --get "submodule.${sub_name}.branch") || true
+      sub_branch=$(git config -f "${path}"/.gitmodules --get "submodule.${sub_name}.branch") || true
       [ -n "${sub_branch}" ] && sub_branch="-b ${sub_branch}"
-      sub_path=$(git config -f ${path}/.gitmodules --get "submodule.${sub_name}.path")
-      sub_url=$(git config -f ${path}/.gitmodules --get "submodule.${sub_name}.url")
+      sub_path=$(git config -f "${path}"/.gitmodules --get "submodule.${sub_name}.path")
+      sub_url=$(git config -f "${path}"/.gitmodules --get "submodule.${sub_name}.url")
 
       # remove the sub-submodule (which should be empty) and cache the command to reinstate it
-      rmdir ${path}/${sub_path}
+      rmdir "${path}"/"${sub_path}"
       add_submod_cmds="$add_submod_cmds git submodule add ${sub_branch} --name ${sub_name} -- ${sub_url} ${path}/${sub_path} ; "
     done
   fi
@@ -203,9 +207,12 @@ if ! [ -d ".git" ]; then
   exit 1
 fi
 
-declare path="$(git config -f .gitmodules --get "submodule.${sub}.path")"
-declare superproject_dir="$(dirname $(git config --get remote.origin.url))"
-declare url=$(absolute_url $(git config -f .gitmodules --get "submodule.${sub}.url") $superproject_dir)
+declare path
+path="$(git config -f .gitmodules --get "submodule.${sub}.path")"
+declare superproject_dir
+superproject_dir="$(dirname "$(git config --get remote.origin.url)")"
+declare url
+url=$(absolute_url "$(git config -f .gitmodules --get "submodule.${sub}.url")" "$superproject_dir")
 
 if [ -z "${path}" ]; then
   >&2 echo "Error: Submodule not found: ${sub}"

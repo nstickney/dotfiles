@@ -289,6 +289,7 @@ path_override() {
 	esac
 }
 
+[ -d "$HOME/.local/bin" ] && path_override "$HOME/.local/bin"
 [ -d "$HOME/dotfiles/overrides" ] && path_override "$HOME/dotfiles/overrides"
 path_append "$HOME/dotfiles/bin"
 

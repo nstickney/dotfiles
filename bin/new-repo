@@ -125,6 +125,6 @@ while [ "$#" -gt 0 ]; do
 		*) _pos_args+=("$1"); shift;;
 	esac
 done
-main "${_pos_args[@]}" >&2
+main ${_pos_args[@]:+"${_pos_args[@]}"}
 
 pwd

@@ -21,9 +21,9 @@ Includes configuration for:
 * `alacritty`
 * `aurman`
 * `bash`
-* gdb
-* git
-* sway (with swaylock)
+* `gdb`
+* `git`
+* `sway` (with `swaylock` )
 * `tmux`
 * `vim` (including plugins as submodules)
 
@@ -50,7 +50,6 @@ The included sway configuration requires the following packages as dependencies 
 * `alacritty` (terminal emulator)
 * `i3ipc-python` (used in scripts interacting with sway) ([AUR](https://aur.archlinux.org/packages/i3ipc-python))
 * `i3status-rust` (information bar) ([AUR](https://aur.archlinux.org/packages/i3status-rust/))
-* `jq` (used in scripts interacting with sway)
 * `otf-font-awesome` (used in info bar)
 * `polkit-gnome` (PolicyKit integration)
 
@@ -59,7 +58,6 @@ The included sway configuration requires the following packages as dependencies 
 * `adobe-source-code-pro-fonts` (default font)
 * `libpulse` (volume control)
 * `playerctl` (music player controls)
-* `solaar` (Logitech Unifying Receiver control applet) ([AUR](https://aur.archlinux.org/packages/solaar/))
 
 ## Usage
 

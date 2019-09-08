@@ -13,9 +13,6 @@
 [submodule "vim/pack/stick/start/tcomment_vim"]
 	path = vim/pack/stick/start/tcomment_vim
 	url = https://github.com/tomtom/tcomment_vim
-[submodule "vim/pack/stick/start/vim-ripgrep"]
-	path = vim/pack/stick/start/vim-ripgrep
-	url = https://github.com/jremmen/vim-ripgrep
 [submodule "vim/pack/stick/start/vim-signify"]
 	path = vim/pack/stick/start/vim-signify
 	url = https://github.com/mhinz/vim-signify
@@ -25,16 +22,9 @@
 [submodule "vim/pack/stick/start/vim-abolish"]
 	path = vim/pack/stick/start/vim-abolish
 	url = https://github.com/tpope/vim-abolish
-[submodule "vim/pack/stick/start/vim-css-color"]
-	path = vim/pack/stick/start/vim-css-color
-	url = https://github.com/ap/vim-css-color
 [submodule "vim/pack/stick/start/sway-vim-syntax"]
 	path = vim/pack/stick/start/sway-vim-syntax
 	url = https://github.com/aouelete/sway-vim-syntax
-[submodule "vim/pack/stick/start/vim-polyglot"]
-	path = vim/pack/stick/start/vim-polyglot
-	url = https://github.com/sheerun/vim-polyglot
-	branch = master
 [submodule "vim/pack/stick/start/fzf.vim"]
 	path = vim/pack/stick/start/fzf.vim
 	url = https://github.com/junegunn/fzf.vim

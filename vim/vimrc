@@ -1,85 +1,51 @@
-" Basics
-set nocompatible                        " use vim settings instead of vi (must be first)
-set autoread                            " automatically reload files changed outside vim
-set backspace=indent,eol,start whichwrap+=<,>,[,]   " backspace/cursor keys wrap lines
-set colorcolumn=80,90,100,120           " add markers to determine line length
-hi ColorColumn ctermbg=0                " set the color column to dark grey
-set history=1000                        " store lots of history
-set showmatch                           " highlight matching [{()}]
-set showcmd                             " show commands in bottom bar
-
-" Buffers
-nnoremap <C-T> :bnext<CR>|              " move to next buffer
-nnoremap <C-G> :bprev<CR>|              " move to previous buffer
-nnoremap <leader>b :ls<CR>:b<space>|    " fly between buffers
-
-" Clipboard
-set clipboard=unnamed                   " use the copy-on-select clipboard
-set clipboard+=unnamedplus              " use the system clipboard
+" Backup, swap, and undo
+set autoread  " automatically reload files changed outside vim
+set backupdir=/tmp//  " backup files stored by full file path in /tmp
+set directory=/tmp//  " swap files stored by full file path in /tmp
+set undodir=/tmp//  " undo files stored by full file path in /tmp
+set history=1000  " store lots of history
+set undofile  " enable persistent undo
+set writebackup  " write backups before writing files
 
 " Encoding (set to UTF-8 where available)
 if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
-   	set fileencodings=ucs-bom,utf-8,latin1
+	set fileencodings=usc-bom,utf-8
 endif
 
-" Eye Candy
-hi Normal     ctermbg=NONE cterm=bold guibg=NONE gui=NONE
-hi SignColumn ctermbg=NONE cterm=bold guibg=NONE gui=NONE
-hi DiffAdd    ctermbg=NONE cterm=bold guibg=NONE gui=NONE
-hi DiffChange ctermbg=NONE cterm=bold guibg=NONE gui=NONE
-hi DiffDelete ctermbg=NONE cterm=bold guibg=NONE gui=NONE
-set t_Co=16                             " use (only) the 16 terminal colors
-
-" Faster
-set lazyredraw                          " redraw only as needed
-set ttyfast                             " faster redraw
-
-" Folding
-set foldmethod=indent                   " fold based on indent
-set foldnestmax=3                       " deepest fold is 3 levels
-set nofoldenable                        " don't fold by default
-
-" Git
+" Git (vim-signify)
 let g:signify_realtime = 1              " more aggressive sign updates
 let g:signify_cursorhold_normal = 0     " avoid auto-saving buffer
 let g:signify_cursorhold_insert = 0     " avoid auto-saving buffer
 nmap <Leader>t <Plug>(signify-prev-hunk)
 nmap <Leader>g <Plug>(signify-next-hunk)
+hi clear Normal
+hi Normal     cterm=bold
+hi clear SignColumn
+hi SignColumn cterm=bold
+hi clear DiffAdd   
+hi DiffAdd    cterm=bold
+hi clear DiffChange
+hi DiffChange cterm=bold
+hi clear DiffDelete
+hi DiffDelete cterm=bold
+
+" Guides
+set colorcolumn=80,90,100,120
+highlight ColorColumn ctermbg=0
 
 " Indentation
-nnoremap p p=`]<C-o>|                    " auto-indent pasted text
-nnoremap P P=`]<C-o>|                    " auto-indent pasted text
-nnoremap <Leader><tab> <esc>gg=G<C-o><C-o>zz|    " auto-indent entire file
+filetype plugin indent on
 set autoindent
-set cindent
-set cinoptions=(0,u0,U0
-set noexpandtab                         " indent with tabs, align with spaces
-set copyindent
-set preserveindent
-set smarttab
-set tabstop=4                           " tabs are four characters wide
-set shiftwidth=4
-set softtabstop=4
-set list lcs=tab:\│\                    " indentation guide character
-hi SpecialKey ctermfg=0                 " indentation guide color
-let g:indentLine_char = '┆'             " soft tab indentation guide character
-let g:indentLine_color_term = 0         " soft tab indentation guide color
-
-" Line Numbers
-hi LineNr ctermfg=0                     " set the line numbers color to dark grey
-set cursorline                          " highlight current line
-hi CursorLine cterm=None                " don't highlight the entire line
-hi CursorLineNr ctermfg=8               " set the current line number color to grey
-
-"" @cur33's Line Numbers function
-function! LineNumberToggle()
-if(&relativenumber != 1)
-	set number!
-endif
-set relativenumber!
-endfunc
-nnoremap <C-n> :call LineNumberToggle()<CR>
-call LineNumberToggle()
+set shiftwidth=4 softtabstop=4 tabstop=4  " tabs are four characters wide
+set cindent cinoptions=(0,u0,U0  " indent with tabs, align with spaces
+highlight SpecialKey ctermfg=0|  " indentation guides are dark gray
+set list listchars=tab:\│\  " indentation guide (tabs)
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " indentation guide (spaces)
+"" Auto-indent pasted text
+nnoremap p p=`]<C-o>
+nnoremap P P=`]<C-o>
+"" Auto-indent entire file
+nnoremap <Leader><tab> <esc>gg=G<C-o><C-o>zz
 
 " Linting (ALE)
 let g:ale_echo_msg_error_str = 'E'
@@ -88,111 +54,56 @@ let g:ale_echo_msg_format = '[%severity%][%linter%]% code:% %s'
 nmap <C-k> <Plug>(ale_previous_wrap)
 nmap <C-j> <Plug>(ale_next_wrap)
 
-" Miscellaneous
-let g:vim_markdown_conceal = 0          " turn off conceal in Markdown
-let g:vim_markdown_conceal_code_blocks = 0  " don't conceal Markdown code fences
-
-" Modeline
-" https://nvd.nist.gov/vuln/detail/CVE-2019-12735
-if v:version > 801 || (v:version == 801 && has("patch1136"))
-	set nomodelineexpr                      " (usually) default
-else
-	set nomodeline
-endif
+" Mappings
+"" Insert a timestamp
+nmap <F3> i<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
+imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
+"" List highlight groups applied under the cursor
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+			\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+"" Write the current file
+nnoremap <Leader><CR> :write<CR>
+"" Write the current file, and quit
+nnoremap <Leader>q :wq<CR>
+"" Write the current file, using sudo
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Mouse
-set mouse=a                             " make the dadgum mouse work
-set mousefocus                          " focus follows mouse
-set mousehide                           " hide the pointer when typing does
+set mouse=a  " use the mouse in all modes
+
+" Navigation
+set backspace=indent,eol,start  " backspace wraps lines
+set whichwrap=<,>,[,]  " cursor keys wrap lines
 
 " Scrolling
-set scrolloff=8                         " start scrolling 8 lines away from margins
-set sidescrolloff=15
-set sidescroll=1
+set scrolloff=4  " start scrolling 4 rows away from top and bottom
+set sidescrolloff=4  " start scrolling 4 columns away from edges
+set sidescroll=1  " scroll one column at a time sideways
 
 " Search
-set hlsearch                            " highlight searches
-set incsearch                           " search as you type
-set smartcase                           " ignore case unless a capital is typed
-if executable('rg')                     " use ripgrep if available
-	let g:ackprg = 'rg --vimgrep'
-endif
-
-" Shortcuts
+set hlsearch  " highlight searches; hit escape twice to clear the highlight
 nnoremap <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
-nnoremap <Leader><CR> :write<CR>
+set incsearch  " search as you type
+set smartcase  " ignore case unless a capital is typed
 
-" Spellcheck
+" Spelling
 if has('spell')
-	set spelllang=en_us                     "
+	set spelllang=en_us
 	set spellfile=$HOME/dotfiles/vim/stick.utf-8.add
 	set spell
-	hi clear SpellBad
-	hi SpellBad cterm=underline
+	highlight clear SpellBad
+	highlight SpellBad cterm=underline ctermbg=None ctermfg=None
+	highlight clear SpellCap
+	highlight SpellCap cterm=italic
+	highlight clear SpellLocal
+	highlight clear SpellRare
 endif
 
 " Splits
-set splitbelow
-set splitright
-
-" Status (lightline + lightline-ale)
-set laststatus=2
-set noshowmode
-let g:lightline = {
-			\ 'component_expand': {
-			\ 'buffers': 'lightline#bufferline#buffers',
-			\ 'linter_checking': 'lightline#ale#checking',
-			\ 'linter_warnings': 'lightline#ale#warnings',
-			\ 'linter_errors': 'lightline#ale#errors',
-			\ 'linter_ok': 'lightline#ale#ok'
-			\ },
-			\ 'component_type': {
-			\ 'buffers': 'tabsel',
-			\ 'linter_checking': 'left',
-			\ 'linter_warnings': 'warning',
-			\ 'linter_errors': 'error',
-			\ 'linter_ok': 'left'
-			\ },
-			\ 'active': {
-			\ 'left': [[ 'mode', 'paste' ],
-			\ [ 'filename', 'readonly', 'modified' ]],
-			\ 'right': [[ 'lineinfo' ],
-			\ [ 'percent' ],
-			\ [ 'linter_checking', 'linter_warnings', 'linter_errors', 'linter_ok' ]]
-			\ },
-			\}
-let g:lightline.separator = {
-			\   'left': '', 'right': ''
-			\}
-let g:lightline.subseparator = {
-			\   'left': '', 'right': ''
-			\}
-let g:lightline.tabline = {
-  			\   'left': [ ['buffers'] ],
-  			\   'right': [ ['fileformat', 'fileencoding', 'filetype'] ],
-  			\ }
-set showtabline=2  " Show tabline
-let g:lightline#ale#indicator_checking = "..."
-let g:lightline#ale#indicator_warnings = "?"
-let g:lightline#ale#indicator_errors = "!"
-let g:lightline#ale#indicator_ok = ""
-
-" sudo
-cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
-
-" Swap files (backup, swap files written in /tmp)
-set backupdir=/tmp//                    " stored by full file path in /tmp
-set directory=/tmp//                    " stored by full file path in /tmp
-set wb                                  " backups are written before actual writes
-
-" Syntax Highlighting
-filetype plugin on                      " detect file type from file name extensions
-filetype indent on                      " indent based on detected file type
-syntax on                               " use syntax highlighting for detected file type
-
-" Timestamp (press <F3>)
-nmap <F3> i<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
-imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
+set diffopt+=vertical  " diff splits vertically by default
+set splitbelow  " horizontal splits will place new pane below
+set splitright  " vertical splits will place new pane to the right
 
 " Typos
 command-bang Q q<bang>
@@ -202,29 +113,46 @@ command-bang W w<bang>
 command-bang WQ wq<bang>
 command-bang Wq wq<bang>
 
-" Undo
-set undodir=/tmp//                      " stored by full file path in /tmp
-set undofile                            " enable persistent undo
-
-" Visual Wrapping
-set wrap linebreak
-
-" Wildcards
-set wildmode=list:longest               " wildmenu behaves like bash completion
-set wildmenu                            " ctrl-n and ctrl-p scroll thru matches
-set wildignore=*.o,*.obj,*~             " stuff to ignore when tab completing
-set wildignore+=*vim/backups*
-set wildignore+=*sass-cache*
-set wildignore+=*DS_Store*
-set wildignore+=vendor/rails/**
-set wildignore+=vendor/cache/**
-set wildignore+=*.gem
-set wildignore+=log/**
-set wildignore+=tmp/**
-set wildignore+=*.png,*.jpg,*.gif
-
-" Per-filetype settings
-autocmd Filetype html       setlocal sts=2 sw=2 ts=2 expandtab
-autocmd Filetype javascript setlocal sts=2 sw=2 ts=2 expandtab
-autocmd Filetype python     setlocal sts=4 sw=4 ts=4 expandtab
-autocmd Filetype vue        setlocal sts=2 sw=2 ts=2 expandtab
+" User interface
+set showcmd  " show commands as they are typed
+syntax on  " apply syntax highlighting
+"" Line Numbers
+highlight LineNr ctermfg=8|  " line numbers should be dark gray
+set cursorline  " highlight the current line
+highlight CursorLine cterm=None|  " don't highlight the line itself ...
+highlight CursorLineNr ctermfg=7|  " but increase brightness on the line number
+"" Status and Tab lines (lightline)
+set laststatus=2  " always show the status line
+set showtabline=2  " always show the tab line
+set noshowmode  " showing mode is unnecessary with status line plugin
+let g:lightline = {
+			\ 'active': {
+			\ 'left': [[ 'mode', 'paste' ],
+			\ [ 'filename', 'readonly', 'modified' ]],
+			\ 'right': [[ 'lineinfo' ],
+			\ [ 'percent' ],
+			\ [ 'checking', 'warnings', 'errors', 'linter_ok' ]]
+			\ },
+			\ 'colorscheme' : 'soml',
+			\ 'component_expand': {
+			\ 'buffers': 'lightline#bufferline#buffers',
+			\ 'checking': 'lightline#ale#checking',
+			\ 'warnings': 'lightline#ale#warnings',
+			\ 'errors': 'lightline#ale#errors',
+			\ 'linter_ok': 'lightline#ale#ok'
+			\ },
+			\ 'component_type': {
+			\ 'buffers': 'tabsel',
+			\ 'checking': 'left',
+			\ 'warnings': 'warning',
+			\ 'errors': 'error',
+			\ 'linter_ok': 'left'
+			\ },
+			\ 'tabline' : {
+			\ 'left': [ ['buffers'] ],
+			\ 'right': [ ['fileformat', 'fileencoding', 'filetype'] ],
+			\ }}
+let g:lightline#ale#indicator_checking = "..."
+let g:lightline#ale#indicator_warnings = "?"
+let g:lightline#ale#indicator_errors = "!"
+let g:lightline#ale#indicator_ok = ""

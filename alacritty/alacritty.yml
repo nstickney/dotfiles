@@ -38,7 +38,7 @@ window:
     y: 0
 
   # Spread additional padding evenly around the terminal content.
-  dynamic_padding: false
+  dynamic_padding: true
 
   # Window decorations
   #
@@ -175,7 +175,7 @@ colors:
   # Default colors
   primary:
     background: '0x1b1b1b'
-    foreground: '0xe2e2e2'
+    foreground: '0xe6e6e6'
 
     # Bright and dim foreground colors
     #
@@ -204,25 +204,25 @@ colors:
 
   # Normal colors
   normal:
-    black:   '0x303030'
-    red:     '0xd73753'
-    green:   '0x907234'
-    yellow:  '0xc15522'
-    blue:    '0x7a64e9'
-    magenta: '0xb25694'
-    cyan:    '0x538160'
-    white:   '0xc6c6c6'
+    black:   '0x1b1b1b'
+    red:     '0xc22436'
+    green:   '0xa58440'
+    yellow:  '0xe64d00'
+    blue:    '0x0077e6'
+    magenta: '0xab3b85'
+    cyan:    '0x35b181'
+    white:   '0xe6e6e6'
 
   # Bright colors
   bright:
-    black:   '0x474747'
-    red:     '0xff7384'
-    green:   '0xc8a565'
-    yellow:  '0xfe8a53'
-    blue:    '0xb497ff'
-    magenta: '0xec8bca'
-    cyan:    '0x86b693'
-    white:   '0xffffff'
+    black:   '0x333333'
+    red:     '0xdf5363'
+    green:   '0xc6a86c'
+    yellow:  '0xff7733'
+    blue:    '0x339cff'
+    magenta: '0xcb67aa'
+    cyan:    '0x62d0a6'
+    white:   '0xfff8e7'
 
   # Dim colors
   #
@@ -230,13 +230,13 @@ colors:
   # on the `normal` colors.
   dim:
     black:   '0x000000'
-    red:     '0x9e0022'
-    green:   '0x2f4f00'
-    yellow:  '0x852000'
-    blue:    '0x373f95'
-    magenta: '0x7b2161'
-    cyan:    '0x00543b'
-    white:   '0xababab'
+    red:     '0x811824'
+    green:   '0x6e582b'
+    yellow:  '0x993300'
+    blue:    '0x004f99'
+    magenta: '0x722759'
+    cyan:    '0x237656'
+    white:   '0xcccccc'
 
   # Indexed Colors
   #
@@ -272,7 +272,7 @@ colors:
 visual_bell:
   animation: EaseOutExpo
   duration: 0
-  color: '0xd73753'
+  color: '0xc22436'
 
 # Background opacity
 #
@@ -308,7 +308,7 @@ mouse:
   triple_click: { threshold: 300 }
 
   # If this is `true`, the cursor is temporarily hidden when typing.
-  hide_when_typing: false
+  hide_when_typing: true
 
   url:
     # URL launcher
@@ -336,7 +336,7 @@ selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
   # When set to `true`, selected text will be copied to the primary clipboard.
-  save_to_clipboard: false
+  save_to_clipboard: true
 
 # Allow terminal applications to change Alacritty's window title.
 dynamic_title: true

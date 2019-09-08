@@ -58,13 +58,13 @@ git_color() {
 	local needs_push
 	needs_push=$([[ $1 = *"^" ]] && printf '%s' "yes")
 	if [[ -n $staged ]] && [[ -n $dirty ]]; then
-		printf '\033[1;33m'  # bold yellow
+		printf '\033[0;33m'  # yellow
 	elif [[ -n $staged ]]; then
-		printf '\033[1;32m'  # bold green
+		printf '\033[0;32m'  # green
 	elif [[ -n $dirty ]]; then
-		printf '\033[1;31m'  # bold red
+		printf '\033[0;31m'  # red
 	elif [[ -n $needs_push ]]; then
-		printf '\033[1;36m'  # bold teal
+		printf '\033[0;36m'  # cyan
 	else
 		printf ''
 	fi
@@ -111,22 +111,22 @@ __prompt_command() {
 
 	## regular colors
 	local G="\\[\\e[0;32m\\]"  # green
+	local Y="\\[\\e[0;33m\\]"  # yellow
+	local B="\\[\\e[0;34m\\]"  # blue
+	local C="\\[\\e[0;36m\\]"  # cyan
 
 	## emphasized (bolded) colors
 	local ER="\\[\\e[1;31m\\]" # bold red
-	local EY="\\[\\e[1;33m\\]" # bold yellow
-	local EB="\\[\\e[1;34m\\]" # bold blue
-	local EC="\\[\\e[1;36m\\]" # bold cyan
 
-	local UC=$EY                # user's color
-	local UP="$"                # user's prompt
+	local UC=$Y                # user's color
+	local UP="$"               # user's prompt
 	if [ "$(id -u)" -eq '0' ]; then
-		UC=$ER                  # root's color
-		UP="#"                  # root's prompt
+		UC=$ER                 # root's color
+		UP="#"                 # root's prompt
 	fi
 
 	# Next line shows username, hostname, current working directory, git status
-	PS1+="    ${UC}\\u${U}@${EC}\\h${U}:${EB}\${CPWD}${U}\${GTBR}\\n"
+	PS1+="    ${UC}\\u${U}@${C}\\h${U}:${B}\${CPWD}${U}\${GTBR}\\n"
 
 	# Last line shows bash version and prompt level (root vs nonroot)
 	PS1+="[${G}\\s \\V${U}] ${UC}${UP} ${U}"
@@ -138,22 +138,22 @@ PROMPT_COMMAND=__prompt_command
 
 # the tty/framebuffer console
 if [ "$TERM" = 'linux' ]; then
-	printf "\\e]P01B1B1B" # black
-	printf "\\e]P1D73753" # red
-	printf "\\e]P2907234" # green
-	printf "\\e]P3C15522" # brown
-	printf "\\e]P47A64E9" # blue
-	printf "\\e]P5B25694" # magenta
-	printf "\\e]P6538160" # cyan
-	printf "\\e]P7C6C6C6" # light gray
-	printf "\\e]P8474747" # gray
-	printf "\\e]P9FF7384" # bright red
-	printf "\\e]PAC8A565" # bright green
-	printf "\\e]PBFE8A53" # yellow
-	printf "\\e]PCB497FF" # bright blue
-	printf "\\e]PDEC8BCA" # bright magenta
-	printf "\\e]PE86B693" # bright cyan
-	printf "\\e]PFE2E2E2" # white
+	printf "\\e]P01A1A1A" # black
+	printf "\\e]P1C22436" # red
+	printf "\\e]P2A58440" # green
+	printf "\\e]P3E64D00" # brown
+	printf "\\e]P40077E6" # blue
+	printf "\\e]P5AB3B85" # magenta
+	printf "\\e]P635B181" # cyan
+	printf "\\e]P7E6E6E6" # light gray
+	printf "\\e]P8333333" # gray
+	printf "\\e]P9DF5363" # bright red
+	printf "\\e]PAC6A86C" # bright green
+	printf "\\e]PBFF7733" # yellow
+	printf "\\e]PC338CFF" # bright blue
+	printf "\\e]PDCB67AA" # bright magenta
+	printf "\\e]PE62D0A6" # bright cyan
+	printf "\\e]PFFFF8E7" # white
 	clear # fix artifacts
 fi
 

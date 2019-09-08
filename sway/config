@@ -13,14 +13,14 @@ titlebar_border_thickness 1
 titlebar_padding 1
 
 ## Colors
-set $fore   #e2e2e2
-set $fade   #e2e2e295
-set $back   #1b1b1b
-set $bact   #1b1b1b95
+set $fore   #e6e6e6
+set $fade   #e6e6e695
+set $back   #1a1a1a
+set $bact   #1a1a1a95
 set $trns   #00000000
-set $acto   #c15522
-set $actt   #c1552295
-set $hint   #d73753
+set $acto   #e64d00
+set $actt   #e64d0095
+set $hint   #c22436
 
 ### Background
 # output * bg $back solid_color

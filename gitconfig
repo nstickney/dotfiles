@@ -53,6 +53,8 @@
 	FS = fetch --all --recurse-submodules
 	# Last Commit
 	LC = log -1 HEAD
+	# Log Graph
+	LG = log --graph --oneline --all
 	# List Ignored
 	LI = ls-files --others -i --exclude-standard
 	# Push (Force)

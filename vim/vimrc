@@ -29,12 +29,10 @@ hi DiffChange cterm=bold
 hi clear DiffDelete
 hi DiffDelete cterm=bold
 
-" Guides
-set colorcolumn=80,90,100,120
-highlight ColorColumn ctermbg=0
-
 " Indentation
-filetype plugin indent on
+if has('autocmd')
+	filetype plugin indent on
+endif
 set autoindent
 set shiftwidth=4 softtabstop=4 tabstop=4  " tabs are four characters wide
 set cindent cinoptions=(0,u0,U0  " indent with tabs, align with spaces
@@ -59,9 +57,11 @@ nmap <C-j> <Plug>(ale_next_wrap)
 nmap <F3> i<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
 "" List highlight groups applied under the cursor
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-			\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . 
+			\ '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . 
+			\ "> lo<"
+			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . 
+			\ ">"<CR>
 "" Write the current file
 nnoremap <Leader><CR> :write<CR>
 "" Write the current file, and quit
@@ -74,6 +74,12 @@ set mouse=a  " use the mouse in all modes
 
 " Navigation
 set backspace=indent,eol,start  " backspace wraps lines
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j  " Delete comment character when joining commented lines
+endif
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+	runtime! macros/matchit.vim  " use % to jump from if to endif
+endif
 set whichwrap=<,>,[,]  " cursor keys wrap lines
 
 " Scrolling
@@ -83,7 +89,9 @@ set sidescroll=1  " scroll one column at a time sideways
 
 " Search
 set hlsearch  " highlight searches; hit escape twice to clear the highlight
-nnoremap <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
+if maparg('<Esc><Esc>', 'n') ==# ''
+	nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<Esc>
+endif
 set incsearch  " search as you type
 set smartcase  " ignore case unless a capital is typed
 
@@ -113,9 +121,17 @@ command-bang W w<bang>
 command-bang WQ wq<bang>
 command-bang Wq wq<bang>
 
-" User interface
+" Visuals
+set background=dark  " use dark mode syntax highlighting
+set listchars+=trail:-,extends:>,precedes:<,nbsp:+  " 
 set showcmd  " show commands as they are typed
-syntax on  " apply syntax highlighting
+set wildmenu  " show completions for menu items
+if has ('syntax') && !exists('g:syntax_on')
+	syntax enable  " apply syntax highlighting
+endif
+"" Guides
+set colorcolumn=80,90,100,120
+highlight ColorColumn ctermbg=8|  " guide columns are dark gray
 "" Line Numbers
 highlight LineNr ctermfg=8|  " line numbers should be dark gray
 set cursorline  " highlight the current line

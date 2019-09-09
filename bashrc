@@ -110,19 +110,26 @@ __prompt_command() {
 	local U="\\[\\e[0m\\]"     # default foreground color
 
 	## regular colors
+	local R="\\[\\e[0;31m\\]"  # red
 	local G="\\[\\e[0;32m\\]"  # green
 	local Y="\\[\\e[0;33m\\]"  # yellow
 	local B="\\[\\e[0;34m\\]"  # blue
+	local M="\\[\\e[0;35m\\]"  # magenta
 	local C="\\[\\e[0;36m\\]"  # cyan
 
 	## emphasized (bolded) colors
 	local ER="\\[\\e[1;31m\\]" # bold red
 
-	local UC=$Y                # user's color
-	local UP="$"               # user's prompt
-	if [ "$(id -u)" -eq '0' ]; then
+	local UC=$R                # user's color
+	local UP='$'               # user's prompt
+	
+	if [ "$USER" == 'stick' ] || [ "$USER" == 'nstickney' ]; then
+		UC=$Y
+	elif [ "$USER" == 'emma' ] || [ "$USER" == 'emmafreester' ]; then
+		UC=$M
+	elif [ "$(id -u)" -eq '0' ]; then
 		UC=$ER                 # root's color
-		UP="#"                 # root's prompt
+		UP='#'                 # root's prompt
 	fi
 
 	# Next line shows username, hostname, current working directory, git status

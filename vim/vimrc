@@ -1,5 +1,4 @@
 " Backup, swap, and undo
-set autoread  " automatically reload files changed outside vim
 set backupdir=/tmp//  " backup files stored by full file path in /tmp
 set directory=/tmp//  " swap files stored by full file path in /tmp
 set undodir=/tmp//  " undo files stored by full file path in /tmp

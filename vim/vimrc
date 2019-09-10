@@ -125,9 +125,11 @@ set background=dark  " use dark mode syntax highlighting
 set listchars+=trail:-,extends:>,precedes:<,nbsp:+  " 
 set showcmd  " show commands as they are typed
 set wildmenu  " show completions for menu items
-if has ('syntax') && !exists('g:syntax_on')
+if has('syntax') && !exists('g:syntax_on')
 	syntax enable  " apply syntax highlighting
 endif
+"" Conceal
+set conceallevel=2 concealcursor=nc
 "" Guides
 set colorcolumn=80,90,100,120
 highlight ColorColumn ctermbg=8|  " guide columns are dark gray
@@ -171,3 +173,8 @@ let g:lightline#ale#indicator_checking = "..."
 let g:lightline#ale#indicator_warnings = "?"
 let g:lightline#ale#indicator_errors = "!"
 let g:lightline#ale#indicator_ok = ""
+"" Wrapping
+set linebreak wrap  " wrap lines, but only on whitespace/punctuation
+if v:version > 704 || v:version == 704 && has("patch338")
+	set breakindent breakindentopt=min:20,shift:2,sbr
+endif

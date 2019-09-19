@@ -56,13 +56,13 @@ if [ "$USER" == 'stick' ]; then
 
 	### Javascript
 	AddPackage npm # A package manager for javascript
+	AddPackage eslint # An AST-based pattern checker for JavaScript
 
-	### HTML
+	### HTML/CSS
 	AddPackage tidy # A tool to tidy down your HTML code to a clean style
 
 	### Multi-language
 	AddPackage astyle # A free, fast and small automatic formatter for C, C++, C#, and Java source code.
-	AddPackage eslint # An AST-based pattern checker for JavaScript
 	AddPackage prettier # An opinionated code formatter for JS, JSON, CSS, YAML and much more
 
 	### Perl
@@ -83,4 +83,7 @@ if [ "$USER" == 'stick' ]; then
 
 	### Scala
 	AddPackage sbt # The interactive build tool
+
+	### Vimscript
+	AddPackage vint # Lint tool for Vim script Language
 fi

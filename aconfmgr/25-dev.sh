@@ -7,8 +7,7 @@ AddPackage fzf # Command-line fuzzy finder
 AddPackage gdb # The GNU Debugger
 AddPackage git # the fast distributed version control system
 AddPackage git-crypt # Transparent file encryption in Git
-AddPackage hyperfine # A command-line benchmarking tool
-AddPackage namcap # A Pacman package analyzer
+AddPackage --foreign gotop-bin # A terminal based graphical activity monitor inspired by gtop and vtop
 AddPackage nmap # Utility for network discovery and security auditing
 AddPackage parallel # A shell tool for executing jobs in parallel
 AddPackage peda # Python Exploit Development Assistance for GDB
@@ -17,13 +16,17 @@ AddPackage rsync # A file transfer program to keep remote files in sync
 AddPackage tig # Text-mode interface for Git.
 AddPackage tmux # A terminal multiplexer
 AddPackage tree # A directory listing program displaying a depth indented list of files
-AddPackage valgrind # Tool to help find memory-management problems in programs
 AddPackage vim # Vi Improved, a highly configurable, improved version of the vi text editor
 AddPackage vim-spell-en # Language files for Vim spell checking
 
 # Remote admin
 if [ "$USER" == 'stick' ]; then
+	AddPackage hyperfine # A command-line benchmarking tool
+	AddPackage namcap # A Pacman package analyzer
+	AddPackage sshpass # Fool ssh into accepting an interactive password non-interactively
 	AddPackage terraform # Tool for building, changing, and versioning infrastructure safely and efficiently
+	AddPackage valgrind # Tool to help find memory-management problems in programs
+	AddPackage --foreign vim-youcompleteme-git # A code-completion engine for Vim
 
 	# Network Testing
 	AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
@@ -42,7 +45,6 @@ if [ "$USER" == 'stick' ]; then
 	AddPackage cmake # A cross-platform open-source make system
 	AddPackage cppcheck # A tool for static C/C++ code analysis
 	AddPackage flawfinder # Searches through source code for potential security flaws
-	AddPackage vim-omnicppcomplete # vim c++ completion omnifunc with a ctags database
 
 	### Go
 	AddPackage delve # A debugger for the Go programming language.
@@ -73,7 +75,6 @@ if [ "$USER" == 'stick' ]; then
 	AddPackage python-pycodestyle # Python style guide checker
 	AddPackage python-pytest # Simple powerful testing with Python
 	AddPackage tk # A windowing toolkit for use with tcl (python turtles)
-	AddPackage vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
 	AddPackage yapf # Python style guide checker
 
 	### Rust

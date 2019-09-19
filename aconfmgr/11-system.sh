@@ -3,6 +3,7 @@
 AddPackage chrony # Lightweight NTP client and server
 CopyFile /etc/locale.gen
 CopyFile /etc/modprobe.d/blacklist.conf
+CopyFile /etc/systemd/system.conf
 
 # Virtual machine
 if sudo dmesg | grep -q "Hypervisor detected"; then
@@ -45,6 +46,7 @@ else
 	AddPackage pcsc-tools # PC/SC Architecture smartcard tools
 	AddPackage solaar # Device manager for Logitech's Unifying receiver peripherals
 	AddPackage teensy-loader-cli # Command line loader for the teensy microprocessor boards
+	AddPackage usb_modeswitch # Activating switchable USB devices on Linux.
 	CreateLink /etc/systemd/system/multi-user.target.wants/cups.path /usr/lib/systemd/system/cups.path
 	CreateLink /etc/systemd/system/multi-user.target.wants/org.cups.cupsd.path /usr/lib/systemd/system/org.cups.cupsd.path
 	CreateLink /etc/systemd/system/multi-user.target.wants/lm_sensors.service /usr/lib/systemd/system/lm_sensors.service
@@ -73,6 +75,9 @@ else
 	# AddPackage virtualbox-ext-vnc # VirtualBox VNC extension pack
 	# AddPackage --foreign virtualbox-ext-oracle # Oracle VM VirtualBox Extension Pack
 	# AddPackage virtualbox-guest-iso # The official VirtualBox Guest Additions ISO image
+
+	### VMWare
+	AddPackage --foreign vmware-workstation # The industry standard for running multiple operating systems as virtual machines on a single Linux PC.
 fi
 
 # AMD CPU

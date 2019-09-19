@@ -75,6 +75,7 @@ if [ "$USER" == 'stick' ]; then
 	AddPackage python-pycodestyle # Python style guide checker
 	AddPackage python-pytest # Simple powerful testing with Python
 	AddPackage tk # A windowing toolkit for use with tcl (python turtles)
+	AddPackage vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
 	AddPackage yapf # Python style guide checker
 
 	### Rust

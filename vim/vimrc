@@ -1,13 +1,15 @@
 " Backup, swap, and undo
 set backupdir=/tmp//  " backup files stored by full file path in /tmp
 set directory=/tmp//  " swap files stored by full file path in /tmp
+set encoding=utf-8
+scriptencoding utf-8
 set undodir=/tmp//  " undo files stored by full file path in /tmp
 set history=1000  " store lots of history
 set undofile  " enable persistent undo
 set writebackup  " write backups before writing files
 
 " Encoding (set to UTF-8 where available)
-if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
+if v:lang =~? 'utf8$'
 	set fileencodings=usc-bom,utf-8
 endif
 
@@ -61,6 +63,8 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
 			\ "> lo<"
 			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . 
 			\ ">"<CR>
+"" Open a vertical terminal
+nmap ` :vert term<CR>
 "" Write the current file
 nnoremap <Leader><CR> :write<CR>
 "" Write the current file, and quit
@@ -73,10 +77,10 @@ set mouse=a  " use the mouse in all modes
 
 " Navigation
 set backspace=indent,eol,start  " backspace wraps lines
-if v:version > 703 || v:version == 703 && has("patch541")
+if v:version > 703 || v:version == 703 && has('patch541')
   set formatoptions+=j  " Delete comment character when joining commented lines
 endif
-if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) ==# ''
 	runtime! macros/matchit.vim  " use % to jump from if to endif
 endif
 set whichwrap=<,>,[,]  " cursor keys wrap lines
@@ -169,12 +173,12 @@ let g:lightline = {
 			\ 'left': [ ['buffers'] ],
 			\ 'right': [ ['fileformat', 'fileencoding', 'filetype'] ],
 			\ }}
-let g:lightline#ale#indicator_checking = "..."
-let g:lightline#ale#indicator_warnings = "?"
-let g:lightline#ale#indicator_errors = "!"
-let g:lightline#ale#indicator_ok = ""
+let g:lightline#ale#indicator_checking = '...'
+let g:lightline#ale#indicator_warnings = '?'
+let g:lightline#ale#indicator_errors = '!'
+let g:lightline#ale#indicator_ok = ''
 "" Wrapping
 set linebreak wrap  " wrap lines, but only on whitespace/punctuation
-if v:version > 704 || v:version == 704 && has("patch338")
+if v:version > 704 || v:version == 704 && has('patch338')
 	set breakindent breakindentopt=min:20,shift:2,sbr
 endif

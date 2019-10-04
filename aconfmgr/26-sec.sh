@@ -41,9 +41,12 @@ fi
 AddPackage clamav # Anti-virus toolkit for Unix
 AddPackage --foreign clamav-unofficial-sigs # ClamAV Unofficial Signatures Updater maintained by eXtremeSHOK.com
 AddPackage fail2ban # Bans IPs after too many failed authentication attempts
+AddPackage firejail # Linux namespaces sandbox program
 AddPackage lynis # Security and system auditing tool to harden Unix/Linux systems
 AddPackage rkhunter # Checks machines for the presence of rootkits and other unwanted tools
 
+CreateFile /etc/ld.so.preload > /dev/null
+CopyFile /etc/pacman.d/hooks/firejail.hook
 CreateLink /etc/systemd/system/multi-user.target.wants/clamav-daemon.service /usr/lib/systemd/system/clamav-daemon.service
 CreateLink /etc/systemd/system/multi-user.target.wants/clamav-freshclam.service /usr/lib/systemd/system/clamav-freshclam.service
 CreateLink /etc/systemd/system/sockets.target.wants/clamav-daemon.socket /usr/lib/systemd/system/clamav-daemon.socket

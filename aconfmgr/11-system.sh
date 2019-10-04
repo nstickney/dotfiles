@@ -91,6 +91,12 @@ if grep -i -q Intel /proc/cpuinfo 2>/dev/null; then
 	AddPackage xf86-video-intel # X.org Intel i810/i830/i915/945G/G965+ video drivers
 fi
 
+# AMD/ATI Video
+if lspci -v | grep -i 'amd/ati' | grep -i -q 'vga'; then
+	AddPackage mesa-vdpau # Mesa VDPAU drivers
+	AddPackage opencl-mesa # OpenCL support for AMD/ATI Radeon mesa drivers
+fi
+
 # Nvidia (Nouveau)
 if lspci -v | grep -i -q nvidia; then
 	AddPackage xf86-video-nouveau # Open Source 3D acceleration driver for nVidia cards

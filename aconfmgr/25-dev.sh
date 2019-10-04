@@ -2,6 +2,7 @@
 AddPackage bat # Cat clone with syntax highlighting and git integration
 AddPackage cloc # Count lines of code
 AddPackage code # The Open Source build of Visual Studio Code (vscode) editor
+AddPackage ctags # Generates an index file of language objects found in source files
 AddPackage fd # Simple, fast and user-friendly alternative to find
 AddPackage fzf # Command-line fuzzy finder
 AddPackage gdb # The GNU Debugger

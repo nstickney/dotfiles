@@ -31,6 +31,8 @@
 	CE = commit
 	# Commit with Message (requires message argument)
 	CM = commit -m
+	# CTags
+	CT = ! .git/hooks/ctags
 	# CLone
 	CL = clone
 	# CheckOut
@@ -105,3 +107,5 @@
 	UC = clean -dfi
 	# Un-stage
 	US = reset HEAD --
+[init]
+	templatedir = ~/dotfiles/git_template

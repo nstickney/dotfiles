@@ -77,7 +77,7 @@ else
 	# AddPackage virtualbox-guest-iso # The official VirtualBox Guest Additions ISO image
 
 	### VMWare
-	AddPackage --foreign vmware-workstation # The industry standard for running multiple operating systems as virtual machines on a single Linux PC.
+	# AddPackage --foreign vmware-workstation # The industry standard for running multiple operating systems as virtual machines on a single Linux PC.
 fi
 
 # AMD CPU

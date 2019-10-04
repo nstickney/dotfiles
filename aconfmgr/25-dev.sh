@@ -27,7 +27,6 @@ if [ "$USER" == 'stick' ]; then
 	AddPackage sshpass # Fool ssh into accepting an interactive password non-interactively
 	AddPackage terraform # Tool for building, changing, and versioning infrastructure safely and efficiently
 	AddPackage valgrind # Tool to help find memory-management problems in programs
-	AddPackage --foreign vim-youcompleteme-git # A code-completion engine for Vim
 
 	# Network Testing
 	AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application

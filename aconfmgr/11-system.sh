@@ -128,3 +128,6 @@ CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/sy
 CreateLink /etc/systemd/system/multi-user.target.wants/chronyd.service /usr/lib/systemd/system/chronyd.service
 CreateLink /etc/systemd/system/multi-user.target.wants/remote-fs.target /usr/lib/systemd/system/remote-fs.target
 CreateLink /etc/systemd/user/default.target.wants/xdg-user-dirs-update.service /usr/lib/systemd/user/xdg-user-dirs-update.service
+
+SetFileProperty /usr/bin group root
+SetFileProperty /usr/bin owner root

@@ -63,6 +63,7 @@ if [ "$USER" == 'stick' ]; then
 
 	### Multi-language
 	AddPackage astyle # A free, fast and small automatic formatter for C, C++, C#, and Java source code.
+	AddPackage meson # High productivity build system
 	AddPackage prettier # An opinionated code formatter for JS, JSON, CSS, YAML and much more
 
 	### Perl

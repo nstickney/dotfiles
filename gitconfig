@@ -1,15 +1,16 @@
-# vim: set ft=gitconfig:
 [user]
 	name = Stick
 	email = stick@stma.is
 	signingkey = 0A3BAF89EFE25F0D55C5571DEC1B22A58EEB3DFC
-[credential]
-	helper = cache --timeout=3600
 [core]
 	autocrlf = input
-    excludesfile = ~/dotfiles/gitignore
+	excludesfile = ~/dotfiles/gitignore
 [commit]
 	gpgsign = true
+[credential]
+	helper = cache --timeout=3600
+[init]
+	templatedir = ~/dotfiles/git_template
 [alias]
 	# Add All
 	AA = ! git add -A && git ST
@@ -107,5 +108,3 @@
 	UC = clean -dfi
 	# Un-stage
 	US = reset HEAD --
-[init]
-	templatedir = ~/dotfiles/git_template

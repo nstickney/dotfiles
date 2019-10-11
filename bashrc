@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source /usr/local/lib/bashrc.source
+
 # BASE CONFIGURATION ##########################################################
 
 # If not running interactively, don't do anything

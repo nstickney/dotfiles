@@ -13,11 +13,11 @@
 	templatedir = ~/dotfiles/git_template
 [alias]
 	# Add All
-	AA = ! git add -A && git ST
+	AA = ! git add -A && git st
 	# Amend Commit
 	AC = commit --amend
 	# Add Patches
-	AP = ! git add -p && git ST
+	AP = ! git add -p && git st
 	# Add Remote
 	AR = remote add
 	# Add Submodule
@@ -61,17 +61,17 @@
 	# List Ignored
 	LI = ls-files --others -i --exclude-standard
 	# Push (Force)
-	PF = ! git push -f origin "$(git BH)"
+	PF = ! git push -f origin "$(git bh)"
 	# Pull Origin
-	PO = ! git pull origin "$(git BH)"
+	PO = ! git pull origin "$(git bh)"
 	# PuSh
-	PS = ! git push || git push -u origin "$(git BH)"
+	PS = ! git push || git push -u origin "$(git bh)"
 	# Push to Top
-	PT = ! git FA && git RO && git PS
+	PT = ! git fa && git ro && git ps
 	# Pull Upstream
-	PU = ! git pull upstream "$(git BH)"
+	PU = ! git pull upstream "$(git bh)"
 	# Pull (Recurse) (requires remote to pull from as argument)
-	PR = "!f(){ git pull --recurse-submodules -r \"$1\" \"$(git BH)\"; }; f"
+	PR = "!f(){ git pull --recurse-submodules -r \"$1\" \"$(git bh)\"; }; f"
 	# Repo Clean (removes a file or set of files from all commits in a repo)
 	RC = "!f(){ git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch '\"$*\" --prune-empty --tag-name-filter cat -- --all && git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin; git reflog expire --expire=now --all && git gc --prune=now; }; f"
 	# Remove (Force)

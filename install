@@ -63,7 +63,8 @@ main() {
 	printf '    ...Complete!\n'
 
 	printf 'Initializing and updating submodules...\n'
-	git submodule update --init --jobs 8 --recursive --remote
+	git submodule update --init --recursive --remote
+	git submodule foreach 'git checkout master && git pull'
 
 	if [ -x "$(command -v sudo)" ]; then
 		if [ -x "$(command -v iptables)" ]; then

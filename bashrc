@@ -266,7 +266,7 @@ export HISTFILESIZE=8192
 
 # PATH ########################################################################
 
-## Remove duplicate items
+## Remove duplicate items from path
 ## https://unix.stackexchange.com/a/338737
 remove_dups() {
     local D=${2:-:}
@@ -299,6 +299,10 @@ path_override() {
 [ -d "$HOME/.local/bin" ] && path_override "$HOME/.local/bin"
 [ -d "$HOME/dotfiles/overrides" ] && path_override "$HOME/dotfiles/overrides"
 path_append "$HOME/dotfiles/bin"
+
+## Add ~/.local/lib to library path (cleanly)
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$HOME/.local/lib"
+LD_LIBRARY_PATH="$(remove_dups "$LD_LIBRARY_PATH")"
 
 # NVM
 # shellcheck disable=1091

@@ -24,20 +24,31 @@ main() {
 	local _dir="$HOME"/.local
 	mkdir -p "$_dir"
 
-	# install ncurses
-	# cd /tmp
-	# wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.1.tar.gz
-	# tar -xzf ncurses-6.1.tar.gz
-	# cd ncurses-6.1
-	# ./configure --prefix="$_dir"
-	# make
-	# make install
-
-	# install vim
+	# install libevent
 	cd /tmp
-	git clone https://github.com/vim/vim.git
-	cd vim/src
-	./configure --prefix="$_dir" LDFLAGS="-L$_dir/lib"
+	wget https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz
+	tar -xzf libevent-2.1.11-stable.tar.gz
+	cd libevent-2.1.11-stable
+	./configure --prefix="$_dir"
+	make
+	make install
+
+	# install ncurses
+	cd /tmp
+	wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.1.tar.gz
+	tar -xzf ncurses-6.1.tar.gz
+	cd ncurses-6.1
+	./configure --prefix="$_dir" CFLAGS="-I$_dir/include" LDFLAGS="-L$_dir/lib"
+	make
+	make install
+
+	# install tmux
+	cd /tmp
+	wget https://github.com/tmux/tmux/releases/download/2.9a/tmux-2.9a.tar.gz
+	tar -xzf tmux-2.9a.tar.gz
+	cd tmux-2.9a
+	./configure --prefix="$_dir" CFLAGS="-I$_dir/include -I$_dir/include/ncurses" \
+		LDFLAGS="-L$_dir/lib"
 	make
 	make install
 

@@ -20,6 +20,7 @@ AddPackage tmux # A terminal multiplexer
 AddPackage tree # A directory listing program displaying a depth indented list of files
 AddPackage vim # Vi Improved, a highly configurable, improved version of the vi text editor
 AddPackage vim-spell-en # Language files for Vim spell checking
+AddPackage vis # modern, legacy free, simple yet efficient vim-like editor
 
 # Remote admin
 if [ "$USER" == 'stick' ]; then

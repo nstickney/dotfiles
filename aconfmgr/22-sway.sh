@@ -3,6 +3,7 @@ AddPackage sway # Tiling Wayland compositor and replacement for the i3 window ma
 AddPackage swayidle # Idle management daemon for Wayland
 AddPackage swaylock # Screen locker for Wayland
 AddPackage --foreign wdisplays-git # GUI display configurator for wlroots compositors
+AddPackage wl-clipboard # Command-line copy/paste utilities for Wayland
 AddPackage wmname # A utility to set the name of your window manager
 
 AddPackage alacritty # A cross-platform, GPU-accelerated terminal emulator

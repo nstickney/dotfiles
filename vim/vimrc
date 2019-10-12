@@ -1,8 +1,6 @@
 " Backup, swap, and undo
 set backupdir=/tmp//  " backup files stored by full file path in /tmp
 set directory=/tmp//  " swap files stored by full file path in /tmp
-set encoding=utf-8
-scriptencoding utf-8
 set undodir=/tmp//  " undo files stored by full file path in /tmp
 set history=1000  " store lots of history
 set undofile  " enable persistent undo
@@ -15,6 +13,8 @@ nnoremap "+p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '
 nnoremap "*p :let @"=substitute(system("wl-paste --no-newline --primary"), '<C-v><C-m>', '', 'g')<cr>p
 
 " Encoding (set to UTF-8 where available)
+set encoding=utf-8
+scriptencoding utf-8
 if v:lang =~? 'utf8$'
 	set fileencodings=usc-bom,utf-8
 endif

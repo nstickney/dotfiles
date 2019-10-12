@@ -74,15 +74,16 @@ if [ "$USER" == 'stick' ]; then
 	### Python
 	AddPackage autopep8 # A tool that automatically formats Python code to conform to the PEP 8 style guide
 	AddPackage flake8 # The modular source code checker: pep8, pyflakes and co
+	AddPackage python-jedi # Awesome autocompletion for python
 	AddPackage python-pip # The PyPA recommended tool for installing Python packages
 	AddPackage python-pycodestyle # Python style guide checker
 	AddPackage python-pytest # Simple powerful testing with Python
 	AddPackage tk # A windowing toolkit for use with tcl (python turtles)
-	AddPackage vim-jedi # Vim plugin for jedi, an awesome Python autocompletion
 	AddPackage yapf # Python style guide checker
 
 	### Rust
 	AddPackage rust # Systems programming language focused on safety, speed and concurrency
+	AddPackage rust-racer # Code completion for Rust
 
 	### Scala
 	AddPackage sbt # The interactive build tool

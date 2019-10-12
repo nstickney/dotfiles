@@ -28,3 +28,6 @@
 [submodule "vim/pack/stick/start/fzf.vim"]
 	path = vim/pack/stick/start/fzf.vim
 	url = https://github.com/junegunn/fzf.vim
+[submodule "vim/pack/stick/start/completor.vim"]
+	path = vim/pack/stick/start/completor.vim
+	url = https://github.com/maralla/completor.vim

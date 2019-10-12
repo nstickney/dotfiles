@@ -1,33 +1,33 @@
-[submodule "vim/pack/stick/start/lightline"]
-	path = vim/pack/stick/start/lightline
-	url = https://github.com/itchyny/lightline.vim
 [submodule "vim/pack/stick/start/ale"]
 	path = vim/pack/stick/start/ale
 	url = https://github.com/w0rp/ale
-[submodule "vim/pack/stick/start/lightline-ale"]
-	path = vim/pack/stick/start/lightline-ale
-	url = https://github.com/maximbaz/lightline-ale
-[submodule "vim/pack/stick/start/indentLine"]
-	path = vim/pack/stick/start/indentLine
-	url = https://github.com/Yggdroot/indentLine
-[submodule "vim/pack/stick/start/tcomment_vim"]
-	path = vim/pack/stick/start/tcomment_vim
-	url = https://github.com/tomtom/tcomment_vim
-[submodule "vim/pack/stick/start/vim-signify"]
-	path = vim/pack/stick/start/vim-signify
-	url = https://github.com/mhinz/vim-signify
-[submodule "vim/pack/stick/start/lightline-bufferline"]
-	path = vim/pack/stick/start/lightline-bufferline
-	url = https://github.com/mgee/lightline-bufferline
-[submodule "vim/pack/stick/start/vim-abolish"]
-	path = vim/pack/stick/start/vim-abolish
-	url = https://github.com/tpope/vim-abolish
-[submodule "vim/pack/stick/start/sway-vim-syntax"]
-	path = vim/pack/stick/start/sway-vim-syntax
-	url = https://github.com/aouelete/sway-vim-syntax
-[submodule "vim/pack/stick/start/fzf.vim"]
-	path = vim/pack/stick/start/fzf.vim
-	url = https://github.com/junegunn/fzf.vim
 [submodule "vim/pack/stick/start/completor.vim"]
 	path = vim/pack/stick/start/completor.vim
 	url = https://github.com/maralla/completor.vim
+[submodule "vim/pack/stick/start/fzf.vim"]
+	path = vim/pack/stick/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim
+[submodule "vim/pack/stick/start/indentLine"]
+	path = vim/pack/stick/start/indentLine
+	url = https://github.com/Yggdroot/indentLine
+[submodule "vim/pack/stick/start/lightline"]
+	path = vim/pack/stick/start/lightline
+	url = https://github.com/itchyny/lightline.vim
+[submodule "vim/pack/stick/start/lightline-ale"]
+	path = vim/pack/stick/start/lightline-ale
+	url = https://github.com/maximbaz/lightline-ale
+[submodule "vim/pack/stick/start/lightline-bufferline"]
+	path = vim/pack/stick/start/lightline-bufferline
+	url = https://github.com/mgee/lightline-bufferline
+[submodule "vim/pack/stick/start/sway-vim-syntax"]
+	path = vim/pack/stick/start/sway-vim-syntax
+	url = https://github.com/aouelete/sway-vim-syntax
+[submodule "vim/pack/stick/start/tcomment_vim"]
+	path = vim/pack/stick/start/tcomment_vim
+	url = https://github.com/tomtom/tcomment_vim
+[submodule "vim/pack/stick/start/vim-abolish"]
+	path = vim/pack/stick/start/vim-abolish
+	url = https://github.com/tpope/vim-abolish
+[submodule "vim/pack/stick/start/vim-signify"]
+	path = vim/pack/stick/start/vim-signify
+	url = https://github.com/mhinz/vim-signify

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-source /usr/local/lib/bashrc.source
+# Some work machines have this....
+# shellcheck disable=1091
+[ -f /usr/local/lib/bashrc.source ] && source /usr/local/lib/bashrc.source
 
 # BASE CONFIGURATION ##########################################################
 

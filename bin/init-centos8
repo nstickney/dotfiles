@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, you can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuxo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+usage() {
+	printf 'Usage: %s filename\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+main() {
+	# don't run as root... we're going to destroy root login
+	if (( "$(id -u)" == 0 )) && [ -n "$SUDO_COMMAND" ]; then
+		printf 'Do not run this as root (sudo); it invokes sudo as required.\n'
+		exit 1
+	fi
+
+	# destroy root login
+	sudo usermod -p '!' root  # (https://askubuntu.com/a/20453)
+	sudo passwd -d root       # (https://unix.stackexchange.com/q/383301)
+	sudo passwd -l root
+
+	# install
+	sudo yum -y clean all
+	sudo yum -y upgrade
+	sudo yum -y install drpm git tmux vim
+	
+	# disable and remove
+	sudo systemctl disable firewalld
+	sudo yum -y remove iwl{10{0,00,5},135,2000,2030,3160,3945,4965,5000,5150,6000{,g2a},6050,7260}-firmware
+
+	# clean up
+	sudo rm /var/db/sudo/lectured/* -rf
+	history -c
+}
+
+_pos_args=()
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
+	esac
+done
+main ${_pos_args[@]:+"${_pos_args[@]}"}

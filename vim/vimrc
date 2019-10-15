@@ -43,7 +43,7 @@ endif
 set autoindent
 set shiftwidth=4 softtabstop=4 tabstop=4  " tabs are four characters wide
 set cindent cinoptions=(0,u0,U0  " indent with tabs, align with spaces
-highlight SpecialKey ctermfg=0|  " indentation guides are dark gray
+highlight SpecialKey ctermfg=8|  " indentation guides are dark gray
 set list listchars=tab:\│\  " indentation guide (tabs)
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " indentation guide (spaces)
 "" Auto-indent pasted text

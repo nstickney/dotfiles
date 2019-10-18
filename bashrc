@@ -356,13 +356,13 @@ fi
 if [ -d "$HOME"/safe ] && [ -z "$(command -v safe)" ]; then
 	alias safe='cd $HOME/safe || exit'
 fi
-if [ -d "$HOME"/Projects ]; then
-	for i in "$HOME"/Projects/*; do
+if [ -d "$HOME"/projects ]; then
+	for i in "$HOME"/projects/*; do
 		_dir="${i##*/}"
 		_dir="${_dir%% *}"
-		if [ -d "$HOME"/Projects/"$_dir" ] && [ -z "$(command -v "$_dir")" ]; then
+		if [ -d "$HOME"/projects/"$_dir" ] && [ -z "$(command -v "$_dir")" ]; then
 			# shellcheck disable=2139,2140
-			alias "$_dir"="cd $HOME/Projects/$_dir || exit"
+			alias "$_dir"="cd $HOME/projects/$_dir || exit"
 		fi
 	done
 fi

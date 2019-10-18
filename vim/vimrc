@@ -1,7 +1,7 @@
 " Backup, swap, and undo
-set backupdir=/tmp//  " backup files stored by full file path in /tmp
-set directory=/tmp//  " swap files stored by full file path in /tmp
-set undodir=/tmp//  " undo files stored by full file path in /tmp
+set backupdir=$HOME/.cache/vim//  " backup files stored by full file path in /tmp
+set directory=$HOME/.cache/vim//  " swap files stored by full file path in /tmp
+set undodir=$HOME/.cache/vim//  " undo files stored by full file path in /tmp
 set history=1000  " store lots of history
 set undofile  " enable persistent undo
 set writebackup  " write backups before writing files

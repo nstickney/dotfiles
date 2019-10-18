@@ -1,4 +1,4 @@
-"" @cur33's Line Numbers function
+" @cur33's Line Numbers function
 function LineNumberToggle()
 if(&relativenumber != 1)
 	set number!

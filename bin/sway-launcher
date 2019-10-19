@@ -22,8 +22,8 @@ fi
 HIST_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/${0##*/}-history.txt"
 
 DIRS=(
-  /usr/share/applications
   "$HOME/.local/share/applications"
+  /usr/share/applications
   /usr/local/share/applications
 )
 
@@ -153,13 +153,14 @@ desktop)
 
                 END{
                   if(path){
-                    print "cd " path " &&"
+                    print "cd " path " && " exec
+                  } else {
+                    print exec
                   }
-                  print exec
                 }' "${PARAMS[0]}")
   ;;
 command)
   command="${PARAMS[0]}"
   ;;
 esac
-swaymsg -t command exec "$command"
+swaymsg -t command exec "${command/ env / }"

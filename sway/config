@@ -168,7 +168,7 @@ bindsym Mod1+Comma exec $_WALLPAPER
 bindsym Mod1+Shift+o exec $_BIN_DIR/sway-set-opacity.py -a
 
 # launcher
-set $_LAUNCHER exec alacritty -t launcher -e "$_BIN_DIR/sway-launcher"
+set $_LAUNCHER exec alacritty -t launcher -e env TERMINAL_COMMAND="alacritty -e" "$_BIN_DIR/sway-launcher-desktop/sway-launcher-desktop.sh"
 for_window [title="^launcher$"] floating enable, border none
 bindsym --release Super_L $_LAUNCHER
 bindsym Mod1+Tab $_LAUNCHER

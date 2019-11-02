@@ -317,7 +317,7 @@ shopt -s cdspell
 [ "$(uname -s)" != 'Darwin' ] && shopt -s dirspell
 
 # SSH-AGENT ###################################################################
-if [ -n "$(command -v ssh-agent)" ]; then
+if [ -x "$(command -v ssh-agent)" ]; then
 	eval "$(ssh-agent -t 240)" >/dev/null
 	trap '[ -n "$SSH_AGENT_PID" ] && eval $(ssh-agent -k); exit' EXIT
 fi
@@ -328,14 +328,14 @@ fi
 # USEFUL ALIASES ##############################################################
 
 # aurvote
-if [ -n "$(command -v aurvote)" ]; then
+if [ -x "$(command -v aurvote)" ]; then
 	aurvoteall() {
 		pacman -Qm | cut -f1 -d' ' | xargs aurvote
 	}
 fi
 
 # bats (Bash Automated Testing System)
-[ -n "$(command -v bats)" ] && alias bats='time bats'
+[ -x "$(command -v bats)" ] && alias bats='time bats'
 
 # cd
 alias ..='cd ..'
@@ -371,15 +371,15 @@ fi
 [ -z "$(command -v dh)" ] && alias dh='df -Tha --total'
 
 # editor
-[ -n "$(command -v vi)" ] && export EDITOR='vi'
-if [ -n "$(command -v vim)" ]; then
+[ -x "$(command -v vi)" ] && export EDITOR='vi'
+if [ -x "$(command -v vim)" ]; then
 	alias vi='vim'
 	alias vimrc='vi $HOME/.vim/vimrc'
 	export EDITOR='vim'
 fi
 
 # git
-if [ -n "$(command -v git)" ]; then
+if [ -x "$(command -v git)" ]; then
 	# https://unix.stackexchange.com/a/97958
 	git() {
 		# For information on CL and CS, see the gitconfig file
@@ -429,7 +429,7 @@ fi
 [ -z "$(command -v pinc)" ] && alias pinc='ping -c'
 
 # pacman
-if [ -n "$(command -v pacman)" ]; then
+if [ -x "$(command -v pacman)" ]; then
 	pacowns() {
 		pacman -Qo "$(command -v "$1")"
 	}
@@ -439,7 +439,7 @@ fi
 [ -z "$(command -v pf)" ] && alias pf='ps auxf'
 [ -z "$(command -v pg)" ] && alias pg='ps aux | grep -v grep | grep -i -e'
 
-if [ -z "$(command -v kp)" ] && [ -n "$(command -v fzf)" ]; then
+if [ -z "$(command -v kp)" ] && [ -x "$(command -v fzf)" ]; then
 	kp() {
 		local pid
 		pid=$(ps -ef | sed 1d | eval "fzf -m --header='[kill:process]'" | awk \
@@ -453,7 +453,7 @@ if [ -z "$(command -v kp)" ] && [ -n "$(command -v fzf)" ]; then
 fi
 
 # ssh
-if [ -n "$(command -v ssh)" ] && [ -z "$(command -v tunnel)" ]; then
+if [ -x "$(command -v ssh)" ] && [ -z "$(command -v tunnel)" ]; then
 	# Create ssh tunnel on port $2 (default 19998) to server $1
 	tunnel() {
 		ssh -f -N -D "${2:-19998}" -4 "$1"
@@ -477,7 +477,7 @@ fi
 
 # tmux
 # https://www.nathankowald.com/blog/2014/03/tmux-attach-session-alias/
-if [ -n "$(command -v tmux)" ]; then
+if [ -x "$(command -v tmux)" ]; then
 	if [ -z "$(command -v tmax)" ]; then
 		tmax() {
 			if (($# > 0)); then
@@ -494,9 +494,6 @@ if [ -n "$(command -v tmux)" ]; then
 		complete -F _tmax tmax
 	fi
 	[ -z "$(command -v tmls)" ] && alias tmls='tmux ls'
-	if [ -n "$(command -v aerc)" ] && [ -z "$(command -v ta)" ]; then
-		alias ta='tmax aerc aerc'
-	fi
 	if [ "$(type -t tmax)" == 'function' ] && \
 		[ -z "$(command -v tv)" ] && \
 		[ -n "$EDITOR" ]; then
@@ -507,7 +504,7 @@ if [ -n "$(command -v tmux)" ]; then
 fi
 
 # wget, curl, aria2c
-[ -n "$(command -v wget)" ] && alias wget='wget -c'
+[ -x "$(command -v wget)" ] && alias wget='wget -c'
 if [ -z "$(command -v ttfb)" ]; then
 	ttfb() {
 		curl -sSo /dev/null -w "Connect: %{time_connect} TTFB: '\
@@ -521,19 +518,19 @@ if [ "$(id -u)" != 0 ] && [ -n "$(command -v sudo)" ]; then
 	[ -z "$(command -v please)" ] && alias please='sudo $(history -p !!)'
 
 	# Editor
-	[ -n "$(command -v vim)" ] && alias svi="sudo vim"
+	[ -x "$(command -v vim)" ] && alias svi="sudo vim"
 
 	# Networking
 
 	### firewalls
-	[ -n "$(command -v firewall-cmd)" ] && alias sfw='sudo firewall-cmd'
-	[ -n "$(command -v iptables)" ] && alias sipt='sudo iptables'
-	[ -n "$(command -v nft)" ] && alias snft='sudo nft'
+	[ -x "$(command -v firewall-cmd)" ] && alias sfw='sudo firewall-cmd'
+	[ -x "$(command -v iptables)" ] && alias sipt='sudo iptables'
+	[ -x "$(command -v nft)" ] && alias snft='sudo nft'
 
 	### SS / Netstat
-	if [ -n "$(command -v ss)" ]; then
+	if [ -x "$(command -v ss)" ]; then
 		alias ss='sudo ss'
-	elif [ -n "$(command -v netstat)" ]; then
+	elif [ -x "$(command -v netstat)" ]; then
 		alias ss='sudo netstat'
 	fi
 	[ "$(type -t ss)" == "alias" ] && alias sl='ss -lnptu'
@@ -541,21 +538,28 @@ if [ "$(id -u)" != 0 ] && [ -n "$(command -v sudo)" ]; then
 	# Package Managers
 
 	### Apt
-	if [ -n "$(command -v apt)" ]; then
-		alias apt='sudo apt'
-		export _UPDATE='apt update && apt dist-upgrade && apt autoremove'
+	if [ -x "$(command -v apt)" ]; then
+		_APT='apt'
+
+		if [ -x "$(command -v apt-fast)" ]; then
+			_APT='apt-fast'
+		fi
+
+		export _APT
+		alias apt='$_APT'
+		export _UPDATE="$_APT update && $_APT dist-upgrade && $_APT autoremove"
 	fi
 
 	### DNF/Yum
-	[ -n "$(command -v yum)" ] && alias dnf='sudo yum'
-	[ -n "$(command -v dnf)" ] && alias dnf='sudo dnf'
+	[ -x "$(command -v yum)" ] && alias dnf='sudo yum'
+	[ -x "$(command -v dnf)" ] && alias dnf='sudo dnf'
 	[ "$(type -t dnf)" == "alias" ] && export _UPDATE='dnf -y update'
 
 	### Pacman (Reflector/Powerpill/Aurman)
-	if [ -n "$(command -v pacman)" ]; then
+	if [ -x "$(command -v pacman)" ]; then
 
 		# Reflector
-		if [ -n "$(command -v reflector)" ]; then
+		if [ -x "$(command -v reflector)" ]; then
 			_RO='-l 50 -a 12 -p https --sort rate'
 			_ML='/etc/pacman.d/mirrorlist'
 			export _REFLECT="sudo reflector $_RO --save $_ML"
@@ -563,7 +567,7 @@ if [ "$(id -u)" != 0 ] && [ -n "$(command -v sudo)" ]; then
 		fi
 
 		# Powerpill or Pacman
-		if [ -n "$(command -v powerpill)" ]; then
+		if [ -x "$(command -v powerpill)" ]; then
 			PACMAN="$(command -v powerpill)"
 			export _PAC='sudo powerpill'
 		else
@@ -574,7 +578,7 @@ if [ "$(id -u)" != 0 ] && [ -n "$(command -v sudo)" ]; then
 		export _UPDATE="yes | $_PAC -Syyu --noconfirm"
 
 		# Aurman
-		if [ -n "$(command -v aurman)" ]; then
+		if [ -x "$(command -v aurman)" ]; then
 			export _PAC='aurman'
 			export _UPDATE="yes | $_PAC -Syyu --noedit --noconfirm --devel"
 		fi
@@ -604,8 +608,8 @@ if [ "$(id -u)" != 0 ] && [ -n "$(command -v sudo)" ]; then
 	fi
 
 	# System
-	[ -n "$(command -v su)" ] && alias su='sudo su'
-	[ -n "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
+	[ -x "$(command -v su)" ] && alias su='sudo su'
+	[ -x "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
 fi
 
 # USER ALIASES ################################################################

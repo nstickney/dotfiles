@@ -50,6 +50,8 @@ main() {
 	confs['bash']='.bashrc'
 	confs['gdb']='.gdbinit'
 	confs['git']='.gitconfig'
+	confs['gnome-control-center']='.local/share/applications/gnome-control-center.desktop'
+	confs['minecraft-launcher']='.local/share/applications/minecraft-launcher.desktop'
 	confs['sway']='.config/sway'
 	confs['swaylock']='.config/swaylock'
 	confs['tmux']='.tmux.conf'

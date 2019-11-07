@@ -83,7 +83,7 @@ AddPackage xfsprogs # XFS filesystem utilities
 
 AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
 AddPackage augeas # aconfmgr opt dep
-AddPackage --foreign aurman # AUR helper with almost pacman syntax
+AddPackage --foreign yay # Yet another yogurt. Pacman wrapper and AUR helper written in go.
 AddPackage --foreign aurvote # Vote for your favorite AUR packages
 AddPackage --foreign find-the-command # Interactive command-not-found hook for bash and zsh using the power of pacman
 

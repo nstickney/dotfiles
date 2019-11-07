@@ -577,9 +577,10 @@ if [ "$(id -u)" != 0 ] && [ -n "$(command -v sudo)" ]; then
 		export PACMAN
 		export _UPDATE="yes | $_PAC -Syyu --noconfirm"
 
-		# Aurman
-		if [ -x "$(command -v aurman)" ]; then
-			export _PAC='aurman'
+		# Yay
+		if [ -x "$(command -v yay)" ]; then
+			export _PAC='yay'
+			[ "$PACMAN" == "$(command -v powerpill)" ] && export _PAC="yay --pacman powerpill"
 			export _UPDATE="yes | $_PAC -Syyu --noedit --noconfirm --devel"
 		fi
 

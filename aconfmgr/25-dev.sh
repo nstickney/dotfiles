@@ -78,7 +78,7 @@ if [ "$USER" == 'stick' ]; then
 	AddPackage python-pip # The PyPA recommended tool for installing Python packages
 	AddPackage python-pycodestyle # Python style guide checker
 	AddPackage python-pytest # Simple powerful testing with Python
-	AddPackage tk # A windowing toolkit for use with tcl (python turtles)
+	# AddPackage tk # A windowing toolkit for use with tcl (python turtles)
 	AddPackage yapf # Python style guide checker
 
 	### Rust

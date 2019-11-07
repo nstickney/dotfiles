@@ -40,7 +40,11 @@ AddPackage less # A terminal based program for viewing text files
 AddPackage lesspipe # an input filter for the pager less
 AddPackage libtool # A generic library support script
 AddPackage licenses # The standard licenses distribution package
+AddPackage linux # The Linux kernel and modules
+AddPackage linux-firmware # Firmware files for Linux
 AddPackage linux-hardened # The Linux-hardened kernel and modules
+AddPackage linux-headers # Header files and scripts for building modules for Linux kernel
+AddPackage linux-hardened-headers # Header files and scripts for building modules for Linux-hardened kernel
 AddPackage logrotate # Rotates system logs automatically
 AddPackage lsof # Lists open files for running Unix processes
 AddPackage lvm2 # Logical Volume Manager 2 utilities

@@ -13,6 +13,7 @@ AddPackage mesa-demos # Mesa demos and tools
 AddPackage --foreign network-manager-applet-indicator # Applet for managing network connections, with Appindicator/StatusNotifierItem support from GNOME GitLab
 AddPackage slurp # Select a region in a Wayland compositor
 AddPackage playerctl # mpris media player controller and lib for spotify, vlc, audacious, bmp, xmms2, and others.
+AddPackage wl-clipboard # Command-line copy/paste utilities for Wayland
 AddPackage xdg-utils # Command line tools that assist applications with a variety of desktop integration tasks
 AddPackage xorg-xev # Print contents of X events
 

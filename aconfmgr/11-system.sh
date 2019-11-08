@@ -46,14 +46,21 @@ else
 	AddPackage pcsc-tools # PC/SC Architecture smartcard tools
 	AddPackage solaar # Device manager for Logitech's Unifying receiver peripherals
 	AddPackage teensy-loader-cli # Command line loader for the teensy microprocessor boards
+	AddPackage tlp # Linux Advanced Power Management
+	AddPackage tlp-rdw # Linux Advanced Power Management - Radio Device Wizard
+	AddPackage x86_energy_perf_policy # Read or write MSR_IA32_ENERGY_PERF_BIAS
 	AddPackage usb_modeswitch # Activating switchable USB devices on Linux.
 	CreateLink /etc/systemd/system/multi-user.target.wants/cups.path /usr/lib/systemd/system/cups.path
 	CreateLink /etc/systemd/system/multi-user.target.wants/org.cups.cupsd.path /usr/lib/systemd/system/org.cups.cupsd.path
 	CreateLink /etc/systemd/system/multi-user.target.wants/lm_sensors.service /usr/lib/systemd/system/lm_sensors.service
+	CreateLink /etc/systemd/system/multi-user.target.wants/tlp.service /usr/lib/systemd/system/tlp.service
 	CreateLink /etc/systemd/system/printer.target.wants/org.cups.cupsd.service /usr/lib/systemd/system/org.cups.cupsd.service
+	CreateLink /etc/systemd/system/sleep.target.wants/tlp-sleep.service /usr/lib/systemd/system/tlp-sleep.service
 	CreateLink /etc/systemd/system/sockets.target.wants/cups.socket /usr/lib/systemd/system/cups.socket
 	CreateLink /etc/systemd/system/sockets.target.wants/pcscd.socket /usr/lib/systemd/system/pcscd.socket
 	CreateLink /etc/systemd/system/sockets.target.wants/org.cups.cupsd.socket /usr/lib/systemd/system/org.cups.cupsd.socket
+	CreateLink /etc/systemd/system/systemd-rfkill.service /dev/null
+	CreateLink /etc/systemd/system/systemd-rfkill.socket /dev/null
 	CopyFile /etc/nsswitch.conf
 
 	### KVM/QEMU

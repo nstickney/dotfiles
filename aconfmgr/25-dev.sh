@@ -58,7 +58,7 @@ if [ "$USER" == 'stick' ]; then
 
 	### Javascript
 	AddPackage npm # A package manager for javascript
-	AddPackage eslint # An AST-based pattern checker for JavaScript
+	# AddPackage eslint # An AST-based pattern checker for JavaScript
 
 	### HTML/CSS
 	AddPackage tidy # A tool to tidy down your HTML code to a clean style

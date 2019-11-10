@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
-# Some work machines have this....
-# shellcheck disable=1091
-[ -f /usr/local/lib/bashrc.source ] && source /usr/local/lib/bashrc.source
-
 # BASE CONFIGURATION ##########################################################
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+# Used to source various files
+source_if_readable() {
+	# shellcheck disable=1090
+	[ -f "$1" ] && [ -r "$1" ] && source "$1"
+}
+
+# Some work machines have this....
+# shellcheck disable=1091
+source_if_readable /usr/local/lib/bashrc.source
 
 # Vi mode
 set -o vi
@@ -24,17 +30,31 @@ fi
 # Fix perl complaining about LC_ALL
 export LC_ALL=en_US.UTF-8
 
+# Fix spelling
+shopt -s cdspell
+[ "$(uname -s)" != 'Darwin' ] && shopt -s dirspell
+
+# Fix gpg agent
+GPG_TTY="$(tty)"
+export GPG_TTY
+
+# Fix ssh agent
+if [ -x "$(command -v ssh-agent)" ]; then
+	eval "$(ssh-agent -t 240)" >/dev/null
+	trap '[ -n "$SSH_AGENT_PID" ] && eval $(ssh-agent -k); exit' EXIT
+fi
+
+# Tabs default to four spaces wide
+[ -x "$(command -v tabs)" ] && tabs 4
+
 # BASH PROMPT #################################################################
 
 # https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
-
-git_branch() {
-	git branch --no-color 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
-}
+# https://gist.github.com/justintv/168835#gistcomment-3012111
 
 git_status() {
 	# + changes are staged and ready to commit
-	# * unstaged changes are present
+	# ! unstaged changes are present
 	# ? untracked files are present
 	# - changes have been stashed
 	# ^ local commits need to be pushed to the remote
@@ -44,8 +64,8 @@ git_status() {
 	grep -q '^[MADRC]' <<<"$status" && output="$output+"
 	grep -q '^.[MD]' <<<"$status" && output="$output*"
 	grep -q '^??' <<<"$status" && output="$output?"
-	[[ -n $(git stash list) ]] && output="${output}-"
-	[[ -n $(git log --branches --not --remotes) ]] && output="${output}^"
+	[ -n "$(git stash list)" ] && output="${output}-"
+	[ -n "$(git log --branches --not --remotes)" ] && output="${output}^"
 	printf '%s' "$output"
 }
 
@@ -70,17 +90,17 @@ git_color() {
 	elif [[ -n $needs_push ]]; then
 		printf '\033[0;36m'  # cyan
 	else
-		printf ''
+		printf '\033[0;37m'  # light gray
 	fi
 }
 
 git_prompt() {
 	# First, get the branch name...
 	local branch
-	branch=$(git_branch)
+	branch=$(git symbolic-ref HEAD --short 2>/dev/null)
 	# Empty output? Then we're not in a Git repository, so bypass the rest
 	# of the function, producing no output
-	if [[ -n "$branch" ]]; then
+	if [ -n "$branch" ]; then
 		local state
 		state=$(git_status)
 		local color
@@ -94,7 +114,7 @@ git_prompt() {
 __prompt_command() {
 
 	# Start with exit status of previous command, and date
-	PS1="\\n  [\$?] \\D{%a %Y.%m.%d %T}\\n"
+	PS1="\\n  [\\j-\$?] \\D{%a %Y.%m.%d %T}\\n"
 
 	# Git
 	GTBR="$(git_prompt)"
@@ -125,22 +145,20 @@ __prompt_command() {
 	local ER="\\[\\e[1;31m\\]" # bold red
 
 	local UC=$R                # user's color
-	local UP='$'               # user's prompt
-	
+
 	if [ "$USER" == 'stick' ] || [ "$USER" == 'nstickney' ]; then
 		UC=$Y
 	elif [ "$USER" == 'emma' ] || [ "$USER" == 'emmafreester' ]; then
 		UC=$M
 	elif [ "$(id -u)" -eq '0' ]; then
 		UC=$ER                 # root's color
-		UP='#'                 # root's prompt
 	fi
 
 	# Next line shows username, hostname, current working directory, git status
 	PS1+="    ${UC}\\u${U}@${C}\\h${U}:${B}\${CPWD}${U}\${GTBR}\\n"
 
 	# Last line shows bash version and prompt level (root vs nonroot)
-	PS1+="[${G}\\s \\V${U}] ${UC}${UP} ${U}"
+	PS1+="[${G}\\s \\V${U}] ${UC}\\$ ${U}"
 }
 
 PROMPT_COMMAND=__prompt_command
@@ -188,13 +206,16 @@ if grep --color 'a' <<< 'a' &>/dev/null; then
 fi
 
 # diff
-[ -n "$(command -v colordiff)" ] && alias diff='colordiff'
+[ -x "$(command -v colordiff)" ] && alias diff='colordiff'
 
 # less
-if [ -e /usr/bin/source-higthlight-esc.sh ]; then
+if [ -x /usr/bin/source-highlight-esc.sh ]; then
 	export LESSOPEN="| /usr/bin/source-highlight-esc.sh %s"
 	export LESS='-R'
 fi
+
+# make
+[ -x "$(command -v colormake)" ] && alias make='colormake'
 
 # man - colored, and with help
 man() {
@@ -207,29 +228,28 @@ man() {
 		LESS_TERMCAP_ue="$(printf '\e[0m')" \
 		LESS_TERMCAP_us="$(printf '\e[0;34m')" \
 		man "$@" || (help "$@" 2> /dev/null && help "$@" | less)
-	}
+}
+
+# ping
+[ -x "$(command -v prettyping)" ] && alias ping='prettyping'
 
 # COMPLETION ##################################################################
 
 # Bash completion where available
-[ -r /usr/share/bash-completion/bash_completion ] && \
-	. /usr/share/bash-completion/bash_completion
-
-# Find-The-Command
-[ -r /usr/share/doc/find-the-command/ftc.bash ] && \
-	. /usr/share/doc/find-the-command/ftc.bash
+source_if_readable /usr/share/bash-completion/bash_completion
 
 # Fuzzy Finder
-[ -r /usr/share/fzf/completion.bash ] && \
-	. /usr/share/fzf/completion.bash
-[ -r /usr/share/fzf/key-bindings.bash ] && \
-	. /usr/share/fzf/key-bindings.bash
+source_if_readable /usr/share/fzf/completion.bash
+source_if_readable /usr/share/fzf/key-bindings.bash
+
+# Git
+source_if_readable /usr/share/git/completion/git-completion.bash
 
 # History search
 if [[ $- == *i* ]]; then
-    bind '"\e[A": history-search-backward'
-    bind '"\e[B": history-search-forward'
-    bind '"\e[5~": previous-history'
+	bind '"\e[A": history-search-backward'
+	bind '"\e[B": history-search-forward'
+	bind '"\e[5~": previous-history'
 	bind '"\e[6~": next-history'
 fi
 
@@ -245,12 +265,8 @@ fi
 	[ -f "$HOME"/dotfiles/bin/bypass.c ] && \
 	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/dotfiles/bin/bypass.c -o \
 	"$HOME"/dotfiles/bin/bypass.so -ldl -Wall -Wextra
-	[ -x "$HOME"/dotfiles/bin/bypass.so ] && export \
-		LD_PRELOAD=$HOME/dotfiles/bin/bypass.so
-
-# GPG KEY #####################################################################
-GPG_TTY="$(tty)"
-export GPG_TTY
+[ -x "$HOME"/dotfiles/bin/bypass.so ] && \
+	export LD_PRELOAD=$HOME/dotfiles/bin/bypass.so
 
 # HISTORY #####################################################################
 
@@ -270,21 +286,21 @@ export HISTFILESIZE=8192
 
 # PATH ########################################################################
 
-## Remove duplicate items from path
-## https://unix.stackexchange.com/a/338737
+# Remove duplicate items from path
+# https://unix.stackexchange.com/a/338737
 remove_dups() {
-    local D=${2:-:}
-    local path=
-    local dir=
-    while IFS= read -r -d"$D" dir; do
-        [[ $path$D =~ .*$D$dir$D.* ]] || path+="$D$dir"
-    done <<< "$1$D"
-    printf %s "${path#$D}"
+	local D=${2:-:}
+	local path=
+	local dir=
+	while IFS= read -r -d"$D" dir; do
+		[[ $path$D =~ .*$D$dir$D.* ]] || path+="$D$dir"
+	done <<< "$1$D"
+	printf %s "${path#$D}"
 }
 PATH="$(remove_dups "$PATH")"
 
-## Cleanly add an item to the end of $PATH
-## https://unix.stackexchange.com/a/124447
+# Cleanly add an item to the end of $PATH
+# https://unix.stackexchange.com/a/124447
 path_append() {
 	case ":${PATH:=$1}:" in
 		*:$@:*) ;;
@@ -292,7 +308,7 @@ path_append() {
 	esac
 }
 
-## Cleanly add an item to the beginning of $PATH
+# Cleanly add an item to the beginning of $PATH
 path_override() {
 	case ":${PATH:=$1}:" in
 		*:$@:*) ;;
@@ -304,45 +320,52 @@ path_override() {
 [ -d "$HOME/dotfiles/overrides" ] && path_override "$HOME/dotfiles/overrides"
 path_append "$HOME/dotfiles/bin"
 
-## Add ~/.local/lib to library path (cleanly)
+# Add ~/.local/lib to library path (cleanly)
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$HOME/.local/lib"
 LD_LIBRARY_PATH="$(remove_dups "$LD_LIBRARY_PATH")"
 
 # NVM
-# shellcheck disable=1091
-[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
+source_if_readable /usr/share/nvm/init-nvm.sh
 
-# SPELLING ####################################################################
-shopt -s cdspell
-[ "$(uname -s)" != 'Darwin' ] && shopt -s dirspell
+# USER ALIASES ################################################################
 
-# SSH-AGENT ###################################################################
-if [ -x "$(command -v ssh-agent)" ]; then
-	eval "$(ssh-agent -t 240)" >/dev/null
-	trap '[ -n "$SSH_AGENT_PID" ] && eval $(ssh-agent -k); exit' EXIT
+# Alias to directly cd into sub-directory of given path, from anywhere
+alias_directories() {
+	for i in "$1"/*; do
+		_dir="${i##*/}"
+		_dir="${_dir%% *}"
+		if [ -d "$1/$_dir" ] && [ -z "$(command -v "$_dir")" ]; then
+			# shellcheck disable=2139,2140
+			alias "$_dir"="cd -- $1/$_dir || exit"
+		fi
+	done
+}
+alias_directories "$HOME"
+[ -d "$HOME"/projects ] && alias_directories "$HOME"/projects
+
+# apt
+if [ -x "$(command -v apt)" ]; then
+	if [ -x "$(command -v apt-fast)" ]; then
+		alias apt='sudo apt-fast'
+	else
+		alias apt='sudo apt'
+	fi
+	alias aptup='apt update && apt dist-upgrade && apt autoremove'
 fi
-
-# TABS ########################################################################
-[ -n "$(command -v tabs)" ] && tabs 4
-
-# USEFUL ALIASES ##############################################################
 
 # aurvote
-if [ -x "$(command -v aurvote)" ]; then
-	aurvoteall() {
-		pacman -Qm | cut -f1 -d' ' | xargs aurvote
-	}
-fi
+[ -x "$(command -v aurvote)" ] && [ -z "$(command -v aurvoteall)" ] && \
+	alias aurvoteall='pacman -Qm | cut -f1 -d" " | xargs aurvote'
 
-# bats (Bash Automated Testing System)
-[ -x "$(command -v bats)" ] && alias bats='time bats'
+# bats
+[ -x "$(command -v bats)" ] && [ -x "$(command -v time)" ] && \
+	alias bats='time bats'
 
 # cd
-alias ..='cd ..'
+alias .='cd -'
 alias cd..='cd ..'
-alias .-='cd -'
 if [ -z "$(command -v pd)" ]; then
-	pd(){
+	pd() {
 		if [ -n "$1" ]; then
 			pushd "$1" || exit
 		else
@@ -350,79 +373,37 @@ if [ -z "$(command -v pd)" ]; then
 		fi
 	}
 fi
-if [ -d "$HOME"/dotfiles ] && [ -z "$(command -v dotfiles)" ]; then
-	alias dotfiles='cd $HOME/dotfiles || exit'
-fi
-if [ -d "$HOME"/safe ] && [ -z "$(command -v safe)" ]; then
-	alias safe='cd $HOME/safe || exit'
-fi
-if [ -d "$HOME"/projects ]; then
-	for i in "$HOME"/projects/*; do
-		_dir="${i##*/}"
-		_dir="${_dir%% *}"
-		if [ -d "$HOME"/projects/"$_dir" ] && [ -z "$(command -v "$_dir")" ]; then
-			# shellcheck disable=2139,2140
-			alias "$_dir"="cd $HOME/projects/$_dir || exit"
-		fi
-	done
-fi
 
-# df
-[ -z "$(command -v dh)" ] && alias dh='df -Tha --total'
+# dnf (and yum)
+if [ -x "$(command -v dnf)" ]; then
+	alias dnf='sudo dnf'
+elif [ -x "$(command -v yum)" ]; then
+	alias dnf='sudo yum'
+fi
+[ "$(type -t dnf)" == 'alias' ] && alias dnfup='dnf -y update'
 
 # editor
 [ -x "$(command -v vi)" ] && export EDITOR='vi'
 if [ -x "$(command -v vim)" ]; then
-	alias vi='vim'
-	alias vimrc='vi $HOME/.vim/vimrc'
+	# shellcheck disable=2139
+	alias vi="$(command -v vim)"
+	alias svi='sudo "$(command -v vim)"'
 	export EDITOR='vim'
-fi
-
-# git
-if [ -x "$(command -v git)" ]; then
-	# https://unix.stackexchange.com/a/97958
-	git() {
-		# For information on CL and CS, see the gitconfig file
-		/usr/bin/git "$@" && if [ "$1" = 'clone' ] || [ "$1" = 'CL' ] || \
-			[ "$1" = 'CS' ] ; then
-			local _repo="${*: -1}"
-			_repo="${_repo%.git}"
-			_repo="${_repo##*:}"
-			cd "${_repo##*/}" || exit
-		fi
-	}
-
-	if [ -n "$(command -v new-repo)" ]; then
-		tkrepo() {
-			cd "$(new-repo "$@")" || exit
-		}
-	fi
 fi
 
 # ls
 [ -z "$(command -v ll)" ] && alias ll='ls -ahl'
 [ -z "$(command -v sl)" ] && alias sl='ls'
 
-# less is more
-[ -n "$(command -v less)" ] && alias more='less'
-
 # mkdir
 alias mkdir='mkdir -pv'
 
-if [ -z "$(command -v tkdir)" ]; then
-	tkdir() {
-		mkdir -pv "$@" && cd "$_" || exit
-	}
-fi
-
 # makepkg
 [ -n "$(command -v makepkg)" ] && \
-	alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 
 # mosh
-if [ -n "$(command -v mosh)" ] && [ ! -v "$(command -v mop)" ]; then
+[ -n "$(command -v mosh)" ] && [ ! -v "$(command -v mop)" ] && \
 	alias mop='mosh -p 59999'
-fi
 
 # networking
 [ -z "$(command -v ipme)" ] && alias ipme='curl ifconfig.me'
@@ -434,6 +415,28 @@ if [ -x "$(command -v pacman)" ]; then
 		pacman -Qo "$(command -v "$1")"
 	}
 fi
+[ -x "$(command -v powerpill)" ] && \
+	PACMAN="$(command -v powerpill)" && \
+	export PACMAN
+if [ -x "$(command -v reflector)" ] && [ -z "$(command -v reflect)" ]; then
+	reflect() {
+		local OPTS='--age 12 --fastest 50 --protocol https --sort rate'
+		if [ -x "$(command -v spinner)" ]; then
+			sudo spinner "reflector $OPTS --save /etc/pacman.d/mirrorlist" \
+				"Updating mirrorlist:"
+		else
+			printf 'Updating mirrorlist:'
+			# shellcheck disable=2086
+			reflector $OPTS --save /etc/pacman.d/mirrorlist
+			printf ' Done\n'
+		fi
+	}
+fi
+[ -x "$(command -v yay)" ] && [ -z "$(command -v yup)" ] && \
+	alias yup='yay -Syu --noconfirm --devel'
+[ "$(type -t reflect)" == 'function' ] && [ "$(type -t yup)" == 'alias' ] && \
+	[ -z "$(command -v rup)" ] && alias rup='reflect && yup'
+
 
 # ps
 [ -z "$(command -v pf)" ] && alias pf='ps auxf'
@@ -445,7 +448,7 @@ if [ -z "$(command -v kp)" ] && [ -x "$(command -v fzf)" ]; then
 		pid=$(ps -ef | sed 1d | eval "fzf -m --header='[kill:process]'" | awk \
 			'{print $2}')
 
-		if [ "x$pid" != "x" ]; then
+		if [ -n "$pid" ]; then
 			echo "$pid" | xargs kill -"${1:-9}"
 			kp "$@"
 		fi
@@ -472,8 +475,12 @@ if [ -x "$(command -v ssh)" ] && [ -z "$(command -v tunnel)" ]; then
 	}
 fi
 
-# tar
-[ -z "$(command -v untar)" ] && alias untar='tar -zxvf'
+# su and sudo
+[ -x "$(command -v su)" ] && [ -x "$(command -v sudo)" ] && alias su='sudo su'
+
+# systemctl
+[ -x "$(command -v systemctl)" ] && [ -z "$(command -v sctl)" ] && \
+	alias sctl='sudo systemctl'
 
 # tmux
 # https://www.nathankowald.com/blog/2014/03/tmux-attach-session-alias/
@@ -486,20 +493,20 @@ if [ -x "$(command -v tmux)" ]; then
 				tmux attach 2>/dev/null || tmux new "$@"
 			fi
 		}
-		_tmax() {
-			# shellcheck disable=2033
-			read -ra COMPREPLY <<< "$(compgen -W "$(tmux ls -F '#S' | xargs)" \
-				-- "${COMP_WORDS[COMP_CWORD]}")"
+	_tmax() {
+		# shellcheck disable=2033
+		read -ra COMPREPLY <<< "$(compgen -W "$(tmux ls -F '#S' | xargs)" \
+			-- "${COMP_WORDS[COMP_CWORD]}")"
 		}
-		complete -F _tmax tmax
+	complete -F _tmax tmax
 	fi
 	[ -z "$(command -v tmls)" ] && alias tmls='tmux ls'
 	if [ "$(type -t tmax)" == 'function' ] && \
 		[ -z "$(command -v tv)" ] && \
 		[ -n "$EDITOR" ]; then
-		tv() {
-			tmax 'editor' "$EDITOR $*"
-		}
+			tv() {
+				tmax 'editor' "$EDITOR $*"
+			}
 	fi
 fi
 
@@ -509,112 +516,8 @@ if [ -z "$(command -v ttfb)" ]; then
 	ttfb() {
 		curl -sSo /dev/null -w "Connect: %{time_connect} TTFB: '\
 			'%{time_starttransfer} Total time: %{time_total} \n" "$1"
-	}
+		}
 fi
-
-# sudo (only run this part if we're not root, and sudo is installed)
-if [ "$(id -u)" != 0 ] && [ -n "$(command -v sudo)" ]; then
-
-	[ -z "$(command -v please)" ] && alias please='sudo $(history -p !!)'
-
-	# Editor
-	[ -x "$(command -v vim)" ] && alias svi="sudo vim"
-
-	# Networking
-
-	### firewalls
-	[ -x "$(command -v firewall-cmd)" ] && alias sfw='sudo firewall-cmd'
-	[ -x "$(command -v iptables)" ] && alias sipt='sudo iptables'
-	[ -x "$(command -v nft)" ] && alias snft='sudo nft'
-
-	### SS / Netstat
-	if [ -x "$(command -v ss)" ]; then
-		alias ss='sudo ss'
-	elif [ -x "$(command -v netstat)" ]; then
-		alias ss='sudo netstat'
-	fi
-	[ "$(type -t ss)" == "alias" ] && alias sl='ss -lnptu'
-
-	# Package Managers
-
-	### Apt
-	if [ -x "$(command -v apt)" ]; then
-		_APT='apt'
-
-		if [ -x "$(command -v apt-fast)" ]; then
-			_APT='apt-fast'
-		fi
-
-		export _APT
-		alias apt='$_APT'
-		export _UPDATE="$_APT update && $_APT dist-upgrade && $_APT autoremove"
-	fi
-
-	### DNF/Yum
-	[ -x "$(command -v yum)" ] && alias dnf='sudo yum'
-	[ -x "$(command -v dnf)" ] && alias dnf='sudo dnf'
-	[ "$(type -t dnf)" == "alias" ] && export _UPDATE='dnf -y update'
-
-	### Pacman (Reflector/Powerpill/Aurman)
-	if [ -x "$(command -v pacman)" ]; then
-
-		# Reflector
-		if [ -x "$(command -v reflector)" ]; then
-			_RO='-l 50 -a 12 -p https --sort rate'
-			_ML='/etc/pacman.d/mirrorlist'
-			export _REFLECT="sudo reflector $_RO --save $_ML"
-			alias update_mirrors='$_REFLECT'
-		fi
-
-		# Powerpill or Pacman
-		if [ -x "$(command -v powerpill)" ]; then
-			PACMAN="$(command -v powerpill)"
-			export _PAC='sudo powerpill'
-		else
-			PACMAN="$(command -v pacman)"
-			export _PAC='sudo pacman'
-		fi
-		export PACMAN
-		export _UPDATE="yes | $_PAC -Syyu --noconfirm"
-
-		# Yay
-		if [ -x "$(command -v yay)" ]; then
-			export _PAC='yay'
-			[ "$PACMAN" == "$(command -v powerpill)" ] && export _PAC="yay --pacman powerpill"
-			export _UPDATE="yes | $_PAC -Syyu --noedit --noconfirm --devel"
-		fi
-
-		# Aliases
-		alias pac='$_PAC'
-		alias pacup='$_UPDATE'
-		alias pacout='$_PAC -Runcs $($_PAC -Qdtq)'
-	fi
-
-	# Combos(
-	if [ -n "$_UPDATE" ]; then
-		if [ -n "$_REFLECT" ]; then
-			export _FULL_UPDATE="$_REFLECT && $_UPDATE"
-		else
-			export _FULL_UPDATE="$_UPDATE"
-		fi
-		alias rpacup='$_FULL_UPDATE'
-		# Tmux
-		if [ "$(type -t tmax)" == 'function' ] && \
-			[ -z "$(command -v tu)" ] && \
-			[ -n "$_FULL_UPDATE" ]; then
-			tu() {
-				tmax 'sysupdate' "$_FULL_UPDATE"
-			}
-		fi
-	fi
-
-	# System
-	[ -x "$(command -v su)" ] && alias su='sudo su'
-	[ -x "$(command -v systemctl)" ] && alias sctl='sudo systemctl'
-fi
-
-# USER ALIASES ################################################################
 
 # Import bash secrets from protected file
-# shellcheck source=/dev/null
-[ -f "$HOME"/safe/bash-secrets.sh ] && source "$HOME"/safe/bash-secrets.sh
+source_if_readable "$HOME"/safe/bash-secrets.sh

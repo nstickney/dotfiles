@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# https://stackoverflow.com/a/38275644
+
+printf '%s ' "${2:-Processing:}"
+
+(
+	while :; do
+		for c in / - \\ \|; do
+			printf '%s\b' "$c"
+			sleep 1
+		done
+	done
+) &
+
+$1
+
+{ printf '\b'; kill $! && wait $!; } 2>/dev/null
+
+printf ' Done.\n'

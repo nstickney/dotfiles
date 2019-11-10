@@ -5,10 +5,14 @@
 [core]
 	autocrlf = input
 	excludesfile = ~/dotfiles/gitignore
+	preloadindex = true
+	untrackedCache = true
 [commit]
 	gpgsign = true
 [credential]
 	helper = cache --timeout=3600
+[gc]
+	auto = 256
 [init]
 	templatedir = ~/dotfiles/git_template
 [alias]

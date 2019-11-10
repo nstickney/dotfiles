@@ -49,78 +49,18 @@ fi
 
 # BASH PROMPT #################################################################
 
-# https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
-# https://gist.github.com/justintv/168835#gistcomment-3012111
-
-git_status() {
-	# + changes are staged and ready to commit
-	# ! unstaged changes are present
-	# ? untracked files are present
-	# - changes have been stashed
-	# ^ local commits need to be pushed to the remote
-	local status
-	status="$(git status --porcelain --no-ahead-behind 2>/dev/null)"
-	local output
-	grep -q '^[MADRC]' <<<"$status" && output="$output+"
-	grep -q '^.[MD]' <<<"$status" && output="$output*"
-	grep -q '^??' <<<"$status" && output="$output?"
-	[ -n "$(git stash list)" ] && output="${output}-"
-	[ -n "$(git log --branches --not --remotes)" ] && output="${output}^"
-	printf '%s' "$output"
-}
-
-git_color() {
-	# - White if everything is clean
-	# - Green if all changes are staged
-	# - Red if there are uncommitted changes with nothing staged
-	# - Yellow if there are both staged and unstaged changes
-	# - Blue if there are unpushed commits
-	local staged
-	staged=$([[ $1 =~ \+ ]] && printf '%s' "yes")
-	local dirty
-	dirty=$([[ $1 =~ [*\?] ]] && printf '%s' "yes")
-	local needs_push
-	needs_push=$([[ $1 = *"^" ]] && printf '%s' "yes")
-	if [[ -n $staged ]] && [[ -n $dirty ]]; then
-		printf '\033[0;33m'  # yellow
-	elif [[ -n $staged ]]; then
-		printf '\033[0;32m'  # green
-	elif [[ -n $dirty ]]; then
-		printf '\033[0;31m'  # red
-	elif [[ -n $needs_push ]]; then
-		printf '\033[0;36m'  # cyan
-	else
-		printf '\033[0;37m'  # light gray
-	fi
-}
-
-git_prompt() {
-	# First, get the branch name...
-	local branch
-	branch=$(git symbolic-ref HEAD --short 2>/dev/null)
-	# Empty output? Then we're not in a Git repository, so bypass the rest
-	# of the function, producing no output
-	if [ -n "$branch" ]; then
-		local state
-		state=$(git_status)
-		local color
-		color=$(git_color "$state")
-		# Now output the actual code to insert the branch and status
-		# last bit of format string resets color
-		printf ' (\x01%s\x02%s\x01\033[00m\x02)' "$color" "$branch$state"
-	fi
-}
+source_if_readable "$HOME"/dotfiles/gitstatus/gitstatus.prompt.sh
 
 __prompt_command() {
 
 	# Start with exit status of previous command, and date
 	PS1="\\n  [\\j-\$?] \\D{%a %Y.%m.%d %T}\\n"
 
-	# Git
-	GTBR="$(git_prompt)"
+	gitstatus_prompt_update
+	[ -n "$GITSTATUS_PROMPT" ] && GITSTATUS_PROMPT=" ($GITSTATUS_PROMPT)"
 
 	# How many characters of the $PWD should be kept
-	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER} - ${#GTBR}))
+	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER} - ${#GITSTATUS_PROMPT}))
 	local dir=${PWD##*/}
 	pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
 	CPWD=${PWD/#$HOME/\~}
@@ -155,7 +95,7 @@ __prompt_command() {
 	fi
 
 	# Next line shows username, hostname, current working directory, git status
-	PS1+="    ${UC}\\u${U}@${C}\\h${U}:${B}\${CPWD}${U}\${GTBR}\\n"
+	PS1+="    ${UC}\\u${U}@${C}\\h${U}:${B}\${CPWD}${U}\${GITSTATUS_PROMPT}\\n"
 
 	# Last line shows bash version and prompt level (root vs nonroot)
 	PS1+="[${G}\\s \\V${U}] ${UC}\\$ ${U}"

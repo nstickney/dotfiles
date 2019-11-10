@@ -37,3 +37,6 @@
 [submodule "bin/sway-launcher-desktop"]
 	path = bin/sway-launcher-desktop
 	url = https://github.com/Biont/sway-launcher-desktop
+[submodule "gitstatus"]
+	path = gitstatus
+	url = https://github.com/romkatv/gitstatus

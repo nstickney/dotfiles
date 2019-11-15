@@ -186,12 +186,10 @@ source_if_readable /usr/share/fzf/key-bindings.bash
 source_if_readable /usr/share/git/completion/git-completion.bash
 
 # History search
-if [[ $- == *i* ]]; then
-	bind '"\e[A": history-search-backward'
-	bind '"\e[B": history-search-forward'
-	bind '"\e[5~": previous-history'
-	bind '"\e[6~": next-history'
-fi
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+bind '"\e[5~": previous-history'
+bind '"\e[6~": next-history'
 
 # Sudo Completion
 [ -n "$(command -v sudo)" ] && complete -cf sudo
@@ -340,6 +338,8 @@ alias mkdir='mkdir -pv'
 
 # makepkg
 [ -n "$(command -v makepkg)" ] && \
+	alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
+
 
 # mosh
 [ -n "$(command -v mosh)" ] && [ ! -v "$(command -v mop)" ] && \

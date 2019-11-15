@@ -283,7 +283,7 @@ alias_directories "$HOME"
 
 # apt
 if [ -x "$(command -v apt)" ]; then
-	if [ -x "$(command -v apt-fast)" ]; then
+	if [ -x "$(command -v apt-fast)" ] || [ -x /usr/sbin/apt-fast ]; then
 		alias apt='sudo apt-fast'
 	else
 		alias apt='sudo apt'

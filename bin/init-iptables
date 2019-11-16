@@ -305,7 +305,7 @@ main() {
 	
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"
-	sipt -L | sed 's/^/  /'
+	sipt -L -n | sed 's/^/  /'
 	printf '\n'
 
 	# Make rules persistent

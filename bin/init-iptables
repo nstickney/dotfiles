@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
-set -eEuo pipefail
-trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+set -eu
+trap flush_all_rules HUP INT QUIT TERM
 
 usage() {
 	printf 'Usage: %s\n' "$(basename "$0")" >&2
@@ -10,14 +10,30 @@ usage() {
 	exit
 }
 
-user_confirm() {
-	while true; do
-		read -r -p "$1 [y/N]: " -n 1 yn
+__get_ch() {
+	# Get an answer
+	if [ -n "${1:-}" ]; then
+		old=$(stty -g)
+		stty raw min 0 time "$1"
+		printf '%s' "$(dd bs=1 count=1 2>/dev/null)"
+		stty "$old"
+	else
+		old=$(stty -g)
+		stty raw min 1 time 0
+		printf '%s' "$(dd bs=1 count=1 2>/dev/null)"
+		stty "$old"
+	fi
+}
+
+__ask() {
+	while :; do
+		printf '%s' "${1:-'Input Required'} [y/N]: "
+		answer=$(__get_ch "${4:-}")
 		printf '\n'
-		case $yn in
-			[Yy]* ) eval "$2"; break;;
-			[Nn]* ) [ -n "${3:-}" ] && eval "$3"; break;;
-			"" ) break;;
+		case "$answer" in
+			[Yy]*) eval "${2:-}"; break;;
+			[Nn]*) eval "${3:-}"; break;;
+			"") [ -n "${4:-}" ] && eval "${5:-}"; break;;
 		esac
 	done
 }
@@ -36,7 +52,7 @@ add_bittorrent_rules() {
 		sipt -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
 		sipt -A OUTPUT -p udp -m udp --dport "$i" -j ACCEPT
 	done
-	user_confirm 'Allow BitTorrent inbound?' add_bittorrent_incoming
+	__ask 'Allow BitTorrent inbound?' add_bittorrent_incoming
 }
 
 add_minecraft_rules() {
@@ -56,7 +72,7 @@ add_openvpn_rules() {
 }
 
 add_outbound_ssh() {
-	user_confirm 'Does this computer need outbound ssh access?' \
+	__ask 'Does this computer need outbound ssh access?' \
 		'sipt -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT'
 }
 
@@ -76,20 +92,21 @@ add_workstation_rules() {
 	sipt -A OUTPUT -p tcp -m tcp --dport 6697 -j ACCEPT # IRC
 	sipt -A OUTPUT -p tcp -m tcp --dport 11371 -j ACCEPT # HKPS
 	sipt -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
-	user_confirm 'Does this computer use network printers?' add_printing_rules
-	user_confirm 'Is this computer used to play Minecraft?' add_minecraft_rules
-	user_confirm 'Is this computer used to access MongoDB?' \
+	__ask 'Does this computer use network printers?' add_printing_rules
+	__ask 'Is this computer used to play Minecraft?' add_minecraft_rules
+	__ask 'Is this computer used to access MongoDB?' \
 		'sipt -A OUTPUT -p tcp -m tcp --dport 27017 -j ACCEPT'
-	user_confirm 'Is this computer used to access ProxMox?' \
+	__ask 'Is this computer used to access ProxMox?' \
 		'sipt -A OUTPUT -p tcp -m tcp --dport 8006 -j ACCEPT'
-	user_confirm 'Is this computer used to access Remote Desktop (RDP)?' \
+	__ask 'Is this computer used to access Remote Desktop (RDP)?' \
 		'sipt -A OUTPUT -p tcp -m tcp --dport 3389 -j ACCEPT'
-	user_confirm 'Is this computer used to access vSphere?' \
+	__ask 'Is this computer used to access vSphere?' \
 		'sipt -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT'
 }
 
 flush_all_rules() {
 	# Clear initial rules (set all policies to ACCEPT and delete extra chains)
+	printf 'Flushing iptables\n'
 	sipt -P INPUT ACCEPT
 	sipt -P FORWARD ACCEPT
 	sipt -P OUTPUT ACCEPT
@@ -97,6 +114,7 @@ flush_all_rules() {
 	sipt -X
 	
 	if [ -x "$(command -v ip6tables)" ]; then
+		printf 'Flushing ip6tables\n'
 		sudo ip6tables -P INPUT ACCEPT
 		sudo ip6tables -P FORWARD ACCEPT
 		sudo ip6tables -P OUTPUT ACCEPT
@@ -114,7 +132,7 @@ save_permanent_iptables() {
 	# On an Arch machine:
 	elif [ -x "$(command -v pacman)" ] && \
 		[ -x "$(command -v iptables-save)" ]; then
-		sipt-save | sudo tee /etc/iptables/iptables.rules >/dev/null
+		sudo iptables-save | sudo tee /etc/iptables/iptables.rules >/dev/null
 
 	# On a CentOS machine:
 	elif [ -x "$(command -v yum)" ] && \
@@ -122,7 +140,7 @@ save_permanent_iptables() {
 		sudo service iptables save
 	
 	# On a Debian machine:
-	elif [ -x "$(apt)" ] && dpkg -s iptables-persistent >/dev/null 2>&1; then
+	elif [ -x "$(command -v dpkg)" ] && dpkg -s iptables-persistent >/dev/null 2>&1; then
 		sudo dpkg-reconfigure -y iptables-persistent
 	
 	# Otherwise, fail:
@@ -147,13 +165,13 @@ main() {
 	# firewalld sanity check
 	if [ -x "$(command -v firewall-cmd)" ]; then
 		printf 'firewalld conflicts with these settings.\n'
-		user_confirm 'Abort setting up iptables?' 'exit 1'
+		__ask 'Abort setting up iptables?' 'exit 1'
 	fi
 
 	# nftables sanity check
 	if [ -x "$(command -v nft)" ]; then
 		printf 'You have nftables installed. It supercedes iptables.\n'
-		user_confirm 'Abort setting up iptables?' 'exit 1'
+		__ask 'Abort setting up iptables?' 'exit 1'
 	fi
 
 	# sudo check
@@ -163,18 +181,16 @@ main() {
 	fi
 
 	# Don't run with sudo! Need to preserve $SSH_CLIENT in some situations
-	if (( "$(id -u)" == 0 )) && [ -n "$SUDO_COMMAND" ]; then
+	if [ "$(id -u)" -eq 0 ] && [ -n "$SUDO_COMMAND" ]; then
 		printf 'Do not run this as root (sudo); it invokes sudo as required.\n'
 		exit 1
 	fi
 
 	# Find necessary information
-	local _NETS
 	_NETS="$(ip a | grep 'inet ' | grep -v 'inet 127\.' | \
 		sed 's/  //g; s/inet //g; s/ .*//g')"
 
-	if [ -n "${SSH_CLIENT}" ]; then
-		local SSH_ADDR
+	if [ -n "${SSH_CLIENT:-}" ]; then
 		SSH_ADDR="$(echo "$SSH_CLIENT" | cut -d' ' -f1)"
 	fi
 
@@ -208,7 +224,7 @@ main() {
 		-m tcp --dport 22 -j ACCEPT
 
 	for _NET in $_NETS; do
-		local _ADDR="${_NET%%/*}"
+		_ADDR="${_NET%%/*}"
 		# Prevent host spoofing
 		sipt -A INPUT -s "$_ADDR" -j DROP
 		sipt -A OUTPUT -d "$_ADDR" -j DROP
@@ -256,17 +272,17 @@ main() {
 	sipt -A OUTPUT -p udp -m udp --dport 123 -j ACCEPT # NTP
 
 	# Allow BitTorrent?
-	user_confirm 'Allow BitTorrent?' add_bittorrent_rules
+	__ask 'Allow BitTorrent?' add_bittorrent_rules
 
 	# Allow OpenVPN outbound?
-	user_confirm 'Does this computer use OpenVPN?' add_openvpn_rules
+	__ask 'Does this computer use OpenVPN?' add_openvpn_rules
 
 	# Allow WireGuard outbound?
-	user_confirm 'Does this computer use WireGuard?' \
+	__ask 'Does this computer use WireGuard?' \
 		'sipt -A OUTPUT -p udp -m udp --dport 51820 -j ACCEPT'
 
 	# Workstation?
-	user_confirm 'Is this machine a workstation?' \
+	__ask 'Is this machine a workstation?' \
 		add_workstation_rules add_outbound_ssh
 
 	# Set default policy for all chains to DROP
@@ -284,13 +300,8 @@ main() {
 
 	# "Cleverness" https://unix.stackexchange.com/a/104361
 	sleep 1
-	read -t 10 -r -p "Still connected? [y/N]: " -n 1 yn
-	printf '\n'
-	case $yn in
-		[Yy]* ) printf 'Rules confirmed.\n';;
-		[Nn]* ) flush_all_rules;;
-		"" ) flush_all_rules;;
-	esac
+	__ask 'Still connected?' "printf 'Rules confirmed.\n'" \
+		flush_all_rules 100 flush_all_rules
 	
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"
@@ -298,24 +309,22 @@ main() {
 	printf '\n'
 
 	# Make rules persistent
-	user_confirm 'Save rules persistently?' save_permanent_iptables
+	__ask 'Save rules persistently?' save_permanent_iptables
 	# Alpine only: actually start the service
 	[ -x "$(command -v rc-service)" ] && sudo rc-service iptables restart
 
 	# Start iptables at boot
 	if [ -x "$(command -v systemctl)" ]; then
-		user_confirm 'Start iptables at boot?' 'sudo systemctl enable iptables'
+		__ask 'Start iptables at boot?' 'sudo systemctl enable iptables'
 	elif [ -x "$(command -v rc-update)" ]; then
-		user_confirm 'Start iptables at boot?' 'sudo rc-update add iptables'
+		__ask 'Start iptables at boot?' 'sudo rc-update add iptables'
 	fi
 }
 
 
-_pos_args=()
 while [ "$#" -gt 0 ]; do
 	case "$1" in
-		'--help'|'-h') usage;;
-		*) _pos_args+=("$1"); shift;;
+		*) usage;;
 	esac
 done
-main ${_pos_args[@]:+"${_pos_args[@]}"}
+main

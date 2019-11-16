@@ -16,67 +16,93 @@ user_confirm() {
 		printf '\n'
 		case $yn in
 			[Yy]* ) eval "$2"; break;;
-			[Nn]* ) break;;
+			[Nn]* ) [ -n "${3:-}" ] && eval "$3"; break;;
 			"" ) break;;
 		esac
 	done
 }
 
+sipt() {
+	sudo iptables "$@"
+}
+
 add_bittorrent_incoming() {
-	sudo iptables -A INPUT -p tcp -m tcp --dport 8999 -j ACCEPT
-	sudo iptables -A INPUT -p udp -m udp --dport 8999 -j ACCEPT
+	sipt -A INPUT -p tcp -m tcp --dport 8999 -j ACCEPT
+	sipt -A INPUT -p udp -m udp --dport 8999 -j ACCEPT
 }
 
 add_bittorrent_rules() {
 	for i in 6969 8999 51413; do
-		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
-		sudo iptables -A OUTPUT -p udp -m udp --dport "$i" -j ACCEPT
+		sipt -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
+		sipt -A OUTPUT -p udp -m udp --dport "$i" -j ACCEPT
 	done
 	user_confirm 'Allow BitTorrent inbound?' add_bittorrent_incoming
 }
 
 add_minecraft_rules() {
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 25565 -j ACCEPT
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 27094 -j ACCEPT
+	sipt -A OUTPUT -p tcp -m tcp --dport 25565 -j ACCEPT
+	sipt -A OUTPUT -p tcp -m tcp --dport 27094 -j ACCEPT
 }
 
 add_printing_rules() {
 	for i in 161 515 631; do
-		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
+		sipt -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
 	done
 }
 
 add_openvpn_rules() {
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 1194 -j ACCEPT
-	sudo iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
+	sipt -A OUTPUT -p tcp -m tcp --dport 1194 -j ACCEPT
+	sipt -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
+}
+
+add_outbound_ssh() {
+	user_confirm 'Does this computer need outbound ssh access?' \
+		'sipt -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT'
 }
 
 add_workstation_rules() {
 
 	# Allow ping
-	sudo iptables -A INPUT -p icmp --icmp-type 0 -j ACCEPT  # echo reply
-	sudo iptables -A INPUT -p icmp --icmp-type 3 -j ACCEPT  # unreachable
-	sudo iptables -A INPUT -p icmp --icmp-type 11 -j ACCEPT # time exceeded
-	sudo iptables -A INPUT -p icmp --icmp-type 12 -j ACCEPT # parameter problem
-	sudo iptables -A OUTPUT -p icmp --icmp-type 8 -j ACCEPT # echo request
+	sipt -A INPUT -p icmp --icmp-type 0 -j ACCEPT  # echo reply
+	sipt -A INPUT -p icmp --icmp-type 3 -j ACCEPT  # unreachable
+	sipt -A INPUT -p icmp --icmp-type 11 -j ACCEPT # time exceeded
+	sipt -A INPUT -p icmp --icmp-type 12 -j ACCEPT # parameter problem
+	sipt -A OUTPUT -p icmp --icmp-type 8 -j ACCEPT # echo request
 
 	# Allow needed workstation outbound access
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT # WHOIS
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT # RSYNC
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6697 -j ACCEPT # IRC
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 11371 -j ACCEPT # HKPS
-	sudo iptables -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
+	sipt -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH
+	sipt -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT # WHOIS
+	sipt -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT # RSYNC
+	sipt -A OUTPUT -p tcp -m tcp --dport 6697 -j ACCEPT # IRC
+	sipt -A OUTPUT -p tcp -m tcp --dport 11371 -j ACCEPT # HKPS
+	sipt -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
 	user_confirm 'Does this computer use network printers?' add_printing_rules
 	user_confirm 'Is this computer used to play Minecraft?' add_minecraft_rules
 	user_confirm 'Is this computer used to access MongoDB?' \
-		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 27017 -j ACCEPT'
+		'sipt -A OUTPUT -p tcp -m tcp --dport 27017 -j ACCEPT'
 	user_confirm 'Is this computer used to access ProxMox?' \
-		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 8006 -j ACCEPT'
+		'sipt -A OUTPUT -p tcp -m tcp --dport 8006 -j ACCEPT'
 	user_confirm 'Is this computer used to access Remote Desktop (RDP)?' \
-		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 3389 -j ACCEPT'
+		'sipt -A OUTPUT -p tcp -m tcp --dport 3389 -j ACCEPT'
 	user_confirm 'Is this computer used to access vSphere?' \
-		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT'
+		'sipt -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT'
+}
+
+flush_all_rules() {
+	# Clear initial rules (set all policies to ACCEPT and delete extra chains)
+	sipt -P INPUT ACCEPT
+	sipt -P FORWARD ACCEPT
+	sipt -P OUTPUT ACCEPT
+	sipt -F
+	sipt -X
+	
+	if [ -x "$(command -v ip6tables)" ]; then
+		sudo ip6tables -P INPUT ACCEPT
+		sudo ip6tables -P FORWARD ACCEPT
+		sudo ip6tables -P OUTPUT ACCEPT
+		sudo ip6tables -F
+		sudo ip6tables -X
+	fi
 }
 
 save_permanent_iptables() {
@@ -88,7 +114,7 @@ save_permanent_iptables() {
 	# On an Arch machine:
 	elif [ -x "$(command -v pacman)" ] && \
 		[ -x "$(command -v iptables-save)" ]; then
-		sudo iptables-save | sudo tee /etc/iptables/iptables.rules >/dev/null
+		sipt-save | sudo tee /etc/iptables/iptables.rules >/dev/null
 
 	# On a CentOS machine:
 	elif [ -x "$(command -v yum)" ] && \
@@ -147,7 +173,7 @@ main() {
 	_NETS="$(ip a | grep 'inet ' | grep -v 'inet 127\.' | \
 		sed 's/  //g; s/inet //g; s/ .*//g')"
 
-	if [ -n "${SSH_CLIENT+x}" ]; then
+	if [ -n "${SSH_CLIENT}" ]; then
 		local SSH_ADDR
 		SSH_ADDR="$(echo "$SSH_CLIENT" | cut -d' ' -f1)"
 	fi
@@ -156,83 +182,78 @@ main() {
 	# If this is an Alpine system, don't start iptables until the end
 	[ -x "$(command -v systemctl)" ] && sudo systemctl restart iptables
 
-	# Clear initial rules (set all policies to ACCEPT and delete extra chains)
-	sudo iptables -P INPUT ACCEPT
-    sudo iptables -P FORWARD ACCEPT
-    sudo iptables -P OUTPUT ACCEPT
-	sudo iptables -F
-	sudo iptables -X
+	flush_all_rules
 
 	# The "BASE" chain will be used to hold rules applied to all other chains
-	sudo iptables -N BASE
-	sudo iptables -A INPUT -j BASE
-	sudo iptables -A FORWARD -j BASE
-	sudo iptables -A OUTPUT -j BASE
+	sipt -N BASE
+	sipt -A INPUT -j BASE
+	sipt -A FORWARD -j BASE
+	sipt -A OUTPUT -j BASE
 
 	# Drop invalid connections
-	sudo iptables -A BASE -m state --state INVALID -j DROP
+	sipt -A BASE -m state --state INVALID -j DROP
 
 	# Allow established connections
-	sudo iptables -A BASE -m state --state ESTABLISHED,RELATED -j ACCEPT
+	sipt -A BASE -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 	# Allow loopback in and out
-	sudo iptables -A BASE -i lo -o lo -j ACCEPT
-	sudo iptables -A BASE -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
+	sipt -A BASE -i lo -o lo -j ACCEPT
+	sipt -A BASE -s 127.0.0.0/8 -d 127.0.0.0/8 -j ACCEPT
 
 	# Jump back after the base chain
-	sudo iptables -A BASE -j RETURN
+	sipt -A BASE -j RETURN
 
 	# Anti-lockout rule (allow SSH from current connection)
-	[ -z "${SSH_ADDR+x}" ] || sudo iptables -A INPUT -s "$SSH_ADDR" -p tcp \
+	[ -z "${SSH_ADDR+x}" ] || sipt -A INPUT -s "$SSH_ADDR" -p tcp \
 		-m tcp --dport 22 -j ACCEPT
 
 	for _NET in $_NETS; do
 		local _ADDR="${_NET%%/*}"
 		# Prevent host spoofing
-		sudo iptables -A INPUT -s "$_ADDR" -j DROP
-		sudo iptables -A OUTPUT -d "$_ADDR" -j DROP
+		sipt -A INPUT -s "$_ADDR" -j DROP
+		sipt -A OUTPUT -d "$_ADDR" -j DROP
 		
 		# Allow DHCP for faster renewals
-		sudo iptables -A INPUT -s "$_NET" -p udp -m udp --sport 67 -m udp \
+		sipt -A INPUT -s "$_NET" -p udp -m udp --sport 67 -m udp \
 			--dport 68 -j ACCEPT
 
 		# Allow mDNS for zeroconf
-		sudo iptables -A INPUT -s "$_NET" -p udp -m udp --dport 5353 -j ACCEPT
-		sudo iptables -A OUTPUT -d "$_NET" -p udp -m udp --dport 5353 -j ACCEPT
+		sipt -A INPUT -s "$_NET" -p udp -m udp --dport 5353 -j ACCEPT
+		sipt -A OUTPUT -d "$_NET" -p udp -m udp --dport 5353 -j ACCEPT
 
 		# Allow Mosh
-		sudo iptables -A INPUT -s "$_NET" -p udp -m udp --dport 59999 -j ACCEPT
+		sipt -A INPUT -s "$_NET" -p udp -m udp --dport 59999 -j ACCEPT
 
 		# Allow ping
-		sudo iptables -A INPUT -s "$_NET" -p icmp --icmp-type 8 -j ACCEPT   # req
-		sudo iptables -A OUTPUT -d "$_NET" -p icmp --icmp-type 0 -j ACCEPT  # rep
+		sipt -A INPUT -s "$_NET" -p icmp --icmp-type 8 -j ACCEPT   # req
+		sipt -A OUTPUT -d "$_NET" -p icmp --icmp-type 0 -j ACCEPT  # rep
 
 		# Allow ssh
-		sudo iptables -A INPUT -s "$_NET" -p tcp -m tcp --dport 22 -j ACCEPT
+		sipt -A INPUT -s "$_NET" -p tcp -m tcp --dport 22 -j ACCEPT
 	done
 
 	# mDNS
-	sudo iptables -A INPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT
-	sudo iptables -A OUTPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT
+	sipt -A INPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT
+	sipt -A OUTPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT
 
 	# Uncomment the lines below as needed to make services available
-	# sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH (DANGER)
-	# sudo iptables -A INPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
-	# sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
-	# sudo iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
-	# sudo iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
-	# sudo iptables -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap
-	# sudo iptables -A INPUT -p tcp -m tcp --dport 25565 -j ACCEPT # Minecraft
-	# sudo iptables -A INPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH (DANGER)
+	# sipt -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH (DANGER)
+	# sipt -A INPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
+	# sipt -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
+	# sipt -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
+	# sipt -A INPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
+	# sipt -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap
+	# sipt -A INPUT -p tcp -m tcp --dport 25565 -j ACCEPT # Minecraft
+	# sipt -A INPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH (DANGER)
 
 	# Allow required services outbound (TCP)
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
+	sipt -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
+	sipt -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
 
 	# Allow required services outbound (UDP)
-	sudo iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
-	sudo iptables -A OUTPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
-	sudo iptables -A OUTPUT -p udp -m udp --dport 123 -j ACCEPT # NTP
+	sipt -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
+	sipt -A OUTPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
+	sipt -A OUTPUT -p udp -m udp --dport 123 -j ACCEPT # NTP
 
 	# Allow BitTorrent?
 	user_confirm 'Allow BitTorrent?' add_bittorrent_rules
@@ -242,15 +263,16 @@ main() {
 
 	# Allow WireGuard outbound?
 	user_confirm 'Does this computer use WireGuard?' \
-		'sudo iptables -A OUTPUT -p udp -m udp --dport 51820 -j ACCEPT'
+		'sipt -A OUTPUT -p udp -m udp --dport 51820 -j ACCEPT'
 
 	# Workstation?
-	user_confirm 'Is this machine a workstation?' add_workstation_rules
+	user_confirm 'Is this machine a workstation?' \
+		add_workstation_rules add_outbound_ssh
 
 	# Set default policy for all chains to DROP
-	sudo iptables -P INPUT DROP
-	sudo iptables -P FORWARD DROP
-	sudo iptables -P OUTPUT DROP
+	sipt -P INPUT DROP
+	sipt -P FORWARD DROP
+	sipt -P OUTPUT DROP
 
 	# Also drop IPv6
 	if [ -x "$(command -v ip6tables)" ]; then
@@ -260,9 +282,19 @@ main() {
 		sudo ip6tables -P OUTPUT DROP
 	fi
 
+	# "Cleverness" https://unix.stackexchange.com/a/104361
+	sleep 1
+	read -t 10 -r -p "Still connected? [y/N]: " -n 1 yn
+	printf '\n'
+	case $yn in
+		[Yy]* ) printf 'Rules confirmed.\n';;
+		[Nn]* ) flush_all_rules;;
+		"" ) flush_all_rules;;
+	esac
+	
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"
-	sudo iptables -L | sed 's/^/  /'
+	sipt -L | sed 's/^/  /'
 	printf '\n'
 
 	# Make rules persistent

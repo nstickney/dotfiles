@@ -17,6 +17,7 @@ source_if_readable /usr/local/lib/bashrc.source
 
 # Vi mode
 set -o vi
+bind -m vi-insert "\C-l":clear-screen
 
 # Check window size after each command and update $LINES and $COLUMNS as needed
 [ "$DISPLAY" ] && shopt -s checkwinsize

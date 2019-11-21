@@ -33,6 +33,8 @@ if [ "$USER" == 'stick' ]; then
 	# Network Testing
 	AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
 	AddPackage ipguard # arp<->ip relation checking tool
+	AddPackage --foreign python-locust-git # Scalable user load testing tool written in Python
+	AddPackage --foreign python-gevent-git # fix for locust + python 3.8
 	AddPackage vegeta # HTTP load testing tool
 
 	# Programming Languages

@@ -96,12 +96,15 @@ fi
 if grep -i -q Intel /proc/cpuinfo 2>/dev/null; then
 	AddPackage intel-ucode # Microcode update files for Intel CPUs
 	AddPackage xf86-video-intel # X.org Intel i810/i830/i915/945G/G965+ video drivers
+	AddPackage vulkan-intel # Intel's Vulkan mesa driver
 fi
 
 # AMD/ATI Video
 if lspci -v | grep -i 'amd/ati' | grep -i -q 'vga'; then
+	AddPackage libva-mesa-driver #  VA-API implementation for gallium
 	AddPackage mesa-vdpau # Mesa VDPAU drivers
 	AddPackage opencl-mesa # OpenCL support for AMD/ATI Radeon mesa drivers
+	AddPackage vulkan-radeon # Radeon's Vulkan mesa driver
 fi
 
 # Nvidia (Nouveau)

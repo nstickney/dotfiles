@@ -55,13 +55,13 @@ source_if_readable "$HOME"/dotfiles/gitstatus/gitstatus.prompt.sh
 __prompt_command() {
 
 	# Start with exit status of previous command, and date
-	PS1="\\n  [\\j-\$?] \\D{%a %Y.%m.%d %T}\\n"
+	PS1="\\n    \\D{%a %Y.%m.%d %T} [\\j][\${PIPESTATUS[@]}]\\n"
 
 	gitstatus_prompt_update
 	[ -n "$GITSTATUS_PROMPT" ] && GITSTATUS_PROMPT=" ($GITSTATUS_PROMPT)"
 
 	# How many characters of the $PWD should be kept
-	local pwdmaxlen=$((COLUMNS - 34 - ${#HOSTNAME} - ${#USER} - ${#GITSTATUS_PROMPT}))
+	local pwdmaxlen=$((COLUMNS - 32 - ${#HOSTNAME} - ${#USER} - ${#GITSTATUS_PROMPT}))
 	local dir=${PWD##*/}
 	pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
 	CPWD=${PWD/#$HOME/\~}
@@ -96,7 +96,7 @@ __prompt_command() {
 	fi
 
 	# Next line shows username, hostname, current working directory, git status
-	PS1+="    ${UC}\\u${U}@${C}\\h${U}:${B}\${CPWD}${U}\${GITSTATUS_PROMPT}\\n"
+	PS1+="  ${UC}\\u${U}@${C}\\h${U}:${B}\${CPWD}${U}\${GITSTATUS_PROMPT}\\n"
 
 	# Last line shows bash version and prompt level (root vs nonroot)
 	PS1+="[${G}\\s \\V${U}] ${UC}\\$ ${U}"

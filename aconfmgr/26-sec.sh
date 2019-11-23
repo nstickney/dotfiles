@@ -40,7 +40,7 @@ fi
 # AddPackage aide # A file integrity checker and intrusion detection program.
 AddPackage clamav # Anti-virus toolkit for Unix
 AddPackage --foreign clamav-unofficial-sigs # ClamAV Unofficial Signatures Updater maintained by eXtremeSHOK.com
-AddPackage firejail # Linux namespaces sandbox program
+# AddPackage firejail # Linux namespaces sandbox program
 AddPackage lynis # Security and system auditing tool to harden Unix/Linux systems
 AddPackage rkhunter # Checks machines for the presence of rootkits and other unwanted tools
 

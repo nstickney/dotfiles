@@ -3,6 +3,7 @@ AddPackage bat # Cat clone with syntax highlighting and git integration
 AddPackage cloc # Count lines of code
 AddPackage code # The Open Source build of Visual Studio Code (vscode) editor
 AddPackage ctags # Generates an index file of language objects found in source files
+AddPackage --foreign eva # simple calculator REPL, similar to bc(1)
 AddPackage fd # Simple, fast and user-friendly alternative to find
 AddPackage fzf # Command-line fuzzy finder
 AddPackage gdb # The GNU Debugger
@@ -22,8 +23,8 @@ AddPackage vim # Vi Improved, a highly configurable, improved version of the vi 
 AddPackage vim-spell-en # Language files for Vim spell checking
 AddPackage vis # modern, legacy free, simple yet efficient vim-like editor
 
-# Remote admin
 if [ "$USER" == 'stick' ]; then
+	AddPackage hexyl # Colored command-line hex viewer
 	AddPackage hyperfine # A command-line benchmarking tool
 	AddPackage namcap # A Pacman package analyzer
 	AddPackage sshpass # Fool ssh into accepting an interactive password non-interactively

@@ -1,7 +1,10 @@
 # shellcheck disable=SC2148
+AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
+AddPackage augeas # aconfmgr opt dep
 AddPackage afpfs-ng # A client for the Apple Filing Protocol (AFP)
 AddPackage arch-audit # An utility like pkg-audit based on Arch CVE Monitoring Team data
 AddPackage arch-install-scripts # Scripts to aid in installing Arch Linux
+AddPackage --foreign aurvote # Vote for your favorite AUR packages
 AddPackage autoconf # A GNU tool for automatically configuring source code
 AddPackage automake # A GNU tool for automatically creating Makefiles
 AddPackage bash # The GNU Bourne Again shell
@@ -65,7 +68,7 @@ AddPackage pciutils # PCI bus configuration space access library and tools
 AddPackage perl # A highly capable, feature-rich programming language
 AddPackage pkgconf # Package compiler and linker metadata toolkit
 AddPackage pkgfile # a pacman .files metadata explorer
-AddPackage powerpill # Pacman wrapper for faster downloads.
+AddPackage --foreign powerpill # Pacman wrapper for faster downloads.
 AddPackage procps-ng # Utilities for monitoring your system and its processes
 AddPackage psmisc # Miscellaneous procfs tools
 AddPackage reflector # A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
@@ -84,12 +87,7 @@ AddPackage usbutils # USB Device Utilities
 AddPackage util-linux # Miscellaneous system utilities for Linux
 AddPackage which # A utility to show the full path of commands
 AddPackage xfsprogs # XFS filesystem utilities
-
-AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
-AddPackage augeas # aconfmgr opt dep
 AddPackage --foreign yay # Yet another yogurt. Pacman wrapper and AUR helper written in go.
-AddPackage --foreign aurvote # Vote for your favorite AUR packages
-AddPackage --foreign find-the-command # Interactive command-not-found hook for bash and zsh using the power of pacman
 
 CopyFile /etc/makepkg.conf
 CopyFile /etc/pacman.conf

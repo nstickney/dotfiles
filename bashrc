@@ -373,10 +373,12 @@ if [ -x "$(command -v reflector)" ] && [ -z "$(command -v reflect)" ]; then
 		fi
 	}
 fi
-[ -x "$(command -v yay)" ] && [ -z "$(command -v yup)" ] && \
-	alias yup='yay -Syu --noconfirm --devel'
-[ "$(type -t reflect)" == 'function' ] && [ "$(type -t yup)" == 'alias' ] && \
-	[ -z "$(command -v rup)" ] && alias rup='reflect && yup'
+if [ -x "$(command -v yay)" ]; then
+	[ -z "$(command -v pac)" ] && alias pac='yay'
+	[ -z "$(command -v pup)" ] && alias pup='yay -Syu --noconfirm --devel'
+fi
+[ "$(type -t reflect)" == 'function' ] && [ "$(type -t pup)" == 'alias' ] && \
+	[ -z "$(command -v rup)" ] && alias rup='reflect && pup'
 
 
 # ps

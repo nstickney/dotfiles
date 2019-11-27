@@ -12,7 +12,6 @@ AddPackage grim # Screenshot utility that works under Wayland
 AddPackage --foreign i3status-rust-git # Very resourcefriendly and feature-rich replacement for i3status, written in pure Rust
 AddPackage pacman-contrib # used in i3status-rust-git config
 AddPackage imv # Image viewer for Wayland and X11
-AddPackage mesa-demos # Mesa demos and tools
 AddPackage --foreign network-manager-applet-indicator # Applet for managing network connections, with Appindicator/StatusNotifierItem support from GNOME GitLab
 AddPackage playerctl # mpris media player controller and lib for spotify, vlc, audacious, bmp, xmms2, and others.
 AddPackage python-i3ipc # An improved Python library to control i3wm

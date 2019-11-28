@@ -38,17 +38,11 @@ __ask() {
 	done
 }
 
-add_bittorrent_incoming() {
-	sudo iptables -A INPUT -p tcp -m tcp --dport 8999 -j ACCEPT
-	sudo iptables -A INPUT -p udp -m udp --dport 8999 -j ACCEPT
-}
-
 add_bittorrent_rules() {
-	for i in 6969 8999 51413; do
+	for i in 6969 6881:6889 8999 51413; do
 		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
 		sudo iptables -A OUTPUT -p udp -m udp --dport "$i" -j ACCEPT
 	done
-	__ask 'Allow BitTorrent inbound?' add_bittorrent_incoming
 }
 
 add_minecraft_rules() {
@@ -257,6 +251,8 @@ main() {
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 25565 -j ACCEPT # Minecraft
 	# sudo iptables -A INPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH (DANGER)
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 8999 -j ACCEPT # BitTorrent
+	# sudo iptables -A INPUT -p udp -m udp --dport 8999 -j ACCEPT # BitTorrent
 
 	# Allow required services outbound (TCP)
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP

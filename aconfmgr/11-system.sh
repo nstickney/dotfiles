@@ -100,7 +100,7 @@ if grep -i -q Intel /proc/cpuinfo 2>/dev/null; then
 fi
 
 # AMD/ATI Video
-if lspci -v | grep -i 'amd/ati' | grep -i -q 'vga'; then
+if sudo lspci -v | grep -i 'amd/ati' | grep -i -q 'vga'; then
 	AddPackage libva-mesa-driver #  VA-API implementation for gallium
 	AddPackage mesa-vdpau # Mesa VDPAU drivers
 	AddPackage opencl-mesa # OpenCL support for AMD/ATI Radeon mesa drivers
@@ -108,7 +108,7 @@ if lspci -v | grep -i 'amd/ati' | grep -i -q 'vga'; then
 fi
 
 # Nvidia (Nouveau)
-if lspci -v | grep -i -q nvidia; then
+if sudo lspci -v | grep -i -q nvidia; then
 	AddPackage xf86-video-nouveau # Open Source 3D acceleration driver for nVidia cards
 fi
 

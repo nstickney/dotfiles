@@ -40,3 +40,6 @@
 [submodule "gitstatus"]
 	path = gitstatus
 	url = https://github.com/romkatv/gitstatus
+[submodule "vim/pack/stick/start/vim-go"]
+	path = vim/pack/stick/start/vim-go
+	url = https://github.com/fatih/vim-go

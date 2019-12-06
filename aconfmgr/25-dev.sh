@@ -10,6 +10,7 @@ AddPackage gdb # The GNU Debugger
 AddPackage git # the fast distributed version control system
 AddPackage git-crypt # Transparent file encryption in Git
 AddPackage --foreign gotop-bin # A terminal based graphical activity monitor inspired by gtop and vtop
+AddPackage --foreign goimports-git # Tool to fix (add, remove) your Go imports automatically.
 AddPackage --foreign lf # A terminal file manager inspred by ranger written in Go
 AddPackage nmap # Utility for network discovery and security auditing
 AddPackage parallel # A shell tool for executing jobs in parallel

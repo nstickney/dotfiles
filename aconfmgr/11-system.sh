@@ -32,6 +32,7 @@ else
 
 		# Printer
 		AddPackage --foreign brother-mfc-j480dw # LPR and CUPS driver for the Brother MFC-j480DW
+		AddPackage --foreign xerox-workcentre-6515 # CUPS driver for the Xerox WorkCentre 6515
 	fi
 
 	AddPackage android-udev # Udev rules to connect Android devices to your linux box

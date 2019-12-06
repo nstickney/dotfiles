@@ -81,6 +81,7 @@ if [ "$USER" == 'stick' ]; then
 	AddPackage python-jedi # Awesome autocompletion for python
 	AddPackage python-pip # The PyPA recommended tool for installing Python packages
 	AddPackage python-pycodestyle # Python style guide checker
+	AddPackage --foreign python-pgzero # A zero-boilerplate 2D games framework
 	AddPackage python-pytest # Simple powerful testing with Python
 	# AddPackage tk # A windowing toolkit for use with tcl (python turtles)
 	AddPackage yapf # Python style guide checker

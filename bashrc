@@ -364,7 +364,7 @@ if [ -x "$(command -v reflector)" ] && [ -z "$(command -v reflect)" ]; then
 		local OPTS='--age 12 --fastest 50 --protocol https --sort rate'
 		if [ -x "$(command -v spinner)" ]; then
 			sudo spinner "reflector $OPTS --save /etc/pacman.d/mirrorlist" \
-				"Updating mirrorlist:"
+				"Updating mirrorlist:" 'unicode'
 		else
 			printf 'Updating mirrorlist:'
 			# shellcheck disable=2086

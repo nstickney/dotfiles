@@ -4,13 +4,16 @@
 
 printf '%s ' "${2:-Processing:}"
 
+chars='/ - \\ \|'
+[ "$3" == 'unicode' ] && chars='▁ ▂ ▃ ▄ ▅ ▆ ▇ █ ▇ ▆ ▅ ▄ ▃ ▂ ▁'
+
 (
-	while :; do
-		for c in / - \\ \|; do
-			printf '%s\b' "$c"
-			sleep 1
-		done
+while :; do
+	for c in $chars; do
+		printf '%s\b' "$c"
+		sleep 0.25
 	done
+done
 ) &
 
 $1

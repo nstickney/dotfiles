@@ -314,9 +314,7 @@ main() {
 }
 
 
-while [ "$#" -gt 0 ]; do
-	case "$1" in
-		*) usage;;
-	esac
-done
+case "${1:-}" in
+	*) usage;;
+esac
 main

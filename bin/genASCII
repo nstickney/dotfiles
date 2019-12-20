@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, you can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+usage() {
+	printf 'Usage: %s filename\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+main() {
+	jp2a --width=120 "$1" > "$1".txt
+	# https://unix.stackexchange.com/a/249348
+	convert -size 1920x1280 xc:black -font 'Source-Code-Pro' -pointsize 12 \
+		-fill white -annotate +16+16 "@$1.txt" -trim "$1ASCII.png"
+	imv "$1ASCII.png"
+}
+
+_pos_args=()
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
+	esac
+done
+main ${_pos_args[@]:+"${_pos_args[@]}"}

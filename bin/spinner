@@ -4,8 +4,8 @@
 
 printf '%s ' "${2:-Processing:}"
 
-chars='/ - \\ \|'
-[ "$3" == 'unicode' ] && chars='▁ ▂ ▃ ▄ ▅ ▆ ▇ █ ▇ ▆ ▅ ▄ ▃ ▂ ▁'
+chars='/ - \ |'
+[ "$3" = 'unicode' ] && chars='▁ ▂ ▃ ▄ ▅ ▆ ▇ █ ▇ ▆ ▅ ▄ ▃ ▂ ▁'
 
 (
 while :; do

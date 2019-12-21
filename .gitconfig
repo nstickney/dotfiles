@@ -29,7 +29,7 @@
 	# Add remote URL
 	AU = remote set-url --add
 	# Branch Here
-	BH = rev-parse --abrev-ref HEAD
+	BH = rev-parse --abbrev-ref HEAD
 	# BRanch
 	BR = branch
 	# Commit and write the message in Editor

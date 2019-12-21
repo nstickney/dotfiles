@@ -512,8 +512,10 @@ fi
 [ -x "$(command -v wget)" ] && alias wget='wget -c'
 if [ -z "$(command -v ttfb)" ]; then
 	ttfb() {
-		curl -sSo /dev/null -w "Connect: %{time_connect} TTFB: '\
-			'%{time_starttransfer} Total time: %{time_total} \n" "$1"
+		local line='Connect: %{time_connect}'
+		line+=' TTFB: %{time_starttransfer}'
+		line+=' Total time: %{time_total} \n'
+		curl -sSo /dev/null -w "$line" "$1"
 		}
 fi
 

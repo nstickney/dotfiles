@@ -4,7 +4,7 @@
 	signingkey = 0A3BAF89EFE25F0D55C5571DEC1B22A58EEB3DFC
 [core]
 	autocrlf = input
-	excludesfile = ~/dotfiles/gitignore
+	excludesfile = ~/.config/gitignore
 	preloadindex = true
 	untrackedCache = true
 [commit]
@@ -14,7 +14,7 @@
 [gc]
 	auto = 256
 [init]
-	templatedir = ~/dotfiles/git_template
+	templatedir = ~/.config/git_template
 [alias]
 	# Add All
 	AA = ! git add -A && git st
@@ -29,7 +29,7 @@
 	# Add remote URL
 	AU = remote set-url --add
 	# Branch Here
-	BH = "!f(){ git branch --no-color | grep "\\*" | cut -f2 -d' '; }; f"
+	BH = rev-parse --abrev-ref HEAD
 	# BRanch
 	BR = branch
 	# Commit and write the message in Editor

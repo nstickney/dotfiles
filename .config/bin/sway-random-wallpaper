@@ -9,15 +9,19 @@ set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 
 usage() {
-	printf 'Usage: %s [on|off]\n' "$(basename "$0")" >&2
+	printf 'Usage: %s filename\n' "$(basename "$0")" >&2
 	printf ' -h --help : display this message\n' >&2
 	exit
 }
 
 main() {
 	while read -r _display; do
-		swaymsg "output $_display dpms $1"
-	done <<< "$("$HOME"/dotfiles/bin/sway-get-active-outputs.py)"
+		local _dir
+		_dir="$(realpath "$1")"
+		local _img
+		_img="$(find "$_dir" ! -wholename "$_dir" | shuf -n 1)"
+		swaymsg "output $_display bg $_img fill ${2:-#111111}"
+	done <<< "$("$HOME"/.config/bin/sway-get-active-outputs.py)"
 }
 
 _pos_args=()

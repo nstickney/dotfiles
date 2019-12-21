@@ -50,7 +50,7 @@ fi
 
 # BASH PROMPT #################################################################
 
-source_if_readable "$HOME"/dotfiles/gitstatus/gitstatus.plugin.sh
+source_if_readable "$HOME"/.config/gitstatus/gitstatus.plugin.sh
 
 # shellcheck disable=2120
 gitstatus_prompt_update() {
@@ -254,13 +254,13 @@ bind '"\e[6~": next-history'
 
 # Defeat Snoopy logging
 # http://blog.rchapman.org/posts/Bypassing_snoopy_logging/
-[ ! -f "$HOME"/dotfiles/bin/bypass.so ] && \
+[ ! -f "$HOME"/.config/bin/bypass.so ] && \
 	[ -x "$(command -v gcc)" ] && \
-	[ -f "$HOME"/dotfiles/bin/bypass.c ] && \
-	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/dotfiles/bin/bypass.c -o \
-	"$HOME"/dotfiles/bin/bypass.so -ldl -Wall -Wextra
-[ -x "$HOME"/dotfiles/bin/bypass.so ] && \
-	export LD_PRELOAD=$HOME/dotfiles/bin/bypass.so
+	[ -f "$HOME"/.config/bin/bypass.c ] && \
+	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/.config/bin/bypass.c -o \
+	"$HOME"/.config/bin/bypass.so -ldl -Wall -Wextra
+[ -x "$HOME"/.config/bin/bypass.so ] && \
+	export LD_PRELOAD=$HOME/.config/bin/bypass.so
 
 # HISTORY #####################################################################
 
@@ -311,8 +311,8 @@ path_override() {
 }
 
 [ -d "$HOME/.local/bin" ] && path_override "$HOME/.local/bin"
-[ -d "$HOME/dotfiles/overrides" ] && path_override "$HOME/dotfiles/overrides"
-path_append "$HOME/dotfiles/bin"
+[ -d "$HOME/.config/overrides" ] && path_override "$HOME/.config/overrides"
+path_append "$HOME/.config/bin"
 
 # Add ~/.local/lib to library path (cleanly)
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$HOME/.local/lib"
@@ -519,3 +519,13 @@ fi
 
 # Import bash secrets from protected file
 source_if_readable "$HOME"/safe/bash-secrets.sh
+
+# Dotfiles bare repository
+if [ -x "$(command -v dots)" ]; then
+	printf '***** WARNING ***********************************'
+	# shellcheck disable=2016
+	printf 'The `dots` command exists on this system already!'
+	printf '*************************************************'
+else
+	alias dots='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+fi

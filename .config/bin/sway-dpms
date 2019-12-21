@@ -9,24 +9,15 @@ set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 
 usage() {
-	printf 'Usage: %s\n' "$(basename "$0")" >&2
+	printf 'Usage: %s [on|off]\n' "$(basename "$0")" >&2
 	printf ' -h --help : display this message\n' >&2
 	exit
 }
 
 main() {
-
-	# Take a screenshot and pixelate it 10x
-	local _image
-	local _final=()
 	while read -r _display; do
-		_image="/tmp/screen_locked_$_display.png"
-		grim -o "$_display" -s 0.05 "$_image"
-		_final+=('-i')
-		_final+=("$_display:$_image")
-	done <<< "$("$HOME"/dotfiles/bin/sway-get-active-outputs.py)"
-
-	swaylock -f -e -F "${_final[@]}"
+		swaymsg "output $_display dpms $1"
+	done <<< "$("$HOME"/.config/bin/sway-get-active-outputs.py)"
 }
 
 _pos_args=()

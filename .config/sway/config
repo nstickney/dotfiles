@@ -1,6 +1,6 @@
 set $_BG_DIR $HOME/.wallpaper
-set $_BIN_DIR $HOME/dotfiles/bin
-set $_CONFIG_DIR $HOME/dotfiles/sway
+set $_BIN_DIR $HOME/.config/bin
+set $_CONFIG_DIR $HOME/.config/sway
 set $_LOCK $_BIN_DIR/sway-pixelate-and-lock
 
 include $_CONFIG_DIR/"$(hostname)".config

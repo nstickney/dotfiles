@@ -13,8 +13,6 @@
 	helper = cache --timeout=3600
 [gc]
 	auto = 256
-[init]
-	templatedir = ~/.config/git_template
 [alias]
 	# Add All
 	AA = ! git add -A && git st

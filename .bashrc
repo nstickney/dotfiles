@@ -254,13 +254,13 @@ bind '"\e[6~": next-history'
 
 # Defeat Snoopy logging
 # http://blog.rchapman.org/posts/Bypassing_snoopy_logging/
-[ ! -f "$HOME"/.config/bin/bypass.so ] && \
+[ ! -f "$HOME"/bin/bypass.so ] && \
 	[ -x "$(command -v gcc)" ] && \
-	[ -f "$HOME"/.config/bin/bypass.c ] && \
-	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/.config/bin/bypass.c -o \
-	"$HOME"/.config/bin/bypass.so -ldl -Wall -Wextra
-[ -x "$HOME"/.config/bin/bypass.so ] && \
-	export LD_PRELOAD=$HOME/.config/bin/bypass.so
+	[ -f "$HOME"/bin/bypass.c ] && \
+	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/bin/bypass.c -o \
+	"$HOME"/bin/bypass.so -ldl -Wall -Wextra
+[ -x "$HOME"/bin/bypass.so ] && \
+	export LD_PRELOAD=$HOME/bin/bypass.so
 
 # HISTORY #####################################################################
 
@@ -312,7 +312,7 @@ path_override() {
 
 [ -d "$HOME/.local/bin" ] && path_override "$HOME/.local/bin"
 [ -d "$HOME/.config/overrides" ] && path_override "$HOME/.config/overrides"
-path_append "$HOME/.config/bin"
+path_append "$HOME/bin"
 
 # Add ~/.local/lib to library path (cleanly)
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$HOME/.local/lib"

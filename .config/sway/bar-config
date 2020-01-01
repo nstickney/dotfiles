@@ -144,6 +144,6 @@ fi
 	[[block]]
 	block = "custom"
 	interval = 1
-	command = "echo  $(~/dotfiles/bin/lockleds)"
+	command = "echo  $(~/bin/lockleds)"
 	EOF
 } >> "$_file"

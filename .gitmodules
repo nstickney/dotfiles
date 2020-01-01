@@ -35,7 +35,7 @@
 	path = .vim/pack/stick/start/vim-signify
 	url = https://github.com/mhinz/vim-signify
 [submodule "bin/sway-launcher-desktop"]
-	path = .config/bin/sway-launcher-desktop
+	path = bin/sway-launcher-desktop
 	url = https://github.com/Biont/sway-launcher-desktop
 [submodule "gitstatus"]
 	path = .config/gitstatus

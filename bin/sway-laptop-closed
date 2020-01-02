@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, you can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eu
+
+usage() {
+	printf 'Usage: %s <laptop_display_name>\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+main() {
+	if [ "$(swaymsg -t get_outputs | grep -c name)" = 1 ]; then
+		"$HOME"/bin/sway-pixelate-and-lock
+	else
+		notify-send '  ' 'Disabling laptop screen' -t 3000
+	fi
+	swaymsg output "$1" disable
+}
+
+case "${1:-}" in
+	'--help'|'-h') usage;;
+esac
+main "$@"

@@ -148,8 +148,9 @@ mode "$_OFF_MENU" {
 floating_modifier Mod1
 
 # laptop lid switch
-bindswitch --locked lid:on output $_LAPTOP disable
+bindswitch --locked lid:on exec $_BIN_DIR/sway-laptop-closed $_LAPTOP
 bindswitch --locked lid:off output $_LAPTOP enable
+
 
 # start a terminal
 bindsym Mod1+Return exec $_BIN_DIR/start-gui-term

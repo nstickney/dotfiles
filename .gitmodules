@@ -34,12 +34,12 @@
 [submodule "vim/pack/stick/start/vim-signify"]
 	path = .vim/pack/stick/start/vim-signify
 	url = https://github.com/mhinz/vim-signify
-[submodule "bin/sway-launcher-desktop"]
-	path = bin/sway-launcher-desktop
-	url = https://github.com/Biont/sway-launcher-desktop
 [submodule "gitstatus"]
 	path = .config/gitstatus
 	url = https://github.com/romkatv/gitstatus
 [submodule "vim/pack/stick/start/vim-go"]
 	path = .vim/pack/stick/start/vim-go
 	url = https://github.com/fatih/vim-go
+[submodule "bin/sway-launcher-desktop"]
+	path = bin/sway-launcher-desktop
+	url = https://github.com/Biont/sway-launcher-desktop

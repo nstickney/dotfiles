@@ -107,7 +107,7 @@ set smartcase  " ignore case unless a capital is typed
 " Spelling
 if has('spell')
 	set spelllang=en_us
-	set spellfile=$HOME/dotfiles/vim/stick.utf-8.add
+	set spellfile=$HOME/.vim/stick.utf-8.add
 	set spell
 	highlight clear SpellBad
 	highlight SpellBad cterm=underline ctermbg=None ctermfg=None

@@ -18,25 +18,22 @@ if sudo dmesg | grep -q "Hypervisor detected"; then
 
 # Not a virtual machine
 else
-	if [ "$USER" == 'stick' ]; then
-		# Bluetooth
-		AddPackage blueman # GTK+ Bluetooth Manager
-		AddPackage --foreign bluez-firmware # Firmwares for Broadcom BCM203x and STLC2300 Bluetooth chips
-		AddPackage bluez-utils # Development and debugging utilities for the bluetooth protocol stack
-		AddPackage pulseaudio-bluetooth # Bluetooth support for PulseAudio
-		CreateLink /etc/systemd/system/bluetooth.target.wants/bluetooth.service /usr/lib/systemd/system/bluetooth.service
-		CreateLink /etc/systemd/system/dbus-org.bluez.service /usr/lib/systemd/system/bluetooth.service
+	# Bluetooth
+	AddPackage blueman # GTK+ Bluetooth Manager
+	AddPackage --foreign bluez-firmware # Firmwares for Broadcom BCM203x and STLC2300 Bluetooth chips
+	AddPackage bluez-utils # Development and debugging utilities for the bluetooth protocol stack
+	AddPackage pulseaudio-bluetooth # Bluetooth support for PulseAudio
+	CreateLink /etc/systemd/system/bluetooth.target.wants/bluetooth.service /usr/lib/systemd/system/bluetooth.service
+	CreateLink /etc/systemd/system/dbus-org.bluez.service /usr/lib/systemd/system/bluetooth.service
 
-		# DVD drives
-		AddPackage --foreign regionset # read/sets the region code of DVD drives
+	# DVD drives
+	AddPackage --foreign regionset # read/sets the region code of DVD drives
 
-		# Printer
-		AddPackage --foreign brother-mfc-j480dw # LPR and CUPS driver for the Brother MFC-j480DW
-		AddPackage --foreign xerox-workcentre-6515 # CUPS driver for the Xerox WorkCentre 6515
-	fi
+	# Printer
+	AddPackage --foreign brother-mfc-j480dw # LPR and CUPS driver for the Brother MFC-j480DW
+	AddPackage --foreign xerox-workcentre-6515 # CUPS driver for the Xerox WorkCentre 6515
 
 	AddPackage android-udev # Udev rules to connect Android devices to your linux box
-	AddPackage arduino # Arduino prototyping platform SDK
 	AddPackage arduino-avr-core # Arduino AVR core with upstream avr-gcc and avrdude
 	AddPackage ccid # A generic USB Chip/Smart Card Interface Devices driver
 	AddPackage cups # The CUPS Printing System - daemon package
@@ -140,5 +137,5 @@ CreateLink /etc/systemd/system/multi-user.target.wants/chronyd.service /usr/lib/
 CreateLink /etc/systemd/system/multi-user.target.wants/remote-fs.target /usr/lib/systemd/system/remote-fs.target
 CreateLink /etc/systemd/user/default.target.wants/xdg-user-dirs-update.service /usr/lib/systemd/user/xdg-user-dirs-update.service
 
-SetFileProperty /usr/bin group root
-SetFileProperty /usr/bin owner root
+# SetFileProperty /usr/bin group root
+# SetFileProperty /usr/bin owner root

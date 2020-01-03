@@ -24,6 +24,7 @@ AddPackage vim-spell-en # Language files for Vim spell checking
 AddPackage vis # modern, legacy free, simple yet efficient vim-like editor
 
 if [ "$USER" == 'stick' ]; then
+	AddPackage arduino # Arduino prototyping platform SDK
 	AddPackage hexyl # Colored command-line hex viewer
 	AddPackage hyperfine # A command-line benchmarking tool
 	AddPackage namcap # A Pacman package analyzer

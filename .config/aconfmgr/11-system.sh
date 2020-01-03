@@ -38,6 +38,7 @@ else
 	AddPackage ccid # A generic USB Chip/Smart Card Interface Devices driver
 	AddPackage cups # The CUPS Printing System - daemon package
 	AddPackage cups-pdf # PDF printer for cups
+	AddPackage dfu-programmer # Programmer for Atmel chips with a USB bootloader
 	AddPackage lm_sensors # Opt dep for i3status-rust-git
 	AddPackage mtpfs # A FUSE filesystem that supports reading and writing from any MTP device
 	AddPackage opensc # Tools and libraries for smart cards

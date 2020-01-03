@@ -42,7 +42,6 @@ if has('autocmd')
 endif
 set autoindent
 set shiftwidth=4 softtabstop=4 tabstop=4  " tabs are four characters wide
-set cindent cinoptions=(0,u0,U0  " indent with tabs, align with spaces
 highlight SpecialKey ctermfg=8|  " indentation guides are dark gray
 set list listchars=tab:\│\  " indentation guide (tabs)
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " indentation guide (spaces)
@@ -70,7 +69,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
 			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . 
 			\ ">"<CR>
 "" Open a vertical terminal
-nmap ` :vert term<CR>
+nnoremap ` :vert term<CR>
 "" Write the current file
 nnoremap <Leader><CR> :write<CR>
 "" Write the current file, and quit
@@ -84,25 +83,24 @@ set mouse=a  " use the mouse in all modes
 " Navigation
 set backspace=indent,eol,start  " backspace wraps lines
 if v:version > 703 || v:version == 703 && has('patch541')
-  set formatoptions+=j  " Delete comment character when joining commented lines
+	set formatoptions+=j  " Delete comment character when joining commented lines
 endif
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &runtimepath) ==# ''
 	runtime! macros/matchit.vim  " use % to jump from if to endif
 endif
-set whichwrap=<,>,[,]  " cursor keys wrap lines
+set whichwrap=b,s,<,>,[,]  " cursor keys wrap lines
 
 " Scrolling
-set scrolloff=4  " start scrolling 4 rows away from top and bottom
+set scrolloff=4      " start scrolling 4 rows away from top and bottom
 set sidescrolloff=4  " start scrolling 4 columns away from edges
-set sidescroll=1  " scroll one column at a time sideways
+set sidescroll=1     " scroll one column at a time sideways
 
 " Search
-set hlsearch  " highlight searches; hit escape twice to clear the highlight
-if maparg('<Esc><Esc>', 'n') ==# ''
-	nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<Esc>
-endif
+set hlsearch  " highlight searches
+"" hit <Return> to clear the highlight
+nnoremap <CR> :nohlsearch<CR><CR>
 set incsearch  " search as you type
-set smartcase  " ignore case unless a capital is typed
+set ignorecase smartcase  " ignore case unless a capital is typed
 
 " Spelling
 if has('spell')
@@ -119,8 +117,9 @@ endif
 
 " Splits
 set diffopt+=vertical  " diff splits vertically by default
-set splitbelow  " horizontal splits will place new pane below
-set splitright  " vertical splits will place new pane to the right
+set equalalways        " splits take equal space
+set splitbelow         " horizontal splits will place new pane below
+set splitright         " vertical splits will place new pane to the right
 
 " Typos
 command-bang Q q<bang>

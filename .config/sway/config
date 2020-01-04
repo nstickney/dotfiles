@@ -151,7 +151,6 @@ floating_modifier Mod1
 bindswitch --locked lid:on exec $_BIN_DIR/sway-laptop-closed $_LAPTOP
 bindswitch --locked lid:off output $_LAPTOP enable
 
-
 # start a terminal
 bindsym Mod1+Return exec $_BIN_DIR/start-gui-term
 bindsym Menu exec $_BIN_DIR/start-gui-term

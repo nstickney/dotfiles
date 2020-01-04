@@ -173,7 +173,14 @@ bindsym Mod1+Shift+o exec $_BIN_DIR/sway-set-opacity.py -a
 set $_LAUNCHER exec alacritty -t launcher -e env TERMINAL_COMMAND="alacritty -e" "$_BIN_DIR/sway-launcher-desktop/sway-launcher-desktop.sh"
 for_window [title="^launcher$"] floating enable, border none
 bindsym --release Super_L $_LAUNCHER
-bindsym Mod1+Tab $_LAUNCHER
+
+# cycle through all windows
+bindsym Mod1+tab exec $_BIN_DIR/sway-alt-tab.py -a
+bindsym Mod1+Shift+tab exec $_BIN_DIR/sway-alt-tab.py -a -r
+
+# cycle through windows on current workspace
+bindsym Mod1+grave exec $_BIN_DIR/sway-alt-tab.py
+bindsym Mod1+Shift+grave exec $_BIN_DIR/sway-alt-tab.py -r
 
 # arrow keys
 # move focus around

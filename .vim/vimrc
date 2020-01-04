@@ -45,11 +45,6 @@ set shiftwidth=4 softtabstop=4 tabstop=4  " tabs are four characters wide
 highlight SpecialKey ctermfg=8|  " indentation guides are dark gray
 set list listchars=tab:\│\  " indentation guide (tabs)
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " indentation guide (spaces)
-"" Auto-indent pasted text
-nnoremap p p=`]<C-o>
-nnoremap P P=`]<C-o>
-"" Auto-indent entire file
-nnoremap <Leader><tab> <esc>gg=G<C-o><C-o>zz
 
 " Linting (ALE)
 let g:ale_echo_msg_error_str = 'E'
@@ -68,6 +63,14 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
 			\ "> lo<"
 			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . 
 			\ ">"<CR>
+"" See ALL highlight groups under cursor
+nmap <leader>sp :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists('*synstack')
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 "" Open a vertical terminal
 nnoremap ` :vert term<CR>
 "" Write the current file
@@ -108,11 +111,13 @@ if has('spell')
 	set spellfile=$HOME/.vim/stick.utf-8.add
 	set spell
 	highlight clear SpellBad
-	highlight SpellBad cterm=underline ctermbg=None ctermfg=None
+	highlight SpellBad cterm=Underline ctermbg=8 ctermfg=None
 	highlight clear SpellCap
-	highlight SpellCap cterm=italic
+	highlight SpellCap cterm=Italic ctermbg=8 ctermfg=None
 	highlight clear SpellLocal
+	highlight SpellLocal cterm=None ctermbg=8 ctermfg=None
 	highlight clear SpellRare
+	highlight SpellRare cterm=None ctermbg=8 ctermfg=None
 endif
 
 " Splits

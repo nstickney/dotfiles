@@ -66,10 +66,10 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
 "" See ALL highlight groups under cursor
 nmap <leader>sp :call <SID>SynStack()<CR>
 function! <SID>SynStack()
-  if !exists('*synstack')
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+	if !exists('*synstack')
+		return
+	endif
+	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 "" Open a vertical terminal
 nnoremap ` :vert term<CR>
@@ -165,10 +165,13 @@ let g:lightline = {
 			\ 'left': [[ 'mode', 'paste' ],
 			\ [ 'filename', 'readonly', 'modified' ]],
 			\ 'right': [[ 'lineinfo' ],
-			\ [ 'percent' ],
+			\ [ 'percent', 'wordcount' ],
 			\ [ 'checking', 'warnings', 'errors', 'linter_ok' ]]
 			\ },
 			\ 'colorscheme' : 'soml',
+			\ 'component': {
+			\ 'wordcount': '%{WordCount()}',
+			\ },
 			\ 'component_expand': {
 			\ 'buffers': 'lightline#bufferline#buffers',
 			\ 'checking': 'lightline#ale#checking',
@@ -191,6 +194,7 @@ let g:lightline#ale#indicator_checking = '...'
 let g:lightline#ale#indicator_warnings = '?'
 let g:lightline#ale#indicator_errors = '!'
 let g:lightline#ale#indicator_ok = ''
+
 "" Wrapping
 set linebreak wrap  " wrap lines, but only on whitespace/punctuation
 if v:version > 704 || v:version == 704 && has('patch338')

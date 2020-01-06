@@ -19,6 +19,9 @@ if v:lang =~? 'utf8$'
 	set fileencodings=usc-bom,utf-8
 endif
 
+" Folding
+set foldlevelstart=99
+
 " Git (vim-signify)
 let g:signify_realtime = 1              " more aggressive sign updates
 let g:signify_cursorhold_normal = 0     " avoid auto-saving buffer

@@ -43,3 +43,9 @@
 [submodule "bin/sway-launcher-desktop"]
 	path = bin/sway-launcher-desktop
 	url = https://github.com/Biont/sway-launcher-desktop
+[submodule ".vim/pack/stick/start/vim-markdown"]
+	path = .vim/pack/stick/start/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown
+[submodule ".vim/pack/stick/start/tabular"]
+	path = .vim/pack/stick/start/tabular
+	url = https://github.com/godlygeek/tabular

@@ -60,20 +60,6 @@ nmap <C-j> <Plug>(ale_next_wrap)
 "" Insert a timestamp
 nmap <F3> i<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
-"" List highlight groups applied under the cursor
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . 
-			\ '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . 
-			\ "> lo<"
-			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . 
-			\ ">"<CR>
-"" See ALL highlight groups under cursor
-nmap <leader>sp :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-	if !exists('*synstack')
-		return
-	endif
-	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
 "" Open a vertical terminal
 nnoremap ` :vert term<CR>
 "" Write the current file
@@ -114,13 +100,13 @@ if has('spell')
 	set spellfile=$HOME/.vim/stick.utf-8.add
 	set spell
 	highlight clear SpellBad
-	highlight SpellBad cterm=Underline ctermbg=8 ctermfg=None
+	highlight SpellBad cterm=Underline ctermbg=None ctermfg=None
 	highlight clear SpellCap
-	highlight SpellCap cterm=Italic ctermbg=8 ctermfg=None
+	highlight SpellCap cterm=Italic ctermbg=None ctermfg=None
 	highlight clear SpellLocal
-	highlight SpellLocal cterm=None ctermbg=8 ctermfg=None
+	highlight SpellLocal cterm=None ctermbg=None ctermfg=None
 	highlight clear SpellRare
-	highlight SpellRare cterm=None ctermbg=8 ctermfg=None
+	highlight SpellRare cterm=None ctermbg=None ctermfg=None
 endif
 
 " Splits

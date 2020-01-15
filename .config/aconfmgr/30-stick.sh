@@ -18,6 +18,7 @@ AddPackage pandoc-crossref # Pandoc filter for cross-references (pandoc opt dep)
 # AddPackage --foreign protonmail-bridge # Integrate ProtonMail paid account with any program that supports IMAP and SMTP
 AddPackage rmlint # Tool to remove duplicates and other lint, being much faster than fdupes
 AddPackage rmlint-shredder # Graphical user interface for rmlint
+AddPackage texlive-fontsextra # TeX Live - all sorts of extra fonts
 AddPackage texlive-latexextra # TeX Live - Large collection of add-on packages for LaTeX
 # AddPackage thunderbird # Standalone mail and news reader from mozilla.org
 AddPackage truecrypt # Free open-source cross-platform disk encryption software

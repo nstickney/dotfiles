@@ -20,6 +20,7 @@ AddPackage tig # Text-mode interface for Git.
 AddPackage tmux # A terminal multiplexer
 AddPackage tree # A directory listing program displaying a depth indented list of files
 AddPackage vim # Vi Improved, a highly configurable, improved version of the vi text editor
+AddPackage --foreign vim-ripgrep-git # Use RipGrep in Vim and display results in a quickfix list.
 AddPackage vim-spell-en # Language files for Vim spell checking
 AddPackage vis # modern, legacy free, simple yet efficient vim-like editor
 
@@ -52,9 +53,14 @@ if [ "$USER" == 'stick' ]; then
 	AddPackage cppcheck # A tool for static C/C++ code analysis
 	AddPackage flawfinder # Searches through source code for potential security flaws
 
+	### English
+	AddPackage proselint # Linter for prose
+	AddPackage --foreign write-good # Naive linter for English prose
+
 	### Go
 	AddPackage delve # A debugger for the Go programming language.
 	AddPackage go # Core compiler tools for the Go programming language
+	AddPackage --foreign gocode-git # An autocompletion daemon for the Go programming language
 
 	### Java
 	AddPackage maven # Java project management and project comprehension tool
@@ -92,8 +98,11 @@ if [ "$USER" == 'stick' ]; then
 	AddPackage rust-racer # Code completion for Rust
 
 	### Scala
+	AddPackage --foreign bloop # Bloop gives you fast edit/compile/test workflows for Scala.
+	AddPackage --foreign metals # Language Server For Scala
 	AddPackage sbt # The interactive build tool
 	AddPackage scala # A Java-interoperable language with object-oriented and functional features
+	AddPackage --foreign scalafmt-native-bin # Code formatter for Scala
 
 	### Vimscript
 	AddPackage vint # Lint tool for Vim script Language

@@ -32,7 +32,7 @@ highlight clear Normal
 highlight Normal     cterm=bold
 highlight clear SignColumn
 highlight SignColumn cterm=bold
-highlight clear DiffAdd   
+highlight clear DiffAdd
 highlight DiffAdd    cterm=bold
 highlight clear DiffChange
 highlight DiffChange cterm=bold
@@ -60,6 +60,12 @@ nmap <C-j> <Plug>(ale_next_wrap)
 "" Insert a timestamp
 nmap <F3> i<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
+"" https://sharats.me/posts/automating-the-vim-workplace/
+""" Remapping of <C-^>. If there is no alternate file, and there's no count
+""" given, then switch to next file. We use `bufloaded` to check for alternate
+""" buffer presence. This will ignore deleted buffers, as intended. To get
+""" default behaviour, use `bufexists` in it's place.
+nnoremap <silent> <C-b> :<C-u>exe v:count ? v:count . 'b' : 'b' . (bufloaded(0) ? '#' : 'n')<CR>
 "" Open a vertical terminal
 nnoremap ` :vert term<CR>
 "" Write the current file
@@ -70,7 +76,9 @@ nnoremap <Leader>q :wq<CR>
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Mouse
-set mouse=a  " use the mouse in all modes
+if has('mouse')
+	set mouse=a  " use the mouse in all modes
+endif
 
 " Navigation
 set backspace=indent,eol,start  " backspace wraps lines
@@ -91,7 +99,9 @@ set sidescroll=1     " scroll one column at a time sideways
 set hlsearch  " highlight searches
 "" hit <Return> to clear the highlight
 nnoremap <CR> :nohlsearch<CR><CR>
-set incsearch  " search as you type
+if has('reltime')
+	set incsearch  " search as you type
+endif
 set ignorecase smartcase  " ignore case unless a capital is typed
 
 " Spelling
@@ -125,7 +135,7 @@ command-bang Wq wq<bang>
 
 " Visuals
 set background=dark  " use dark mode syntax highlighting
-set listchars+=trail:-,extends:>,precedes:<,nbsp:+  " 
+set listchars+=trail:-,extends:>,precedes:<,nbsp:+  "
 set showcmd  " show commands as they are typed
 set wildmenu  " show completions for menu items
 if has('syntax') && !exists('g:syntax_on')

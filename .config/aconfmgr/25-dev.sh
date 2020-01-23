@@ -91,7 +91,7 @@ if [ "$USER" == 'stick' ]; then
 	AddPackage python-pytest # Simple powerful testing with Python
 	# AddPackage tk # A windowing toolkit for use with tcl (python turtles)
 	AddPackage yapf # Python style guide checker
-	AddPackage zerynth-studio # A powerful IDE for embedded programming in Python that enables the IoT
+	AddPackage --foreign zerynth-studio # A powerful IDE for embedded programming in Python that enables the IoT
 
 	### Rust
 	AddPackage rust # Systems programming language focused on safety, speed and concurrency

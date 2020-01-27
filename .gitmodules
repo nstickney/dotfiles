@@ -49,3 +49,6 @@
 [submodule "bin/sway-launcher-desktop"]
 	path = bin/sway-launcher-desktop
 	url = https://github.com/Biont/sway-launcher-desktop
+[submodule ".vim/pack/stick/start/context.vim"]
+	path = .vim/pack/stick/start/context.vim
+	url = https://github.com/wellle/context.vim

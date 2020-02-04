@@ -13,6 +13,8 @@
 	helper = cache --timeout=3600
 [gc]
 	auto = 256
+[pager]
+	branch = false
 [alias]
 	# Add All
 	AA = ! git add -A && git st
@@ -30,6 +32,8 @@
 	BH = rev-parse --abbrev-ref HEAD
 	# BRanch
 	BR = branch
+	# Branch information, Verbose
+	BV = branch -vv
 	# Commit and write the message in Editor
 	CE = commit
 	# Commit with Message (requires message argument)

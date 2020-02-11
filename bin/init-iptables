@@ -78,6 +78,7 @@ add_workstation_rules() {
 	# Allow needed workstation outbound access
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT # WHOIS
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT # DNS (XFR)
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT # RSYNC
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6697 -j ACCEPT # IRC
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 11371 -j ACCEPT # HKPS
@@ -102,7 +103,7 @@ flush_all_rules() {
 	sudo iptables -P OUTPUT ACCEPT
 	sudo iptables -F
 	sudo iptables -X
-	
+
 	if [ -x "$(command -v ip6tables)" ]; then
 		printf 'Flushing ip6tables\n'
 		sudo ip6tables -P INPUT ACCEPT
@@ -128,11 +129,11 @@ save_permanent_iptables() {
 	elif [ -x "$(command -v yum)" ] && \
 		sudo yum list installed iptables-services >/dev/null 2>&1 ; then
 		sudo service iptables save
-	
+
 	# On a Debian machine:
 	elif [ -x "$(command -v dpkg)" ] && dpkg -s iptables-persistent >/dev/null 2>&1; then
 		sudo dpkg-reconfigure -y iptables-persistent
-	
+
 	# Otherwise, fail:
 	else
 		# Warn about non-persistence
@@ -218,7 +219,7 @@ main() {
 		# Prevent host spoofing
 		sudo iptables -A INPUT -s "$_ADDR" -j DROP
 		sudo iptables -A OUTPUT -d "$_ADDR" -j DROP
-		
+
 		# Allow DHCP for faster renewals
 		sudo iptables -A INPUT -s "$_NET" -p udp -m udp --sport 67 -m udp \
 			--dport 68 -j ACCEPT
@@ -255,6 +256,7 @@ main() {
 	# sudo iptables -A INPUT -p udp -m udp --dport 8999 -j ACCEPT # BitTorrent
 
 	# Allow required services outbound (TCP)
+	# sudo iptables -A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT # DNS (XFR)
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
 
@@ -294,7 +296,7 @@ main() {
 	sleep 1
 	__ask 'Still connected?' "printf 'Rules confirmed.\n'" \
 		flush_all_rules 100 flush_all_rules
-	
+
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"
 	sudo iptables -L -n | sed 's/^/  /'
@@ -314,7 +316,5 @@ main() {
 }
 
 
-case "${1:-}" in
-	*) usage;;
-esac
+[ "$#" -gt 0 ] && usage
 main

@@ -1,5 +1,5 @@
 " https://vim.fandom.com/wiki/Switching_case_of_characters
-function TwiddleCase(str)
+function TwiddleCase(str) abort
   if a:str ==# toupper(a:str)
     let result = tolower(a:str)
   elseif a:str ==# tolower(a:str)

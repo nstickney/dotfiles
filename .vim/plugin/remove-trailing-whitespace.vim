@@ -9,6 +9,7 @@ fun! StripTrailingWhitespace()
 endfun
 
 augroup StripTrailingWhitespace
+	autocmd!| " Remove all auto-commands from StripTrailingWhitespace
 	autocmd BufWritePre * call StripTrailingWhitespace()
 	autocmd FileType markdown let b:noStripWhitespace=1
 augroup END

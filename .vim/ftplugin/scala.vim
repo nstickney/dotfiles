@@ -7,5 +7,6 @@ command! -buffer -range=% ScalaFMT let myview = winsaveview() |
 			\ call winrestview(myview)
 
 augroup ScalaFMT
+	autocmd!| " Remove all auto-commands from ScalaFMT
 	autocmd BufWritePre *.scala silent ScalaFMT
 augroup END

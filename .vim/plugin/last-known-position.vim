@@ -1,5 +1,5 @@
-augroup vimStartup
-	au!
+augroup LastKnown
+	autocmd!| " Remove all auto-commands from LastKnown
 
 	" When editing a file, always jump to the last known cursor position.
 	" Don't do it when the position is invalid, when inside an event handler

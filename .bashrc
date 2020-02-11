@@ -380,9 +380,11 @@ fi
 [ -x "$(command -v vi)" ] && export EDITOR='vi'
 if [ -x "$(command -v vim)" ]; then
 	# shellcheck disable=2139
-	alias vi="$(command -v vim)"
+	alias vi='$(command -v vim)'
+	alias vimrc='$(command -v vim) ~/.vim/vimrc'
 	alias svi='sudo "$(command -v vim)"'
-	export EDITOR='vim'
+	EDITOR="$(command -v vim)"
+	export EDITOR
 fi
 
 # ls
@@ -486,7 +488,7 @@ if [ -x "$(command -v tmux)" ]; then
 	if [ -z "$(command -v tmax)" ]; then
 		tmax() {
 			if (($# > 0)); then
-				tmux attach -t "$1" 2>/dev/null || tmux new -s "$@" 
+				tmux attach -t "$1" 2>/dev/null || tmux new -s "$@"
 			else
 				tmux attach 2>/dev/null || tmux new "$@"
 			fi

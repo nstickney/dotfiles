@@ -40,10 +40,10 @@ highlight clear DiffDelete
 highlight DiffDelete cterm=bold
 
 " Indentation
+set autoindent
 if has('autocmd')
 	filetype plugin indent on
 endif
-set autoindent
 set shiftwidth=4 softtabstop=4 tabstop=4  " tabs are four characters wide
 highlight SpecialKey ctermfg=8|  " indentation guides are dark gray
 set list listchars=tab:\│\  " indentation guide (tabs)

@@ -49,18 +49,17 @@ if [ "$USER" == 'stick' ]; then
 	AddPackage shellharden # Bash linter and syntax highlighter
 
 	### C/C++
-	AddPackage cmake # A cross-platform open-source make system
+	AddPackage clang # C language family frontend for LLVM
+	# AddPackage cmake # A cross-platform open-source make system
 	AddPackage cppcheck # A tool for static C/C++ code analysis
 	AddPackage flawfinder # Searches through source code for potential security flaws
 
 	### English
 	AddPackage proselint # Linter for prose
-	AddPackage --foreign write-good # Naive linter for English prose
 
 	### Go
 	AddPackage delve # A debugger for the Go programming language.
 	AddPackage go # Core compiler tools for the Go programming language
-	AddPackage --foreign gocode-git # An autocompletion daemon for the Go programming language
 
 	### Java
 	AddPackage maven # Java project management and project comprehension tool

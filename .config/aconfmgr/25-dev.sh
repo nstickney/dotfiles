@@ -53,6 +53,7 @@ if [ "$USER" == 'stick' ]; then
 	# AddPackage cmake # A cross-platform open-source make system
 	AddPackage cppcheck # A tool for static C/C++ code analysis
 	AddPackage flawfinder # Searches through source code for potential security flaws
+	AddPackage uncrustify # A source code beautifier
 
 	### English
 	AddPackage proselint # Linter for prose

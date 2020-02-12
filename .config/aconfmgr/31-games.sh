@@ -9,5 +9,5 @@ if [ "$USER" == "stick" ]; then
 	AddPackage --foreign ninvaders # Ncurses based space invaders clone
 	AddPackage stellarium # A stellarium with great graphics and a nice database of sky-objects
 	AddPackage stone-soup # Open-source, single-player, role-playing roguelike game of exploration and treasure-hunting
-	AddPackage --foreign tome4 # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
+	# AddPackage --foreign tome4 # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
 fi

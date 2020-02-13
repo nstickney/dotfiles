@@ -321,6 +321,11 @@ LD_LIBRARY_PATH="$(remove_dups "$LD_LIBRARY_PATH")"
 # NVM
 source_if_readable /usr/share/nvm/init-nvm.sh
 
+# KEYBOARD SHORTCUTS ##########################################################
+
+# Ctrl-Z sends to background, Ctrl-F brings to foreground!
+bind -x '"\C-f":fg'
+
 # USER ALIASES ################################################################
 
 # Alias to directly cd into sub-directory of given path, from anywhere

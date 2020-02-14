@@ -2,7 +2,7 @@
 " https://vi.stackexchange.com/a/11731
 command! -buffer -range=% ScalaFMT let myview = winsaveview() |
 			\ setlocal shellredir=> |
-			\ execute <line1> . "," . <line2> . "!scalafmt --stdin" |
+			\ execute <line1> . "," . <line2> . "!scalafmt --stdin --non-interactive" |
 			\ set shellredir< |
 			\ call winrestview(myview)
 

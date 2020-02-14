@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, you can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+usage() {
+	printf 'Usage: %s\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+__ask() {
+	printf '%s ' "${1:-'Input Required:'}" >&2
+	read -r answer
+	printf '%s\n' "$answer"
+}
+
+main() {
+	local direction action protocol srcaddr srcport dstaddr dstport rule
+	local correct
+	while :; do
+		while :; do
+			direction="$(__ask "INPUT or OUTPUT?")"
+			case "$direction" in
+				[Ii]*) direction='INPUT'; break;;
+				[Oo]*) direction='OUTPUT'; break;;
+			esac
+		done
+		while :; do
+			action="$(__ask 'ACCEPT or DROP?')"
+			case "$action" in
+				[Aa]*) action='ACCEPT'; break;;
+				[Dd]*) action='DROP'; break;;
+			esac
+		done
+		while :; do
+			protocol="$(__ask 'TCP or UDP?')"
+			case "$protocol" in
+				[Tt]*) protocol='tcp'; break;;
+				[Uu]*) protocol='udp'; break;;
+				'') break;;
+			esac
+		done
+		srcaddr="$(__ask 'Source address?')"
+		[ "${#srcaddr}" -gt 0 ] && srcaddr="-s $srcaddr"
+		dstaddr="$(__ask 'Destination address?')"
+		[ "${#dstaddr}" -gt 0 ] && dstaddr="-d $dstaddr"
+		if [ "${#protocol}" -gt 0 ]; then
+			protocol="-p $protocol -m $protocol"
+			srcport="$(__ask 'Source port?')"
+			[ "${#srcport}" -gt 0 ] && protocol="$protocol --sport $srcport"
+			dstport="$(__ask 'Destination port?')"
+			[ "${#dstport}" -gt 0 ] && protocol="$protocol --dport $dstport"
+		fi
+		rule="sudo iptables -A $direction $srcaddr $dstaddr $protocol -j $action"
+		printf '\n%s\n\n' "$rule"
+		correct="$(__ask 'Correct? [yes/NO/quit]:')"
+		case "$correct" in
+			[Yy]*) $rule; break;;
+			[Qq]*) break;;
+		esac
+	done
+
+}
+
+_pos_args=()
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		'--help'|'-h') usage;;
+		*) _pos_args+=("$1"); shift;;
+	esac
+done
+main ${_pos_args[@]:+"${_pos_args[@]}"}

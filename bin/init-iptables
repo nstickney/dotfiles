@@ -80,7 +80,8 @@ add_workstation_rules() {
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT # WHOIS
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT # DNS (XFR)
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT # RSYNC
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6697 -j ACCEPT # IRC
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6667 -j ACCEPT # IRC
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 8448 -j ACCEPT # Matrix
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 11371 -j ACCEPT # HKPS
 	sudo iptables -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
 	__ask 'Does this computer use network printers?' add_printing_rules

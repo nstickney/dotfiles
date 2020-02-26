@@ -1,3 +1,5 @@
+let b:ale_fixers = ['prettier']
+
 " tpope/vim-markdown (Vim's included markdown plugin)
 let g:markdown_syntax_conceal = 0
 

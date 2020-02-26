@@ -16,15 +16,16 @@ if [[ "$USER" == 'stick' ]]; then
 	# AddPackage bettercap # Swiss army knife for network attacks and monitoring
 	AddPackage masscan # TCP port scanner, spews SYN packets asynchronously, scanning entire Internet in under 5 minutes
 	# AddPackage metasploit # Advanced open-source platform for developing, testing, and using exploit code
-	AddPackage ncrack # High-speed network authentication cracking tool
+	AddPackage ncrack      # High-speed network authentication cracking tool
 	AddPackage netsniff-ng # High performance Linux network sniffer for packet inspection
 	# AddPackage --foreign termshark-bin # A terminal UI for tshark, inspired by Wireshark
-	AddPackage vulscan # A module which enhances nmap to a vulnerability scanner
+	AddPackage vulscan      # A module which enhances nmap to a vulnerability scanner
 	AddPackage wireshark-qt # Network traffic and protocol analyzer/sniffer - Qt GUI
 
 	# Reverse Engineering
-	# AddPackage --foreign bingrep # Small binary version of grep
-	# AddPackage --foreign ghidra-bin # Software reverse engineering framework (bin)
+	AddPackage ghidra             # Software reverse engineering framework
+	AddPackage --foreign ida-eval # Evaluation version of the world's smartest and most feature-full disassembler
+	AddPackage --foreign ida-free # Freeware version of the world's smartest and most feature-full disassembler
 	# AddPackage radare2 # Open-source tools to disasm, debug, analyze and manipulate binary files
 	# AddPackage radare2-cutter # Qt and C++ GUI for radare2 reverse engineering framework
 
@@ -38,13 +39,13 @@ fi
 
 # Host Security
 # AddPackage aide # A file integrity checker and intrusion detection program.
-AddPackage clamav # Anti-virus toolkit for Unix
+AddPackage clamav                           # Anti-virus toolkit for Unix
 AddPackage --foreign clamav-unofficial-sigs # ClamAV Unofficial Signatures Updater maintained by eXtremeSHOK.com
 # AddPackage firejail # Linux namespaces sandbox program
-AddPackage lynis # Security and system auditing tool to harden Unix/Linux systems
+AddPackage lynis    # Security and system auditing tool to harden Unix/Linux systems
 AddPackage rkhunter # Checks machines for the presence of rootkits and other unwanted tools
 
-CreateFile /etc/ld.so.preload > /dev/null
+CreateFile /etc/ld.so.preload >/dev/null
 CreateLink /etc/systemd/system/multi-user.target.wants/clamav-daemon.service /usr/lib/systemd/system/clamav-daemon.service
 CreateLink /etc/systemd/system/multi-user.target.wants/clamav-freshclam.service /usr/lib/systemd/system/clamav-freshclam.service
 CreateLink /etc/systemd/system/sockets.target.wants/clamav-daemon.socket /usr/lib/systemd/system/clamav-daemon.socket

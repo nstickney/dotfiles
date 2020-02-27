@@ -21,7 +21,7 @@ main() {
 	[ "$#" -lt 1 ] && usage
 	local _c="${2:-$USER@$HOSTNAME}"
 	ssh-keygen -f "$HOME/.ssh/$1" -a 256 "${_type[@]}" -C "$_c-$(date +%Y-%m-%d)"
-	chmod go-rwx "$HOME/.ssh/$1{,.pub}"
+	chmod go-rwx "$HOME/.ssh/$1" "$HOME/.ssh/$1.pub"
 }
 
 _pos_args=()

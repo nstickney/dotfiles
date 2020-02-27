@@ -8,34 +8,38 @@
 set -eu
 
 usage() {
-	printf 'Usage: %s [projects_dir]\n' "$(basename "$0")" >&2
-	printf ' projects_dir : optional path to projects directory\n' >&2
+	printf 'Usage: %s [-sh] [projects_dir]\n' "$(basename "$0")" >&2
+	printf ' projects_dir    : optional path to projects directory\n' >&2
 	# shellcheck disable=2016
-	printf '                (defaults to $HOME/projects)\n' >&2
-	printf ' -h --help    : display this message\n' >&2
+	printf '                   (defaults to $HOME/projects)\n' >&2
+	printf ' -s --submodules : recursively update all submodules\n' >&2
+	printf ' -h --help       : display this message\n' >&2
 	exit
 }
 
+_submodules='false'
 update_project() {
 	git stash
 	git pull origin "$(git rev-parse --abbrev-ref HEAD)"
+	[ "$_submodules" = 'true' ] &&
+		git submodule update --init --recursive --remote
 }
 
+_projects_dir="$HOME"/projects
 main() {
-	projects_dir="${1:-"$HOME"/projects}"
 	bold=""
 	norm=""
 	if [ -t 1 ]; then
 		bold="$(tput bold)"
 		norm="$(tput sgr0)"
 	fi
-	if [ ! -d "$projects_dir" ]; then
+	if [ ! -d "$_projects_dir" ]; then
 		printf '%s%s: Directory not found%s\n' \
-			"$bold" "$projects_dir" "$norm" >&2
+			"$bold" "$_projects_dir" "$norm" >&2
 		exit
 	fi
 	working_dir="$(pwd)"
-	for i in "$projects_dir"/*/; do
+	for i in "$_projects_dir"/*/; do
 		cd "$working_dir" || exit
 		cd "$i" || exit
 		printf '%s%s%s\n' "$bold" "$(pwd)" "$norm"
@@ -47,9 +51,22 @@ main() {
 	done
 }
 
-if [ "$#" -gt 0 ]; then
+while [ "$#" -gt 0 ]; do
 	case "$1" in
-		'--help'|'-h') usage;;
+	'--help' | '-h')
+		usage
+		shift
+		;;
+	'--submodules' | '-s')
+		_submodules='true'
+		shift
+		;;
+	*)
+		_projects_dir="$1"
+		shift
+		break
+		;;
 	esac
-fi
+done
+[ "$#" -gt 0 ] && usage
 main "$@"

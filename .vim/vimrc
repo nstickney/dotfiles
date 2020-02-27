@@ -201,3 +201,13 @@ set linebreak wrap  " wrap lines, but only on whitespace/punctuation
 if v:version > 704 || v:version == 704 && has('patch338')
 	set breakindent breakindentopt=min:20,shift:2,sbr
 endif
+
+"" HELP
+" https://github.com/dense-analysis/ale#standard-installation
+" Put these lines at the very end of your vimrc file.
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL

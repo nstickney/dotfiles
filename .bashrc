@@ -74,20 +74,20 @@ source_if_readable "$HOME"/.config/gitstatus/gitstatus.plugin.sh
 gitstatus_prompt_update() {
 	GITSTATUS_PROMPT=""
 
-	gitstatus_query "$@"                  || return 1  # error
-	[[ "$VCS_STATUS_RESULT" == ok-sync ]] || return 0  # not a git repo
+	gitstatus_query "$@" || return 1                  # error
+	[[ "$VCS_STATUS_RESULT" == ok-sync ]] || return 0 # not a git repo
 
-	local      reset=$'\e[0m'         # no color
-	local      clean=$'\e[0;36m'  # green foreground
-	local    pbranch=$'\e[0;35m'  # purple foreground
-	local       otag=$'\e[0;93m'  # orange foreground
-	local  untracked=$'\e[0;94m'  # blue foreground
-	local   modified=$'\e[0;92m'  # yellow foreground
-	local conflicted=$'\e[0;91m'  # red foreground
+	local reset=$'\e[0m'         # no color
+	local clean=$'\e[0;36m'      # green foreground
+	local pbranch=$'\e[0;35m'    # purple foreground
+	local otag=$'\e[0;93m'       # orange foreground
+	local untracked=$'\e[0;94m'  # blue foreground
+	local modified=$'\e[0;92m'   # yellow foreground
+	local conflicted=$'\e[0;91m' # red foreground
 
 	local p="${pbranch}"
 
-	local where  # branch name, tag or commit
+	local where # branch name, tag or commit
 	if [[ -n "$VCS_STATUS_LOCAL_BRANCH" ]]; then
 		where="$VCS_STATUS_LOCAL_BRANCH"
 	elif [[ -n "$VCS_STATUS_TAG" ]]; then
@@ -98,26 +98,26 @@ gitstatus_prompt_update() {
 		where="${VCS_STATUS_COMMIT:0:8}"
 	fi
 
-	(( ${#where} > 32 )) && where="${where:0:12}…${where: -12}"  # truncate long branch names and tags
+	((${#where} > 32)) && where="${where:0:12}…${where: -12}" # truncate long branch names and tags
 	p+="${where}"
 
 	# ⇣42 if behind the remote.
-	(( VCS_STATUS_COMMITS_BEHIND )) && p+=" ${clean}⇣${VCS_STATUS_COMMITS_BEHIND}"
+	((VCS_STATUS_COMMITS_BEHIND)) && p+=" ${clean}⇣${VCS_STATUS_COMMITS_BEHIND}"
 	# ⇡42 if ahead of the remote; no leading space if also behind the remote: ⇣42⇡42.
-	(( VCS_STATUS_COMMITS_AHEAD && !VCS_STATUS_COMMITS_BEHIND )) && p+=" "
-	(( VCS_STATUS_COMMITS_AHEAD  )) && p+="${clean}⇡${VCS_STATUS_COMMITS_AHEAD}"
+	((VCS_STATUS_COMMITS_AHEAD && !VCS_STATUS_COMMITS_BEHIND)) && p+=" "
+	((VCS_STATUS_COMMITS_AHEAD)) && p+="${clean}⇡${VCS_STATUS_COMMITS_AHEAD}"
 	# *42 if have stashes.
-	(( VCS_STATUS_STASHES        )) && p+=" ${clean}*${VCS_STATUS_STASHES}"
+	((VCS_STATUS_STASHES)) && p+=" ${clean}*${VCS_STATUS_STASHES}"
 	# 'merge' if the repo is in an unusual state.
-	[[ -n "$VCS_STATUS_ACTION"   ]] && p+=" ${conflicted}${VCS_STATUS_ACTION}"
+	[[ -n "$VCS_STATUS_ACTION" ]] && p+=" ${conflicted}${VCS_STATUS_ACTION}"
 	# ~42 if have merge conflicts.
-	(( VCS_STATUS_NUM_CONFLICTED )) && p+=" ${conflicted}~${VCS_STATUS_NUM_CONFLICTED}"
+	((VCS_STATUS_NUM_CONFLICTED)) && p+=" ${conflicted}~${VCS_STATUS_NUM_CONFLICTED}"
 	# +42 if have staged changes.
-	(( VCS_STATUS_NUM_STAGED     )) && p+=" ${modified}+${VCS_STATUS_NUM_STAGED}"
+	((VCS_STATUS_NUM_STAGED)) && p+=" ${modified}+${VCS_STATUS_NUM_STAGED}"
 	# !42 if have unstaged changes.
-	(( VCS_STATUS_NUM_UNSTAGED   )) && p+=" ${modified}!${VCS_STATUS_NUM_UNSTAGED}"
+	((VCS_STATUS_NUM_UNSTAGED)) && p+=" ${modified}!${VCS_STATUS_NUM_UNSTAGED}"
 	# ?42 if have untracked files. It's really a question mark, your font isn't broken.
-	(( VCS_STATUS_NUM_UNTRACKED  )) && p+=" ${untracked}?${VCS_STATUS_NUM_UNTRACKED}"
+	((VCS_STATUS_NUM_UNTRACKED)) && p+=" ${untracked}?${VCS_STATUS_NUM_UNTRACKED}"
 
 	GITSTATUS_PROMPT="${p}${reset}"
 }
@@ -136,36 +136,36 @@ __prompt_command() {
 	# How many characters of the $PWD should be kept
 	local pwdmaxlen=$((COLUMNS - 32 - ${#HOSTNAME} - ${#USER} - ${#GITSTATUS_PROMPT}))
 	local dir=${PWD##*/}
-	pwdmaxlen=$(( ( pwdmaxlen < ${#dir} ) ? ${#dir} : pwdmaxlen ))
+	pwdmaxlen=$(((pwdmaxlen < ${#dir}) ? ${#dir} : pwdmaxlen))
 	CPWD=${PWD/#$HOME/\~}
-	local pwdoffset=$(( ${#CPWD} - pwdmaxlen ))
+	local pwdoffset=$((${#CPWD} - pwdmaxlen))
 	if [ ${pwdoffset} -gt "0" ]; then
 		CPWD=${CPWD:$pwdoffset:$pwdmaxlen}
 		CPWD='.../'"${CPWD#*/}"
 	fi
 
 	# Colors
-	local U="\\[\\e[0m\\]"     # default foreground color
+	local U="\\[\\e[0m\\]" # default foreground color
 
 	## regular colors
-	local R="\\[\\e[0;31m\\]"  # red
-	local G="\\[\\e[0;32m\\]"  # green
-	local Y="\\[\\e[0;33m\\]"  # yellow
-	local B="\\[\\e[0;34m\\]"  # blue
-	local M="\\[\\e[0;35m\\]"  # magenta
-	local C="\\[\\e[0;36m\\]"  # cyan
+	local R="\\[\\e[0;31m\\]" # red
+	local G="\\[\\e[0;32m\\]" # green
+	local Y="\\[\\e[0;33m\\]" # yellow
+	local B="\\[\\e[0;34m\\]" # blue
+	local M="\\[\\e[0;35m\\]" # magenta
+	local C="\\[\\e[0;36m\\]" # cyan
 
 	## emphasized (bolded) colors
 	local ER="\\[\\e[1;31m\\]" # bold red
 
-	local UC=$R                # user's color
+	local UC=$R # user's color
 
 	if [ "$USER" == 'stick' ] || [ "$USER" == 'nstickney' ]; then
 		UC=$Y
 	elif [ "$USER" == 'emma' ] || [ "$USER" == 'emmafreester' ]; then
 		UC=$M
 	elif [ "$(id -u)" -eq '0' ]; then
-		UC=$ER                 # root's color
+		UC=$ER # root's color
 	fi
 
 	# Next line shows username, hostname, current working directory, git status
@@ -197,7 +197,7 @@ if [ "$TERM" = 'linux' ]; then
 	printf "\\e]PDCB67AA" # bright magenta
 	printf "\\e]PE62D0A6" # bright cyan
 	printf "\\e]PFFFF8E7" # white
-	clear # fix artifacts
+	clear                 # fix artifacts
 fi
 
 # ls
@@ -213,7 +213,7 @@ alias vdir='vdir --color=auto'
 
 # grep
 export GREP_COLOR='1;33'
-if grep --color 'a' <<< 'a' &>/dev/null; then
+if grep --color 'a' <<<'a' &>/dev/null; then
 	alias grep='grep --color=auto'
 	alias fgrep='fgrep --color=auto'
 	alias egrep='egrep --color=auto'
@@ -241,7 +241,7 @@ man() {
 		LESS_TERMCAP_so="$(printf '\e[1;45;30m')" \
 		LESS_TERMCAP_ue="$(printf '\e[0m')" \
 		LESS_TERMCAP_us="$(printf '\e[0;34m')" \
-		man "$@" || (help "$@" 2> /dev/null && help "$@" | less)
+		man "$@" || (help "$@" 2>/dev/null && help "$@" | less)
 }
 
 # ping
@@ -272,12 +272,12 @@ bind '"\e[6~": next-history'
 
 # Defeat Snoopy logging
 # http://blog.rchapman.org/posts/Bypassing_snoopy_logging/
-[ ! -f "$HOME"/bin/bypass.so ] && \
-	[ -x "$(command -v gcc)" ] && \
-	[ -f "$HOME"/bin/bypass.c ] && \
+[ ! -f "$HOME"/bin/bypass.so ] &&
+	[ -x "$(command -v gcc)" ] &&
+	[ -f "$HOME"/bin/bypass.c ] &&
 	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/bin/bypass.c -o \
-	"$HOME"/bin/bypass.so -ldl -Wall -Wextra
-[ -x "$HOME"/bin/bypass.so ] && \
+		"$HOME"/bin/bypass.so -ldl -Wall -Wextra
+[ -x "$HOME"/bin/bypass.so ] &&
 	export LD_PRELOAD=$HOME/bin/bypass.so
 
 # HISTORY #####################################################################
@@ -306,7 +306,7 @@ remove_dups() {
 	local dir=
 	while IFS= read -r -d"$D" dir; do
 		[[ $path$D =~ .*$D$dir$D.* ]] || path+="$D$dir"
-	done <<< "$1$D"
+	done <<<"$1$D"
 	printf %s "${path#$D}"
 }
 PATH="$(remove_dups "$PATH")"
@@ -315,16 +315,16 @@ PATH="$(remove_dups "$PATH")"
 # https://unix.stackexchange.com/a/124447
 path_append() {
 	case ":${PATH:=$1}:" in
-		*:$@:*) ;;
-		*) PATH="$PATH:$1";;
+	*:$@:*) ;;
+	*) PATH="$PATH:$1" ;;
 	esac
 }
 
 # Cleanly add an item to the beginning of $PATH
 path_override() {
 	case ":${PATH:=$1}:" in
-		*:$@:*) ;;
-		*) PATH="$1:$PATH";;
+	*:$@:*) ;;
+	*) PATH="$1:$PATH" ;;
 	esac
 }
 
@@ -371,11 +371,11 @@ if [ -x "$(command -v apt)" ]; then
 fi
 
 # aurvote
-[ -x "$(command -v aurvote)" ] && [ -z "$(command -v aurvoteall)" ] && \
+[ -x "$(command -v aurvote)" ] && [ -z "$(command -v aurvoteall)" ] &&
 	alias aurvoteall='pacman -Qm | cut -f1 -d" " | xargs aurvote'
 
 # bats
-[ -x "$(command -v bats)" ] && [ -x "$(command -v time)" ] && \
+[ -x "$(command -v bats)" ] && [ -x "$(command -v time)" ] &&
 	alias bats='time bats'
 
 # cd
@@ -418,12 +418,11 @@ fi
 alias mkdir='mkdir -pv'
 
 # makepkg
-[ -n "$(command -v makepkg)" ] && \
+[ -n "$(command -v makepkg)" ] &&
 	alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 
-
 # mosh
-[ -n "$(command -v mosh)" ] && [ ! -v "$(command -v mop)" ] && \
+[ -n "$(command -v mosh)" ] && [ ! -v "$(command -v mop)" ] &&
 	alias mop='mosh -p 59999'
 
 # networking
@@ -436,8 +435,8 @@ if [ -x "$(command -v pacman)" ]; then
 		pacman -Qo "$(command -v "$1")"
 	}
 fi
-[ -x "$(command -v powerpill)" ] && \
-	PACMAN="$(command -v powerpill)" && \
+[ -x "$(command -v powerpill)" ] &&
+	PACMAN="$(command -v powerpill)" &&
 	export PACMAN
 if [ -x "$(command -v reflector)" ] && [ -z "$(command -v reflect)" ]; then
 	reflect() {
@@ -457,9 +456,8 @@ if [ -x "$(command -v yay)" ]; then
 	[ -z "$(command -v pac)" ] && alias pac='yay'
 	[ -z "$(command -v pup)" ] && alias pup='yay -Syu --noconfirm --devel'
 fi
-[ "$(type -t reflect)" == 'function' ] && [ "$(type -t pup)" == 'alias' ] && \
+[ "$(type -t reflect)" == 'function' ] && [ "$(type -t pup)" == 'alias' ] &&
 	[ -z "$(command -v rup)" ] && alias rup='reflect && pup'
-
 
 # ps
 [ -z "$(command -v pf)" ] && alias pf='ps auxf'
@@ -479,30 +477,37 @@ if [ -z "$(command -v kp)" ] && [ -x "$(command -v fzf)" ]; then
 fi
 
 # ssh
-if [ -x "$(command -v ssh)" ] && [ -z "$(command -v tunnel)" ]; then
-	# Create ssh tunnel on port $2 (default 19998) to server $1
-	tunnel() {
-		ssh -f -N -D "${2:-19998}" -4 "$1"
-	}
+if [ -x "$(command -v ssh)" ]; then
 
-	# Kill the ssh tunnel running on server or port $1 (default all tunnels)
-	kill_tunnel() {
-		local PID
-		PID="$(pgrep -a ssh | grep "\-f \-N \-D .*$1.*" | cut -f1 -d' ' | \
-			xargs)"
-		if ((${#PID} > 0)); then
-			kill "$PID"
-		else
-			printf 'No ssh tunnels running.\n'
-		fi
-	}
+	# Fix "'alacritty': unknown terminal type" and enable agent forwarding
+	alias ssh='TERM=xterm-256color ssh -A'
+
+	# Easy tunnel creation
+	if [ -z "$(command -v tunnel)" ]; then
+		# Create ssh tunnel on port $2 (default 19998) to server $1
+		tunnel() {
+			ssh -f -N -D "${2:-19998}" -4 "$1"
+		}
+
+		# Kill the ssh tunnel running on server or port $1 (default all tunnels)
+		kill_tunnel() {
+			local PID
+			PID="$(pgrep -a ssh | grep "\-f \-N \-D .*$1.*" | cut -f1 -d' ' |
+				xargs)"
+			if ((${#PID} > 0)); then
+				kill "$PID"
+			else
+				printf 'No ssh tunnels running.\n'
+			fi
+		}
+	fi
 fi
 
 # su and sudo
 [ -x "$(command -v su)" ] && [ -x "$(command -v sudo)" ] && alias su='sudo su'
 
 # systemctl
-[ -x "$(command -v systemctl)" ] && [ -z "$(command -v sctl)" ] && \
+[ -x "$(command -v systemctl)" ] && [ -z "$(command -v sctl)" ] &&
 	alias sctl='sudo systemctl'
 
 # tmux
@@ -516,20 +521,20 @@ if [ -x "$(command -v tmux)" ]; then
 				tmux attach 2>/dev/null || tmux new "$@"
 			fi
 		}
-	_tmax() {
-		# shellcheck disable=2033
-		read -ra COMPREPLY <<< "$(compgen -W "$(tmux ls -F '#S' | xargs)" \
-			-- "${COMP_WORDS[COMP_CWORD]}")"
+		_tmax() {
+			# shellcheck disable=2033
+			read -ra COMPREPLY <<<"$(compgen -W "$(tmux ls -F '#S' | xargs)" \
+				-- "${COMP_WORDS[COMP_CWORD]}")"
 		}
-	complete -F _tmax tmax
+		complete -F _tmax tmax
 	fi
 	[ -z "$(command -v tmls)" ] && alias tmls='tmux ls'
-	if [ "$(type -t tmax)" == 'function' ] && \
-		[ -z "$(command -v tv)" ] && \
+	if [ "$(type -t tmax)" == 'function' ] &&
+		[ -z "$(command -v tv)" ] &&
 		[ -n "$EDITOR" ]; then
-			tv() {
-				tmax 'editor' "$EDITOR $*"
-			}
+		tv() {
+			tmax 'editor' "$EDITOR $*"
+		}
 	fi
 fi
 
@@ -541,7 +546,7 @@ if [ -z "$(command -v ttfb)" ]; then
 		line+=' TTFB: %{time_starttransfer}'
 		line+=' Total time: %{time_total} \n'
 		curl -sSo /dev/null -w "$line" "$1"
-		}
+	}
 fi
 
 # Import bash secrets from protected file

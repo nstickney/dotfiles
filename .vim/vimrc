@@ -60,8 +60,12 @@ nmap <C-j> <Plug>(ale_next_wrap)
 
 " Mappings
 "" Insert a timestamp
-nmap <F3> i<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
-imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
+nnoremap <F2> i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
+inoremap <F2> <C-R>=strftime("%Y-%m-%d")<CR>
+nnoremap <F3> i<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
+inoremap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
+nnoremap <F4> i<C-R>=strftime("%Y-%m-%dT%T%z")<CR><Esc>
+inoremap <F4> <C-R>=strftime("%Y-%m-%dT%T%z")<CR>
 "" https://sharats.me/posts/automating-the-vim-workplace/
 """ Remapping of <C-^>. If there is no alternate file, and there's no count
 """ given, then switch to next file. We use `bufloaded` to check for alternate

@@ -40,9 +40,27 @@ GPG_TTY="$(tty)"
 export GPG_TTY
 
 # Fix ssh agent
+# http://rabexc.org/posts/pitfalls-of-ssh-agents
 if [ -x "$(command -v ssh-agent)" ]; then
-	eval "$(ssh-agent -t 240)" >/dev/null
-	trap '[ -n "$SSH_AGENT_PID" ] && eval $(ssh-agent -k); exit' EXIT
+
+	# Test if agent is running
+	ssh-add -l >/dev/null 2>/dev/null
+	if [ "$?" -gt 1 ]; then # agent not running
+
+		# Test if agent config exists in file
+		test -r ~/.ssh-agent &&
+			eval "$(<~/.ssh-agent)" >/dev/null
+
+		# Test again if running
+		ssh-add -l &>/dev/null
+		if [ "$?" -gt 1 ]; then # agent not running
+			(
+				umask 066
+				ssh-agent -t 600 >~/.ssh-agent
+			)
+			eval "$(<~/.ssh-agent)" >/dev/null
+		fi
+	fi
 fi
 
 # Tabs default to four spaces wide

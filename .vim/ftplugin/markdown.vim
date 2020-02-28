@@ -1,5 +1,9 @@
 let b:ale_fixers = ['prettier']
 
+" Format tables nicely
+nnoremap <F12> :TableFormat<CR>
+inoremap <F12> <C-o><F12>
+
 " tpope/vim-markdown (Vim's included markdown plugin)
 let g:markdown_syntax_conceal = 0
 

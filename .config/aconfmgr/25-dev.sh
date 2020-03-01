@@ -1,5 +1,4 @@
 # Basic tools
-AddPackage bat                       # Cat clone with syntax highlighting and git integration
 AddPackage cloc                      # Count lines of code
 AddPackage code                      # The Open Source build of Visual Studio Code (vscode) editor
 AddPackage --foreign eva             # simple calculator REPL, similar to bc(1)
@@ -8,9 +7,7 @@ AddPackage fzf                       # Command-line fuzzy finder
 AddPackage gdb                       # The GNU Debugger
 AddPackage git                       # the fast distributed version control system
 AddPackage git-crypt                 # Transparent file encryption in Git
-AddPackage --foreign gotop-bin       # A terminal based graphical activity monitor inspired by gtop and vtop
 AddPackage --foreign goimports-git   # Tool to fix (add, remove) your Go imports automatically.
-AddPackage --foreign lf              # A terminal file manager inspred by ranger written in Go
 AddPackage nmap                      # Utility for network discovery and security auditing
 AddPackage parallel                  # A shell tool for executing jobs in parallel
 AddPackage peda                      # Python Exploit Development Assistance for GDB
@@ -22,7 +19,6 @@ AddPackage tree                      # A directory listing program displaying a 
 AddPackage vim                       # Vi Improved, a highly configurable, improved version of the vi text editor
 AddPackage --foreign vim-ripgrep-git # Use RipGrep in Vim and display results in a quickfix list.
 AddPackage vim-spell-en              # Language files for Vim spell checking
-AddPackage vis                       # modern, legacy free, simple yet efficient vim-like editor
 
 if [ "$USER" == 'stick' ]; then
 	AddPackage ansible   # Radically simple IT automation platform

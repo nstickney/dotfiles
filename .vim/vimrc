@@ -104,7 +104,7 @@ set sidescroll=1     " scroll one column at a time sideways
 " Search
 set hlsearch  " highlight searches
 "" hit <Return> to clear the highlight
-nnoremap <CR> :nohlsearch<CR><CR>
+nnoremap <CR> :nohlsearch<CR>
 if has('reltime')
 	set incsearch  " search as you type
 endif

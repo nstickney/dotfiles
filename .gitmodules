@@ -52,3 +52,6 @@
 [submodule ".vim/pack/stick/start/context.vim"]
 	path = .vim/pack/stick/start/context.vim
 	url = https://github.com/wellle/context.vim
+[submodule ".vim/pack/stick/start/vim-terraform"]
+	path = .vim/pack/stick/start/vim-terraform
+	url = https://github.com/hashivim/vim-terraform

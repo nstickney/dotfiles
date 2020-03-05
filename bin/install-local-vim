@@ -37,7 +37,15 @@ main() {
 	cd /tmp
 	git clone https://github.com/vim/vim.git
 	cd vim/src
-	./configure --prefix="$_dir" LDFLAGS="-L$_dir/lib"
+	# FOR RHEL7
+	# ./configure \
+	# 	--enable-python3interp=yes \
+	# 	--with-python3-command="/usr/local_rhel7/python3.7/bin/python3.7" \
+	# 	--with-python3-config-dir="$(/usr/local_rhel7/python3.7/bin/python3.7m-config --configdir)" \
+	# 	--enable-fail-if-missing \
+	# 	--prefix="$_dir" LDFLAGS="-L$_dir/lib"
+	./configure \
+		--prefix="$_dir" LDFLAGS="-L$_dir/lib"
 	make
 	make install
 
@@ -48,8 +56,11 @@ main() {
 _pos_args=()
 while [ "$#" -gt 0 ]; do
 	case "$1" in
-		'--help'|'-h') usage;;
-		*) _pos_args+=("$1"); shift;;
+	'--help' | '-h') usage ;;
+	*)
+		_pos_args+=("$1")
+		shift
+		;;
 	esac
 done
 main ${_pos_args[@]:+"${_pos_args[@]}"}

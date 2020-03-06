@@ -426,7 +426,7 @@ alias mkdir='mkdir -pv'
 	alias mop='mosh -p 59999'
 
 # networking
-[ -z "$(command -v ipme)" ] && alias ipme='curl ifconfig.me'
+[ -z "$(command -v ipme)" ] && alias ipme="curl ifconfig.me; printf '\n'"
 [ -z "$(command -v pinc)" ] && alias pinc='ping -c'
 
 # pacman

@@ -92,6 +92,8 @@ add_workstation_rules() {
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 8006 -j ACCEPT'
 	__ask 'Is this computer used to access Remote Desktop (RDP)?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 3389 -j ACCEPT'
+	__ask 'Is this computer used to access Virtual Network Computing (VNC)?' \
+		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 5900 -j ACCEPT'
 	__ask 'Is this computer used to access vSphere?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT'
 }

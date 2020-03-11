@@ -31,9 +31,18 @@ __ask() {
 		answer=$(__get_ch "${4:-}")
 		printf '\n'
 		case "$answer" in
-			[Yy]*) eval "${2:-}"; break;;
-			[Nn]*) eval "${3:-}"; break;;
-			"") [ -n "${4:-}" ] && eval "${5:-}"; break;;
+		[Yy]*)
+			eval "${2:-}"
+			break
+			;;
+		[Nn]*)
+			eval "${3:-}"
+			break
+			;;
+		"")
+			[ -n "${4:-}" ] && eval "${5:-}"
+			break
+			;;
 		esac
 	done
 }
@@ -46,8 +55,15 @@ add_bittorrent_rules() {
 }
 
 add_minecraft_rules() {
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 25565 -j ACCEPT
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 27094 -j ACCEPT
+	for i in 25565 27094; do
+		sudo iptables -A OUTPUT -p tcp -m tcp --dport $i -j ACCEPT
+	done
+}
+
+add_tome4_rules() {
+	for i in 2257 2258; do
+		sudo iptables -A OUTPUT -d te4.org -p tcp -m tcp --dport $i -j ACCEPT
+	done
 }
 
 add_printing_rules() {
@@ -57,8 +73,9 @@ add_printing_rules() {
 }
 
 add_openvpn_rules() {
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 1194 -j ACCEPT
-	sudo iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT
+	for i in tcp udp; do
+		sudo iptables -A OUTPUT -p $i -m $i --dport 1194 -j ACCEPT
+	done
 }
 
 add_outbound_ssh() {
@@ -76,16 +93,17 @@ add_workstation_rules() {
 	sudo iptables -A OUTPUT -p icmp --icmp-type 8 -j ACCEPT # echo request
 
 	# Allow needed workstation outbound access
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT # WHOIS
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT # DNS (XFR)
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT # RSYNC
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6667 -j ACCEPT # IRC
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 8448 -j ACCEPT # Matrix
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT    # SSH
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT    # WHOIS
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT    # DNS (XFR)
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT   # RSYNC
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6667 -j ACCEPT  # IRC
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 8448 -j ACCEPT  # Matrix
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 11371 -j ACCEPT # HKPS
 	sudo iptables -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
 	__ask 'Does this computer use network printers?' add_printing_rules
 	__ask 'Is this computer used to play Minecraft?' add_minecraft_rules
+	__ask 'Is this computer used to play Tales of Maj'\''Eyal?' add_tome4_rules
 	__ask 'Is this computer used to access MongoDB?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 27017 -j ACCEPT'
 	__ask 'Is this computer used to access ProxMox?' \
@@ -124,13 +142,13 @@ save_permanent_iptables() {
 		sudo rc-service iptables save
 
 	# On an Arch machine:
-	elif [ -x "$(command -v pacman)" ] && \
+	elif [ -x "$(command -v pacman)" ] &&
 		[ -x "$(command -v iptables-save)" ]; then
 		sudo iptables-save | sudo tee /etc/iptables/iptables.rules >/dev/null
 
 	# On a CentOS machine:
-	elif [ -x "$(command -v yum)" ] && \
-		sudo yum list installed iptables-services >/dev/null 2>&1 ; then
+	elif [ -x "$(command -v yum)" ] &&
+		sudo yum list installed iptables-services >/dev/null 2>&1; then
 		sudo service iptables save
 
 	# On a Debian machine:
@@ -181,7 +199,7 @@ main() {
 	fi
 
 	# Find necessary information
-	_NETS="$(ip a | grep 'inet ' | grep -v 'inet 127\.' | \
+	_NETS="$(ip a | grep 'inet ' | grep -v 'inet 127\.' |
 		sed 's/  //g; s/inet //g; s/ .*//g')"
 
 	if [ -n "${SSH_CLIENT:-}" ]; then
@@ -235,8 +253,8 @@ main() {
 		sudo iptables -A INPUT -s "$_NET" -p udp -m udp --dport 59999 -j ACCEPT
 
 		# Allow ping
-		sudo iptables -A INPUT -s "$_NET" -p icmp --icmp-type 8 -j ACCEPT   # req
-		sudo iptables -A OUTPUT -d "$_NET" -p icmp --icmp-type 0 -j ACCEPT  # rep
+		sudo iptables -A INPUT -s "$_NET" -p icmp --icmp-type 8 -j ACCEPT  # req
+		sudo iptables -A OUTPUT -d "$_NET" -p icmp --icmp-type 0 -j ACCEPT # rep
 
 		# Allow ssh
 		sudo iptables -A INPUT -s "$_NET" -p tcp -m tcp --dport 22 -j ACCEPT
@@ -260,11 +278,11 @@ main() {
 
 	# Allow required services outbound (TCP)
 	# sudo iptables -A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT # DNS (XFR)
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 80 -j ACCEPT  # HTTP
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
 
 	# Allow required services outbound (UDP)
-	sudo iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
+	sudo iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT  # DNS
 	sudo iptables -A OUTPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
 	sudo iptables -A OUTPUT -p udp -m udp --dport 123 -j ACCEPT # NTP
 
@@ -317,7 +335,6 @@ main() {
 		__ask 'Start iptables at boot?' 'sudo rc-update add iptables'
 	fi
 }
-
 
 [ "$#" -gt 0 ] && usage
 main

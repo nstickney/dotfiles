@@ -1,4 +1,3 @@
-# shellcheck disable=SC2148
 AddPackage alsa-utils # An alternative implementation of Linux sound support
 AddPackage asciinema # Record and share terminal sessions
 AddPackage audacity # A program that lets you manipulate digital audio waveforms

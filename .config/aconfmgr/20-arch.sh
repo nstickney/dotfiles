@@ -1,4 +1,3 @@
-# shellcheck disable=SC2148
 AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
 AddPackage augeas # aconfmgr opt dep
 AddPackage afpfs-ng # A client for the Apple Filing Protocol (AFP)

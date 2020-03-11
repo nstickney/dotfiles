@@ -26,6 +26,7 @@ AddPackage openssh # Free version of the SSH connectivity tools
 AddPackage openvpn # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
 AddPackage python2-dbus # avahi optionally requires python2-dbus: avahi-discover
 AddPackage remmina # remote desktop client written in GTK+
+AddPackage libvncserver # remmina opt dep
 AddPackage signal-desktop # Electron application that links with Signal on mobile
 AddPackage sniffglue # Secure multithreaded packet sniffer
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol

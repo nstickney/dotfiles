@@ -12,17 +12,17 @@ if sudo dmesg | grep -q "Hypervisor detected"; then
 	# VirtualBox
 	if systemd-detect-virt | grep -i -q oracle; then
 		AddPackage virtualbox-guest-modules-arch # Virtualbox guest kernel modules for Arch Kernel
-		AddPackage virtualbox-guest-utils # VirtualBox Guest userspace utilities
+		AddPackage virtualbox-guest-utils        # VirtualBox Guest userspace utilities
 		CreateLink /etc/systemd/system/multi-user.target.wants/vboxservice.service /usr/lib/systemd/system/vboxservice.service
 	fi
 
 # Not a virtual machine
 else
 	# Bluetooth
-	AddPackage blueman # GTK+ Bluetooth Manager
+	AddPackage blueman                  # GTK+ Bluetooth Manager
 	AddPackage --foreign bluez-firmware # Firmwares for Broadcom BCM203x and STLC2300 Bluetooth chips
-	AddPackage bluez-utils # Development and debugging utilities for the bluetooth protocol stack
-	AddPackage pulseaudio-bluetooth # Bluetooth support for PulseAudio
+	AddPackage bluez-utils              # Development and debugging utilities for the bluetooth protocol stack
+	AddPackage pulseaudio-bluetooth     # Bluetooth support for PulseAudio
 	CreateLink /etc/systemd/system/bluetooth.target.wants/bluetooth.service /usr/lib/systemd/system/bluetooth.service
 	CreateLink /etc/systemd/system/dbus-org.bluez.service /usr/lib/systemd/system/bluetooth.service
 
@@ -30,25 +30,25 @@ else
 	AddPackage --foreign regionset # read/sets the region code of DVD drives
 
 	# Printer
-	AddPackage --foreign brother-mfc-j480dw # LPR and CUPS driver for the Brother MFC-j480DW
+	AddPackage --foreign brother-mfc-j480dw    # LPR and CUPS driver for the Brother MFC-j480DW
 	AddPackage --foreign xerox-workcentre-6515 # CUPS driver for the Xerox WorkCentre 6515
 
-	AddPackage android-udev # Udev rules to connect Android devices to your linux box
-	AddPackage arduino-avr-core # Arduino AVR core with upstream avr-gcc and avrdude
-	AddPackage ccid # A generic USB Chip/Smart Card Interface Devices driver
-	AddPackage cups # The CUPS Printing System - daemon package
-	AddPackage cups-pdf # PDF printer for cups
-	AddPackage dfu-programmer # Programmer for Atmel chips with a USB bootloader
-	AddPackage lm_sensors # Opt dep for i3status-rust-git
-	AddPackage mtpfs # A FUSE filesystem that supports reading and writing from any MTP device
-	AddPackage opensc # Tools and libraries for smart cards
-	AddPackage pcsc-tools # PC/SC Architecture smartcard tools
-	AddPackage solaar # Device manager for Logitech's Unifying receiver peripherals
-	AddPackage teensy-loader-cli # Command line loader for the teensy microprocessor boards
-	AddPackage tlp # Linux Advanced Power Management
-	AddPackage tlp-rdw # Linux Advanced Power Management - Radio Device Wizard
+	AddPackage android-udev           # Udev rules to connect Android devices to your linux box
+	AddPackage arduino-avr-core       # Arduino AVR core with upstream avr-gcc and avrdude
+	AddPackage ccid                   # A generic USB Chip/Smart Card Interface Devices driver
+	AddPackage cups                   # The CUPS Printing System - daemon package
+	AddPackage cups-pdf               # PDF printer for cups
+	AddPackage dfu-programmer         # Programmer for Atmel chips with a USB bootloader
+	AddPackage lm_sensors             # Opt dep for i3status-rust-git
+	AddPackage mtpfs                  # A FUSE filesystem that supports reading and writing from any MTP device
+	AddPackage opensc                 # Tools and libraries for smart cards
+	AddPackage pcsc-tools             # PC/SC Architecture smartcard tools
+	AddPackage solaar                 # Device manager for Logitech's Unifying receiver peripherals
+	AddPackage teensy-loader-cli      # Command line loader for the teensy microprocessor boards
+	AddPackage tlp                    # Linux Advanced Power Management
+	AddPackage tlp-rdw                # Linux Advanced Power Management - Radio Device Wizard
 	AddPackage x86_energy_perf_policy # Read or write MSR_IA32_ENERGY_PERF_BIAS
-	AddPackage usb_modeswitch # Activating switchable USB devices on Linux.
+	AddPackage usb_modeswitch         # Activating switchable USB devices on Linux.
 	CreateLink /etc/systemd/system/multi-user.target.wants/cups.path /usr/lib/systemd/system/cups.path
 	CreateLink /etc/systemd/system/multi-user.target.wants/org.cups.cupsd.path /usr/lib/systemd/system/org.cups.cupsd.path
 	CreateLink /etc/systemd/system/multi-user.target.wants/lm_sensors.service /usr/lib/systemd/system/lm_sensors.service
@@ -64,12 +64,12 @@ else
 
 	### KVM/QEMU
 	AddPackage bridge-utils # Utilities for configuring the Linux ethernet bridge
-	AddPackage dmidecode # Desktop Management Interface table related utilities
-	AddPackage ebtables # Ethernet bridge filtering utilities
-	AddPackage libvirt # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
-	AddPackage qemu # A generic and open source machine emulator and virtualizer
+	AddPackage dmidecode    # Desktop Management Interface table related utilities
+	AddPackage ebtables     # Ethernet bridge filtering utilities
+	AddPackage libvirt      # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
+	AddPackage qemu         # A generic and open source machine emulator and virtualizer
 	AddPackage virt-manager # Desktop user interface for managing virtual machines
-	AddPackage virt-viewer # A lightweight interface for interacting with the graphical display of virtualized guest OS.
+	AddPackage virt-viewer  # A lightweight interface for interacting with the graphical display of virtualized guest OS.
 	CreateLink /etc/systemd/system/multi-user.target.wants/libvirtd.service /usr/lib/systemd/system/libvirtd.service
 	CreateLink /etc/systemd/system/sockets.target.wants/virtlockd.socket /usr/lib/systemd/system/virtlockd.socket
 	CreateLink /etc/systemd/system/sockets.target.wants/virtlogd.socket /usr/lib/systemd/system/virtlogd.socket
@@ -93,17 +93,17 @@ fi
 
 # Intel CPU/Video
 if grep -i -q Intel /proc/cpuinfo 2>/dev/null; then
-	AddPackage intel-ucode # Microcode update files for Intel CPUs
+	AddPackage intel-ucode      # Microcode update files for Intel CPUs
 	AddPackage xf86-video-intel # X.org Intel i810/i830/i915/945G/G965+ video drivers
-	AddPackage vulkan-intel # Intel's Vulkan mesa driver
+	AddPackage vulkan-intel     # Intel's Vulkan mesa driver
 fi
 
 # AMD/ATI Video
 if sudo lspci -v | grep -i 'amd/ati' | grep -i -q 'vga'; then
 	AddPackage libva-mesa-driver #  VA-API implementation for gallium
-	AddPackage mesa-vdpau # Mesa VDPAU drivers
-	AddPackage opencl-mesa # OpenCL support for AMD/ATI Radeon mesa drivers
-	AddPackage vulkan-radeon # Radeon's Vulkan mesa driver
+	AddPackage mesa-vdpau        # Mesa VDPAU drivers
+	AddPackage opencl-mesa       # OpenCL support for AMD/ATI Radeon mesa drivers
+	AddPackage vulkan-radeon     # Radeon's Vulkan mesa driver
 fi
 
 # Nvidia (Nouveau)
@@ -112,16 +112,16 @@ if sudo lspci -v | grep -i -q nvidia; then
 fi
 
 # https://wiki.archlinux.org/index.php/Getty#Have_boot_messages_stay_on_tty1
-cat > "$(CreateFile /etc/systemd/system/getty@tty1.service.d/noclear.conf)" <<EOF
+cat >"$(CreateFile /etc/systemd/system/getty@tty1.service.d/noclear.conf)" <<EOF
 [Service]
 TTYVTDisallocate=no
 EOF
 
 # Enable Magic SysRq
-echo "kernel.sysrq = 1" > "$(CreateFile /etc/sysctl.d/99-sysrq.conf)"
+echo "kernel.sysrq = 1" >"$(CreateFile /etc/sysctl.d/99-sysrq.conf)"
 
-# Reduce timeouts to sane variables
-cat >> "$(GetPackageOriginalFile systemd /etc/systemd/system.conf)" <<EOF
+# Reduce timeouts to sane values
+cat >>"$(GetPackageOriginalFile systemd /etc/systemd/system.conf)" <<EOF
 RuntimeWatchdogSec=10min
 ShutdownWatchdogSec=10min
 DefaultTimeoutStartSec=30s
@@ -137,6 +137,3 @@ CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/sy
 CreateLink /etc/systemd/system/multi-user.target.wants/chronyd.service /usr/lib/systemd/system/chronyd.service
 CreateLink /etc/systemd/system/multi-user.target.wants/remote-fs.target /usr/lib/systemd/system/remote-fs.target
 CreateLink /etc/systemd/user/default.target.wants/xdg-user-dirs-update.service /usr/lib/systemd/user/xdg-user-dirs-update.service
-
-# SetFileProperty /usr/bin group root
-# SetFileProperty /usr/bin owner root

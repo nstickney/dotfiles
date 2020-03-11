@@ -1,4 +1,3 @@
-# shellcheck disable=SC2148
 IgnorePath '**.bak'
 IgnorePath '**.pacnew'
 IgnorePath '**/__pycache__/*'

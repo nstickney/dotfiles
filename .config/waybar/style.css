@@ -1,0 +1,137 @@
+@define-color soml_black rgba(26, 26, 26, 0.93);
+@define-color soml_half rgba(38, 38, 38, 0.93);
+@define-color soml_gray rgba(51, 51, 51, 0.93);
+@define-color soml_red rgba(194, 36, 54, 0.93);
+@define-color soml_green rgba(53, 177, 129, 0.93);
+@define-color soml_yellow rgba(165, 132, 64, 0.93);
+@define-color soml_blue rgba(0, 119, 230, 0.93);
+@define-color soml_orange rgba(230, 77, 0, 0.93);
+@define-color soml_white rgba(230, 230, 230, 0.93);
+
+* {
+  border-radius: 0;
+  color: @soml_white;
+  /* `otf-font-awesome` is required to be installed for icons */
+  font-family: "Source Code Pro", sans-serif;
+  font-size: 16px;
+  min-height: 0;
+}
+
+#waybar {
+  background: transparent;
+}
+
+#workspaces button {
+  background: @soml_black;
+  margin: 1px;
+  padding: 1px 14px;
+}
+
+#workspaces button:not(.focused):not(.urgent):nth-child(even) {
+  background: @soml_gray;
+}
+
+#workspaces button.focused {
+  background-color: @soml_orange;
+}
+
+#workspaces button.urgent {
+  background-color: @soml_red;
+}
+
+#mode {
+  background-color: @soml_red;
+}
+
+#waybar:not(.empty) #window {
+  background: @soml_black;
+  border-width: 0 4px;
+  border-image-source: linear-gradient(
+    to right,
+    @soml_black,
+    @soml_black,
+    @soml_half
+  );
+  border-image-slice: 50%;
+  border-image-width: 8px;
+  padding: 2px 16px;
+}
+
+.horizontal:nth-child(3):last-child > * {
+  background: @soml_black;
+  border-width: 0 4px;
+  border-image-source: linear-gradient(
+    to right,
+    @soml_half,
+    @soml_black,
+    @soml_half
+  );
+  border-image-slice: 50%;
+  border-image-width: 8px;
+}
+
+.horizontal:nth-child(3):last-child > *:nth-child(odd) {
+  background: @soml_gray;
+  border-image-source: linear-gradient(
+    to right,
+    @soml_half,
+    @soml_gray,
+    @soml_half
+  );
+}
+
+#battery,
+#clock,
+#cpu,
+#idle_inhibitor,
+#memory,
+#mode,
+#network,
+#pulseaudio,
+#temperature {
+  padding: 2px 16px;
+}
+
+#battery.plugged {
+  color: @soml_green;
+}
+
+#battery.warning:not(.plugged) {
+  background-color: @soml_yellow;
+}
+
+#battery.critical:not(.plugged) {
+  background-color: @soml_red;
+}
+
+#network.disconnected {
+  background-color: @soml_red;
+}
+
+#network.linked {
+  color: @soml_yellow;
+}
+
+#network.wifi {
+  color: @soml_green;
+}
+
+#network.ethernet {
+  color: @soml_blue;
+}
+
+#pulseaudio.muted {
+  color: @soml_red;
+}
+
+#temperature.critical {
+  color: @soml_red;
+}
+
+#idle_inhibitor.activated {
+  color: @soml_green;
+}
+
+#tray {
+  padding: 2px 8px;
+}

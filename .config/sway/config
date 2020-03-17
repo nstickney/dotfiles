@@ -39,7 +39,7 @@ default_orientation horizontal
 # Startup Actions #############################################################
 
 # Finalize host-specific configuration of status bar
-exec_always $_CONFIG_DIR/bar-config $_CONFIG_DIR
+# exec_always $_CONFIG_DIR/bar-config $_CONFIG_DIR
 
 # Fix blank application window in java applications
 exec_always wmname LG3D
@@ -69,17 +69,7 @@ exec --no-startup-id swayidle -w \
 		 before-sleep "$_LOCK"
 
 bar {
-	colors {
-		# Item              Border  Background  Text
-		background                  $trns
-		focused_workspace   $acto   $acto       $fore
-		active_workspace    $back   $acto       $fore
-		inactive_workspace  $back   $back       $fade
-		urgent_workspace    $hint   $hint       $back
-	}
-	font pango:Source Code Pro, Font Awesome 5 Free Solid 12
-	position top
-	status_command i3status-rs $_CONFIG_DIR/status.toml
+	swaybar_command waybar
 }
 
 # Transparency

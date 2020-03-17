@@ -98,10 +98,11 @@ fi
 
 # AMD/ATI Video
 if sudo lspci -v | grep -i 'amd/ati' | grep -i -q 'vga'; then
-	AddPackage libva-mesa-driver #  VA-API implementation for gallium
-	AddPackage mesa-vdpau        # Mesa VDPAU drivers
-	AddPackage opencl-mesa       # OpenCL support for AMD/ATI Radeon mesa drivers
-	AddPackage vulkan-radeon     # Radeon's Vulkan mesa driver
+	AddPackage libva-mesa-driver    #  VA-API implementation for gallium
+	AddPackage mesa-vdpau           # Mesa VDPAU drivers
+	AddPackage --foreign opencl-amd # OpenCL userspace driver as provided in the amdgpu-pro driver stack. This package is intended to work along with the free amdgpu stack.
+	AddPackage opencl-mesa          # OpenCL support for AMD/ATI Radeon mesa drivers
+	AddPackage vulkan-radeon        # Radeon's Vulkan mesa driver
 fi
 
 # Nvidia (Nouveau)

@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, you can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
+set -eEuo pipefail
+trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
+
+usage() {
+	printf 'Usage: %s\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+main() {
+
+	# Put in the defaults
+	cat <<-EOF >"$HOME"/.config/waybar/config
+		{
+		    "layer": "top", // Popups over other windows
+		    "margin-bottom": 1,
+		    "modules-left": ["sway/workspaces", "sway/mode"],
+		    "modules-center": ["sway/window"],
+
+		    // Modules (in order of appearance)
+		    "network": {
+		        "format-wifi": " {ipaddr}/{cidr} ({essid} {signalStrength}%)",
+		        "format-ethernet": " {ipaddr}/{cidr}",
+		        "format-linked": "  (No IP)",
+		        "format-disconnected": "  Disconnected"
+		    },
+		    "cpu": {
+		        "format": " {usage}%"
+		    },
+		    "temperature": {
+		        "critical-threshold": 64,
+		        "format": "{icon} {temperatureC}°C",
+		        "format-icons": ["", "", ""]
+		    },
+		    "memory": {
+		        "format": " {}%",
+		        "states": {
+		            "warning": 68,
+		            "critical": 92
+		        }
+		    },
+		    "battery": {
+		        "states": {
+		            "warning": 32,
+		            "critical": 8
+		        },
+		        "format": "{icon} {capacity}% {time}",
+		        "format-charging": "{icon} ",
+		        "format-plugged": "",
+		        "format-icons": ["", "", "", "", ""]
+		    },
+		    "pulseaudio": {
+		        // "scroll-step": 1, // %, can be a float
+		        "format": "{volume}% {icon} {format_source}",
+		        "format-bluetooth": "{volume}% {icon} {format_source}",
+		        "format-bluetooth-muted": " {icon} {format_source}",
+		        "format-muted": " {format_source}",
+		        "format-source": "{volume}% ",
+		        "format-source-muted": "",
+		        "format-icons": {
+		            "headphone": "",
+		            "hands-free": "",
+		            "headset": "",
+		            "phone": "",
+		            "portable": "",
+		            "car": "",
+		            "default": ["", "", ""]
+		        },
+		        "on-click": "pavucontrol"
+		    },
+		    "clock": {
+		        "format": "{:%a %Y%m.%d %H:%M:%S}",
+		        "interval": 1,
+		        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+		    },
+		    "idle_inhibitor": {
+		        "format": "{icon}",
+		        "format-icons": {
+		            "activated": "",
+		            "deactivated": ""
+		        }
+		    },
+		    "tray": {
+		        "icon-size": 22,
+		        "spacing": 2
+		    },
+	EOF
+
+	# Prepare the list of modules
+	local _mods_right='    "modules-right": ["network", "cpu", "temperature", "memory",'
+
+	# Add disk blocks for each physical filesystem
+	for i in $(mount | grep -e btrfs -e ext -e vfat -e xfs -e zfs | cut -f3 -d' '); do
+		cat <<-EOF >>"$HOME"/.config/waybar/config
+			    "disk#$i": {
+			        "format": " {percentage_used}%",
+			        "path": "$i",
+			        "tooltip-format": "{path}: {used}/{total} ({percentage_free}% free)"
+			    },
+		EOF
+		_mods_right="$_mods_right \"disk#$i\","
+	done
+
+	_mods_right="$_mods_right"' "battery", "pulseaudio", "clock", "idle_inhibitor", "tray"]'
+	printf '%s\n}' "$_mods_right" >>"$HOME"/.config/waybar/config
+
+}
+
+[ "$#" -gt 0 ] && usage
+main

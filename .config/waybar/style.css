@@ -45,7 +45,7 @@
 
 #waybar:not(.empty) #window {
   background: @soml_black;
-  border-width: 0 4px;
+  border-width: 0 4px 0 0;
   border-image-source: linear-gradient(
     to right,
     @soml_black,
@@ -57,7 +57,7 @@
   padding: 2px 16px;
 }
 
-.horizontal:nth-child(3):last-child > * {
+.horizontal:nth-child(3):last-child > * > * {
   background: @soml_black;
   border-width: 0 4px;
   border-image-source: linear-gradient(
@@ -68,9 +68,10 @@
   );
   border-image-slice: 50%;
   border-image-width: 8px;
+  padding: 2px 12px;
 }
 
-.horizontal:nth-child(3):last-child > *:nth-child(odd) {
+.horizontal:nth-child(3):last-child > *:nth-child(odd) > * {
   background: @soml_gray;
   border-image-source: linear-gradient(
     to right,
@@ -80,56 +81,40 @@
   );
 }
 
-#battery,
-#clock,
-#cpu,
-#idle_inhibitor,
-#memory,
-#mode,
-#network,
-#pulseaudio,
-#temperature {
-  padding: 2px 16px;
-}
-
-#battery.plugged {
-  color: @soml_green;
-}
-
-#battery.warning:not(.plugged) {
-  background-color: @soml_yellow;
-}
-
-#battery.critical:not(.plugged) {
-  background-color: @soml_red;
-}
-
-#network.disconnected {
-  background-color: @soml_red;
-}
-
-#network.linked {
-  color: @soml_yellow;
-}
-
-#network.wifi {
-  color: @soml_green;
-}
-
 #network.ethernet {
   color: @soml_blue;
 }
 
-#pulseaudio.muted {
-  color: @soml_red;
-}
-
-#temperature.critical {
-  color: @soml_red;
-}
-
-#idle_inhibitor.activated {
+#battery.plugged,
+#idle_inhibitor.activated,
+#network.wifi {
   color: @soml_green;
+}
+
+#battery.warning:not(.plugged),
+#memory.warning,
+#network.linked {
+  background-color: @soml_yellow;
+  border-image-source: linear-gradient(
+    to right,
+    @soml_half,
+    @soml_yellow,
+    @soml_half
+  );
+}
+
+#battery.critical:not(.plugged),
+#memory.critical,
+#network.disconnected,
+#pulseaudio.muted,
+#temperature.critical {
+  background-color: @soml_red;
+  border-image-source: linear-gradient(
+    to right,
+    @soml_half,
+    @soml_red,
+    @soml_half
+  );
 }
 
 #tray {

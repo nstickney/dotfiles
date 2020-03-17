@@ -1,12 +1,12 @@
-@define-color soml_black rgba(26, 26, 26, 0.93);
-@define-color soml_half rgba(38, 38, 38, 0.93);
-@define-color soml_gray rgba(51, 51, 51, 0.93);
-@define-color soml_red rgba(194, 36, 54, 0.93);
-@define-color soml_green rgba(53, 177, 129, 0.93);
-@define-color soml_yellow rgba(165, 132, 64, 0.93);
-@define-color soml_blue rgba(0, 119, 230, 0.93);
-@define-color soml_orange rgba(230, 77, 0, 0.93);
-@define-color soml_white rgba(230, 230, 230, 0.93);
+@define-color soml_black rgba(26, 26, 26, 0.8);
+@define-color soml_half rgba(38, 38, 38, 0.8);
+@define-color soml_gray rgba(51, 51, 51, 0.8);
+@define-color soml_red rgba(194, 36, 54, 0.8);
+@define-color soml_green rgba(53, 177, 129, 0.8);
+@define-color soml_yellow rgba(165, 132, 64, 0.8);
+@define-color soml_blue rgba(0, 119, 230, 0.8);
+@define-color soml_orange rgba(230, 77, 0, 0.8);
+@define-color soml_white rgba(230, 230, 230, 0.8);
 
 * {
   border-radius: 0;

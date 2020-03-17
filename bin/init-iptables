@@ -60,12 +60,6 @@ add_minecraft_rules() {
 	done
 }
 
-add_tome4_rules() {
-	for i in 2257 2258; do
-		sudo iptables -A OUTPUT -d te4.org -p tcp -m tcp --dport $i -j ACCEPT
-	done
-}
-
 add_printing_rules() {
 	for i in 161 515 631; do
 		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
@@ -103,7 +97,8 @@ add_workstation_rules() {
 	sudo iptables -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
 	__ask 'Does this computer use network printers?' add_printing_rules
 	__ask 'Is this computer used to play Minecraft?' add_minecraft_rules
-	__ask 'Is this computer used to play Tales of Maj'\''Eyal?' add_tome4_rules
+	__ask 'Is this computer used to play Tales of Maj'\''Eyal?' \
+		'sudo iptables -A OUTPUT -d angolwen.net-core.org -p tcp -m tcp --dport 2257:2258 -j ACCEPT'
 	__ask 'Is this computer used to access MongoDB?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 27017 -j ACCEPT'
 	__ask 'Is this computer used to access ProxMox?' \
@@ -158,11 +153,15 @@ save_permanent_iptables() {
 	# Otherwise, fail:
 	else
 		# Warn about non-persistence
-		printf '\e[1;31mWARNING:\e[0m'
-		printf ' The applied configuration is NOT PERMANENT across reboots. Please\n'
-		printf "    consult your distribution's documentation to determine how best to\\n"
-		printf '    persist these rules. Suggested tools include iptables-persistent,\n'
-		printf '    iptables-save, or iptables-services.\n'
+		cat <<-EOF
+
+			    $(tput bold && tput setaf 1)WARNING:$(tput sgr0)
+			  The applied configuration is NOT PERMANENT across reboots. Please
+			  consult your distribution's documentation to determine how best to
+			  persist these rules. Suggested tools include iptables-persistent,
+			  iptables-save, or iptables-services.
+
+		EOF
 	fi
 
 }

@@ -2,8 +2,6 @@
 
 AddPackage chrony # Lightweight NTP client and server
 CopyFile /etc/locale.gen
-CopyFile /etc/modprobe.d/blacklist.conf
-CopyFile /etc/systemd/system.conf
 
 # Virtual machine
 if sudo dmesg | grep -q "Hypervisor detected"; then
@@ -137,3 +135,4 @@ CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/sy
 CreateLink /etc/systemd/system/multi-user.target.wants/chronyd.service /usr/lib/systemd/system/chronyd.service
 CreateLink /etc/systemd/system/multi-user.target.wants/remote-fs.target /usr/lib/systemd/system/remote-fs.target
 CreateLink /etc/systemd/user/default.target.wants/xdg-user-dirs-update.service /usr/lib/systemd/user/xdg-user-dirs-update.service
+CreateLink /usr/lib/p11-kit-trust.so libnssckbi.so

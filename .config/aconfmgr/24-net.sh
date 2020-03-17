@@ -28,9 +28,9 @@ AddPackage python2-dbus # avahi optionally requires python2-dbus: avahi-discover
 AddPackage remmina # remote desktop client written in GTK+
 AddPackage libvncserver # remmina opt dep
 AddPackage signal-desktop # Electron application that links with Signal on mobile
-AddPackage sniffglue # Secure multithreaded packet sniffer
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 AddPackage tcpdump # Powerful command-line packet analyzer
+AddPackage --foreign teams # Microsoft Teams for Linux is your chat-centered workspace in Office 365
 AddPackage traceroute # Tracks the route taken by packets over an IP network
 AddPackage wget # A network utility to retrieve files from the Web
 AddPackage whois # Intelligent WHOIS client
@@ -39,6 +39,7 @@ AddPackage wireguard-tools # next generation secure network tunnel
 AddPackage openresolv # wireguard opt dep
 AddPackage youtube-dl # A small command-line program to download videos from YouTube.com and a few more sites
 AddPackage zerotier-one # Creates virtual Ethernet networks of almost unlimited size.
+AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 
 # AddPackage --foreign chromium-widevine # A browser plugin designed for the viewing of premium video content
 # AddPackage privoxy # A web proxy with advanced filtering capabilities.

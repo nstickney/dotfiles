@@ -16,36 +16,13 @@ usage() {
 
 main() {
 
+	# Prepare the list of modules
+	local _mods_right='"modules-right": ["network", "cpu", "temperature", "memory",'
+
 	# Put in the defaults
 	cat <<-EOF >"$HOME"/.config/waybar/config
 		{
-		    "layer": "top", // Popups over other windows
-		    "margin-bottom": 1,
-		    "modules-left": ["sway/workspaces", "sway/mode"],
-		    "modules-center": ["sway/window"],
-
-		    // Modules (in order of appearance)
-		    "network": {
-		        "format-wifi": " {ipaddr}/{cidr} ({essid} {signalStrength}%)",
-		        "format-ethernet": " {ipaddr}/{cidr}",
-		        "format-linked": "  (No IP)",
-		        "format-disconnected": "  Disconnected"
-		    },
-		    "cpu": {
-		        "format": " {usage}%"
-		    },
-		    "temperature": {
-		        "critical-threshold": 64,
-		        "format": "{icon} {temperatureC}°C",
-		        "format-icons": ["", "", ""]
-		    },
-		    "memory": {
-		        "format": " {}%",
-		        "states": {
-		            "warning": 68,
-		            "critical": 92
-		        }
-		    },
+		    // Universal module configuration
 		    "battery": {
 		        "states": {
 		            "warning": 32,
@@ -55,6 +32,35 @@ main() {
 		        "format-charging": "{icon} ",
 		        "format-plugged": "",
 		        "format-icons": ["", "", "", "", ""]
+		    },
+		    "clock": {
+		        "format": "{:%a %Y%m.%d %H:%M:%S}",
+		        "interval": 1,
+		        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+		    },
+		    "cpu": {
+		        "format": " {usage}%",
+				"interval": 1
+		    },
+		    "idle_inhibitor": {
+		        "format": "{icon}",
+		        "format-icons": {
+		            "activated": "",
+		            "deactivated": ""
+		        }
+		    },
+		    "memory": {
+		        "format": " {}%",
+		        "states": {
+		            "warning": 68,
+		            "critical": 92
+		        }
+		    },
+		    "network": {
+		        "format-wifi": " {ipaddr}/{cidr} ({essid} {signalStrength}%)",
+		        "format-ethernet": " {ipaddr}/{cidr}",
+		        "format-linked": "  (No IP)",
+		        "format-disconnected": "  Disconnected"
 		    },
 		    "pulseaudio": {
 		        // "scroll-step": 1, // %, can be a float
@@ -75,26 +81,18 @@ main() {
 		        },
 		        "on-click": "pavucontrol"
 		    },
-		    "clock": {
-		        "format": "{:%a %Y%m.%d %H:%M:%S}",
-		        "interval": 1,
-		        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
-		    },
-		    "idle_inhibitor": {
-		        "format": "{icon}",
-		        "format-icons": {
-		            "activated": "",
-		            "deactivated": ""
-		        }
+		    "temperature": {
+		        "critical-threshold": 64,
+		        "format": "{icon} {temperatureC}°C",
+		        "format-icons": ["", "", ""]
 		    },
 		    "tray": {
 		        "icon-size": 22,
 		        "spacing": 2
 		    },
-	EOF
 
-	# Prepare the list of modules
-	local _mods_right='    "modules-right": ["network", "cpu", "temperature", "memory",'
+		    // Per-host module configuration
+	EOF
 
 	# Add disk blocks for each physical filesystem
 	for i in $(mount | grep -e btrfs -e ext -e vfat -e xfs -e zfs | cut -f3 -d' '); do
@@ -105,11 +103,22 @@ main() {
 			        "tooltip-format": "{path}: {used}/{total} ({percentage_free}% free)"
 			    },
 		EOF
-		_mods_right="$_mods_right \"disk#$i\","
+		_mods_right+=" \"disk#$i\","
 	done
 
-	_mods_right="$_mods_right"' "battery", "pulseaudio", "clock", "idle_inhibitor", "tray"]'
-	printf '%s\n}' "$_mods_right" >>"$HOME"/.config/waybar/config
+	# Finalize list of modules
+	_mods_right+=' "battery", "pulseaudio", "clock", "idle_inhibitor", "tray"]'
+
+	cat <<-EOF >>"$HOME"/.config/waybar/config
+
+		    // Overall configuration options
+		    "layer": "top", // Popups over other windows
+		    "margin-bottom": 1,
+		    "modules-left": ["sway/workspaces", "sway/mode"],
+		    "modules-center": ["sway/window"],
+		    $_mods_right
+		}
+	EOF
 
 }
 

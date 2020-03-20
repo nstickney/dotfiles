@@ -41,6 +41,7 @@
 
 #mode {
   background-color: @soml_red;
+  padding: 2px 16px;
 }
 
 #waybar:not(.empty) #window {

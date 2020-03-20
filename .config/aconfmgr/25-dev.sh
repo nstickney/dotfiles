@@ -62,8 +62,9 @@ AddPackage maven   # Java project management and project comprehension tool
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
 ### Javascript
-AddPackage npm    # A package manager for javascript
-AddPackage eslint # An AST-based pattern checker for JavaScript
+AddPackage eslint            # An AST-based pattern checker for JavaScript
+AddPackage npm               # A package manager for javascript
+AddPackage npm-check-updates # Find newer versions of dependencies than what your package.json or bower.json allows
 
 ### HTML/CSS
 AddPackage prettier # An opinionated code formatter for JS, JSON, CSS, YAML and much more

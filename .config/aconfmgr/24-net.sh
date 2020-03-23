@@ -2,6 +2,7 @@ AddPackage --foreign aerc              # Email Client for your Terminal
 AddPackage aria2                       # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
 AddPackage avahi                       # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
 AddPackage bind-tools                  # The ISC DNS tools
+AddPackge discord                      # All-in-one voice and text chat for gamers that's free and secure.
 AddPackage geoip-database-extra        # bind-tools opt dep
 AddPackage chromium                    # A web browser built for speed, simplicity, and security
 AddPackage dhcpcd                      # RFC2131 compliant DHCP client daemon

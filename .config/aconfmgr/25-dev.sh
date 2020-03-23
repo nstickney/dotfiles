@@ -97,5 +97,8 @@ AddPackage sbt                           # The interactive build tool
 AddPackage scala                         # A Java-interoperable language with object-oriented and functional features
 AddPackage --foreign scalafmt-native-bin # Code formatter for Scala
 
+### VHDL
+AddPackge --foreign ghdl # VHDL simulator
+
 ### Vimscript
 AddPackage vint # Lint tool for Vim script Language

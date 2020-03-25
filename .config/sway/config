@@ -50,6 +50,8 @@ exec_always $_WALLPAPER
 
 # Applications
 #exec --no-startup-id bitwarden-bin
+exec --no-startup-id blueman-tray
+exec --no-startup-id discord
 exec --no-startup-id hydroxide serve
 exec --no-startup-id keybase-gui
 exec --no-startup-id mako

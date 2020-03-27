@@ -479,8 +479,8 @@ fi
 # ssh
 if [ -x "$(command -v ssh)" ]; then
 
-	# Fix "'alacritty': unknown terminal type" and enable agent forwarding
-	alias ssh='TERM=xterm-256color ssh -A'
+	# Fix "'alacritty': unknown terminal type"
+	alias ssh='TERM=xterm-256color ssh'
 
 	# Easy tunnel creation
 	if [ -z "$(command -v tunnel)" ]; then

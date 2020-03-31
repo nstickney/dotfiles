@@ -30,8 +30,10 @@ AddPackage truecrypt               # Free open-source cross-platform disk encryp
 # AddPackage rcs # opt dep for gramps
 # AddPackage --foreign lbry-app-bin # The LBRY app built using electron
 # AddPackage --foreign protonmail-bridge # Integrate ProtonMail paid account with any program that supports IMAP and SMTP
+# AddPackage solvespace # A parametric 3d CAD program
 # AddPackage thunderbird # Standalone mail and news reader from mozilla.org
 # AddPackage --foreign zotero # Zotero Standalone, a free, easy-to-use tool to help you collect, organize, cite, and share your research sources
 # AddPackage xpdf # opt dep for zotero
 
 CreateLink /etc/systemd/system/multi-user.target.wants/boinc.service /usr/lib/systemd/system/boinc.service
+

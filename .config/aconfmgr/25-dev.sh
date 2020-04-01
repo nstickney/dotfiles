@@ -51,7 +51,8 @@ AddPackage flawfinder # Searches through source code for potential security flaw
 AddPackage uncrustify # A source code beautifier
 
 ### English
-AddPackage proselint # Linter for prose
+AddPackage proselint          # Linter for prose
+AddPackage --foreign vale-bin # A customizable, syntax-aware linter for prose
 
 ### Go
 AddPackage delve # A debugger for the Go programming language.
@@ -92,13 +93,13 @@ AddPackage rust       # Systems programming language focused on safety, speed an
 AddPackage rust-racer # Code completion for Rust
 
 ### Scala
-AddPackage --foreign metals              # Language Server For Scala
-AddPackage sbt                           # The interactive build tool
-AddPackage scala                         # A Java-interoperable language with object-oriented and functional features
-AddPackage --foreign scalafmt-native-bin # Code formatter for Scala
+AddPackage --foreign metals   # Language Server For Scala
+AddPackage sbt                # The interactive build tool
+AddPackage scala              # A Java-interoperable language with object-oriented and functional features
+AddPackage --foreign scalafmt # code formatter for the Scala programming language
 
 ### VHDL
-AddPackge --foreign ghdl # VHDL simulator
+AddPackage --foreign ghdl # VHDL simulator
 
 ### Vimscript
 AddPackage vint # Lint tool for Vim script Language

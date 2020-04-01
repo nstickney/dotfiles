@@ -18,3 +18,4 @@ AddPackage --foreign wdisplays-git                    # GUI display configurator
 AddPackage wl-clipboard                               # Command-line copy/paste utilities for Wayland
 AddPackage xdg-utils                                  # Command line tools that assist applications with a variety of desktop integration tasks
 AddPackage xorg-xev                                   # Print contents of X events
+AddPackage --foreign wev-git                          # Print wayland events, like xev(1)

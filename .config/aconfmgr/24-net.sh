@@ -13,14 +13,12 @@ AddPackage inetutils                   # A collection of common network programs
 AddPackage iproute2                    # IP Routing Utilities
 AddPackage iputils                     # Network monitoring tools, including ping
 AddPackage irssi                       # Modular text mode IRC client with Perl scripting
-AddPackage --foreign lbry-app-bin      # The LBRY app built using electron
 AddPackage lynx                        # A text browser for the World Wide Web
 AddPackage mosh                        # Mobile shell, surviving disconnects with local echo and line editing
 AddPackage mtr                         # Combines the functionality of traceroute and ping into one tool (CLI version)
 AddPackage networkmanager              # Network connection manager and user applications
 AddPackage networkmanager-openconnect  # NetworkManager VPN plugin for OpenConnect
 AddPackage networkmanager-openvpn      # NetworkManager VPN plugin for OpenVPN
-# AddPackage --foreign networkmanager-wireguard-git # NetworkManager VPN plugin for WireGuard - git
 AddPackage ngrep                   # A grep-like utility that allows you to search for network packets on an interface.
 AddPackage nss-mdns                # glibc plugin providing host name resolution via mDNS
 AddPackage obs-studio              # Free, open source software for live streaming and recording
@@ -33,7 +31,6 @@ AddPackage signal-desktop          # Electron application that links with Signal
 AddPackage --foreign slack-desktop # Slack Desktop (Beta) for Linux
 AddPackage sshfs                   # FUSE client based on the SSH File Transfer Protocol
 AddPackage tcpdump                 # Powerful command-line packet analyzer
-AddPackage --foreign teams         # Microsoft Teams for Linux is your chat-centered workspace in Office 365
 AddPackage traceroute              # Tracks the route taken by packets over an IP network
 AddPackage wget                    # A network utility to retrieve files from the Web
 AddPackage whois                   # Intelligent WHOIS client
@@ -42,14 +39,17 @@ AddPackage wireguard-tools         # next generation secure network tunnel
 AddPackage openresolv              # wireguard opt dep
 AddPackage youtube-dl              # A small command-line program to download videos from YouTube.com and a few more sites
 AddPackage zerotier-one            # Creates virtual Ethernet networks of almost unlimited size.
-AddPackage --foreign zoom          # Video Conferencing and Web Conferencing Service
 
 # AddPackage --foreign chromium-widevine # A browser plugin designed for the viewing of premium video content
+# AddPackage --foreign lbry-app-bin      # The LBRY app built using electron
+# AddPackage --foreign networkmanager-wireguard-git # NetworkManager VPN plugin for WireGuard - git
 # AddPackage privoxy # A web proxy with advanced filtering capabilities.
-# CopyFile /etc/privoxy/config
 # AddPackage tor # Anonymizing overlay network
+# AddPackage --foreign teams         # Microsoft Teams for Linux is your chat-centered workspace in Office 365
+# AddPackage --foreign zoom          # Video Conferencing and Web Conferencing Service
 
 CopyFile /etc/avahi/avahi-daemon.conf
+# CopyFile /etc/privoxy/config
 CopyFile /etc/sysctl.d/51-net.conf
 CreateLink /etc/systemd/system/dbus-org.freedesktop.Avahi.service /usr/lib/systemd/system/avahi-daemon.service
 CreateLink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service /usr/lib/systemd/system/avahi-daemon.service

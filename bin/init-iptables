@@ -95,21 +95,23 @@ add_workstation_rules() {
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 8448 -j ACCEPT  # Matrix
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 11371 -j ACCEPT # HKPS
 	sudo iptables -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
-	__ask 'Does this computer use network printers?' add_printing_rules
-	__ask 'Does this computer require Discord?' \
+	__ask 'Does this machine use network printers?' add_printing_rules
+	__ask 'Does this machine require Discord?' \
 		'sudo iptables -A OUTPUT -p udp -m udp --dport 50000:50010 -j ACCEPT'
-	__ask 'Is this computer used to play Minecraft?' add_minecraft_rules
-	__ask 'Is this computer used to play Tales of Maj'\''Eyal?' \
+	__ask 'Is this machine used to play Hack The Box?' \
+		'sudo iptables -A OUTPUT -p udp -m udp --dport 1337 -j ACCEPT'
+	__ask 'Is this machine used to play Minecraft?' add_minecraft_rules
+	__ask 'Is this machine used to play Tales of Maj'\''Eyal?' \
 		'sudo iptables -A OUTPUT -d angolwen.net-core.org -p tcp -m tcp --dport 2257:2258 -j ACCEPT'
-	__ask 'Is this computer used to access MongoDB?' \
+	__ask 'Is this machine used to access MongoDB?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 27017 -j ACCEPT'
-	__ask 'Is this computer used to access ProxMox?' \
+	__ask 'Is this machine used to access ProxMox?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 8006 -j ACCEPT'
-	__ask 'Is this computer used to access Remote Desktop (RDP)?' \
+	__ask 'Is this machine used to access Remote Desktop (RDP)?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 3389 -j ACCEPT'
-	__ask 'Is this computer used to access Virtual Network Computing (VNC)?' \
+	__ask 'Is this machine used to access Virtual Network Computing (VNC)?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 5900 -j ACCEPT'
-	__ask 'Is this computer used to access vSphere?' \
+	__ask 'Is this machine used to access vSphere?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT'
 }
 

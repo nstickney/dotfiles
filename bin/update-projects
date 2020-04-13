@@ -22,7 +22,7 @@ update_project() {
 	git stash
 	git pull origin "$(git rev-parse --abbrev-ref HEAD)"
 	[ "$_submodules" = 'true' ] &&
-		git submodule update --init --recursive --remote
+		git submodule foreach 'git checkout master && git pull'
 }
 
 _projects_dir="$HOME"/projects

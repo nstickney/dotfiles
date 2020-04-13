@@ -39,4 +39,3 @@ AddPackage truecrypt                         # Free open-source cross-platform d
 # AddPackage xpdf # opt dep for zotero
 
 CreateLink /etc/systemd/system/multi-user.target.wants/boinc.service /usr/lib/systemd/system/boinc.service
-

@@ -78,15 +78,15 @@ AddPackage meson # High productivity build system
 AddPackage perl-tidy # Parses and beautifies perl source
 
 ### Python
-AddPackage autopep8                # A tool that automatically formats Python code to conform to the PEP 8 style guide
-AddPackage python-black            # Uncompromising Python code formatter
-AddPackage python-isort            # A Python utility / library to sort Python imports.
-AddPackage python-jedi             # Awesome autocompletion for python
-AddPackage python-pip              # The PyPA recommended tool for installing Python packages
-AddPackage --foreign python-pgzero # A zero-boilerplate 2D games framework
-AddPackage python-pytest           # Simple powerful testing with Python
+AddPackage autopep8     # A tool that automatically formats Python code to conform to the PEP 8 style guide
+AddPackage python-black # Uncompromising Python code formatter
+AddPackage python-isort # A Python utility / library to sort Python imports.
+AddPackage python-jedi  # Awesome autocompletion for python
+AddPackage python-pip   # The PyPA recommended tool for installing Python packages
+# AddPackage --foreign python-pgzero # A zero-boilerplate 2D games framework
+AddPackage python-pytest # Simple powerful testing with Python
 # AddPackage tk # A windowing toolkit for use with tcl (python turtles)
-AddPackage --foreign zerynth-studio # A powerful IDE for embedded programming in Python that enables the IoT
+# AddPackage --foreign zerynth-studio # A powerful IDE for embedded programming in Python that enables the IoT
 
 ### Rust
 AddPackage rust       # Systems programming language focused on safety, speed and concurrency

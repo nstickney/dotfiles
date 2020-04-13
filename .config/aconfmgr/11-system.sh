@@ -27,6 +27,10 @@ else
 	# DVD drives
 	AddPackage --foreign regionset # read/sets the region code of DVD drives
 
+	# MemTest86
+	AddPackage --foreign memtest86-efi
+	IgnorePath /etc/memtest86-efi/*
+
 	# Printer
 	AddPackage --foreign brother-mfc-j480dw    # LPR and CUPS driver for the Brother MFC-j480DW
 	AddPackage --foreign xerox-workcentre-6515 # CUPS driver for the Xerox WorkCentre 6515

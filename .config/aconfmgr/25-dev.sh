@@ -1,15 +1,16 @@
 AddPackage ansible                   # Radically simple IT automation platform
+AddPackage ansible-lint              # Checks playbooks for practices and behaviour that could potentially be improved.
 AddPackage arduino                   # Arduino prototyping platform SDK
 AddPackage cloc                      # Count lines of code
 AddPackage code                      # The Open Source build of Visual Studio Code (vscode) editor
 AddPackage docker                    # Pack, ship and run any application as a lightweight container
+AddPackage pigz                      # docker opt dep
 AddPackage --foreign eva             # simple calculator REPL, similar to bc(1)
 AddPackage fd                        # Simple, fast and user-friendly alternative to find
 AddPackage fzf                       # Command-line fuzzy finder
 AddPackage gdb                       # The GNU Debugger
 AddPackage git                       # the fast distributed version control system
 AddPackage git-crypt                 # Transparent file encryption in Git
-AddPackage --foreign goimports-git   # Tool to fix (add, remove) your Go imports automatically.
 AddPackage hexyl                     # Colored command-line hex viewer
 AddPackage hyperfine                 # A command-line benchmarking tool
 AddPackage namcap                    # A Pacman package analyzer
@@ -50,13 +51,23 @@ AddPackage cppcheck   # A tool for static C/C++ code analysis
 AddPackage flawfinder # Searches through source code for potential security flaws
 AddPackage uncrustify # A source code beautifier
 
+### Docker
+AddPackage --foreign hadolint-bin # Dockerfile linter, validate inline bash, written in Haskell
+
 ### English
 AddPackage proselint          # Linter for prose
 AddPackage --foreign vale-bin # A customizable, syntax-aware linter for prose
 
+### Git
+AddPackage --foreign gitlint # Git commit message linter
+
 ### Go
-AddPackage delve # A debugger for the Go programming language.
-AddPackage go    # Core compiler tools for the Go programming language
+AddPackage delve                   # A debugger for the Go programming language.
+AddPackage go-pie                  # Core compiler tools for the Go programming language (with PIE enabled by default)
+AddPackage --foreign goimports-git # Tool to fix (add, remove) your Go imports automatically.
+
+### HTML
+AddPackage hq # HTML processor inspired by jq
 
 ### Java
 AddPackage maven   # Java project management and project comprehension tool
@@ -66,13 +77,17 @@ AddPackage vim-jad # Automatically decompile Java class files and display Java c
 AddPackage eslint            # An AST-based pattern checker for JavaScript
 AddPackage npm               # A package manager for javascript
 AddPackage npm-check-updates # Find newer versions of dependencies than what your package.json or bower.json allows
+AddPackage jq                # Command-line JSON processor
 
-### HTML/CSS
-AddPackage prettier # An opinionated code formatter for JS, JSON, CSS, YAML and much more
-AddPackage tidy     # A tool to tidy down your HTML code to a clean style
+### LaTeX
+AddPackage texlab # A cross-platform implementation of the Language Server Protocol for LaTeX.
+
+### Make
+AddPackage --foreign checkmake # Experimental linter/analyzer for makefiles
 
 ### Multi-language
-AddPackage meson # High productivity build system
+AddPackage meson    # High productivity build system
+AddPackage prettier # An opinionated code formatter for JS, JSON, CSS, YAML and much more
 
 ### Perl
 AddPackage perl-tidy # Parses and beautifies perl source
@@ -98,8 +113,15 @@ AddPackage sbt                # The interactive build tool
 AddPackage scala              # A Java-interoperable language with object-oriented and functional features
 AddPackage --foreign scalafmt # code formatter for the Scala programming language
 
+### SQL
+AddPackage --foreign ruby-sqlint # Simple SQL linter supporting ANSI and PostgreSQL syntaxes
+AddPackage --foreign sqlfmt-bin  # Experimental SQL formatter with width-aware output.
+
 ### VHDL
 AddPackage --foreign ghdl # VHDL simulator
 
 ### Vimscript
 AddPackage vint # Lint tool for Vim script Language
+
+### YAML
+AddPackage yamllint # Linter for YAML files

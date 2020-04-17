@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Settings (Wayland)
 Icon=org.gnome.Settings
-Exec=env XDG_CURRENT_DESKTOP=GNOME gnome-control-center
+Exec=XDG_CURRENT_DESKTOP=GNOME gnome-control-center
 Terminal=false
 Type=Application
 StartupNotify=true

@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
 Version=1.0
-Name=Minecraft Launcher
+Name=Minecraft Launcher (Wayland)
 Comment=Official Minecraft Launcher (Wayland)
-Exec=env GDK_BACKEND=x11 /opt/minecraft-launcher/minecraft-launcher
+Exec=_JAVA_AWT_WM_NONREPARENTING=1 /opt/minecraft-launcher/minecraft-launcher
 Path=/opt/minecraft-launcher/
 Icon=minecraft-launcher
 Terminal=false

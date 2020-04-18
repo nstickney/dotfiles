@@ -1,0 +1,6 @@
+# https://github.com/swaywm/sway/wiki/Running-programs-natively-under-Wayland
+XDG_SESSION_TYPE                     DEFAULT=wayland
+QT_QPA_PLATFORM                      DEFAULT=wayland-egl
+QT_WAYLAND_FORCE_DPI                 DEFAULT=physical
+QT_WAYLAND_DISABLE_WINDOWDECORATION  DEFAULT=1
+SDL_VIDEODRIVER                      DEFAULT=wayland

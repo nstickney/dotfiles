@@ -114,3 +114,6 @@
 	UC = clean -dfi
 	# Un-stage
 	US = reset HEAD --
+[filesystem "Oracle Corporation|11.0.6|/dev/mapper/cryptroot"]
+	timestampResolution = 5000 nanoseconds
+	minRacyThreshold = 5564 microseconds

@@ -41,6 +41,7 @@ else
 	AddPackage cups                   # The CUPS Printing System - daemon package
 	AddPackage cups-pdf               # PDF printer for cups
 	AddPackage dfu-programmer         # Programmer for Atmel chips with a USB bootloader
+	AddPackage fwupd                  # Simple daemon to allow session software to update firmware
 	AddPackage lm_sensors             # Opt dep for i3status-rust-git
 	AddPackage mtpfs                  # A FUSE filesystem that supports reading and writing from any MTP device
 	AddPackage opensc                 # Tools and libraries for smart cards
@@ -63,6 +64,7 @@ else
 	CreateLink /etc/systemd/system/systemd-rfkill.service /dev/null
 	CreateLink /etc/systemd/system/systemd-rfkill.socket /dev/null
 	CopyFile /etc/nsswitch.conf
+	CopyFile /etc/udev/rules.d/50-atmel-dfu.rules
 
 	### KVM/QEMU
 	AddPackage bridge-utils         # Utilities for configuring the Linux ethernet bridge
@@ -74,6 +76,8 @@ else
 	AddPackage virt-viewer          # A lightweight interface for interacting with the graphical display of virtualized guest OS.
 	AddPackage --foreign virtio-win # virtio drivers for Windows (2000, XP, Vista, 7, 8, 10) guests and floppy images for Windows XP
 	CreateLink /etc/systemd/system/multi-user.target.wants/libvirtd.service /usr/lib/systemd/system/libvirtd.service
+	CreateLink /etc/systemd/system/sockets.target.wants/libvirtd-ro.socket /usr/lib/systemd/system/libvirtd-ro.socket
+	CreateLink /etc/systemd/system/sockets.target.wants/libvirtd.socket /usr/lib/systemd/system/libvirtd.socket
 	CreateLink /etc/systemd/system/sockets.target.wants/virtlockd.socket /usr/lib/systemd/system/virtlockd.socket
 	CreateLink /etc/systemd/system/sockets.target.wants/virtlogd.socket /usr/lib/systemd/system/virtlogd.socket
 
@@ -114,6 +118,13 @@ fi
 if sudo lspci -v | grep -i -q nvidia; then
 	AddPackage xf86-video-nouveau # Open Source 3D acceleration driver for nVidia cards
 fi
+
+# Hosts file
+cat >>"$(GetPackageOriginalFile filesystem /etc/hosts)" <<EOF
+127.0.0.1	localhost
+::1			localhost
+127.0.1.1	$HOSTNAME
+EOF
 
 # https://wiki.archlinux.org/index.php/Getty#Have_boot_messages_stay_on_tty1
 cat >"$(CreateFile /etc/systemd/system/getty@tty1.service.d/noclear.conf)" <<EOF

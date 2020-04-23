@@ -9,3 +9,6 @@ AddPackage stellarium                       # A stellarium with great graphics a
 AddPackage stone-soup                       # Open-source, single-player, role-playing roguelike game of exploration and treasure-hunting
 AddPackage --foreign tome4                  # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
 AddPackage glew-wayland                     # The OpenGL Extension Wrangler Library, for Wayland
+
+CreateLink /opt/minecraft-launcher/swiftshader/libEGL.so /lib64/libEGL.so
+CreateLink /opt/minecraft-launcher/swiftshader/libGLESv2.so /lib64/libGLESv2.so

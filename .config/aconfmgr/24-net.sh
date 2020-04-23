@@ -5,6 +5,7 @@ AddPackage bind-tools                  # The ISC DNS tools
 AddPackage discord                     # All-in-one voice and text chat for gamers that's free and secure.
 AddPackage geoip-database-extra        # bind-tools opt dep
 AddPackage chromium                    # A web browser built for speed, simplicity, and security
+AddPackage --foreign chromium-widevine # A browser plugin designed for the viewing of premium video content
 AddPackage dhcpcd                      # RFC2131 compliant DHCP client daemon
 AddPackage dnsmasq                     # Lightweight, easy to configure DNS forwarder and DHCP server
 AddPackage firefox                     # Standalone web browser from mozilla.org
@@ -19,26 +20,26 @@ AddPackage mtr                         # Combines the functionality of tracerout
 AddPackage networkmanager              # Network connection manager and user applications
 AddPackage networkmanager-openconnect  # NetworkManager VPN plugin for OpenConnect
 AddPackage networkmanager-openvpn      # NetworkManager VPN plugin for OpenVPN
-AddPackage ngrep                   # A grep-like utility that allows you to search for network packets on an interface.
-AddPackage nss-mdns                # glibc plugin providing host name resolution via mDNS
-AddPackage obs-studio              # Free, open source software for live streaming and recording
-AddPackage openssh                 # Free version of the SSH connectivity tools
-AddPackage openvpn                 # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
-AddPackage python2-dbus            # avahi optionally requires python2-dbus: avahi-discover
-AddPackage remmina                 # remote desktop client written in GTK+
-AddPackage libvncserver            # remmina opt dep
-AddPackage signal-desktop          # Electron application that links with Signal on mobile
-AddPackage --foreign slack-desktop # Slack Desktop (Beta) for Linux
-AddPackage sshfs                   # FUSE client based on the SSH File Transfer Protocol
-AddPackage tcpdump                 # Powerful command-line packet analyzer
-AddPackage traceroute              # Tracks the route taken by packets over an IP network
-AddPackage wget                    # A network utility to retrieve files from the Web
-AddPackage whois                   # Intelligent WHOIS client
-AddPackage wireguard-dkms          # Wireguard module for Arch Kernel
-AddPackage wireguard-tools         # next generation secure network tunnel
-AddPackage openresolv              # wireguard opt dep
-AddPackage youtube-dl              # A small command-line program to download videos from YouTube.com and a few more sites
-AddPackage zerotier-one            # Creates virtual Ethernet networks of almost unlimited size.
+AddPackage ngrep                       # A grep-like utility that allows you to search for network packets on an interface.
+AddPackage nss-mdns                    # glibc plugin providing host name resolution via mDNS
+AddPackage obs-studio                  # Free, open source software for live streaming and recording
+AddPackage openssh                     # Free version of the SSH connectivity tools
+AddPackage openvpn                     # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
+AddPackage python2-dbus                # avahi optionally requires python2-dbus: avahi-discover
+AddPackage remmina                     # remote desktop client written in GTK+
+AddPackage libvncserver                # remmina opt dep
+AddPackage signal-desktop              # Electron application that links with Signal on mobile
+AddPackage --foreign slack-desktop     # Slack Desktop (Beta) for Linux
+AddPackage sshfs                       # FUSE client based on the SSH File Transfer Protocol
+AddPackage tcpdump                     # Powerful command-line packet analyzer
+AddPackage traceroute                  # Tracks the route taken by packets over an IP network
+AddPackage wget                        # A network utility to retrieve files from the Web
+AddPackage whois                       # Intelligent WHOIS client
+AddPackage wireguard-dkms              # Wireguard module for Arch Kernel
+AddPackage wireguard-tools             # next generation secure network tunnel
+AddPackage openresolv                  # wireguard opt dep
+AddPackage youtube-dl                  # A small command-line program to download videos from YouTube.com and a few more sites
+AddPackage zerotier-one                # Creates virtual Ethernet networks of almost unlimited size.
 
 # AddPackage --foreign chromium-widevine # A browser plugin designed for the viewing of premium video content
 # AddPackage --foreign lbry-app-bin      # The LBRY app built using electron
@@ -55,4 +56,5 @@ CreateLink /etc/systemd/system/dbus-org.freedesktop.Avahi.service /usr/lib/syste
 CreateLink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service /usr/lib/systemd/system/avahi-daemon.service
 CreateLink /etc/systemd/system/multi-user.target.wants/iptables.service /usr/lib/systemd/system/iptables.service
 CreateLink /etc/systemd/system/multi-user.target.wants/NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
+CreateLink /etc/systemd/system/multi-user.target.wants/sshd.service /usr/lib/systemd/system/sshd.service
 CreateLink /etc/systemd/system/sockets.target.wants/avahi-daemon.socket /usr/lib/systemd/system/avahi-daemon.socket

@@ -6,6 +6,7 @@ AddPackage hugo                              # Fast and Flexible Static Site Gen
 AddPackage asciidoctor                       # used with hugo
 AddPackage ruby-rouge                        # used with hugo/asciidoctor
 AddPackage --foreign ruby-asciidoctor-html5s # used with hugo/asciidoctor
+AddPackage hunspell-en_US                    # US English hunspell dictionaries
 AddPackage --foreign hydroxide-git           # A third-party, open-source ProtonMail CardDAV, IMAP and SMTP bridge
 AddPackage jp2a                              # A small utility for converting JPG images to ASCII
 AddPackage kbfs                              # The Keybase filesystem

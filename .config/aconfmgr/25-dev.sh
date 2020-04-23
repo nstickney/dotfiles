@@ -55,8 +55,8 @@ AddPackage uncrustify # A source code beautifier
 AddPackage --foreign hadolint-bin # Dockerfile linter, validate inline bash, written in Haskell
 
 ### English
-AddPackage proselint          # Linter for prose
-AddPackage --foreign vale-bin # A customizable, syntax-aware linter for prose
+AddPackage proselint # Linter for prose
+# AddPackage --foreign vale-bin # A customizable, syntax-aware linter for prose
 
 ### Git
 AddPackage --foreign gitlint # Git commit message linter
@@ -65,6 +65,9 @@ AddPackage --foreign gitlint # Git commit message linter
 AddPackage delve                   # A debugger for the Go programming language.
 AddPackage go-pie                  # Core compiler tools for the Go programming language (with PIE enabled by default)
 AddPackage --foreign goimports-git # Tool to fix (add, remove) your Go imports automatically.
+
+### Graphviz
+AddPackage graphviz # Graph visualization software
 
 ### HTML
 AddPackage hq # HTML processor inspired by jq

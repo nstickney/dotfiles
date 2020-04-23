@@ -1,0 +1,8 @@
+#!/bin/sh
+
+/usr/bin/asciidoctor -r asciidoctor-html5s -b html5s \
+	--attribute tabsize=4 \
+	--attribute source-highlighter=rouge \
+	--attribute rouge-css=style \
+	--attribute rouge-style=base16.monokai \
+	"$@"

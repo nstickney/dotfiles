@@ -4,7 +4,8 @@ Name=Firefox (Wayland)
 GenericName=Web Browser (Wayland)
 Comment=Browse the World Wide Web
 Keywords=Internet;WWW;Browser;Web;Explorer
-Exec=MOZ_ENABLE_WAYLAND=1 /usr/lib/firefox/firefox %u
+Exec=/usr/lib/firefox/firefox %u
+# Exec=MOZ_ENABLE_WAYLAND=1 /usr/lib/firefox/firefox %u
 Icon=firefox
 Terminal=false
 X-MultipleArgs=false
@@ -17,8 +18,10 @@ Actions=new-window;new-private-window;
 
 [Desktop Action new-window]
 Name=New Window (Wayland)
-Exec=MOZ_ENABLE_WAYLAND=1 /usr/lib/firefox/firefox --new-window %u
+Exec=/usr/lib/firefox/firefox --new-window %u
+# Exec=MOZ_ENABLE_WAYLAND=1 /usr/lib/firefox/firefox --new-window %u
 
 [Desktop Action new-private-window]
 Name=New Private Window (Wayland)
-Exec=MOZ_ENABLE_WAYLAND=1 /usr/lib/firefox/firefox --private-window %u
+Exec=/usr/lib/firefox/firefox --private-window %u
+# Exec=MOZ_ENABLE_WAYLAND=1 /usr/lib/firefox/firefox --private-window %u

@@ -35,7 +35,6 @@ AddPackage tcpdump                     # Powerful command-line packet analyzer
 AddPackage traceroute                  # Tracks the route taken by packets over an IP network
 AddPackage wget                        # A network utility to retrieve files from the Web
 AddPackage whois                       # Intelligent WHOIS client
-AddPackage wireguard-dkms              # Wireguard module for Arch Kernel
 AddPackage wireguard-tools             # next generation secure network tunnel
 AddPackage openresolv                  # wireguard opt dep
 AddPackage youtube-dl                  # A small command-line program to download videos from YouTube.com and a few more sites

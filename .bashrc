@@ -405,10 +405,10 @@ if [ -x "$(command -v vim)" ]; then
 	# shellcheck disable=2139
 	alias vi='$(command -v vim)'
 	alias vimrc='$(command -v vim) ~/.vim/vimrc'
-	alias svi='sudo "$(command -v vim)"'
 	EDITOR="$(command -v vim)"
 	export EDITOR
 fi
+[ -x "$(command -v sudo)" ] && alias se='sudo -e'
 
 # ls
 [ -z "$(command -v ll)" ] && alias ll='ls -ahl'

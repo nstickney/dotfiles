@@ -113,6 +113,8 @@ add_workstation_rules() {
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 5900 -j ACCEPT'
 	__ask 'Is this machine used to access vSphere?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT'
+	__ask 'Playing All-Army CyberStakes?' \
+		'sudo iptables -A OUTPUT -d challenge.acictf.com -j ACCEPT'
 }
 
 flush_all_rules() {

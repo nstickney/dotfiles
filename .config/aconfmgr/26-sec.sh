@@ -45,7 +45,8 @@ AddPackage wireshark-qt # Network traffic and protocol analyzer/sniffer - Qt GUI
 # Reverse Engineering
 AddPackage ghidra # Software reverse engineering framework
 # AddPackage --foreign ida-eval # Evaluation version of the world's smartest and most feature-full disassembler
-# AddPackage --foreign ida-free # Freeware version of the world's smartest and most feature-full disassembler
+AddPackage --foreign ida-free # Freeware version of the world's smartest and most feature-full disassembler
+AddPackage --foreign blc-git # used with ida-free (and ghidra)
 # AddPackage radare2 # Open-source tools to disasm, debug, analyze and manipulate binary files
 # AddPackage radare2-cutter # Qt and C++ GUI for radare2 reverse engineering framework
 

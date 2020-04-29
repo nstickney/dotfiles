@@ -1,6 +1,6 @@
 AddPackage --foreign bitwarden-bin           # A secure and free password manager for all of your devices.
 AddPackage boinc                             # Berkeley Open Infrastructure for Network Computing for desktop
-AddPackage calibre                           # Ebook management application (python2 build)
+AddPackage calibre-python3                   # Ebook management application (experimental python3 port)
 AddPackage --foreign exercism-bin            # Command line client for exercism.io
 AddPackage hugo                              # Fast and Flexible Static Site Generator in Go
 AddPackage asciidoctor                       # used with hugo
@@ -40,3 +40,4 @@ AddPackage truecrypt                         # Free open-source cross-platform d
 # AddPackage xpdf # opt dep for zotero
 
 CreateLink /etc/systemd/system/multi-user.target.wants/boinc.service /usr/lib/systemd/system/boinc.service
+CreateLink /usr/lib/calibre/bin bin-py3

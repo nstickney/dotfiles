@@ -17,6 +17,7 @@ AddPackage namcap                    # A Pacman package analyzer
 AddPackage nmap                      # Utility for network discovery and security auditing
 AddPackage parallel                  # A shell tool for executing jobs in parallel
 AddPackage peda                      # Python Exploit Development Assistance for GDB
+AddPackage perf                      # Linux kernel performance auditing tool
 AddPackage ripgrep                   # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rsync                     # A file transfer program to keep remote files in sync
 AddPackage sshpass                   # Fool ssh into accepting an interactive password non-interactively
@@ -121,7 +122,7 @@ AddPackage --foreign ruby-sqlint # Simple SQL linter supporting ANSI and Postgre
 AddPackage --foreign sqlfmt-bin  # Experimental SQL formatter with width-aware output.
 
 ### VHDL
-AddPackage --foreign ghdl # VHDL simulator
+AddPackage ghdl-gcc # VHDL simulator (GCC backend)
 
 ### Vimscript
 AddPackage vint # Lint tool for Vim script Language

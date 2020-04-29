@@ -1,6 +1,7 @@
 # shellcheck disable=SC2148
 
-AddPackage chrony # Lightweight NTP client and server
+AddPackage chrony                             # Lightweight NTP client and server
+AddPackage --foreign systemd-boot-pacman-hook # Pacman hook to upgrade systemd-boot after systemd upgrade.
 CopyFile /etc/locale.gen
 
 # Virtual machine
@@ -72,6 +73,7 @@ else
 	AddPackage ebtables             # Ethernet bridge filtering utilities
 	AddPackage libvirt              # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
 	AddPackage qemu                 # A generic and open source machine emulator and virtualizer
+	AddPackage qemu-arch-extra      # QEMU for foreign architectures
 	AddPackage virt-manager         # Desktop user interface for managing virtual machines
 	AddPackage virt-viewer          # A lightweight interface for interacting with the graphical display of virtualized guest OS.
 	AddPackage --foreign virtio-win # virtio drivers for Windows (2000, XP, Vista, 7, 8, 10) guests and floppy images for Windows XP

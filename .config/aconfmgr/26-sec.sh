@@ -31,6 +31,7 @@ AddPackage masscan # TCP port scanner, spews SYN packets asynchronously, scannin
 AddPackage ncrack      # High-speed network authentication cracking tool
 AddPackage netsniff-ng # High performance Linux network sniffer for packet inspection
 AddPackage sniffglue   # Secure multithreaded packet sniffer
+AddPackage sqlmap      # Automatic SQL injection and database takeover tool
 # AddPackage --foreign termshark-bin # A terminal UI for tshark, inspired by Wireshark
 AddPackage vulscan      # A module which enhances nmap to a vulnerability scanner
 AddPackage wireshark-qt # Network traffic and protocol analyzer/sniffer - Qt GUI
@@ -43,10 +44,11 @@ AddPackage wireshark-qt # Network traffic and protocol analyzer/sniffer - Qt GUI
 # AddPackage openvas-scanner # The OpenVAS scanning Daemon
 
 # Reverse Engineering
-AddPackage ghidra # Software reverse engineering framework
-# AddPackage --foreign ida-eval # Evaluation version of the world's smartest and most feature-full disassembler
+AddPackage binwalk            # A tool for searching a given binary image for embedded files
+AddPackage ghidra             # Software reverse engineering framework
 AddPackage --foreign ida-free # Freeware version of the world's smartest and most feature-full disassembler
-AddPackage --foreign blc-git # used with ida-free (and ghidra)
+AddPackage --foreign blc-git  # used with ida-free (and ghidra)
+AddPackage ropgadget          # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
 # AddPackage radare2 # Open-source tools to disasm, debug, analyze and manipulate binary files
 # AddPackage radare2-cutter # Qt and C++ GUI for radare2 reverse engineering framework
 

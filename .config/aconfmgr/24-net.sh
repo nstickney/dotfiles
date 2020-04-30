@@ -2,6 +2,7 @@ AddPackage --foreign aerc              # Email Client for your Terminal
 AddPackage aria2                       # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
 AddPackage avahi                       # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
 AddPackage bind-tools                  # The ISC DNS tools
+AddPackage bmon                        # Portable bandwidth monitor and rate estimator
 AddPackage discord                     # All-in-one voice and text chat for gamers that's free and secure.
 AddPackage geoip-database-extra        # bind-tools opt dep
 AddPackage chromium                    # A web browser built for speed, simplicity, and security
@@ -47,6 +48,14 @@ AddPackage zerotier-one                # Creates virtual Ethernet networks of al
 # AddPackage tor # Anonymizing overlay network
 # AddPackage --foreign teams         # Microsoft Teams for Linux is your chat-centered workspace in Office 365
 # AddPackage --foreign zoom          # Video Conferencing and Web Conferencing Service
+
+sed "s|%SLACK_URL%|$SLACK_URL|g" <<-'EOF' >"$(CreateFile /etc/ssh/sshrc)"
+	#!/bin/sh
+
+	ip="$(echo "$SSH_CONNECTION" | cut -d " " -f 1)"
+	host="$(uname -n)"
+	curl -X POST -H 'Content-type: application/json' --data '{"text":"'$host': new login ('$USER') from '$ip'"}' https://hooks.slack.com/services/%SLACK_URL% > /dev/null 2>&1
+EOF
 
 CopyFile /etc/avahi/avahi-daemon.conf
 # CopyFile /etc/privoxy/config

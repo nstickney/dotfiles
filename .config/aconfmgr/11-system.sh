@@ -107,6 +107,11 @@ if grep -i -q Intel /proc/cpuinfo 2>/dev/null; then
 	AddPackage vulkan-intel     # Intel's Vulkan mesa driver
 fi
 
+# NVME drives
+if ls /dev/ | grep -i -q nvme 2>/dev/null; then
+	AddPackage nvme-cli # NVM-Express user space tooling for Linux
+fi
+
 # AMD/ATI Video
 if sudo lspci -v | grep -i 'amd/ati' | grep -i -q 'vga'; then
 	AddPackage libva-mesa-driver    #  VA-API implementation for gallium

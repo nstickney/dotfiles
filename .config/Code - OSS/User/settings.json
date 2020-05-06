@@ -31,4 +31,7 @@
         "terminal.ansiBrightCyan":"#62d0a6",
         "terminal.ansiBrightWhite":"#fff8e7",
     },
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
 }

@@ -83,6 +83,13 @@ add_outbound_ssh() {
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 22 -j ACCEPT'
 }
 
+add_ryzom_rules() {
+	for i in 40916 43434 48851:48860 50000; do
+		sudo iptables -A OUTPUT -p tcp -m tcp --dport $i -j ACCEPT
+	done
+	sudo iptables -A OUTPUT -p udp -m udp --dport 47851:47860 -j ACCEPT
+}
+
 add_twitch_rules() {
 	for i in tcp udp; do
 		sudo iptables -A OUTPUT -p $i -m $i --dport 1935 -j ACCEPT
@@ -125,6 +132,7 @@ add_workstation_rules() {
 	__ask 'Playing Hack The Box?' \
 		'sudo iptables -A OUTPUT -p udp -m udp --dport 1337 -j ACCEPT'
 	__ask 'Playing Minecraft?' add_minecraft_rules
+	__ask 'Playing Saga of Ryzom?' add_ryzom_rules
 	__ask 'Playing Tales of Maj'\''Eyal?' \
 		'sudo iptables -A OUTPUT -d angolwen.net-core.org -p tcp -m tcp --dport 2257:2258 -j ACCEPT'
 }

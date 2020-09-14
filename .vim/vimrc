@@ -1,3 +1,7 @@
+" Windows Terminal is broken.
+" https://superuser.com/a/1525060
+set t_u7=
+
 " Backup, swap, and undo
 set backupdir=$HOME/.cache/vim/backup//  " backups stored by full file path
 set directory=$HOME/.cache/vim/swap//  " swap files stored by full file path

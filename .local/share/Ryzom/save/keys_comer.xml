@@ -241,36 +241,37 @@
   </macro>
   <macro name="Gather" id="4" back="2" icon="1" over="0" text="GTHR">
     <command name="inv_temp_all" params=""/>
+    <command name="target" params="entity=Raw Material Source"/>
     <command name="target" params="entity=[Comer]"/>
     <command name="run_shortcut" params="00"/>
   </macro>
   <macro name="HP Armor" id="5" back="0" icon="0" over="2" text="HP">
     <command name="item_group_equip" params="name=HP"/>
-    <command name="item_group_move" params="name=Focus|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Heavy|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Show|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Psy|destination=pet_animal4"/>
+    <command name="item_group_move" params="name=Focus|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Heavy|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Show|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Psy|destination=pet_animal1"/>
   </macro>
   <macro name="Focus Armor" id="6" back="6" icon="6" over="2" text="Focus">
     <command name="item_group_equip" params="name=Focus"/>
-    <command name="item_group_move" params="name=HP|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Heavy|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Show|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Psy|destination=pet_animal4"/>
+    <command name="item_group_move" params="name=HP|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Heavy|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Show|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Psy|destination=pet_animal1"/>
   </macro>
   <macro name="Heavy Armor" id="7" back="9" icon="9" over="2" text="HVY">
     <command name="item_group_equip" params="name=Heavy"/>
-    <command name="item_group_move" params="name=HP|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Focus|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Show|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Psy|destination=pet_animal4"/>
+    <command name="item_group_move" params="name=HP|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Focus|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Show|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Psy|destination=pet_animal1"/>
   </macro>
   <macro name="Show Armor" id="8" back="7" icon="7" over="2" text="Show">
     <command name="item_group_equip" params="name=Show"/>
-    <command name="item_group_move" params="name=HP|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Focus|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Heavy|destination=pet_animal4"/>
-    <command name="item_group_move" params="name=Psy|destination=pet_animal4"/>
+    <command name="item_group_move" params="name=HP|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Focus|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Heavy|destination=pet_animal1"/>
+    <command name="item_group_move" params="name=Psy|destination=pet_animal1"/>
   </macro>
   <macro name="Amplifiers" id="9" back="4" icon="4" over="3" text="Amps">
     <command name="item_group_equip" params="name=Amps"/>

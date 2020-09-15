@@ -78,13 +78,6 @@
   <group name="Elemental">
     <item createTime="1590341416" serial="3226423" slot="HandR"/>
   </group>
-  <group name="Melee">
-    <item createTime="1597457542" serial="8105215" slot="HandL"/>
-    <item createTime="1599271533" serial="7650368" slot="HandR"/>
-  </group>
-  <group name="Pick">
-    <item createTime="1599414447" serial="9228037" slot="HandR"/>
-  </group>
   <group name="Focus">
     <item createTime="1599443551" serial="9604880" slot="Headdress"/>
     <item createTime="1599443560" serial="9604972" slot="EarL"/>
@@ -104,5 +97,12 @@
     <remove slot="Head"/>
     <remove slot="HandL"/>
     <remove slot="HandR"/>
+  </group>
+  <group name="Melee">
+    <item createTime="1597457542" serial="8105215" slot="HandL"/>
+    <item createTime="1599269066" serial="7628206" slot="HandR"/>
+  </group>
+  <group name="Pick">
+    <item createTime="1599930492" serial="14556052" slot="HandR"/>
   </group>
 </item_groups>

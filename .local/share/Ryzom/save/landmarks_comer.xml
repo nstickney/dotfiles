@@ -8,6 +8,7 @@
     <landmark type="29" x="18733.13" y="-24949.01" title="Karavan (Burning Desert)"/>
     <landmark type="29" x="18691.00" y="-24928.95" title="Path (Burning Desert)"/>
     <landmark type="29" x="16827.00" y="-26191.00" title="Path (Scorched Corridor)"/>
+    <landmark type="29" x="16680.45" y="-24630.11" title="Kami (Dunes Of Exile)"/>
   </landmarks>
   <landmarks continent="fyros_island" type="user"/>
   <landmarks continent="fyros_newbie" type="user"/>
@@ -33,6 +34,7 @@
     <landmark type="29" x="5960.00" y="-16150.00" title="Path (Trench Of Trials)"/>
     <landmark type="29" x="6333.00" y="-12451.00" title="Path (Elusive Forest)"/>
     <landmark type="29" x="6192.00" y="-10335.00" title="Path (Windy Gate)"/>
+    <landmark type="29" x="6335.01" y="-16488.00" title="Zinuakeen (Trench of Trials)"/>
   </landmarks>
   <landmarks continent="sources" type="user">
     <landmark type="29" x="2975.00" y="-10048.00" title="Path (Under Spring)"/>
@@ -45,12 +47,23 @@
   <landmarks continent="testroom" type="user"/>
   <landmarks continent="tryker" type="user">
     <landmark type="29" x="17411.25" y="-32776.30" title="Fairhaven Path"/>
+    <landmark type="29" x="14415.36" y="-32436.91" title="Zinuakeen (Bounty Beaches)"/>
+    <landmark type="29" x="14657.01" y="-32438.05" title="Karavan (Bounty Beaches)"/>
+    <landmark type="13" x="16142.17" y="-30723.79" title="Dzao (E, Sp/Su, Night, -Fair)"/>
+    <landmark type="11" x="19290.46" y="-30747.38" title="Zun (Ex, Su/Au, Good)"/>
+    <landmark type="13" x="18925.47" y="-29833.17" title="Dzao"/>
   </landmarks>
   <landmarks continent="tryker_island" type="user"/>
   <landmarks continent="tryker_newbie" type="user"/>
   <landmarks continent="zorai" type="user">
     <landmark type="29" x="8741.00" y="-3273.00" title="Path (Cities of Intuition)"/>
     <landmark type="29" x="10663.00" y="-2200.00" title="Path (Void)"/>
+    <landmark type="29" x="8089.50" y="-2259.87" title="Kami (Knot Of Dementia)"/>
+    <landmark type="29" x="8698.54" y="-3224.97" title="Karavan (Cities of Intuition)"/>
+    <landmark type="29" x="8766.23" y="-2952.38" title="Kami (Cities of Intuition)"/>
+    <landmark type="29" x="8506.79" y="-2797.30" title="New Horizon (Zora)"/>
+    <landmark type="0" x="10266.06" y="-4543.51" title="Zinuakeen (Grove of Umbra)"/>
+    <landmark type="0" x="10968.83" y="-4515.79" title="Kami (Grove of Umbra)"/>
   </landmarks>
   <landmarks continent="zorai_island" type="user"/>
   <landmarks continent="zorai_newbie" type="user"/>

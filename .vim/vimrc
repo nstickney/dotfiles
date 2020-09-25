@@ -76,8 +76,9 @@ inoremap <F4> <C-R>=strftime("%Y-%m-%dT%T%z")<CR>
 """ buffer presence. This will ignore deleted buffers, as intended. To get
 """ default behaviour, use `bufexists` in it's place.
 nnoremap <silent> <C-b> :<C-u>exe v:count ? v:count . 'b' : 'b' . (bufloaded(0) ? '#' : 'n')<CR>
-"" Open a vertical terminal
-nnoremap ` :vert term<CR>
+"" Open a terminal
+nnoremap ` :terminal<CR>
+nnoremap ~ :vertical terminal<CR>
 "" Write the current file
 nnoremap <Leader><CR> :write<CR>
 "" Write the current file, and quit

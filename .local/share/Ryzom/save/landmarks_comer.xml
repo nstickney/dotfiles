@@ -2,6 +2,7 @@
 <interface_config>
   <landmarks continent="bagne" type="user">
     <landmark type="29" x="701.00" y="-10437.00" title="Path (Abyss of Ichor)"/>
+    <landmark type="29" x="994.15" y="-10498.29" title="Karavan (Abyss of Ichor)"/>
   </landmarks>
   <landmarks continent="corrupted_moor" type="user"/>
   <landmarks continent="fyros" type="user">
@@ -18,7 +19,10 @@
     <landmark type="29" x="4577.00" y="-3088.00" title="Path (Majestic Garden)"/>
     <landmark type="29" x="4261.00" y="-1316.00" title="Path (Grove of Confusion)"/>
   </landmarks>
-  <landmarks continent="matis_island" type="user"/>
+  <landmarks continent="matis_island" type="user">
+    <landmark type="29" x="14717.08" y="-810.39" title="Karavan (Almati Wood)"/>
+    <landmark type="29" x="14859.46" y="-992.03" title="Kami (Almati Wood)"/>
+  </landmarks>
   <landmarks continent="matis_newbie" type="user"/>
   <landmarks continent="newbieland" type="user"/>
   <landmarks continent="nexus" type="user">
@@ -46,12 +50,17 @@
   </landmarks>
   <landmarks continent="testroom" type="user"/>
   <landmarks continent="tryker" type="user">
-    <landmark type="29" x="17411.25" y="-32776.30" title="Fairhaven Path"/>
+    <landmark type="29" x="17411.25" y="-32776.30" title="Path (Fairhaven)"/>
     <landmark type="29" x="14415.36" y="-32436.91" title="Zinuakeen (Bounty Beaches)"/>
     <landmark type="29" x="14657.01" y="-32438.05" title="Karavan (Bounty Beaches)"/>
     <landmark type="13" x="16142.17" y="-30723.79" title="Dzao (E, Sp/Su, Night, -Fair)"/>
     <landmark type="11" x="19290.46" y="-30747.38" title="Zun (Ex, Su/Au, Good)"/>
     <landmark type="13" x="18925.47" y="-29833.17" title="Dzao"/>
+    <landmark type="29" x="15098.04" y="-34418.73" title="Karavan (Fount)"/>
+    <landmark type="29" x="17222.59" y="-32063.83" title="Zinuakeen (Dew Drops)"/>
+    <landmark type="29" x="18171.79" y="-31143.71" title="Karavan (Avendale)"/>
+    <landmark type="29" x="19391.09" y="-30263.96" title="Path (Loria)"/>
+    <landmark type="4" x="15567.70" y="-34442.30" title="Stinga 115"/>
   </landmarks>
   <landmarks continent="tryker_island" type="user"/>
   <landmarks continent="tryker_newbie" type="user"/>
@@ -64,6 +73,7 @@
     <landmark type="29" x="8506.79" y="-2797.30" title="New Horizon (Zora)"/>
     <landmark type="0" x="10266.06" y="-4543.51" title="Zinuakeen (Grove of Umbra)"/>
     <landmark type="0" x="10968.83" y="-4515.79" title="Kami (Grove of Umbra)"/>
+    <landmark type="29" x="10813.14" y="-1962.32" title="Kami"/>
   </landmarks>
   <landmarks continent="zorai_island" type="user"/>
   <landmarks continent="zorai_newbie" type="user"/>

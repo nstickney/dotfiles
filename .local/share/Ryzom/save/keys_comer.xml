@@ -211,7 +211,8 @@
   <key name="KeyV" ctrl="1" action="edit_paste" context="edit"/>
   <key name="KeyX" ctrl="1" action="edit_cut" context="edit"/>
   <macro name="Find" id="0" back="3" icon="3" over="1" text="Find">
-    <command name="target" params="entity=Zauza"/>
+    <command name="target" params="entity=Kipucka"/>
+    <command name="target" params="entity=Kipesta"/>
   </macro>
   <macro name="Check Aggro Bosses" id="1" back="0" icon="0" over="1" text="Aggr">
     <command name="target" params="entity= the "/>

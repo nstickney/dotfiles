@@ -1,7 +1,3 @@
-[user]
-	name = Stick
-	email = stick@stma.is
-	signingkey = 0A3BAF89EFE25F0D55C5571DEC1B22A58EEB3DFC
 [core]
 	autocrlf = input
 	excludesfile = ~/.config/gitignore
@@ -13,8 +9,16 @@
 	helper = cache --timeout=3600
 [gc]
 	auto = 256
+[init]
+	defaultBranch = main
 [pager]
 	branch = false
+[pull]
+	rebase = true
+[user]
+	name = Stick
+	email = stick@stma.is
+	signingkey = 0A3BAF89EFE25F0D55C5571DEC1B22A58EEB3DFC
 [alias]
 	# Add All
 	AA = ! git add -A && git st
@@ -120,7 +124,3 @@
 	UC = clean -dfi
 	# Un-stage
 	US = reset HEAD --
-[init]
-	defaultBranch = main
-[pull]
-	rebase = true

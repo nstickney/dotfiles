@@ -63,9 +63,15 @@
 	# Last Commit
 	LC = log -1 HEAD
 	# Log Graph
-	LG = log --graph --oneline --all
+	LG = log --graph \
+		--date=format-local:'%Y.%m.%d %H:%M' \
+		--pretty=format:'%C(yellow)%h%Creset %an %C(cyan)%ad%Creset%Cgreen%d%Creset %s'
 	# List Ignored
 	LI = ls-files --others -i --exclude-standard
+	# Log with Signatures
+	LS = log --graph \
+		--date=format-local:'%Y.%m.%d %H:%M' \
+		--pretty=format:'%C(yellow)%h%Creset [%G?] %an %C(cyan)%ad%Creset%Cgreen%d%Creset %s'
 	# Push (Force)
 	PF = ! git push -f origin $(git bh)
 	# Pull Origin

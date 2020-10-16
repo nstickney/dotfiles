@@ -1,4 +1,5 @@
-let b:ale_fixers = ['prettier']
+" Don't use prettier, it sucks for markdown (3 spaces indent?!!)
+let b:ale_fixers = []
 
 " Format tables nicely
 nnoremap <F12> :TableFormat<CR>

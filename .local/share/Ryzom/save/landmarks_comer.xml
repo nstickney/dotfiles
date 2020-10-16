@@ -61,6 +61,8 @@
     <landmark type="29" x="18171.79" y="-31143.71" title="Karavan (Avendale)"/>
     <landmark type="29" x="19391.09" y="-30263.96" title="Path (Loria)"/>
     <landmark type="4" x="15567.70" y="-34442.30" title="Stinga 115"/>
+    <landmark type="28" x="14281.77" y="-33176.49" title="Bounty Beaches -&gt; Fount"/>
+    <landmark type="28" x="14504.27" y="-33802.73" title="Fount -&gt; Bounty Beaches"/>
   </landmarks>
   <landmarks continent="tryker_island" type="user"/>
   <landmarks continent="tryker_newbie" type="user"/>
@@ -73,7 +75,7 @@
     <landmark type="29" x="8506.79" y="-2797.30" title="New Horizon (Zora)"/>
     <landmark type="0" x="10266.06" y="-4543.51" title="Zinuakeen (Grove of Umbra)"/>
     <landmark type="0" x="10968.83" y="-4515.79" title="Kami (Grove of Umbra)"/>
-    <landmark type="29" x="10813.14" y="-1962.32" title="Kami"/>
+    <landmark type="29" x="10813.14" y="-1962.32" title="Void (Kami)"/>
   </landmarks>
   <landmarks continent="zorai_island" type="user"/>
   <landmarks continent="zorai_newbie" type="user"/>

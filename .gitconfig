@@ -81,7 +81,7 @@
 	# Pull Origin
 	PO = ! git pull origin $(git bh)
 	# PuSh
-	PS = ! git push || git push -u origin $(git bh)
+	PS = ! git push -u origin $(git bh)
 	# Push to Top
 	PT = ! git fa && git ro && git ps
 	# Pull Upstream

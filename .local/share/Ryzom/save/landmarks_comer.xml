@@ -76,6 +76,7 @@
     <landmark type="0" x="10266.06" y="-4543.51" title="Zinuakeen (Grove of Umbra)"/>
     <landmark type="0" x="10968.83" y="-4515.79" title="Kami (Grove of Umbra)"/>
     <landmark type="29" x="10813.14" y="-1962.32" title="Void (Kami)"/>
+    <landmark type="29" x="10119.97" y="-2423.22" title="Zinuakeen (Void)"/>
   </landmarks>
   <landmarks continent="zorai_island" type="user"/>
   <landmarks continent="zorai_newbie" type="user"/>

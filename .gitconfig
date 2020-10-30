@@ -1,3 +1,5 @@
+[include]
+	path = safe/gitconfig
 [core]
 	autocrlf = input
 	excludesfile = ~/.config/gitignore
@@ -15,10 +17,6 @@
 	branch = false
 [pull]
 	rebase = true
-[user]
-	name = Stick
-	email = stick@stma.is
-	signingkey = 0A3BAF89EFE25F0D55C5571DEC1B22A58EEB3DFC
 [alias]
 	# Add All
 	AA = ! git add -A && git st

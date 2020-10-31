@@ -63,6 +63,8 @@ nmap <C-k> <Plug>(ale_previous_wrap)
 nmap <C-j> <Plug>(ale_next_wrap)
 
 " Mappings
+"" Insert an em-dash
+inoremap <C-y> <C-v>u2014
 "" Insert a timestamp
 nnoremap <F2> i<C-R>=strftime("%Y-%m-%d")<CR><Esc>
 inoremap <F2> <C-R>=strftime("%Y-%m-%d")<CR>

@@ -16,7 +16,7 @@
 [pager]
 	branch = false
 [pull]
-	rebase = true
+	ff=only
 [alias]
 	# Add All
 	AA = ! git add -A && git st

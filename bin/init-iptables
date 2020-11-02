@@ -111,23 +111,25 @@ add_workstation_rules() {
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 43 -j ACCEPT    # WHOIS
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 53 -j ACCEPT    # DNS (XFR)
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 873 -j ACCEPT   # RSYNC
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6667 -j ACCEPT  # IRC
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 6697 -j ACCEPT  # IRC
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 8448 -j ACCEPT  # Matrix
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 11371 -j ACCEPT # HKPS
 	sudo iptables -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
-	__ask 'Does this machine use network printers?' add_printing_rules
-	__ask 'Does this machine require Discord?' \
+	__ask 'Network printing?' add_printing_rules
+	__ask 'Discord?' \
 		'sudo iptables -A OUTPUT -p udp -m udp --dport 50000:50010 -j ACCEPT'
+	__ask 'Gemini?' \
+		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 1965 -j ACCEPT'
 	__ask 'Streaming on Twitch.tv?' add_twitch_rules
-	__ask 'Is this machine used to access MongoDB?' \
+	__ask 'Accessing MongoDB?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 27017 -j ACCEPT'
-	__ask 'Is this machine used to access ProxMox?' \
+	__ask 'Accessing ProxMox?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 8006 -j ACCEPT'
-	__ask 'Is this machine used to access Remote Desktop (RDP)?' \
+	__ask 'Accessing Remote Desktop (RDP)?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 3389 -j ACCEPT'
-	__ask 'Is this machine used to access Virtual Network Computing (VNC)?' \
+	__ask 'Accessing Virtual Network Computing (VNC)?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 5900 -j ACCEPT'
-	__ask 'Is this machine used to access vSphere?' \
+	__ask 'Accessing vSphere?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT'
 	__ask 'Playing All-Army CyberStakes?' add_cyberstakes_rules
 	__ask 'Playing Hack The Box?' \

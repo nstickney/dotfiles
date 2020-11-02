@@ -9,24 +9,29 @@ set -eEuo pipefail
 trap 'echo "Aborting (errexit line $LINENO). Exit code: $?" >&2' ERR
 
 usage() {
-	printf 'Usage: %s filename\n' "$(basename "$0")" >&2
+	printf 'Usage: %s filename [width]\n' "$(basename "$0")" >&2
 	printf ' -h --help : display this message\n' >&2
+	printf ' [width]   : number of characters per line (default 76)\n' >&2
 	exit
 }
 
 main() {
-	jp2a --width=120 "$1" > "$1".txt
+	_fn="${1##*/}"
+	jp2a --width="${2:-76}" "$1" >"$_fn".txt
 	# https://unix.stackexchange.com/a/249348
 	convert -size 1920x1280 xc:black -font 'Source-Code-Pro' -pointsize 12 \
-		-fill white -annotate +16+16 "@$1.txt" -trim "$1ASCII.png"
-	imv "$1ASCII.png"
+		-fill white -annotate +16+16 "@$_fn.txt" -trim "$_fn.ASCII.png"
+	imv "$_fn.ASCII.png"
 }
 
 _pos_args=()
 while [ "$#" -gt 0 ]; do
 	case "$1" in
-		'--help'|'-h') usage;;
-		*) _pos_args+=("$1"); shift;;
+	'--help' | '-h') usage ;;
+	*)
+		_pos_args+=("$1")
+		shift
+		;;
 	esac
 done
 main ${_pos_args[@]:+"${_pos_args[@]}"}

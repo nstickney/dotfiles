@@ -60,6 +60,7 @@ exec --no-startup-id nm-applet --indicator
 exec --no-startup-id signal-desktop
 exec --no-startup-id slack
 exec --no-startup-id teams
+exec --no-startup-id wlsunset -l 41.4 -L -74.0
 
 # Numlock
 input "*" xkb_numlock enable

@@ -10,9 +10,11 @@ AddPackage fd                        # Simple, fast and user-friendly alternativ
 AddPackage fzf                       # Command-line fuzzy finder
 AddPackage gdb                       # The GNU Debugger
 AddPackage git                       # the fast distributed version control system
+AddPackage --foreign git-absorb      # git commit --fixup, but automatic
 AddPackage git-crypt                 # Transparent file encryption in Git
 AddPackage hexyl                     # Colored command-line hex viewer
 AddPackage hyperfine                 # A command-line benchmarking tool
+AddPackage lldb                      # Next generation, high-performance debugger
 AddPackage namcap                    # A Pacman package analyzer
 AddPackage nmap                      # Utility for network discovery and security auditing
 AddPackage parallel                  # A shell tool for executing jobs in parallel
@@ -24,18 +26,18 @@ AddPackage sshpass                   # Fool ssh into accepting an interactive pa
 AddPackage terraform                 # Tool for building, changing, and versioning infrastructure safely and efficiently
 AddPackage tig                       # Text-mode interface for Git.
 AddPackage tmux                      # A terminal multiplexer
+AddPackage tokei                     # A blazingly fast CLOC (Count Lines Of Code) program
 AddPackage tree                      # A directory listing program displaying a depth indented list of files
 AddPackage valgrind                  # Tool to help find memory-management problems in programs
 AddPackage vim                       # Vi Improved, a highly configurable, improved version of the vi text editor
 AddPackage --foreign vim-ripgrep-git # Use RipGrep in Vim and display results in a quickfix list.
 AddPackage vim-spell-en              # Language files for Vim spell checking
+AddPackage watchexec                 # Executes commands in response to file modifications
 
 # Network Testing
-AddPackage gnu-netcat                  # GNU rewrite of netcat, the network piping application
-AddPackage ipguard                     # arp<->ip relation checking tool
-AddPackage --foreign python-locust-git # Scalable user load testing tool written in Python
-AddPackage --foreign python-gevent-git # fix for locust + python 3.8
-AddPackage vegeta                      # HTTP load testing tool
+AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
+AddPackage ipguard    # arp<->ip relation checking tool
+AddPackage vegeta     # HTTP load testing tool
 
 # Programming Languages
 
@@ -52,6 +54,10 @@ AddPackage cppcheck   # A tool for static C/C++ code analysis
 AddPackage flawfinder # Searches through source code for potential security flaws
 AddPackage uncrustify # A source code beautifier
 
+### Clojure
+AddPackage clojure   # Lisp dialect for the JVM
+AddPackage leiningen # Automate Clojure projects
+
 ### Docker
 AddPackage --foreign hadolint-bin # Dockerfile linter, validate inline bash, written in Haskell
 
@@ -64,7 +70,7 @@ AddPackage --foreign gitlint # Git commit message linter
 
 ### Go
 AddPackage delve                   # A debugger for the Go programming language.
-AddPackage go-pie                  # Core compiler tools for the Go programming language (with PIE enabled by default)
+AddPackage go                      # Core compiler tools for the Go programming language
 AddPackage --foreign goimports-git # Tool to fix (add, remove) your Go imports automatically.
 
 ### Graphviz
@@ -110,6 +116,9 @@ AddPackage python-pytest # Simple powerful testing with Python
 ### Rust
 AddPackage rust       # Systems programming language focused on safety, speed and concurrency
 AddPackage rust-racer # Code completion for Rust
+
+### SCAD
+AddPackage openscad # The programmers solid 3D CAD modeller
 
 ### Scala
 AddPackage --foreign metals   # Language Server For Scala

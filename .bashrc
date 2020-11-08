@@ -200,6 +200,9 @@ if [ "$TERM" = 'linux' ]; then
 	clear                 # fix artifacts
 fi
 
+# cat
+[ -x "$(command -v bat)" ] && alias cat='bat --style="plain"'
+
 # ls
 if [ "$(uname -s)" == 'Darwin' ]; then
 	# shellcheck disable=2032
@@ -207,6 +210,7 @@ if [ "$(uname -s)" == 'Darwin' ]; then
 else
 	alias ls='ls --color=auto'
 fi
+[ -x "$(command -v exa)" ] && alias ls=exa
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 [ -n "$(command -v dircolors)" ] && eval "$(dircolors -b)"

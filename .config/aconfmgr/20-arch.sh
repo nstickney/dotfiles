@@ -5,6 +5,7 @@ AddPackage linux-firmware    # Firmware files for Linux
 AddPackage linux-lts         # The Linux-lts kernel and modules
 AddPackage linux-headers     # Header files and scripts for building modules for Linux kernel
 AddPackage linux-lts-headers # Header files and scripts for building modules for Linux-lts kernel
+AddPackage wireguard-lts     # Wireguard module for LTS Kernel
 
 AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
 AddPackage augeas                 # aconfmgr opt dep
@@ -15,6 +16,7 @@ AddPackage --foreign aurvote      # Vote for your favorite AUR packages
 AddPackage autoconf               # A GNU tool for automatically configuring source code
 AddPackage automake               # A GNU tool for automatically creating Makefiles
 AddPackage bash-completion        # Programmable completion for the bash shell
+AddPackage bat                    # Cat clone with syntax highlighting and git integration
 AddPackage binutils               # A set of programs to assemble and manipulate binary and object files
 AddPackage bison                  # The GNU general-purpose parser generator
 AddPackage btrfs-progs            # Btrfs filesystem utilities
@@ -25,6 +27,7 @@ AddPackage diffutils              # Utility programs used for creating patch fil
 AddPackage dos2unix               # Text file format converter
 AddPackage dosfstools             # DOS filesystem utilities
 AddPackage e2fsprogs              # Ext2/3/4 filesystem utilities
+AddPackage exa                    # ls replacement
 AddPackage exfat-utils            # Utilities for exFAT file system
 AddPackage fakeroot               # Tool for simulating superuser privileges
 AddPackage f2fs-tools             #

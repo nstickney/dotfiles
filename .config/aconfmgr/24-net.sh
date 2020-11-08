@@ -1,7 +1,8 @@
 AddPackage --foreign aerc              # Email Client for your Terminal
+AddPackage amfora                      # Terminal browser for the Gemini protocol
 AddPackage aria2                       # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
 AddPackage avahi                       # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
-AddPackage bind-tools                  # The ISC DNS tools
+AddPackage bind                        # A complete, highly portable implementation of the DNS protocol
 AddPackage bmon                        # Portable bandwidth monitor and rate estimator
 AddPackage discord                     # All-in-one voice and text chat for gamers that's free and secure.
 AddPackage geoip-database-extra        # bind-tools opt dep
@@ -10,7 +11,7 @@ AddPackage --foreign chromium-widevine # A browser plugin designed for the viewi
 AddPackage dhcpcd                      # RFC2131 compliant DHCP client daemon
 AddPackage dnsmasq                     # Lightweight, easy to configure DNS forwarder and DHCP server
 AddPackage firefox                     # Standalone web browser from mozilla.org
-AddPackage --foreign google-talkplugin # Video chat browser plug-in for Google Talk
+AddPackage --foreign gmni-git          # A Gemini client
 AddPackage inetutils                   # A collection of common network programs
 AddPackage iproute2                    # IP Routing Utilities
 AddPackage iputils                     # Network monitoring tools, including ping
@@ -19,9 +20,11 @@ AddPackage lynx                        # A text browser for the World Wide Web
 AddPackage mosh                        # Mobile shell, surviving disconnects with local echo and line editing
 AddPackage mtr                         # Combines the functionality of traceroute and ping into one tool (CLI version)
 AddPackage networkmanager              # Network connection manager and user applications
+AddPackage network-manager-applet      # Applet for managing network connections
 AddPackage networkmanager-openconnect  # NetworkManager VPN plugin for OpenConnect
 AddPackage networkmanager-openvpn      # NetworkManager VPN plugin for OpenVPN
 AddPackage ngrep                       # A grep-like utility that allows you to search for network packets on an interface.
+AddPackage nm-connection-editor        # NetworkManager GUI connection editor and widgets
 AddPackage nss-mdns                    # glibc plugin providing host name resolution via mDNS
 AddPackage obs-studio                  # Free, open source software for live streaming and recording
 AddPackage openssh                     # Free version of the SSH connectivity tools
@@ -33,6 +36,7 @@ AddPackage signal-desktop              # Electron application that links with Si
 AddPackage --foreign slack-desktop     # Slack Desktop (Beta) for Linux
 AddPackage sshfs                       # FUSE client based on the SSH File Transfer Protocol
 AddPackage tcpdump                     # Powerful command-line packet analyzer
+AddPackage --foreign teams             # Microsoft Teams for Linux is your chat-centered workspace in Office 365
 AddPackage traceroute                  # Tracks the route taken by packets over an IP network
 AddPackage wget                        # A network utility to retrieve files from the Web
 AddPackage whois                       # Intelligent WHOIS client

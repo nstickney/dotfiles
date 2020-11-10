@@ -72,7 +72,7 @@ AddPackage texinfo                # GNU documentation system for on-line informa
 AddPackage usbutils               # USB Device Utilities
 AddPackage which                  # A utility to show the full path of commands
 AddPackage xfsprogs               # XFS filesystem utilities
-AddPackage --foreign yay          # Yet another yogurt. Pacman wrapper and AUR helper written in go.
+AddPackage --foreign paru         # AUR helper based on yay
 
 CopyFile /etc/makepkg.conf
 CopyFile /etc/pacman.conf

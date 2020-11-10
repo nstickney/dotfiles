@@ -43,9 +43,6 @@
 [submodule ".vim/pack/stick/start/vim-signify"]
 	path = .vim/pack/stick/start/vim-signify
 	url = https://github.com/mhinz/vim-signify
-[submodule "bin/sway-launcher-desktop"]
-	path = bin/sway-launcher-desktop
-	url = https://github.com/Biont/sway-launcher-desktop
 [submodule ".vim/pack/stick/start/vim-terraform"]
 	path = .vim/pack/stick/start/vim-terraform
 	url = https://github.com/hashivim/vim-terraform

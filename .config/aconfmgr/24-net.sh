@@ -1,4 +1,6 @@
 AddPackage --foreign aerc              # Email Client for your Terminal
+AddPackage dante                       # aerc opt dep
+AddPackage w3m                         # aerc opt dep
 AddPackage amfora                      # Terminal browser for the Gemini protocol
 AddPackage aria2                       # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
 AddPackage avahi                       # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour

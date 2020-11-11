@@ -201,7 +201,7 @@ if [ "$TERM" = 'linux' ]; then
 fi
 
 # cat
-[ -x "$(command -v bat)" ] && alias cat='bat --style="plain"'
+[ -x "$(command -v bat)" ] && alias cat='bat'
 
 # ls
 if [ "$(uname -s)" == 'Darwin' ]; then

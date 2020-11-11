@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Optimize Images #############################################################
+
+if [ -x "$(command -v jpegoptim)" ]; then
+	for file in $(git diff --cached --name-only |
+		grep -e ".jpg\$" -e ".jpeg\$" -e ".JPG\$" -e ".JPEG\$"); do
+		printf '** Processing: %s\n' "$file"
+		jpegoptim "$file" 2>&1 | sed 's/^/	/'
+		git add "$file"
+	done
+fi
+
+if [ -x "$(command -v optipng)" ]; then
+	for file in $(git diff --cached --name-only | grep -e ".png\$" -e ".PNG\$"); do
+		optipng "$file" 2>&1 | sed '/^$/d' | sed -e 1b -e '$!d' | sed 's/^/	/'
+		git add "$file"
+	done
+fi

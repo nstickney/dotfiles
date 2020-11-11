@@ -2,7 +2,8 @@
 	path = safe/gitconfig
 [core]
 	autocrlf = input
-	excludesfile = ~/.config/gitignore
+	excludesfile = ~/.config/git/ignore
+	hooksPath = /home/stick/.config/git/hooks
 	preloadindex = true
 	untrackedCache = true
 [commit]

@@ -287,7 +287,7 @@ bind '"\e[6~": next-history'
 # HISTORY #####################################################################
 
 # Colon seperated list of exact commands to ignore
-export HISTIGNORE="clear:bg:fg:cd:cd -:exit:date:poweroff:reboot:* --help"
+export HISTIGNORE="clear:bg:fg:cd:pd:exit:date:poweroff:reboot:* --help"
 
 # Avoid duplicates, and share history across terminals
 export HISTCONTROL=ignoredups:erasedups
@@ -383,14 +383,27 @@ fi
 	alias bats='time bats'
 
 # cd
+dir_memo() {
+	_d="$1"
+	shift
+	builtin "$_d" "$@" && {
+		# shellcheck disable=1003
+		[ ! -f .dir-memo ] ||
+			sed -e '1i\\' -e 's/^/ \o033[36m=>\o033[0m /' .dir-memo >&2
+	}
+}
+alias cd='dir_memo cd'
+alias pushd='dir_memo pushd'
+alias popd='dir_memo popd'
 alias .='cd -'
 alias cd..='cd ..'
 if [ -z "$(command -v pd)" ]; then
+	# shellcheck disable=2164
 	pd() {
 		if [ -n "$1" ]; then
-			pushd "$1" || exit
+			pushd "$1"
 		else
-			popd || exit
+			popd
 		fi
 	}
 fi

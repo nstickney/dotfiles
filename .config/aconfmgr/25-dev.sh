@@ -15,6 +15,7 @@ AddPackage git-crypt                 # Transparent file encryption in Git
 AddPackage hexyl                     # Colored command-line hex viewer
 AddPackage hyperfine                 # A command-line benchmarking tool
 AddPackage lldb                      # Next generation, high-performance debugger
+AddPackage mercurial                 # A scalable distributed SCM tool
 AddPackage namcap                    # A Pacman package analyzer
 AddPackage nmap                      # Utility for network discovery and security auditing
 AddPackage parallel                  # A shell tool for executing jobs in parallel
@@ -23,6 +24,7 @@ AddPackage perf                      # Linux kernel performance auditing tool
 AddPackage ripgrep                   # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rsync                     # A file transfer program to keep remote files in sync
 AddPackage sshpass                   # Fool ssh into accepting an interactive password non-interactively
+AddPackage strace                    # A diagnostic, debugging and instructional userspace tracer
 AddPackage terraform                 # Tool for building, changing, and versioning infrastructure safely and efficiently
 AddPackage tig                       # Text-mode interface for Git.
 AddPackage tmux                      # A terminal multiplexer
@@ -71,6 +73,7 @@ AddPackage --foreign gitlint # Git commit message linter
 ### Go
 AddPackage delve                   # A debugger for the Go programming language.
 AddPackage go                      # Core compiler tools for the Go programming language
+AddPackage gopls                   # Language server for Go programming language
 AddPackage --foreign goimports-git # Tool to fix (add, remove) your Go imports automatically.
 
 ### Graphviz

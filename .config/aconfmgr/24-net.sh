@@ -1,4 +1,4 @@
-AddPackage --foreign aerc              # Email Client for your Terminal
+AddPackage aerc                        # Email Client for your Terminal
 AddPackage dante                       # aerc opt dep
 AddPackage w3m                         # aerc opt dep
 AddPackage amfora                      # Terminal browser for the Gemini protocol

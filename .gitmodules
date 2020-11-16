@@ -46,3 +46,6 @@
 [submodule ".vim/pack/stick/start/vim-terraform"]
 	path = .vim/pack/stick/start/vim-terraform
 	url = https://github.com/hashivim/vim-terraform
+[submodule ".vim/pack/stick/start/completor-necovim"]
+	path = .vim/pack/stick/start/completor-necovim
+	url = https://github.com/kyouryuukunn/completor-necovim

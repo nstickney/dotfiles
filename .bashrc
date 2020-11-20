@@ -200,8 +200,11 @@ if [ "$TERM" = 'linux' ]; then
 	clear                 # fix artifacts
 fi
 
-# cat
-[ -x "$(command -v bat)" ] && alias cat='bat'
+# bat
+if [ -x "$(command -v bat)" ]; then
+	alias cat='bat --paging=never'
+	alias less=bat
+fi
 
 # ls
 if [ "$(uname -s)" == 'Darwin' ]; then

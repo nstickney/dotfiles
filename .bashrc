@@ -213,7 +213,11 @@ if [ "$(uname -s)" == 'Darwin' ]; then
 else
 	alias ls='ls --color=auto'
 fi
-[ -x "$(command -v exa)" ] && alias ls=exa
+if [ -x "$(command -v exa)" ]; then
+	alias ls='exa --group-directories-first'
+	alias lg='ls --long --git'
+	alias ll='lg --all'
+fi
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 [ -n "$(command -v dircolors)" ] && eval "$(dircolors -b)"

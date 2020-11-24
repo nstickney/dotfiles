@@ -450,11 +450,6 @@ alias mkdir='mkdir -pv'
 [ -z "$(command -v pinc)" ] && alias pinc='ping -c'
 
 # pacman
-if [ -x "$(command -v pacman)" ]; then
-	pacowns() {
-		pacman -Qo "$(command -v "$1")"
-	}
-fi
 [ -x "$(command -v powerpill)" ] &&
 	PACMAN="$(command -v powerpill)" &&
 	export PACMAN
@@ -475,9 +470,21 @@ fi
 if [ -x "$(command -v paru)" ]; then
 	[ -z "$(command -v pac)" ] && alias pac='paru'
 	[ -z "$(command -v pup)" ] && alias pup='paru -Syu --noconfirm --devel'
+	if [ -z "$(command -v pin)" ]; then
+		pin() {
+			paru -Slq | fzf -m --preview "cat <(paru -Si {1}) <(paru -Fl {1} | awk \"{print \$2}\")" | xargs -ro paru -S
+		}
+	fi
 fi
 [ "$(type -t reflect)" == 'function' ] && [ "$(type -t pup)" == 'alias' ] &&
 	[ -z "$(command -v rup)" ] && alias rup='reflect && pup'
+if [ -x "$(command -v pacman)" ]; then
+	[ -z "$(command -v pac)" ] && alias pac='sudo pacman'
+	[ -z "$(command -v pup)" ] && alias pup='sudo pacman -Syyu --noconfirm'
+	pacowns() {
+		pacman -Qo "$(command -v "$1")"
+	}
+fi
 
 # ps
 [ -z "$(command -v pf)" ] && alias pf='ps auxf'

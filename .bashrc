@@ -472,16 +472,16 @@ if [ -x "$(command -v reflector)" ] && [ -z "$(command -v reflect)" ]; then
 	}
 fi
 if [ -x "$(command -v paru)" ]; then
-	[ -z "$(command -v pac)" ] && alias pac='paru'
-	[ -z "$(command -v pup)" ] && alias pup='paru -Syu --noconfirm --devel'
+	[ -z "$(command -v pac)" ] && alias pac='paru --batflags --paging=never'
+	[ -z "$(command -v pup)" ] && alias pup='pac -Syu --noconfirm --devel'
 	if [ -z "$(command -v pin)" ]; then
 		pin() {
-			paru -Slq | fzf -m --preview "cat <(paru -Si {1}) <(paru -Fl {1} | awk \"{print \$2}\")" | xargs -ro paru -S
+			paru -Slq |
+				fzf -m --preview "cat <(paru -Si {1}) <(paru -Fl {1} | awk \"{print \$2}\")" |
+				xargs -ro paru --batflags --paging=never -S
 		}
 	fi
 fi
-[ "$(type -t reflect)" == 'function' ] && [ "$(type -t pup)" == 'alias' ] &&
-	[ -z "$(command -v rup)" ] && alias rup='reflect && pup'
 if [ -x "$(command -v pacman)" ]; then
 	[ -z "$(command -v pac)" ] && alias pac='sudo pacman'
 	[ -z "$(command -v pup)" ] && alias pup='sudo pacman -Syyu --noconfirm'
@@ -489,6 +489,8 @@ if [ -x "$(command -v pacman)" ]; then
 		pacman -Qo "$(command -v "$1")"
 	}
 fi
+[ "$(type -t reflect)" == 'function' ] && [ "$(type -t pup)" == 'alias' ] &&
+	[ -z "$(command -v rup)" ] && alias rup='reflect && pup'
 
 # ps
 [ -z "$(command -v pf)" ] && alias pf='ps auxf'

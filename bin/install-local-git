@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# https://superuser.com/a/1423505
+# https://unix.stackexchange.com/q/107775
 
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -24,27 +24,37 @@ main() {
 	local _dir="$HOME"/.local
 	mkdir -p "$_dir"
 
-	# # install ncurses
-	# local ncurses_ver='6.1'
-	# wget https://ftp.gnu.org/pub/gnu/ncurses/ncurses-$ncurses_ver.tar.gz
-	# tar -xzf ncurses-$ncurses_ver.tar.gz
-	# cd ncurses-$ncurses_ver
+	# # install curl
+	# local curl_ver='7.74.0'
+	# wget https://curl.se/download/curl-$curl_ver.tar.gz
+	# tar -xzf curl-$curl_ver.tar.gz
+	# cd curl-$curl_ver
 	# ./configure --prefix="$_dir"
 	# make
 	# make install
 	# cd ..
 
-	# install vim
-	git clone https://github.com/vim/vim.git
-	cd vim/src
+	# # install expat
+	# local expat_ver='2.2.10'
+	# wget https://github.com/libexpat/libexpat/releases/download/R_${expat_ver//./_}/expat-$expat_ver.tar.gz
+	# tar -xzf expat-$expat_ver.tar.gz
+	# cd expat-$expat_ver
+	# ./configure --prefix="$_dir"
+	# make
+	# make install
+	# cd ..
+
+	# install git
+	local git_ver='2.30.0'
+	wget -O git-$git_ver.tar.gz https://github.com/git/git/archive/v$git_ver.tar.gz
+	tar -xzf git-$git_ver.tar.gz
+	cd git-$git_ver
+	make configure
 	./configure --prefix="$_dir" LDFLAGS="-L$_dir/lib" \
-		--enable-python3interp=yes \
-		--with-python3-command="/usr/local_rhel7/python3.7/bin/python3.7" \
-		--with-python3-config-dir="$(/usr/local_rhel7/python3.7/bin/python3.7m-config --configdir)" \
-		--enable-fail-if-missing
-	make
+		--with-curl="$_dir" \
+		--with-expat="$_dir" \
+	make all
 	make install
-	cd ..
 
 	# ensure installation directory is in path
 	# export PATH=$PATH:$_dir/bin

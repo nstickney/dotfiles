@@ -459,7 +459,7 @@ alias mkdir='mkdir -pv'
 	export PACMAN
 if [ -x "$(command -v reflector)" ] && [ -z "$(command -v reflect)" ]; then
 	reflect() {
-		local OPTS='--age 12 --fastest 50 --protocol https --sort rate'
+		local OPTS='--age 12 --country US --fastest 50 --protocol https --sort rate'
 		if [ -x "$(command -v spinner)" ]; then
 			sudo spinner "reflector $OPTS --save /etc/pacman.d/mirrorlist" \
 				"Updating mirrorlist:" 'unicode'

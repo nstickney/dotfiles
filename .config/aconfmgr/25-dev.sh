@@ -117,8 +117,9 @@ AddPackage python-pytest # Simple powerful testing with Python
 # AddPackage --foreign zerynth-studio # A powerful IDE for embedded programming in Python that enables the IoT
 
 ### Rust
-AddPackage rust       # Systems programming language focused on safety, speed and concurrency
-AddPackage rust-racer # Code completion for Rust
+AddPackage rust-analyzer # Experimental Rust compiler front-end for IDEs
+AddPackage rust-racer    # Code completion for Rust
+AddPackage rustup        # The Rust toolchain installer
 
 ### SCAD
 AddPackage openscad # The programmers solid 3D CAD modeller

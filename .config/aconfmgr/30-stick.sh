@@ -20,6 +20,7 @@ AddPackage ncdu                              # Disk usage analyzer with an ncurs
 AddPackage pandoc                            # Conversion between markup formats
 AddPackage pandoc-citeproc                   # Supports using pandoc with citeproc (pandoc opt dep)
 AddPackage pandoc-crossref                   # Pandoc filter for cross-references (pandoc opt dep)
+AddPackage --foreign python-cleantoots       # Cleanup your toot history
 AddPackage rmlint                            # Tool to remove duplicates and other lint, being much faster than fdupes
 AddPackage rmlint-shredder                   # Graphical user interface for rmlint
 AddPackage --foreign splat                   # A RF Signal Propagation, Loss, And Terrain analysis tool for the spectrum between 20 MHz and 20 GHz

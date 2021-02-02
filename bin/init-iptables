@@ -117,7 +117,7 @@ add_workstation_rules() {
 	sudo iptables -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
 	__ask 'Network printing?' add_printing_rules
 	__ask 'Discord?' \
-		'sudo iptables -A OUTPUT -p udp -m udp --dport 50000:50010 -j ACCEPT'
+		'sudo iptables -A OUTPUT -p udp -m udp --dport 50000:50025 -j ACCEPT'
 	__ask 'Gemini?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 1965 -j ACCEPT'
 	__ask 'Streaming on Twitch.tv?' add_twitch_rules

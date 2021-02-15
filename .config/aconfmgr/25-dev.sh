@@ -45,6 +45,7 @@ AddPackage vegeta     # HTTP load testing tool
 
 ### Shell (Ash, Bash, Dash)
 AddPackage bash-bats     # Bash Automated Testing System
+AddPackage bash-language-server # Bash language server implementation based on Tree Sitter and its grammar for Bash
 AddPackage checkbashisms # Debian script that checks for bashisms
 AddPackage shellcheck    # Shell script analysis tool
 AddPackage shfmt         # Format shell programs
@@ -107,9 +108,9 @@ AddPackage perl-tidy # Parses and beautifies perl source
 
 ### Python
 AddPackage autopep8     # A tool that automatically formats Python code to conform to the PEP 8 style guide
-AddPackage python-black # Uncompromising Python code formatter
 AddPackage python-isort # A Python utility / library to sort Python imports.
-AddPackage python-jedi  # Awesome autocompletion for python
+AddPackage python-language-server # An implementation of the Language Server Protocol for Python
+AddPackage python-pyls-black # Black plugin for the Python Language Server
 AddPackage python-pip   # The PyPA recommended tool for installing Python packages
 # AddPackage --foreign python-pgzero # A zero-boilerplate 2D games framework
 AddPackage python-pytest # Simple powerful testing with Python
@@ -138,6 +139,7 @@ AddPackage --foreign sqlfmt-bin  # Experimental SQL formatter with width-aware o
 AddPackage ghdl-gcc # VHDL simulator (GCC backend)
 
 ### Vimscript
+AddPackage --foreign vim-language-server # Vim language server
 AddPackage vint # Lint tool for Vim script Language
 
 ### YAML

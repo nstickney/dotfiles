@@ -6,8 +6,9 @@ Type = Package
 Target = *
 
 [Action]
+Description = Checking for security alerts...
 Depends = curl
 Depends = openssl
 Depends = arch-audit
 When = PostTransaction
-Exec = /usr/bin/arch-audit
+Exec = /usr/bin/env sh -c "/usr/bin/arch-audit -C -f '%n: %s (%c)' | sed 's/^/- /'"

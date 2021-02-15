@@ -73,6 +73,7 @@ EOF
 
 CopyFile /etc/avahi/avahi-daemon.conf
 # CopyFile /etc/privoxy/config
+CopyFile /etc/ssh/sshd_config
 CopyFile /etc/sysctl.d/51-net.conf
 CreateLink /etc/systemd/system/dbus-org.freedesktop.Avahi.service /usr/lib/systemd/system/avahi-daemon.service
 CreateLink /etc/systemd/system/multi-user.target.wants/avahi-daemon.service /usr/lib/systemd/system/avahi-daemon.service

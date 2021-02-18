@@ -43,14 +43,19 @@ highlight DiffChange cterm=bold
 highlight clear DiffDelete
 highlight DiffDelete cterm=bold
 
-" Indentation
+" Indentation (vim-yadi)
+augroup VimYadiVimrc
+	" Try to auto detect and use the indentation of a file when opened.
+	autocmd!
+	autocmd BufRead * DetectIndent
+augroup END
 set autoindent
 if has('autocmd')
 	filetype plugin indent on
 endif
-set shiftwidth=4 softtabstop=4 tabstop=4  " tabs are four characters wide
 highlight SpecialKey ctermfg=8|  " indentation guides are dark gray
 set list listchars=tab:\│\  " indentation guide (tabs)
+set tabstop=4
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " indentation guide (spaces)
 
 " Linting (ALE) (and completion)
@@ -174,35 +179,36 @@ set laststatus=2  " always show the status line
 set showtabline=2  " always show the tab line
 set noshowmode  " showing mode is unnecessary with status line plugin
 let g:lightline = {
-			\ 'active': {
-			\ 'left': [[ 'mode', 'paste' ],
+	\ 'active': {
+		\ 'left': [[ 'mode', 'paste' ],
 			\ [ 'filename', 'readonly', 'modified' ]],
-			\ 'right': [[ 'lineinfo' ],
+		\ 'right': [[ 'lineinfo' ],
 			\ [ 'percent', 'wordcount' ],
 			\ [ 'checking', 'warnings', 'errors', 'linter_ok' ]]
-			\ },
-			\ 'colorscheme' : 'soml',
-			\ 'component': {
-			\ 'wordcount': '%{WordCount()}',
-			\ },
-			\ 'component_expand': {
-			\ 'buffers': 'lightline#bufferline#buffers',
-			\ 'checking': 'lightline#ale#checking',
-			\ 'warnings': 'lightline#ale#warnings',
-			\ 'errors': 'lightline#ale#errors',
-			\ 'linter_ok': 'lightline#ale#ok'
-			\ },
-			\ 'component_type': {
-			\ 'buffers': 'tabsel',
-			\ 'checking': 'left',
-			\ 'warnings': 'warning',
-			\ 'errors': 'error',
-			\ 'linter_ok': 'left'
-			\ },
-			\ 'tabline' : {
-			\ 'left': [ ['buffers'] ],
-			\ 'right': [ ['fileformat', 'fileencoding', 'filetype'] ],
-			\ }}
+	\ },
+	\ 'colorscheme' : 'soml',
+	\ 'component': {
+		\ 'indentstyle': '%{&expandtab?shiftwidth()." sp":"tabs"}',
+		\ 'wordcount': '%{WordCount()}'
+	\ },
+	\ 'component_expand': {
+		\ 'buffers': 'lightline#bufferline#buffers',
+		\ 'checking': 'lightline#ale#checking',
+		\ 'warnings': 'lightline#ale#warnings',
+		\ 'errors': 'lightline#ale#errors',
+		\ 'linter_ok': 'lightline#ale#ok'
+	\ },
+	\ 'component_type': {
+		\ 'buffers': 'tabsel',
+		\ 'checking': 'left',
+		\ 'warnings': 'warning',
+		\ 'errors': 'error',
+		\ 'linter_ok': 'left'
+	\ },
+	\ 'tabline' : {
+		\ 'left': [['buffers']],
+		\ 'right': [['fileformat', 'fileencoding', 'filetype', 'indentstyle']],
+	\ }}
 let g:lightline#ale#indicator_checking = '...'
 let g:lightline#ale#indicator_warnings = '?'
 let g:lightline#ale#indicator_errors = '!'

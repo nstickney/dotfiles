@@ -43,3 +43,6 @@
 [submodule ".vim/pack/stick/start/vim-terraform"]
 	path = .vim/pack/stick/start/vim-terraform
 	url = https://github.com/hashivim/vim-terraform
+[submodule ".vim/pack/stick/start/vim-yadi"]
+	path = .vim/pack/stick/start/vim-yadi
+	url = https://github.com/timakro/vim-yadi

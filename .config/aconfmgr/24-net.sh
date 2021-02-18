@@ -54,12 +54,21 @@ AddPackage zerotier-one                       # Creates virtual Ethernet network
 # AddPackage --foreign teams         # Microsoft Teams for Linux is your chat-centered workspace in Office 365
 # AddPackage --foreign zoom          # Video Conferencing and Web Conferencing Service
 
-sed "s|%SLACK_URL%|$SLACK_URL|g" <<-'EOF' >"$(CreateFile /etc/ssh/sshrc)"
-	#!/bin/sh
+sed "s|%KEY%|$DISCORD_WEBHOOK|g" <<'EOF' >"$(CreateFile /etc/pam.d/loglogins)"
+#!/bin/sh
 
-	ip="$(echo "$SSH_CONNECTION" | cut -d " " -f 1)"
-	host="$(uname -n)"
-	curl -X POST -H 'Content-type: application/json' --data '{"text":"'$host': new login ('$USER') from '$ip'"}' https://hooks.slack.com/services/%SLACK_URL% > /dev/null 2>&1
+_LOGINHOST=${PAM_RHOST:-(local)}
+[ "$_LOGINHOST" != '(local)' ] && _LOGINHOST="(\`$_LOGINHOST\`)"
+
+curl -X POST -H 'Content-type: application/json' \
+	--data "{\"content\":\"**$(uname -n)**: ${PAM_TYPE} \`${PAM_USER:-$USER}\` $_LOGINHOST\"}" \
+	https://ptb.discord.com/api/webhooks/%KEY%
+EOF
+
+SetFileProperty /etc/pam.d/loglogins mode 755
+
+cat >>"$(GetPackageOriginalFile pambase /etc/pam.d/system-login)" <<'EOF'
+session    optional   pam_exec.so          quiet /etc/pam.d/loglogins
 EOF
 
 CopyFile /etc/avahi/avahi-daemon.conf

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# https://infosecwriteups.com/pwndbg-gef-peda-one-for-all-and-all-for-one-714d71bf36b8
+
+if [ -f /usr/share/peda/peda.py ]; then
+	gdb -q -ex init-peda "$@"
+else
+	printf >&2 'Python Exploit Development Assistant not found.\n'
+fi

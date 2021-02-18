@@ -8,7 +8,6 @@ AddPackage pigz                      # docker opt dep
 AddPackage --foreign eva             # simple calculator REPL, similar to bc(1)
 AddPackage fd                        # Simple, fast and user-friendly alternative to find
 AddPackage fzf                       # Command-line fuzzy finder
-AddPackage gdb                       # The GNU Debugger
 AddPackage git                       # the fast distributed version control system
 AddPackage --foreign git-absorb      # git commit --fixup, but automatic
 AddPackage git-crypt                 # Transparent file encryption in Git
@@ -19,7 +18,6 @@ AddPackage mercurial                 # A scalable distributed SCM tool
 AddPackage namcap                    # A Pacman package analyzer
 AddPackage nmap                      # Utility for network discovery and security auditing
 AddPackage parallel                  # A shell tool for executing jobs in parallel
-AddPackage peda                      # Python Exploit Development Assistance for GDB
 AddPackage perf                      # Linux kernel performance auditing tool
 AddPackage ripgrep                   # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rsync                     # A file transfer program to keep remote files in sync
@@ -36,6 +34,14 @@ AddPackage --foreign vim-ripgrep-git # Use RipGrep in Vim and display results in
 AddPackage vim-spell-en              # Language files for Vim spell checking
 AddPackage watchexec                 # Executes commands in response to file modifications
 
+# Debugging (and more!)
+AddPackage gdb               # The GNU Debugger
+AddPackage --foreign gef-git # Multi-Architecture GDB Enhanced Features for Exploiters & Reverse-Engineers
+AddPackage python-keystone   # gef opt dep
+AddPackage python-ropper     # gef opt dep
+AddPackage peda              # Python Exploit Development Assistance for GDB
+AddPackage pwndbg            # Makes debugging with GDB suck less
+
 # Network Testing
 AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
 AddPackage ipguard    # arp<->ip relation checking tool
@@ -44,12 +50,12 @@ AddPackage vegeta     # HTTP load testing tool
 # Programming Languages
 
 ### Shell (Ash, Bash, Dash)
-AddPackage bash-bats     # Bash Automated Testing System
+AddPackage bash-bats            # Bash Automated Testing System
 AddPackage bash-language-server # Bash language server implementation based on Tree Sitter and its grammar for Bash
-AddPackage checkbashisms # Debian script that checks for bashisms
-AddPackage shellcheck    # Shell script analysis tool
-AddPackage shfmt         # Format shell programs
-AddPackage shellharden   # Bash linter and syntax highlighter
+AddPackage checkbashisms        # Debian script that checks for bashisms
+AddPackage shellcheck           # Shell script analysis tool
+AddPackage shfmt                # Format shell programs
+AddPackage shellharden          # Bash linter and syntax highlighter
 
 ### C/C++
 AddPackage clang      # C language family frontend for LLVM
@@ -107,11 +113,11 @@ AddPackage prettier # An opinionated code formatter for JS, JSON, CSS, YAML and 
 AddPackage perl-tidy # Parses and beautifies perl source
 
 ### Python
-AddPackage autopep8     # A tool that automatically formats Python code to conform to the PEP 8 style guide
-AddPackage python-isort # A Python utility / library to sort Python imports.
+AddPackage autopep8               # A tool that automatically formats Python code to conform to the PEP 8 style guide
+AddPackage python-isort           # A Python utility / library to sort Python imports.
 AddPackage python-language-server # An implementation of the Language Server Protocol for Python
-AddPackage python-pyls-black # Black plugin for the Python Language Server
-AddPackage python-pip   # The PyPA recommended tool for installing Python packages
+AddPackage python-pyls-black      # Black plugin for the Python Language Server
+AddPackage python-pip             # The PyPA recommended tool for installing Python packages
 # AddPackage --foreign python-pgzero # A zero-boilerplate 2D games framework
 AddPackage python-pytest # Simple powerful testing with Python
 # AddPackage tk # A windowing toolkit for use with tcl (python turtles)
@@ -140,7 +146,7 @@ AddPackage ghdl-gcc # VHDL simulator (GCC backend)
 
 ### Vimscript
 AddPackage --foreign vim-language-server # Vim language server
-AddPackage vint # Lint tool for Vim script Language
+AddPackage vint                          # Lint tool for Vim script Language
 
 ### YAML
 AddPackage yamllint # Linter for YAML files

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# https://infosecwriteups.com/pwndbg-gef-peda-one-for-all-and-all-for-one-714d71bf36b8
+
+if [ -f /usr/share/pwndbg/gdbinit.py ]; then
+	gdb -q -ex init-pwndbg "$@"
+else
+	printf >&2 'PwnDBG not found.\n'
+fi

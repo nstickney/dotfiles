@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# https://infosecwriteups.com/pwndbg-gef-peda-one-for-all-and-all-for-one-714d71bf36b8
+
+if [ -f /usr/share/gef/gef.py ]; then
+	gdb -q -ex init-gef "$@"
+else
+	printf >&2 'GDB Enhanced Features not found.\n'
+fi

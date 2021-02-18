@@ -53,7 +53,8 @@ highlight SpecialKey ctermfg=8|  " indentation guides are dark gray
 set list listchars=tab:\│\  " indentation guide (tabs)
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " indentation guide (spaces)
 
-" Linting (ALE)
+" Linting (ALE) (and completion)
+let g:ale_completion_enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%severity%][%linter%]% code:% %s'
@@ -61,7 +62,6 @@ let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
 let g:ale_fix_on_save = 1
 nmap <C-k> <Plug>(ale_previous_wrap)
 nmap <C-j> <Plug>(ale_next_wrap)
-set omnifunc=ale#completion#OmniFunc
 
 " Mappings
 "" Insert an em-dash

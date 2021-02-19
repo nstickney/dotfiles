@@ -49,27 +49,27 @@ set $_WALLPAPER $_BIN_DIR/sway-random-wallpaper $_BG_DIR $back
 exec_always $_WALLPAPER
 
 # Applications
-#exec --no-startup-id bitwarden-bin
-exec --no-startup-id blueman-tray
-exec --no-startup-id discord
-exec --no-startup-id hydroxide serve
-# exec --no-startup-id keybase-gui
-exec --no-startup-id mako
-exec --no-startup-id nm-applet --indicator
-# exec --no-startup-id protonmail-bridge --no-window
-exec --no-startup-id signal-desktop
-exec --no-startup-id slack
-exec --no-startup-id teams
-exec --no-startup-id wlsunset -l 41.4 -L -74.0
+#exec bitwarden-bin
+exec blueman-tray
+exec discord
+exec hydroxide serve
+# exec keybase-gui
+exec mako
+exec nm-applet --indicator
+# exec protonmail-bridge --no-window
+exec signal-desktop
+exec slack
+exec teams
+exec wlsunset -l 41.4 -L -74.0
 
 # Numlock
 input "*" xkb_numlock enable
 
 # Polkit
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Power management
-exec --no-startup-id swayidle -w \
+exec swayidle -w \
 		 timeout 300  "$_LOCK" \
 		 before-sleep "$_LOCK"
 
@@ -78,7 +78,7 @@ bar {
 }
 
 # Transparency
-exec --no-startup-id $_BIN_DIR/sway-focus-opacity.py
+exec $_BIN_DIR/sway-focus-opacity.py
 
 # Power Menu ##################################################################
 set $_CAD_MENU (L)ock screen  (E)xit sway  (S)uspend  (H)ibernate  (R)eboot  (P)oweroff  (C)ancel
@@ -305,9 +305,9 @@ mode "Resize" {
 bindsym Mod1+r mode "Resize"
 
 # PulseAudio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
 
 # Touchpad controls
 bindsym XF86TouchpadToggle exec $_BIN_DIR/toggletouchpad # toggle touchpad

@@ -1,3 +1,13 @@
+# WSL
+if grep -q microsoft /proc/version; then
+	IgnorePath '/ArchWSL.tar.gz'
+	IgnorePath '/etc/hosts'
+	IgnorePath '/init'
+	IgnorePath '/README'
+	IgnorePath '/usr/bin/mount.drvfs'
+	IgnorePath '/usr/bin/wslpath'
+fi
+
 IgnorePath '**.bak'
 IgnorePath '**.pacnew'
 IgnorePath '**/__pycache__/*'

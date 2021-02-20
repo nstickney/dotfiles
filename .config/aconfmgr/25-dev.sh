@@ -2,7 +2,6 @@ AddPackage ansible                   # Radically simple IT automation platform
 AddPackage ansible-lint              # Checks playbooks for practices and behaviour that could potentially be improved.
 AddPackage arduino                   # Arduino prototyping platform SDK
 AddPackage cloc                      # Count lines of code
-AddPackage code                      # The Open Source build of Visual Studio Code (vscode) editor
 AddPackage docker                    # Pack, ship and run any application as a lightweight container
 AddPackage pigz                      # docker opt dep
 AddPackage --foreign eva             # simple calculator REPL, similar to bc(1)
@@ -150,3 +149,8 @@ AddPackage vint                          # Lint tool for Vim script Language
 
 ### YAML
 AddPackage yamllint # Linter for YAML files
+
+# Don't install these in WSL
+if grep -v -q microsoft /proc/version; then
+	AddPackage code                      # The Open Source build of Visual Studio Code (vscode) editor
+fi

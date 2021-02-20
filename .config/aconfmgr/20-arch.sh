@@ -1,15 +1,5 @@
-### THE BEAR NECESSITIES
-AddPackage base              # Minimal package set to define a basic Arch Linux installation
-AddPackage linux             # The Linux kernel and modules
-AddPackage linux-firmware    # Firmware files for Linux
-AddPackage linux-lts         # The Linux-lts kernel and modules
-AddPackage linux-headers     # Header files and scripts for building modules for Linux kernel
-AddPackage linux-lts-headers # Header files and scripts for building modules for Linux-lts kernel
-AddPackage wireguard-lts     # Wireguard module for LTS Kernel
-
 AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
 AddPackage augeas                 # aconfmgr opt dep
-AddPackage afpfs-ng               # A client for the Apple Filing Protocol (AFP)
 AddPackage arch-audit             # An utility like pkg-audit based on Arch CVE Monitoring Team data
 AddPackage arch-install-scripts   # Scripts to aid in installing Arch Linux
 AddPackage --foreign aurvote      # Vote for your favorite AUR packages
@@ -19,33 +9,25 @@ AddPackage bash-completion        # Programmable completion for the bash shell
 AddPackage bat                    # Cat clone with syntax highlighting and git integration
 AddPackage binutils               # A set of programs to assemble and manipulate binary and object files
 AddPackage bison                  # The GNU general-purpose parser generator
-AddPackage btrfs-progs            # Btrfs filesystem utilities
 AddPackage colordiff              # A Perl script wrapper for 'diff' that produces the same output but with pretty 'syntax' highlighting
 AddPackage cryptsetup             # Userspace setup tool for transparent encryption of block devices using dm-crypt
 AddPackage device-mapper          # Device mapper userspace library and tools
 AddPackage diffutils              # Utility programs used for creating patch files
 AddPackage dos2unix               # Text file format converter
-AddPackage dosfstools             # DOS filesystem utilities
-AddPackage e2fsprogs              # Ext2/3/4 filesystem utilities
 AddPackage exa                    # ls replacement
-AddPackage exfat-utils            # Utilities for exFAT file system
 AddPackage fakeroot               # Tool for simulating superuser privileges
-AddPackage f2fs-tools             #
 AddPackage flex                   # A tool for generating text-scanning programs
 AddPackage gcc-libs               # Runtime libraries shipped by GCC
 AddPackage gcc                    # The GNU Compiler Collection - C and C++ frontends
 AddPackage gettext                # GNU internationalization library
-AddPackage gpart                  # Partition table rescue/guessing tool
 AddPackage groff                  # GNU troff text-formatting system
 AddPackage htop                   # Interactive process viewer
-AddPackage jfsutils               # JFS filesystem utilities
 AddPackage less                   # A terminal based program for viewing text files
 AddPackage lesspipe               # an input filter for the pager less
 AddPackage rpmextract             # lesspipe opt dep
 AddPackage libtool                # A generic library support script
 AddPackage logrotate              # Rotates system logs automatically
 AddPackage lsof                   # Lists open files for running Unix processes
-AddPackage lvm2                   # Logical Volume Manager 2 utilities
 AddPackage m4                     # The GNU macro processor
 AddPackage make                   # GNU make utility to maintain groups of programs
 AddPackage man-db                 # A utility for reading man pages
@@ -55,8 +37,7 @@ AddPackage mlocate                # Merging locate/updatedb implementation
 AddPackage mtools                 # A collection of utilities to access MS-DOS disks	A collection of utilities to access MS-DOS disks
 AddPackage net-tools              # Configuration tools for Linux networking
 AddPackage neofetch               # A CLI system information tool written in BASH that supports displaying images.
-AddPackage nilfs-utils            # A log-structured file system supporting continuous snapshotting (userspace utils)
-AddPackage ntfs-3g                # NTFS filesystem driver and utilities
+AddPackage --foreign paru         # AUR helper based on yay
 AddPackage patch                  # A utility to apply patch files to original sources
 AddPackage pciutils               # PCI bus configuration space access library and tools
 AddPackage perl                   # A highly capable, feature-rich programming language
@@ -64,15 +45,11 @@ AddPackage pkgconf                # Package compiler and linker metadata toolkit
 AddPackage pkgfile                # a pacman .files metadata explorer
 AddPackage --foreign powerpill    # Pacman wrapper for faster downloads.
 AddPackage reflector              # A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
-AddPackage reiserfsprogs          # Reiserfs utilities
 AddPackage source-highlight       # Convert source code to syntax highlighted document
 AddPackage sudo                   # Give certain users the ability to run some commands as root
-AddPackage sysfsutils             # System Utilities Based on Sysfs
 AddPackage texinfo                # GNU documentation system for on-line information and printed output
 AddPackage usbutils               # USB Device Utilities
 AddPackage which                  # A utility to show the full path of commands
-AddPackage xfsprogs               # XFS filesystem utilities
-AddPackage --foreign paru         # AUR helper based on yay
 
 CopyFile /etc/makepkg.conf
 CopyFile /etc/pacman.conf

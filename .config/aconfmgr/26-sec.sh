@@ -50,7 +50,7 @@ if grep -v -q microsoft /proc/version; then
 	AddPackage --foreign ida-free # Freeware version of the world's smartest and most feature-full disassembler
 	AddPackage --foreign blc-git  # used with ida-free (and ghidra)
 	AddPackage ropgadget          # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
-	# AddPackage radare2 # Open-source tools to disasm, debug, analyze and manipulate binary files
+	AddPackage radare2            # Open-source tools to disasm, debug, analyze and manipulate binary files
 	# AddPackage radare2-cutter # Qt and C++ GUI for radare2 reverse engineering framework
 
 	# Security Checking

@@ -22,7 +22,6 @@ else
 	AddPackage linux-lts         # The Linux-lts kernel and modules
 	AddPackage linux-headers     # Header files and scripts for building modules for Linux kernel
 	AddPackage linux-lts-headers # Header files and scripts for building modules for Linux-lts kernel
-	AddPackage wireguard-lts     # Wireguard module for LTS Kernel
 
 	# Filesystems
 	AddPackage afpfs-ng               # A client for the Apple Filing Protocol (AFP)
@@ -191,7 +190,6 @@ else
 	DefaultTimeoutStopSec=30s
 	EOF
 
-	CopyFile /etc/chrony.conf
 	CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
 	CreateLink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service /usr/lib/systemd/system/NetworkManager-dispatcher.service
 	CreateLink /etc/systemd/system/multi-user.target.wants/chronyd.service /usr/lib/systemd/system/chronyd.service

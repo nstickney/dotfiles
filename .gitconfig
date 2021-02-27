@@ -6,8 +6,6 @@
 	hooksPath = ~/.config/git/hooks
 	preloadindex = true
 	untrackedCache = true
-[commit]
-	gpgsign = true
 [credential]
 	helper = cache --timeout=3600
 [gc]

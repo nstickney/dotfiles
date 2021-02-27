@@ -1,6 +1,8 @@
 # Host security
 CreateFile /etc/ld.so.preload >/dev/null
 
+AddPackage checksec # Tool designed to test which standard Linux OS and PaX security features are being used
+
 # Reverse Engineering
 AddPackage binwalk        # A tool for searching a given binary image for embedded files
 AddPackage arj            # binwalk opt-dep
@@ -62,9 +64,9 @@ if grep -v -q microsoft /proc/version; then
 
 	# Reverse Engineering
 	AddPackage ghidra             # Software reverse engineering framework
-	AddPackage --foreign ida-free # Freeware version of the world's smartest and most feature-full disassembler
-	AddPackage --foreign blc-git  # used with ida-free (and ghidra)
-	AddPackage ropgadget          # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
+	# AddPackage --foreign ida-free # Freeware version of the world's smartest and most feature-full disassembler
+	# AddPackage --foreign blc-git  # used with ida-free (and ghidra)
+	AddPackage ropgadget # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
 	# AddPackage radare2-cutter # Qt and C++ GUI for radare2 reverse engineering framework
 
 	# Security Checking

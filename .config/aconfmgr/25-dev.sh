@@ -9,6 +9,7 @@ AddPackage fd                        # Simple, fast and user-friendly alternativ
 AddPackage fzf                       # Command-line fuzzy finder
 AddPackage git                       # the fast distributed version control system
 AddPackage --foreign git-absorb      # git commit --fixup, but automatic
+AddPackage git-filter-repo           # Quickly rewrite git repository history (filter-branch replacement)
 AddPackage git-crypt                 # Transparent file encryption in Git
 AddPackage hexyl                     # Colored command-line hex viewer
 AddPackage hyperfine                 # A command-line benchmarking tool
@@ -104,6 +105,9 @@ AddPackage texlab # A cross-platform implementation of the Language Server Proto
 ### Make
 AddPackage --foreign checkmake # Experimental linter/analyzer for makefiles
 
+### Maths
+AddPackage octave # A high-level language, primarily intended for numerical computations.
+
 ### Multi-language
 AddPackage meson    # High productivity build system
 AddPackage prettier # An opinionated code formatter for JS, JSON, CSS, YAML and much more
@@ -115,6 +119,7 @@ AddPackage perl-tidy # Parses and beautifies perl source
 AddPackage autopep8               # A tool that automatically formats Python code to conform to the PEP 8 style guide
 AddPackage python-isort           # A Python utility / library to sort Python imports.
 AddPackage python-language-server # An implementation of the Language Server Protocol for Python
+AddPackage python-matplotlib      # A python plotting library, making publication quality plots
 AddPackage python-pyls-black      # Black plugin for the Python Language Server
 AddPackage python-pip             # The PyPA recommended tool for installing Python packages
 # AddPackage --foreign python-pgzero # A zero-boilerplate 2D games framework
@@ -152,5 +157,5 @@ AddPackage yamllint # Linter for YAML files
 
 # Don't install these in WSL
 if grep -v -q microsoft /proc/version; then
-	AddPackage code                      # The Open Source build of Visual Studio Code (vscode) editor
+	AddPackage code # The Open Source build of Visual Studio Code (vscode) editor
 fi

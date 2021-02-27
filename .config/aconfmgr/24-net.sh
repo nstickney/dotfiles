@@ -1,40 +1,42 @@
-AddPackage aerc                               # Email Client for your Terminal
-AddPackage dante                              # aerc opt dep
-AddPackage w3m                                # aerc opt dep
-AddPackage amfora                             # Terminal browser for the Gemini protocol
-AddPackage aria2                              # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
-AddPackage bind                               # A complete, highly portable implementation of the DNS protocol
-AddPackage --foreign gmni-git                 # A Gemini client
-AddPackage irssi                              # Modular text mode IRC client with Perl scripting
-AddPackage lynx                               # A text browser for the World Wide Web
-AddPackage mosh                               # Mobile shell, surviving disconnects with local echo and line editing
-AddPackage mtr                                # Combines the functionality of traceroute and ping into one tool (CLI version)
-AddPackage openssh                            # Free version of the SSH connectivity tools
-AddPackage wget                               # A network utility to retrieve files from the Web
-AddPackage whois                              # Intelligent WHOIS client
-AddPackage youtube-dl                         # A small command-line program to download videos from YouTube.com and a few more sites
+AddPackage aerc               # Email Client for your Terminal
+AddPackage dante              # aerc opt dep
+AddPackage w3m                # aerc opt dep
+AddPackage amfora             # Terminal browser for the Gemini protocol
+AddPackage aria2              # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
+AddPackage bind               # A complete, highly portable implementation of the DNS protocol
+AddPackage --foreign gmni-git # A Gemini client
+AddPackage irssi              # Modular text mode IRC client with Perl scripting
+AddPackage lynx               # A text browser for the World Wide Web
+AddPackage mosh               # Mobile shell, surviving disconnects with local echo and line editing
+AddPackage mtr                # Combines the functionality of traceroute and ping into one tool (CLI version)
+AddPackage openssh            # Free version of the SSH connectivity tools
+AddPackage wget               # A network utility to retrieve files from the Web
+AddPackage whois              # Intelligent WHOIS client
+AddPackage youtube-dl         # A small command-line program to download videos from YouTube.com and a few more sites
 
 # Don't install these tools in WSL
 if grep -v -q microsoft /proc/version; then
-	AddPackage avahi                              # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
-	AddPackage bmon                               # Portable bandwidth monitor and rate estimator
-	AddPackage chromium                           # A web browser built for speed, simplicity, and security
-	AddPackage --foreign chromium-widevine        # A browser plugin designed for the viewing of premium video content
-	AddPackage dhcpcd                             # RFC2131 compliant DHCP client daemon
-	AddPackage --foreign discord_arch_electron    # Discord (popular voice + video app) using the system provided electron for increased security and performance
-	AddPackage dnsmasq                            # Lightweight, easy to configure DNS forwarder and DHCP server
-	AddPackage firefox                            # Standalone web browser from mozilla.org
-	AddPackage inetutils                          # A collection of common network programs
-	AddPackage iproute2                           # IP Routing Utilities
-	AddPackage iputils                            # Network monitoring tools, including ping
-	AddPackage networkmanager                     # Network connection manager and user applications
-	AddPackage network-manager-applet             # Applet for managing network connections
-	AddPackage networkmanager-openconnect         # NetworkManager VPN plugin for OpenConnect
-	AddPackage networkmanager-openvpn             # NetworkManager VPN plugin for OpenVPN
-	AddPackage ngrep                              # A grep-like utility that allows you to search for network packets on an interface.
-	AddPackage nm-connection-editor               # NetworkManager GUI connection editor and widgets
-	AddPackage nss-mdns                           # glibc plugin providing host name resolution via mDNS
-	AddPackage openvpn                            # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
+	AddPackage avahi                           # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
+	AddPackage bmon                            # Portable bandwidth monitor and rate estimator
+	AddPackage chromium                        # A web browser built for speed, simplicity, and security
+	AddPackage --foreign chromium-widevine     # A browser plugin designed for the viewing of premium video content
+	AddPackage dhcpcd                          # RFC2131 compliant DHCP client daemon
+	AddPackage --foreign discord_arch_electron # Discord (popular voice + video app) using the system provided electron for increased security and performance
+	AddPackage dnsmasq                         # Lightweight, easy to configure DNS forwarder and DHCP server
+	AddPackage firefox                         # Standalone web browser from mozilla.org
+	AddPackage inetutils                       # A collection of common network programs
+	AddPackage iproute2                        # IP Routing Utilities
+	AddPackage iputils                         # Network monitoring tools, including ping
+	AddPackage networkmanager                  # Network connection manager and user applications
+	AddPackage network-manager-applet          # Applet for managing network connections
+	AddPackage networkmanager-openconnect      # NetworkManager VPN plugin for OpenConnect
+	AddPackage networkmanager-openvpn          # NetworkManager VPN plugin for OpenVPN
+	AddPackage ngrep                           # A grep-like utility that allows you to search for network packets on an interface.
+	AddPackage nm-connection-editor            # NetworkManager GUI connection editor and widgets
+	AddPackage nss-mdns                        # glibc plugin providing host name resolution via mDNS
+	AddPackage openvpn                         # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
+	CreateDir /etc/openvpn/client 750 openvpn network
+	CreateDir /etc/openvpn/server 750 openvpn network
 	AddPackage python2-dbus                       # avahi optionally requires python2-dbus: avahi-discover
 	AddPackage remmina                            # remote desktop client written in GTK+
 	AddPackage libvncserver                       # remmina opt dep
@@ -56,20 +58,20 @@ if grep -v -q microsoft /proc/version; then
 	# AddPackage --foreign zoom          # Video Conferencing and Web Conferencing Service
 
 	sed "s|%KEY%|${DISCORD_WEBHOOK:-}|g" <<-'EOF' >"$(CreateFile /etc/pam.d/loglogins)"
-	#!/bin/sh
+		#!/bin/sh
 
-	_LOGINHOST=${PAM_RHOST:-(local)}
-	[ "$_LOGINHOST" != '(local)' ] && _LOGINHOST="(\`$_LOGINHOST\`)"
+		_LOGINHOST=${PAM_RHOST:-(local)}
+		[ "$_LOGINHOST" != '(local)' ] && _LOGINHOST="(\`$_LOGINHOST\`)"
 
-	curl -X POST -H 'Content-type: application/json' \
-		--data "{\"content\":\"**$(uname -n)**: ${PAM_TYPE} \`${PAM_USER:-$USER}\` $_LOGINHOST\"}" \
-		https://ptb.discord.com/api/webhooks/%KEY%
+		curl -X POST -H 'Content-type: application/json' \
+			--data "{\"content\":\"**$(uname -n)**: ${PAM_TYPE} \`${PAM_USER:-$USER}\` $_LOGINHOST\"}" \
+			https://ptb.discord.com/api/webhooks/%KEY%
 	EOF
 
 	SetFileProperty /etc/pam.d/loglogins mode 755
 
 	cat >>"$(GetPackageOriginalFile pambase /etc/pam.d/system-login)" <<-'EOF'
-	session    optional   pam_exec.so          quiet /etc/pam.d/loglogins
+		session    optional   pam_exec.so          quiet /etc/pam.d/loglogins
 	EOF
 
 	CopyFile /etc/avahi/avahi-daemon.conf

@@ -1,10 +1,10 @@
 # shellcheck disable=SC2148
 
-AddPackage base              # Minimal package set to define a basic Arch Linux installation
+AddPackage base # Minimal package set to define a basic Arch Linux installation
 
 CopyFile /etc/locale.conf
 CopyFile /etc/locale.gen
-CreateLink /etc/localtime /usr/share/zoneinfo/US/Eastern
+CreateLink /etc/localtime /usr/share/zoneinfo/America/New_York
 CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/systemd/system/getty@.service
 CreateLink /etc/systemd/system/multi-user.target.wants/remote-fs.target /usr/lib/systemd/system/remote-fs.target
 CreateLink /etc/systemd/user/sockets.target.wants/p11-kit-server.socket /usr/lib/systemd/user/p11-kit-server.socket
@@ -24,26 +24,26 @@ else
 	AddPackage linux-lts-headers # Header files and scripts for building modules for Linux-lts kernel
 
 	# Filesystems
-	AddPackage afpfs-ng               # A client for the Apple Filing Protocol (AFP)
-	AddPackage btrfs-progs            # Btrfs filesystem utilities
-	AddPackage dosfstools             # DOS filesystem utilities
-	AddPackage e2fsprogs              # Ext2/3/4 filesystem utilities
-	AddPackage exfat-utils            # Utilities for exFAT file system
-	AddPackage f2fs-tools             # Tools for Flash-Friendly File System (F2FS)
-	AddPackage gpart                  # Partition table rescue/guessing tool
-	AddPackage jfsutils               # JFS filesystem utilities
-	AddPackage lvm2                   # Logical Volume Manager 2 utilities
-	AddPackage nilfs-utils            # A log-structured file system supporting continuous snapshotting (userspace utils)
-	AddPackage ntfs-3g                # NTFS filesystem driver and utilities
-	AddPackage reiserfsprogs          # Reiserfs utilities
-	AddPackage sysfsutils             # System Utilities Based on Sysfs
-	AddPackage xfsprogs               # XFS filesystem utilities
+	AddPackage afpfs-ng      # A client for the Apple Filing Protocol (AFP)
+	AddPackage btrfs-progs   # Btrfs filesystem utilities
+	AddPackage dosfstools    # DOS filesystem utilities
+	AddPackage e2fsprogs     # Ext2/3/4 filesystem utilities
+	AddPackage exfat-utils   # Utilities for exFAT file system
+	AddPackage f2fs-tools    # Tools for Flash-Friendly File System (F2FS)
+	AddPackage gpart         # Partition table rescue/guessing tool
+	AddPackage jfsutils      # JFS filesystem utilities
+	AddPackage lvm2          # Logical Volume Manager 2 utilities
+	AddPackage nilfs-utils   # A log-structured file system supporting continuous snapshotting (userspace utils)
+	AddPackage ntfs-3g       # NTFS filesystem driver and utilities
+	AddPackage reiserfsprogs # Reiserfs utilities
+	AddPackage sysfsutils    # System Utilities Based on Sysfs
+	AddPackage xfsprogs      # XFS filesystem utilities
 
 	# Hosts file
 	cat >>"$(GetPackageOriginalFile filesystem /etc/hosts)" <<-EOF
-	127.0.0.1	localhost
-	::1			localhost
-	127.0.1.1	$HOSTNAME
+		127.0.0.1 localhost
+		::1         localhost
+		127.0.1.1 $HOSTNAME
 	EOF
 
 	# Virtual machine
@@ -175,8 +175,8 @@ else
 
 	# https://wiki.archlinux.org/index.php/Getty#Have_boot_messages_stay_on_tty1
 	cat >"$(CreateFile /etc/systemd/system/getty@tty1.service.d/noclear.conf)" <<-EOF
-	[Service]
-	TTYVTDisallocate=no
+		[Service]
+		TTYVTDisallocate=no
 	EOF
 
 	# Enable Magic SysRq
@@ -184,10 +184,10 @@ else
 
 	# Reduce timeouts to sane values
 	cat >>"$(GetPackageOriginalFile systemd /etc/systemd/system.conf)" <<-EOF
-	RuntimeWatchdogSec=10min
-	ShutdownWatchdogSec=10min
-	DefaultTimeoutStartSec=30s
-	DefaultTimeoutStopSec=30s
+		RuntimeWatchdogSec=10min
+		ShutdownWatchdogSec=10min
+		DefaultTimeoutStartSec=30s
+		DefaultTimeoutStopSec=30s
 	EOF
 
 	CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service

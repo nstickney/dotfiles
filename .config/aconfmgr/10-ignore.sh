@@ -2,6 +2,7 @@
 if grep -q microsoft /proc/version; then
 	IgnorePath '/ArchWSL.tar.gz'
 	IgnorePath '/etc/hosts'
+	IgnorePath '/etc/timezone'
 	IgnorePath '/init'
 	IgnorePath '/README'
 	IgnorePath '/usr/bin/mount.drvfs'

@@ -1,3 +1,19 @@
+# Host security
+CreateFile /etc/ld.so.preload >/dev/null
+
+# Reverse Engineering
+AddPackage binwalk        # A tool for searching a given binary image for embedded files
+AddPackage arj            # binwalk opt-dep
+AddPackage cabextract     # binwalk opt-dep
+AddPackage cpio           # binwalk opt-dep
+AddPackage lhasa          # binwalk opt-dep
+AddPackage mtd-utils      # binwalk opt-dep
+AddPackage p7zip          # binwalk opt-dep
+AddPackage radare2        # binwalk opt-dep
+AddPackage squashfs-tools # binwalk opt-dep
+AddPackage unrar          # binwalk opt-dep
+AddPackage radare2        # Open-source tools to disasm, debug, analyze and manipulate binary files
+
 if grep -v -q microsoft /proc/version; then
 	# Cracking
 	# AddPackage hashcat # Multithreaded advanced password recovery utility
@@ -45,12 +61,10 @@ if grep -v -q microsoft /proc/version; then
 	# AddPackage openvas-scanner # The OpenVAS scanning Daemon
 
 	# Reverse Engineering
-	AddPackage binwalk            # A tool for searching a given binary image for embedded files
 	AddPackage ghidra             # Software reverse engineering framework
 	AddPackage --foreign ida-free # Freeware version of the world's smartest and most feature-full disassembler
 	AddPackage --foreign blc-git  # used with ida-free (and ghidra)
 	AddPackage ropgadget          # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
-	AddPackage radare2            # Open-source tools to disasm, debug, analyze and manipulate binary files
 	# AddPackage radare2-cutter # Qt and C++ GUI for radare2 reverse engineering framework
 
 	# Security Checking
@@ -60,7 +74,6 @@ if grep -v -q microsoft /proc/version; then
 	# Signal analysis
 	# AddPackage --foreign inspectrum # SDR signal analyzer
 
-	CreateFile /etc/ld.so.preload >/dev/null
 	CreateLink /etc/systemd/system/multi-user.target.wants/clamav-daemon.service /usr/lib/systemd/system/clamav-daemon.service
 	CreateLink /etc/systemd/system/multi-user.target.wants/clamav-freshclam.service /usr/lib/systemd/system/clamav-freshclam.service
 	CreateLink /etc/systemd/system/sockets.target.wants/clamav-daemon.socket /usr/lib/systemd/system/clamav-daemon.socket

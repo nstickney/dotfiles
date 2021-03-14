@@ -14,7 +14,6 @@ if grep -v -q microsoft /proc/version; then
 	AddPackage handbrake                # Multithreaded video transcoder
 	AddPackage inkscape                 # Professional vector graphics editor
 	AddPackage libdvdcss                # Portable abstraction library for DVD decryption
-	AddPackage --foreign obs-studio-git # Free and open source software for video recording and live streaming.
 	AddPackage openshot                 # an open-source, non-linear video editor for Linux based on MLT framework
 	AddPackage pavucontrol              # PulseAudio Volume Control
 	AddPackage pulseaudio               # A featureful, general-purpose sound server

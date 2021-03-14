@@ -158,4 +158,29 @@ AddPackage yamllint # Linter for YAML files
 # Don't install these in WSL
 if grep -v -q microsoft /proc/version; then
 	AddPackage code # The Open Source build of Visual Studio Code (vscode) editor
+
+	# QMK Requirements
+	AddPackage base-devel
+	AddPackage clang
+	AddPackage diffutils
+	AddPackage git
+	AddPackage unzip
+	AddPackage wget
+	AddPackage zip
+	AddPackage arm-none-eabi-binutils
+	AddPackage arm-none-eabi-gcc
+	AddPackage arm-none-eabi-newlib
+	AddPackage avrdude
+	AddPackage avr-gcc
+	AddPackage avr-libc
+	AddPackage dfu-programmer
+	AddPackage dfu-util
+	AddPackage python-appdirs
+	AddPackage python-argcomplete
+	AddPackage python-colorama
+	AddPackage --foreign python-dotty-dict
+	AddPackage python-hjson
+	AddPackage python-jsonschema
+	AddPackage python-milc
+	AddPackage python-pygments
 fi

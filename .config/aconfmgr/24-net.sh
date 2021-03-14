@@ -16,25 +16,26 @@ AddPackage youtube-dl         # A small command-line program to download videos 
 
 # Don't install these tools in WSL
 if grep -v -q microsoft /proc/version; then
-	AddPackage avahi                           # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
-	AddPackage bmon                            # Portable bandwidth monitor and rate estimator
-	AddPackage chromium                        # A web browser built for speed, simplicity, and security
-	AddPackage --foreign chromium-widevine     # A browser plugin designed for the viewing of premium video content
-	AddPackage dhcpcd                          # RFC2131 compliant DHCP client daemon
-	AddPackage --foreign discord_arch_electron # Discord (popular voice + video app) using the system provided electron for increased security and performance
-	AddPackage dnsmasq                         # Lightweight, easy to configure DNS forwarder and DHCP server
-	AddPackage firefox                         # Standalone web browser from mozilla.org
-	AddPackage inetutils                       # A collection of common network programs
-	AddPackage iproute2                        # IP Routing Utilities
-	AddPackage iputils                         # Network monitoring tools, including ping
-	AddPackage networkmanager                  # Network connection manager and user applications
-	AddPackage network-manager-applet          # Applet for managing network connections
-	AddPackage networkmanager-openconnect      # NetworkManager VPN plugin for OpenConnect
-	AddPackage networkmanager-openvpn          # NetworkManager VPN plugin for OpenVPN
-	AddPackage ngrep                           # A grep-like utility that allows you to search for network packets on an interface.
-	AddPackage nm-connection-editor            # NetworkManager GUI connection editor and widgets
-	AddPackage nss-mdns                        # glibc plugin providing host name resolution via mDNS
-	AddPackage openvpn                         # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
+	AddPackage avahi                            # Service Discovery for Linux using mDNS/DNS-SD -- compatible with Bonjour
+	AddPackage bmon                             # Portable bandwidth monitor and rate estimator
+	AddPackage chromium                         # A web browser built for speed, simplicity, and security
+	AddPackage --foreign chromium-widevine      # A browser plugin designed for the viewing of premium video content
+	AddPackage dhcpcd                           # RFC2131 compliant DHCP client daemon
+	AddPackage --foreign discord_arch_electron  # Discord (popular voice + video app) using the system provided electron for increased security and performance
+	AddPackage dnsmasq                          # Lightweight, easy to configure DNS forwarder and DHCP server
+	AddPackage firefox                          # Standalone web browser from mozilla.org
+	AddPackage inetutils                        # A collection of common network programs
+	AddPackage iproute2                         # IP Routing Utilities
+	AddPackage iputils                          # Network monitoring tools, including ping
+	AddPackage --foreign microsoft-edge-dev-bin # A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier
+	AddPackage networkmanager                   # Network connection manager and user applications
+	AddPackage network-manager-applet           # Applet for managing network connections
+	AddPackage networkmanager-openconnect       # NetworkManager VPN plugin for OpenConnect
+	AddPackage networkmanager-openvpn           # NetworkManager VPN plugin for OpenVPN
+	AddPackage ngrep                            # A grep-like utility that allows you to search for network packets on an interface.
+	AddPackage nm-connection-editor             # NetworkManager GUI connection editor and widgets
+	AddPackage nss-mdns                         # glibc plugin providing host name resolution via mDNS
+	AddPackage openvpn                          # An easy-to-use, robust and highly configurable VPN (Virtual Private Network)
 	CreateDir /etc/openvpn/client 750 openvpn network
 	CreateDir /etc/openvpn/server 750 openvpn network
 	AddPackage python2-dbus                       # avahi optionally requires python2-dbus: avahi-discover

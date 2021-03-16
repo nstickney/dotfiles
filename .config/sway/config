@@ -6,11 +6,10 @@ set $_LOCK $_BIN_DIR/sway-pixelate-and-lock
 include $_CONFIG_DIR/"$(hostname)".config
 
 # Appearance ##################################################################
-default_border pixel 1
-font monospace 0
+default_border none
+default_floating_border none
 gaps inner 1
-titlebar_border_thickness 1
-titlebar_padding 1
+gaps outer 1
 
 ## Colors
 set $fore   #e6e6e6

@@ -24,7 +24,6 @@
 #workspaces button {
   background: @soml_black;
   color: @soml_white;
-  margin: 1px;
   padding: 1px 14px;
 }
 

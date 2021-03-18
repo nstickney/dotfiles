@@ -1,5 +1,5 @@
 # WSL
-if grep -q microsoft /proc/version; then
+if DetectWSL; then
 	IgnorePath '/ArchWSL.tar.gz'
 	IgnorePath '/etc/hosts'
 	IgnorePath '/etc/timezone'
@@ -42,6 +42,8 @@ IgnorePath '/etc/mkinitcpio*'
 IgnorePath '/etc/modules-load.d/*'
 IgnorePath '/etc/NetworkManager/*'
 IgnorePath '/etc/os-release'
+IgnorePath '/etc/openvpn/client'
+IgnorePath '/etc/openvpn/server'
 IgnorePath '/etc/pacman.d/gnupg/*'
 IgnorePath '/etc/passwd'
 IgnorePath '/etc/passwd-'

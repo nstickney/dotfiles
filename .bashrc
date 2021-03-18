@@ -203,7 +203,7 @@ fi
 # bat
 if [ -x "$(command -v bat)" ]; then
 	alias cat='bat --paging=never'
-	alias less=bat
+	alias less='bat --paging=auto'
 fi
 
 # ls
@@ -415,6 +415,11 @@ if [ -z "$(command -v pd)" ]; then
 	}
 fi
 
+# dig
+if [ -x "$(command -v dog)" ] && [ -z "$(command -v dig)" ]; then
+	alias dig=dog
+fi
+
 # dnf (and yum)
 if [ -x "$(command -v dnf)" ]; then
 	alias dnf='sudo dnf'
@@ -472,13 +477,13 @@ if [ -x "$(command -v reflector)" ] && [ -z "$(command -v reflect)" ]; then
 	}
 fi
 if [ -x "$(command -v paru)" ]; then
-	[ -z "$(command -v pac)" ] && alias pac='paru --batflags --paging=never'
+	[ -z "$(command -v pac)" ] && alias pac='paru'
 	[ -z "$(command -v pup)" ] && alias pup='pac -Syu --noconfirm --devel'
 	if [ -z "$(command -v pin)" ]; then
 		pin() {
 			paru -Slq |
 				fzf -m --preview "cat <(paru -Si {1}) <(paru -Fl {1} | awk \"{print \$2}\")" |
-				xargs -ro paru --batflags --paging=never -S
+				xargs -ro paru -S
 		}
 	fi
 fi

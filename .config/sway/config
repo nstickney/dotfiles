@@ -3,7 +3,7 @@ set $_BIN_DIR $HOME/bin
 set $_CONFIG_DIR $HOME/.config/sway
 set $_LOCK $_BIN_DIR/sway-pixelate-and-lock
 
-include $_CONFIG_DIR/"$(hostname)".config
+include $_CONFIG_DIR/"$(cat /etc/hostname)".config
 
 # Appearance ##################################################################
 default_border none

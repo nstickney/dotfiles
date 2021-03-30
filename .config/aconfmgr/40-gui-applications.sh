@@ -121,6 +121,6 @@ if ! DetectWSL; then # No GUI in WSL
 
 	# Web browser: Firefox
 	AddPackage firefox         # Standalone web browser from mozilla.org
-	AddPackage hunspell-en_US  # OPTIONAL DEPENDENCY (firefox)
+	AddPackage hunspell-en_us  # OPTIONAL DEPENDENCY (firefox)
 	AddPackage x11-ssh-askpass # OPTIONAL DEPENDENCY (code)
 fi

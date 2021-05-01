@@ -120,6 +120,9 @@ add_workstation_rules() {
 		'sudo iptables -A OUTPUT -p udp -m udp --dport 50000:50025 -j ACCEPT'
 	__ask 'Gemini?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 1965 -j ACCEPT'
+	# https://support.google.com/a/answer/1279090
+	__ask 'Google Duo?' \
+		'sudo iptables -A OUTPUT -d 74.125.250.0/24,142.250.82.0/24 -p udp -m udp --dport 19302:19309 -j ACCEPT'
 	__ask 'Streaming on Twitch.tv?' add_twitch_rules
 	__ask 'Accessing MongoDB?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 27017 -j ACCEPT'

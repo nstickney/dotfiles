@@ -54,6 +54,13 @@ add_bittorrent_rules() {
 	done
 }
 
+add_blizzard_rules() {
+	for i in 1119 3724 4000 6012 6112:6114; do
+		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
+		sudo iptables -A OUTPUT -p udp -m udp --dport "$i" -j ACCEPT
+	done
+}
+
 add_cyberstakes_rules() {
 	for i in challenge docker; do
 		sudo iptables -A OUTPUT -d $i.acictf.com -j ACCEPT
@@ -143,6 +150,7 @@ add_workstation_rules() {
 		'sudo iptables -A OUTPUT -d angolwen.net-core.org -p tcp -m tcp --dport 2257:2258 -j ACCEPT'
 	__ask 'Playing Veloren?' \
 		'sudo iptables -A OUTPUT -d server.veloren.net -p tcp -m tcp --dport 14004 -j ACCEPT'
+	__ask 'Playing World of Warcraft?' add_blizzard_rules
 }
 
 flush_all_rules() {

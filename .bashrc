@@ -462,8 +462,8 @@ alias mkdir='mkdir -pv'
 [ -x "$(command -v powerpill)" ] &&
 	PACMAN="$(command -v powerpill)" &&
 	export PACMAN
-if [ -x "$(command -v reflector)" ] && [ -z "$(command -v reflect)" ]; then
-	reflect() {
+if [ -x "$(command -v reflector)" ] && [ -z "$(command -v mirrors)" ]; then
+	mirrors() {
 		local OPTS='--age 12 --country US --fastest 50 --protocol https --sort rate'
 		if [ -x "$(command -v spinner)" ]; then
 			sudo spinner "reflector $OPTS --save /etc/pacman.d/mirrorlist" \
@@ -494,8 +494,8 @@ if [ -x "$(command -v pacman)" ]; then
 		pacman -Qo "$(command -v "$1")"
 	}
 fi
-[ "$(type -t reflect)" == 'function' ] && [ "$(type -t pup)" == 'alias' ] &&
-	[ -z "$(command -v rup)" ] && alias rup='reflect && pup'
+[ "$(type -t mirrors)" == 'function' ] && [ "$(type -t pup)" == 'alias' ] &&
+	[ -z "$(command -v rup)" ] && alias rup='mirrors && pup'
 
 # ps
 [ -z "$(command -v pf)" ] && alias pf='ps auxf'

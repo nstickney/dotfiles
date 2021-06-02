@@ -25,7 +25,6 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage --foreign discord_arch_electron    # Discord (popular voice + video app) using the system provided electron for increased security and performance
 	AddPackage signal-desktop                     # Signal Private Messenger for Linux
 	AddPackage --foreign skypeforlinux-stable-bin # Skype for Linux - Stable/Release Version
-	AddPackage --foreign teams                    # Microsoft Teams for Linux is your chat-centered workspace in Office 365
 
 	# Credential management
 	AddPackage --foreign bitwarden-bin # A secure and free password manager for all of your devices.

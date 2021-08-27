@@ -3,8 +3,8 @@
 if ! DetectWSL; then # No GUI in WSL
 	# Basics
 	AddPackage adobe-source-code-pro-fonts  # Monospaced font family for user interface and coding environments
-	AddPackage adobe-source-sans-pro-fonts  # Sans-serif font family for user interface environments
-	AddPackage adobe-source-serif-pro-fonts # Serif typeface designed to complement Source Sans
+	AddPackage adobe-source-sans-fonts  # Sans-serif font family for user interface environments
+	AddPackage adobe-source-serif-fonts # Serif typeface designed to complement Source Sans
 
 	# Extras
 	AddPackage noto-fonts-cjk   # Google Noto CJK fonts

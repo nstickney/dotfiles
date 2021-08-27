@@ -4,7 +4,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage swaylock # Screen locker for Wayland
 	AddPackage wmname   # A utility to set the name of your window manager
 
-	AddPackage blueman                         # GTK+ Bluetooth Manager
+	AddPackage blueberry                       # Bluetooth configuration tool
 	AddPackage mako                            # Lightweight notification daemon for Wayland
 	AddPackage polkit-gnome                    # Legacy polkit authentication agent for GNOME
 	AddPackage python-i3ipc                    # An improved Python library to control i3wm

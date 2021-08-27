@@ -36,4 +36,6 @@ if ! DetectVM; then # No peripherals on virtual machines
 	AddPackage --foreign brother-mfc-j480dw    # CUPS and LPR drivers for the Brother MFC-J480DW printer
 	AddPackage --foreign xerox-workcentre-6515 # CUPS driver for the Xerox WorkCentre 6515
 
+	# Serial
+	AddPackage screen # Full-screen window manager that multiplexes a physical terminal
 fi

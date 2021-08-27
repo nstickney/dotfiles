@@ -11,6 +11,7 @@ AddPackage git                  # the fast distributed version control system
 AddPackage --foreign git-absorb # git commit --fixup, but automatic
 AddPackage git-crypt            # Transparent file encryption in Git
 AddPackage git-filter-repo      # Quickly rewrite git repository history (filter-branch replacement)
+AddPackage git-lfs              # Git extension for versioning large files
 AddPackage hexyl                # Colored command-line hex viewer
 AddPackage hq                   # HTML processor inspired by jq
 AddPackage htop                 # Interactive process viewer
@@ -33,22 +34,22 @@ AddPackage vim          # Vi Improved, a highly configurable, improved version o
 AddPackage vim-spell-en # Language files for Vim spell checking
 
 ## ALE: https://github.com/dense-analysis/ale/blob/master/supported-tools.md
-AddPackage ansible-lint                  # Checks playbooks for practices and behaviour that could potentially be improved.
-AddPackage autopep8                      # A tool that automatically formats Python code to conform to the PEP 8 style guide
-AddPackage bash-language-server          # Bash language server implementation based on Tree Sitter and its grammar for Bash
-AddPackage --foreign checkmake           # Experimental linter/analyzer for makefiles
-AddPackage clang                         # C language family frontend for LLVM
-AddPackage cppcheck                      # A tool for static C/C++ code analysis
-AddPackage eslint                        # An AST-based pattern checker for JavaScript
-AddPackage flawfinder                    # Searches through source code for potential security flaws
-AddPackage --foreign gitlint             # Git commit message linter
-AddPackage --foreign goimports-git       # Tool to fix (add, remove) your Go imports automatically.
-AddPackage gopls                         # Language server for Go programming language
-AddPackage --foreign hadolint-bin        # Dockerfile linter, validate inline bash, written in Haskell
-AddPackage --foreign metals              # Language Server For Scala
-AddPackage perl-tidy                     # Parses and beautifies perl source
-AddPackage prettier                      # An opinionated code formatter for JS, JSON, CSS, YAML and much more
-AddPackage proselint                     # Linter for prose
+AddPackage ansible-lint            # Checks playbooks for practices and behaviour that could potentially be improved.
+AddPackage autopep8                # A tool that automatically formats Python code to conform to the PEP 8 style guide
+AddPackage bash-language-server    # Bash language server implementation based on Tree Sitter and its grammar for Bash
+AddPackage --foreign checkmake     # Experimental linter/analyzer for makefiles
+AddPackage clang                   # C language family frontend for LLVM
+AddPackage cppcheck                # A tool for static C/C++ code analysis
+AddPackage eslint                  # An AST-based pattern checker for JavaScript
+AddPackage flawfinder              # Searches through source code for potential security flaws
+AddPackage --foreign gitlint       # Git commit message linter
+AddPackage --foreign goimports-git # Tool to fix (add, remove) your Go imports automatically.
+AddPackage gopls                   # Language server for Go programming language
+AddPackage --foreign hadolint-bin  # Dockerfile linter, validate inline bash, written in Haskell
+AddPackage --foreign metals        # Language Server For Scala
+AddPackage perl-tidy               # Parses and beautifies perl source
+AddPackage prettier                # An opinionated code formatter for JS, JSON, CSS, YAML and much more
+# AddPackage --foreign proselint           # Linter for prose
 AddPackage python-isort                  # A Python utility / library to sort Python imports.
 AddPackage python-language-server        # An implementation of the Language Server Protocol for Python
 AddPackage python-pyls-black             # Black plugin for the Python Language Server
@@ -168,7 +169,8 @@ AddPackage maven   # Java project management and project comprehension tool
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
 ## JavaScript
-AddPackage npm # A package manager for javascript
+AddPackage npm               # A package manager for javascript
+AddPackage --foreign vue-cli # Standard tooling for Vue.js development
 
 ## Go
 AddPackage delve # A debugger for the Go programming language.

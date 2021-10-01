@@ -1,5 +1,7 @@
 [include]
 	path = safe/gitconfig
+[includeIf "gitdir:~/work/"]
+	path = safe/gitworkconfig
 [core]
 	autocrlf = input
 	excludesfile = ~/.config/git/ignore
@@ -123,3 +125,8 @@
 	UC = clean -dfi
 	# Un-stage
 	US = reset HEAD --
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

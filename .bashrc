@@ -521,9 +521,9 @@ if [ -x "$(command -v ssh)" ]; then
 	alias ssh='TERM=xterm-256color ssh'
 
 	# Easy tunnel creation
-	if [ -z "$(command -v tunnel)" ]; then
+	if [ -z "$(command -v ssh_tunnel)" ]; then
 		# Create ssh tunnel on port $2 (default 19998) to server $1
-		tunnel() {
+		ssh_tunnel() {
 			ssh -f -N -D "${2:-19998}" -4 "$1"
 		}
 

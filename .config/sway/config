@@ -72,6 +72,10 @@ exec swayidle -w \
 		 timeout 300  "$_LOCK" \
 		 before-sleep "$_LOCK"
 
+# https://www.reddit.com/r/swaywm/comments/conhod/inhibit_idle_while_a_fullscreen_app_is_running/ewl8i96
+for_window [class="^.*"] inhibit_idle fullscreen
+for_window [app_id="^.*"] inhibit_idle fullscreen
+
 bar {
 	swaybar_command waybar
 }

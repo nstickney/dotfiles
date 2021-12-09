@@ -283,13 +283,13 @@ bind '"\e[6~": next-history'
 
 # Defeat Snoopy logging
 # http://blog.rchapman.org/posts/Bypassing_snoopy_logging/
-[ ! -f "$HOME"/bin/bypass.so ] &&
-	[ -x "$(command -v gcc)" ] &&
-	[ -f "$HOME"/bin/bypass.c ] &&
-	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/bin/bypass.c -o \
-		"$HOME"/bin/bypass.so -ldl -Wall -Wextra
-[ -x "$HOME"/bin/bypass.so ] &&
-	export LD_PRELOAD=$HOME/bin/bypass.so
+# [ ! -f "$HOME"/bin/bypass.so ] &&
+# 	[ -x "$(command -v gcc)" ] &&
+# 	[ -f "$HOME"/bin/bypass.c ] &&
+# 	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/bin/bypass.c -o \
+# 		"$HOME"/bin/bypass.so -ldl -Wall -Wextra
+# [ -x "$HOME"/bin/bypass.so ] &&
+# 	export LD_PRELOAD=$HOME/bin/bypass.so
 
 # HISTORY #####################################################################
 

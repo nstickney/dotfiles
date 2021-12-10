@@ -24,7 +24,9 @@
     <landmark type="29" x="14859.46" y="-992.03" title="Kami (Almati Wood)"/>
   </landmarks>
   <landmarks continent="matis_newbie" type="user"/>
-  <landmarks continent="newbieland" type="user"/>
+  <landmarks continent="newbieland" type="user">
+    <landmark type="0" x="10346.47" y="-11746.26" title="Rendor Meat Turn-In"/>
+  </landmarks>
   <landmarks continent="nexus" type="user">
     <landmark type="29" x="9083.00" y="-7494.00" title="Path (Nexus)"/>
   </landmarks>

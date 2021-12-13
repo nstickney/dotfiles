@@ -47,6 +47,10 @@ __ask() {
 	done
 }
 
+add_bigbluebutton_rules() {
+	sudo iptables -A OUTPUT -p udp -m udp --dport 3478 -j ACCEPT
+}
+
 add_bittorrent_rules() {
 	for i in 6969 6881:6889 8999 51413; do
 		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
@@ -58,12 +62,6 @@ add_blizzard_rules() {
 	for i in 1119 3724 4000 6012 6112:6114; do
 		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
 		sudo iptables -A OUTPUT -p udp -m udp --dport "$i" -j ACCEPT
-	done
-}
-
-add_cyberstakes_rules() {
-	for i in challenge docker; do
-		sudo iptables -A OUTPUT -d $i.acictf.com -j ACCEPT
 	done
 }
 
@@ -123,6 +121,7 @@ add_workstation_rules() {
 	sudo iptables -A OUTPUT -p tcp -m tcp --dport 11371 -j ACCEPT # HKPS
 	sudo iptables -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
 	__ask 'Network printing?' add_printing_rules
+	__ask 'BigBlueButton?' add_bigbluebutton_rules
 	__ask 'Discord?' \
 		'sudo iptables -A OUTPUT -p udp -m udp --dport 50000:50025 -j ACCEPT'
 	__ask 'Gemini?' \
@@ -141,7 +140,6 @@ add_workstation_rules() {
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 5900 -j ACCEPT'
 	__ask 'Accessing vSphere?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 9443 -j ACCEPT'
-	__ask 'Playing All-Army CyberStakes?' add_cyberstakes_rules
 	__ask 'Playing Hack The Box?' \
 		'sudo iptables -A OUTPUT -p udp -m udp --dport 1337 -j ACCEPT'
 	__ask 'Playing Minecraft?' add_minecraft_rules

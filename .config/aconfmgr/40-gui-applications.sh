@@ -5,8 +5,8 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage stellarium # A stellarium with great graphics and a nice database of sky-objects
 
 	# 3D Modeling
-	AddPackage --foreign leocad # A CAD program for creating virtual LEGO models
-	AddPackage openscad         # The programmers solid 3D CAD modeller
+	AddPackage leocad   # A CAD program for creating virtual LEGO models
+	AddPackage openscad # The programmers solid 3D CAD modeller
 
 	# Audio editing
 	AddPackage audacity # A program that lets you manipulate digital audio waveforms
@@ -27,7 +27,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage --foreign skypeforlinux-stable-bin # Skype for Linux - Stable/Release Version
 
 	# Credential management
-	AddPackage --foreign bitwarden-bin # A secure and free password manager for all of your devices.
+	AddPackage bitwarden # A secure and free password manager for all of your devices.
 
 	# Document viewer
 	AddPackage evince # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
@@ -51,11 +51,12 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage --foreign minecraft-launcher     # Official Minecraft Launcher
 	CreateLink /opt/minecraft-launcher/swiftshader/libEGL.so /lib64/libEGL.so
 	CreateLink /opt/minecraft-launcher/swiftshader/libGLESv2.so /lib64/libGLESv2.so
-	AddPackage steam                 # Valve's digital software delivery system
-	AddPackage --foreign steam-fonts # Fonts to fix scrambled or missing text in steam menus
-	AddPackage steam-native-runtime  # Native replacement for the Steam runtime using system libraries
-	AddPackage stone-soup            # Open-source, single-player, role-playing roguelike game of exploration and treasure-hunting
-	AddPackage --foreign tome4       # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
+	AddPackage --foreign protontricks # A simple wrapper that does winetricks things for Proton enabled games.
+	AddPackage steam                  # Valve's digital software delivery system
+	AddPackage --foreign steam-fonts  # Fonts to fix scrambled or missing text in steam menus
+	AddPackage steam-native-runtime   # Native replacement for the Steam runtime using system libraries
+	AddPackage stone-soup             # Open-source, single-player, role-playing roguelike game of exploration and treasure-hunting
+	AddPackage --foreign tome4        # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
 
 	# Images
 	AddPackage eog         # Eye of Gnome
@@ -95,7 +96,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage vinagre # A VNC Client for the GNOME desktop
 
 	# Security
-	AddPackage --foreign burpsuite # An integrated platform for performing security testing of web applications (free edition)
+	#AddPackage --foreign burpsuite # An integrated platform for performing security testing of web applications (free edition)
 
 	# Terminal emulator
 	AddPackage alacritty # A cross-platform, GPU-accelerated terminal emulator
@@ -112,11 +113,11 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage pipewire                    # OPTIONAL DEPENDENCY (chromium)
 
 	# Web browser: Edge
-	AddPackage --foreign microsoft-edge-dev-bin # A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier
-	AddPackage gtk3                             # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
-	AddPackage libpipewire02                    # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
-	AddPackage ttf-liberation                   # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
-	AddPackage xdg-utils                        # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
+	AddPackage --foreign microsoft-edge-stable-bin # A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier
+	AddPackage gtk3                                # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
+	AddPackage libpipewire02                       # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
+	AddPackage ttf-liberation                      # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
+	AddPackage xdg-utils                           # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
 
 	# Web browser: Firefox
 	AddPackage firefox         # Standalone web browser from mozilla.org

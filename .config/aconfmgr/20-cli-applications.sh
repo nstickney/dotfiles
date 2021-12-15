@@ -1,58 +1,57 @@
-AddPackage asciinema            # Record and share terminal sessions
-AddPackage bash-completion      # Programmable completion for the bash shell
-AddPackage bat                  # Cat clone with syntax highlighting and git integration
-AddPackage colordiff            # A Perl script wrapper for 'diff' that produces the same output but with pretty 'syntax' highlighting
-AddPackage dos2unix             # Text file format converter
-AddPackage --foreign eva        # simple calculator REPL, similar to bc(1)
-AddPackage exa                  # ls replacement
-AddPackage fd                   # Simple, fast and user-friendly alternative to find
-AddPackage fzf                  # Command-line fuzzy finder
-AddPackage git                  # the fast distributed version control system
-AddPackage --foreign git-absorb # git commit --fixup, but automatic
-AddPackage git-crypt            # Transparent file encryption in Git
-AddPackage git-filter-repo      # Quickly rewrite git repository history (filter-branch replacement)
-AddPackage git-lfs              # Git extension for versioning large files
-AddPackage hexyl                # Colored command-line hex viewer
-AddPackage hq                   # HTML processor inspired by jq
-AddPackage htop                 # Interactive process viewer
-AddPackage jq                   # Command-line JSON processor
-AddPackage lesspipe             # an input filter for the pager less
-AddPackage lsof                 # Lists open files for running Unix processes
-AddPackage man-pages            # Linux man pages
-AddPackage mlocate              # Merging locate/updatedb implementation
-AddPackage ncdu                 # Disk usage analyzer with an ncurses interface
-AddPackage parallel             # A shell tool for executing jobs in parallel
-AddPackage ripgrep              # A search tool that combines the usability of ag with the raw speed of grep
-AddPackage rmlint               # Tool to remove duplicates and other lint, being much faster than fdupes
-AddPackage rsync                # A fast and versatile file copying tool for remote and local files
-AddPackage tmux                 # A terminal multiplexer
-AddPackage tree                 # A directory listing program displaying a depth indented list of files
-AddPackage watchexec            # Executes commands in response to file modifications
+AddPackage asciinema       # Record and share terminal sessions
+AddPackage bash-completion # Programmable completion for the bash shell
+AddPackage bat             # Cat clone with syntax highlighting and git integration
+AddPackage colordiff       # A Perl script wrapper for 'diff' that produces the same output but with pretty 'syntax' highlighting
+AddPackage dos2unix        # Text file format converter
+AddPackage --foreign eva   # simple calculator REPL, similar to bc(1)
+AddPackage exa             # ls replacement
+AddPackage fd              # Simple, fast and user-friendly alternative to find
+AddPackage fzf             # Command-line fuzzy finder
+AddPackage git             # the fast distributed version control system
+AddPackage git-absorb      # git commit --fixup, but automatic
+AddPackage git-crypt       # Transparent file encryption in Git
+AddPackage git-filter-repo # Quickly rewrite git repository history (filter-branch replacement)
+AddPackage git-lfs         # Git extension for versioning large files
+AddPackage hexyl           # Colored command-line hex viewer
+AddPackage hq              # HTML processor inspired by jq
+AddPackage htop            # Interactive process viewer
+AddPackage jq              # Command-line JSON processor
+AddPackage lesspipe        # an input filter for the pager less
+AddPackage lsof            # Lists open files for running Unix processes
+AddPackage man-pages       # Linux man pages
+AddPackage mlocate         # Merging locate/updatedb implementation
+AddPackage ncdu            # Disk usage analyzer with an ncurses interface
+AddPackage parallel        # A shell tool for executing jobs in parallel
+AddPackage ripgrep         # A search tool that combines the usability of ag with the raw speed of grep
+AddPackage rmlint          # Tool to remove duplicates and other lint, being much faster than fdupes
+AddPackage rsync           # A fast and versatile file copying tool for remote and local files
+AddPackage tmux            # A terminal multiplexer
+AddPackage tree            # A directory listing program displaying a depth indented list of files
+AddPackage watchexec       # Executes commands in response to file modifications
 
 # $EDITOR
 AddPackage vim          # Vi Improved, a highly configurable, improved version of the vi text editor
 AddPackage vim-spell-en # Language files for Vim spell checking
 
 ## ALE: https://github.com/dense-analysis/ale/blob/master/supported-tools.md
-AddPackage ansible-lint            # Checks playbooks for practices and behaviour that could potentially be improved.
-AddPackage autopep8                # A tool that automatically formats Python code to conform to the PEP 8 style guide
-AddPackage bash-language-server    # Bash language server implementation based on Tree Sitter and its grammar for Bash
-AddPackage --foreign checkmake     # Experimental linter/analyzer for makefiles
-AddPackage clang                   # C language family frontend for LLVM
-AddPackage cppcheck                # A tool for static C/C++ code analysis
-AddPackage eslint                  # An AST-based pattern checker for JavaScript
-AddPackage flawfinder              # Searches through source code for potential security flaws
-AddPackage --foreign gitlint       # Git commit message linter
-AddPackage --foreign goimports-git # Tool to fix (add, remove) your Go imports automatically.
-AddPackage gopls                   # Language server for Go programming language
-AddPackage --foreign hadolint-bin  # Dockerfile linter, validate inline bash, written in Haskell
-AddPackage --foreign metals        # Language Server For Scala
-AddPackage perl-tidy               # Parses and beautifies perl source
-AddPackage prettier                # An opinionated code formatter for JS, JSON, CSS, YAML and much more
+AddPackage ansible-lint           # Checks playbooks for practices and behaviour that could potentially be improved.
+AddPackage autopep8               # A tool that automatically formats Python code to conform to the PEP 8 style guide
+AddPackage bash-language-server   # Bash language server implementation based on Tree Sitter and its grammar for Bash
+AddPackage --foreign checkmake    # Experimental linter/analyzer for makefiles
+AddPackage clang                  # C language family frontend for LLVM
+AddPackage cppcheck               # A tool for static C/C++ code analysis
+AddPackage eslint                 # An AST-based pattern checker for JavaScript
+AddPackage flawfinder             # Searches through source code for potential security flaws
+AddPackage --foreign gitlint      # Git commit message linter
+AddPackage gopls                  # Language server for Go programming language
+AddPackage --foreign hadolint-bin # Dockerfile linter, validate inline bash, written in Haskell
+AddPackage --foreign metals       # Language Server For Scala
+AddPackage perl-tidy              # Parses and beautifies perl source
+AddPackage prettier               # An opinionated code formatter for JS, JSON, CSS, YAML and much more
 # AddPackage --foreign proselint           # Linter for prose
+AddPackage python-black                  # Uncompromising Python code formatter
 AddPackage python-isort                  # A Python utility / library to sort Python imports.
-AddPackage python-language-server        # An implementation of the Language Server Protocol for Python
-AddPackage python-pyls-black             # Black plugin for the Python Language Server
+AddPackage python-lsp-server             # Fork of the python-language-server project, maintained by the Spyder IDE team and the community
 AddPackage --foreign ruby-sqlint         # Simple SQL linter supporting ANSI and PostgreSQL syntaxes
 AddPackage rust-analyzer                 # Experimental Rust compiler front-end for IDEs
 AddPackage --foreign scalafmt            # code formatter for the Scala programming language
@@ -173,8 +172,9 @@ AddPackage npm               # A package manager for javascript
 AddPackage --foreign vue-cli # Standard tooling for Vue.js development
 
 ## Go
-AddPackage delve # A debugger for the Go programming language.
-AddPackage go    # Core compiler tools for the Go programming language
+AddPackage delve    # A debugger for the Go programming language.
+AddPackage go       # Core compiler tools for the Go programming language
+AddPackage go-tools # Developer tools for the Go programming language
 
 ## Octave
 AddPackage octave # A high-level language, primarily intended for numerical computations.

@@ -21,6 +21,7 @@ CopyFile /etc/pacman.conf
 CopyFile /etc/pacman.d/hooks/arch-audit.hook
 CopyFile /etc/pacman.d/hooks/mirrorupgrade.hook
 CopyFile /etc/profile.d/powerpill.sh
+CopyFile /etc/security/faillock.conf
 
 if DetectWSL; then
 

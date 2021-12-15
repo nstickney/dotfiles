@@ -27,6 +27,7 @@ EOF
 AddPackage mosh  # Mobile shell, surviving disconnects with local echo and line editing
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 CreateLink /etc/systemd/system/multi-user.target.wants/sshd.service /usr/lib/systemd/system/sshd.service
+CreateLink /etc/systemd/user/sockets.target.wants/gcr-ssh-agent.socket /usr/lib/systemd/user/gcr-ssh-agent.socket
 
 ## SSH server configuration hardening
 sshd_conf="$(GetPackageOriginalFile openssh /etc/ssh/sshd_config)"
@@ -34,5 +35,6 @@ sed -i 's/^#LoginGraceTime.*$/LoginGraceTime 30s/g' "$sshd_conf"
 sed -i 's/^#PermitRootLogin.*$/PermitRootLogin no/g' "$sshd_conf"
 sed -i 's/^MaxAuthTries.*$/MaxAuthTries 3/g' "$sshd_conf"
 sed -i 's/^MaxSessions.*$/MaxSessions 5/g' "$sshd_conf"
-sed -i 's/^PasswordAuthentication.*$/PasswordAuthentication no/g' "$sshd_conf"
+sed -i 's/^#PasswordAuthentication.*$/PasswordAuthentication no/g' "$sshd_conf"
+sed -i 's/^KbdInteractiveAuthentication.*$/KbdInteractiveAuthentication no/g' "$sshd_conf"
 sed -i 's/^AllowAgentForwarding.*$/AllowAgentForwarding no/g' "$sshd_conf"

@@ -16,4 +16,6 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage --foreign wlstreamer-git        # Wrapper around wf-recorder and ffmpeg that automatically switches the screen being recorded based on current window focus. Works with sway.
 	AddPackage wl-clipboard                    # Command-line copy/paste utilities for Wayland
 	AddPackage xdg-desktop-portal-wlr          # xdg-desktop-portal backend for wlroots
+
+	CopyFile /etc/systemd/user/sway-gsd-rfkill.service 755
 fi

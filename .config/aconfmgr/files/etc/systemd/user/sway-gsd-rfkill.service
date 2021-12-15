@@ -1,0 +1,17 @@
+# sway-gsd-rfkill.service
+[Unit]
+Description=GNOME RFKill support service
+CollectMode=inactive-or-failed
+RefuseManualStart=true
+RefuseManualStop=true
+
+[Service]
+Slice=session.slice
+Type=dbus
+ExecStart=/usr/lib/gsd-rfkill
+Restart=on-failure
+BusName=org.gnome.SettingsDaemon.Rfkill
+TimeoutStopSec=5
+
+[Install]
+WantedBy=sway-session.target

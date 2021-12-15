@@ -2,6 +2,8 @@ if ! DetectWSL; then # No GUI in WSL
 
 	# AMD graphics support
 	if DetectAMDGPU; then
+		AddPackage amdvlk            # AMD's standalone Vulkan driver
+		AddPackage lib32-amdvlk      # AMD's standalone Vulkan driver
 		AddPackage libva-mesa-driver # VA-API implementation for gallium
 		AddPackage mesa-vdpau        # Mesa VDPAU drivers
 		AddPackage opencl-mesa       # OpenCL support for AMD/ATI Radeon mesa drivers

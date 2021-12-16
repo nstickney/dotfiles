@@ -15,6 +15,15 @@ if ! DetectWSL; then # No GUI in WSL
 		AddPackage vulcan-intel # Intel's Vulkan mesa driver
 	fi
 
+	# Nvidia graphics support
+	if DetectNvidia; then
+		AddPackage egl-wayland
+		AddPackage lib32-nvidia-utils
+		AddPackage nvidia
+		AddPackage nvidia-lts
+		AddPackage nvidia-utils
+	fi
+
 	AddPackage gdm                    # Display manager and login screen
 	AddPackage glfw-wayland           # A free, open source, portable framework for graphical application development (wayland)
 	AddPackage grim                   # Screenshot utility that works under Wayland

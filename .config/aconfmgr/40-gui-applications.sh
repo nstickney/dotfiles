@@ -103,9 +103,10 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage ncurses   # OPTIONAL DEPENDENCY (alacritty)
 
 	# Video
-	AddPackage handbrake # Multithreaded video transcoder
-	AddPackage openshot  # An award-winning free and open-source video editor
-	AddPackage vlc       # Multi-platform MPEG, VCD/DVD, and DivX player
+	AddPackage handbrake  # Multithreaded video transcoder
+	AddPackage obs-studio # Free, open source software for live streaming and recording
+	AddPackage openshot   # An award-winning free and open-source video editor
+	AddPackage vlc        # Multi-platform MPEG, VCD/DVD, and DivX player
 
 	# Web browser: Chrome
 	AddPackage chromium                    # A web browser built for speed, simplicity, and security

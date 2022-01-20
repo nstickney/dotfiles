@@ -37,6 +37,9 @@ default_orientation horizontal
 
 # Startup Actions #############################################################
 
+# Set up the session for xdg-desktop-portal screen sharing
+exec $_BIN_DIR/xdg-portal-setup
+
 # Finalize host-specific configuration of status bar
 exec_always $_BIN_DIR/waybar-config
 

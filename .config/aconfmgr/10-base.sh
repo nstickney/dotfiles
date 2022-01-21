@@ -127,7 +127,7 @@ if [ -n "${DISCORD_WEBHOOK:-}" ]; then
 
 		curl -X POST -H 'Content-type: application/json' \
 			--data "{\"content\":\"**$(uname -n)**: ${PAM_TYPE} \`${PAM_USER:-$USER}\` $_LOGINHOST\"}" \
-			https://ptb.discord.com/api/webhooks/%KEY%
+			https://ptb.discord.com/api/webhooks/%KEY% &
 	EOF
 	cat >>"$(GetPackageOriginalFile pambase /etc/pam.d/system-login)" <<-'EOF'
 		session    optional   pam_exec.so          quiet /etc/pam.d/loglogins

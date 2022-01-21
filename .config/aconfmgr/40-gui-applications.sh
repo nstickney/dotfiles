@@ -93,7 +93,7 @@ if ! DetectWSL; then # No GUI in WSL
 
 	# Remote
 	AddPackage remmina # remote desktop client written in GTK+
-	AddPackage vinagre # A VNC Client for the GNOME desktop
+	# AddPackage vinagre # A VNC Client for the GNOME desktop
 
 	# Security
 	#AddPackage --foreign burpsuite # An integrated platform for performing security testing of web applications (free edition)

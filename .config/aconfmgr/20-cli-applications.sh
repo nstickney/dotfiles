@@ -123,7 +123,7 @@ AddPackage aerc                        # Email Client for your Terminal
 AddPackage w3m                         # OPTIONAL DEPENDENCY (aerc)
 AddPackage --foreign hydroxide-git     # A third-party, open-source ProtonMail CardDAV, IMAP and SMTP bridge
 AddPackage irssi                       # Modular text mode IRC client with Perl scripting
-AddPackage --foreign python-cleantoots # Cleanup your toot history
+# AddPackage --foreign python-cleantoots # Cleanup your toot history
 
 # Network
 AddPackage aria2              # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink

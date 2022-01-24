@@ -93,6 +93,8 @@ if ! DetectWSL; then # No GUI in WSL
 
 	# Remote
 	AddPackage remmina # remote desktop client written in GTK+
+	AddPackage freerdp # remmina opt dep
+	AddPackage libvncserver # remmina opt dep
 	# AddPackage vinagre # A VNC Client for the GNOME desktop
 
 	# Security

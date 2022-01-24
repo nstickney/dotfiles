@@ -18,6 +18,7 @@ AddPackage htop            # Interactive process viewer
 AddPackage jq              # Command-line JSON processor
 AddPackage lesspipe        # an input filter for the pager less
 AddPackage lsof            # Lists open files for running Unix processes
+AddPackage man-db          # A utility for reading man pages
 AddPackage man-pages       # Linux man pages
 AddPackage mlocate         # Merging locate/updatedb implementation
 AddPackage ncdu            # Disk usage analyzer with an ncurses interface
@@ -119,10 +120,10 @@ AddPackage perl-image-exiftool # Reader and rewriter of EXIF informations that s
 AddPackage svgcleaner          # An application that cleans svg images from unnecessary data in batch mode.
 
 # Messaging
-AddPackage aerc                        # Email Client for your Terminal
-AddPackage w3m                         # OPTIONAL DEPENDENCY (aerc)
-AddPackage --foreign hydroxide-git     # A third-party, open-source ProtonMail CardDAV, IMAP and SMTP bridge
-AddPackage irssi                       # Modular text mode IRC client with Perl scripting
+AddPackage aerc                    # Email Client for your Terminal
+AddPackage w3m                     # OPTIONAL DEPENDENCY (aerc)
+AddPackage --foreign hydroxide-git # A third-party, open-source ProtonMail CardDAV, IMAP and SMTP bridge
+AddPackage irssi                   # Modular text mode IRC client with Perl scripting
 # AddPackage --foreign python-cleantoots # Cleanup your toot history
 
 # Network

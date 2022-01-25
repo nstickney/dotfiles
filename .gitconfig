@@ -76,7 +76,7 @@
 		--date=format-local:'%Y.%m.%d %H:%M' \
 		--pretty=format:'%C(yellow)%h%Creset [%G?] %an %C(cyan)%ad%Creset%Cgreen%d%Creset %s'
 	# Main Branch
-	MB = ! git checkout master || git checkout main
+	MB = ! git checkout master 2>/dev/null || git checkout main
 	# Push (Force)
 	PF = ! git push -f origin $(git bh)
 	# Pull Origin

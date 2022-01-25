@@ -9,8 +9,6 @@ if DetectWSL; then
 	IgnorePath '/usr/bin/wslpath'
 fi
 
-IgnorePath '**.bak'
-IgnorePath '**.pacnew'
 IgnorePath '**/__pycache__/*'
 IgnorePath '/boot/*'
 IgnorePath '/etc/.*'

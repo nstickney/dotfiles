@@ -35,4 +35,6 @@
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
     "editor.minimap.enabled": false,
+    "editor.wrappingIndent": "indent",
+    "files.autoSave": "onFocusChange",
 }

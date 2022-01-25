@@ -165,15 +165,15 @@ set conceallevel=2 concealcursor=nc
 "" Guides
 set colorcolumn=80,90,100,120
 highlight clear ColorColumn
-highlight ColorColumn ctermbg=8|  " guide columns are dark gray
+highlight ColorColumn ctermbg=15|  " guide columns are dark gray
 "" Line Numbers
 highlight clear LineNr
-highlight LineNr ctermfg=8|  " line numbers should be dark gray
+highlight LineNr ctermfg=15|  " line numbers should be dark gray
 set cursorline  " highlight the current line
 highlight clear CursorLine
 highlight clear CursorLineNr
 highlight CursorLine cterm=None|  " don't highlight the line itself ...
-highlight CursorLineNr ctermfg=7|  " but increase brightness on the line number
+highlight CursorLineNr ctermfg=0|  " but increase brightness on the line number
 "" Status and Tab lines (lightline)
 set laststatus=2  " always show the status line
 set showtabline=2  " always show the tab line

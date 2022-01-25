@@ -269,26 +269,28 @@ colors:
   #  background: CellForeground
 
   # Normal colors
+  # black/white swapped for dark theme
   normal:
-    black: "#1b1b1b"
+    black: "#e6e6e6"
     red: "#c22436"
     green: "#a58440"
     yellow: "#e64d00"
     blue: "#0077e6"
     magenta: "#ab3b85"
     cyan: "#35b181"
-    white: "#e6e6e6"
+    white: "#1b1b1b"
 
   # Bright colors
+  # black/white swapped for dark theme
   bright:
-    black: "#333333"
+    black: "#fff8e7"
     red: "#df5363"
     green: "#c6a86c"
     yellow: "#ff7733"
     blue: "#339cff"
     magenta: "#cb67aa"
     cyan: "#62d0a6"
-    white: "#fff8e7"
+    white: "#333333"
 
   # Dim colors
   #
@@ -450,7 +452,6 @@ mouse:
 
   # If this is `true`, the cursor is temporarily hidden when typing.
   hide_when_typing: true
-
 # Regex hints
 #
 # Terminal hints can be used to find text in the visible part of the terminal

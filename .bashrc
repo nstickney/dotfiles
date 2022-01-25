@@ -180,23 +180,27 @@ PROMPT_COMMAND=__prompt_command
 # COLORIZE EVERYTHING #########################################################
 
 # the tty/framebuffer console
-if [ "$TERM" = 'linux' ]; then
-	printf "\\e]P01A1A1A" # black
+if [ "$TERM" = 'linux' ]; then # Dark theme
+	# printf "\\e]P01A1A1A" # black
+	printf "\\e]P0E6E6E6" # black (light gray)
 	printf "\\e]P1C22436" # red     (red)
 	printf "\\e]P2A58440" # green   (yellow)
 	printf "\\e]P3E64D00" # brown   (orange)
 	printf "\\e]P40077E6" # blue    (blue)
 	printf "\\e]P5AB3B85" # magenta (purple)
 	printf "\\e]P635B181" # cyan    (green)
-	printf "\\e]P7E6E6E6" # light gray
-	printf "\\e]P8333333" # gray
+	# printf "\\e]P7E6E6E6" # light gray
+	printf "\\e]P71A1A1A" # light gray (black)
+	# printf "\\e]P8333333" # gray
+	printf "\\e]P8FFF8E7" # gray (white)
 	printf "\\e]P9DF5363" # bright red
 	printf "\\e]PAC6A86C" # bright green
 	printf "\\e]PBFF7733" # yellow
 	printf "\\e]PC338CFF" # bright blue
 	printf "\\e]PDCB67AA" # bright magenta
 	printf "\\e]PE62D0A6" # bright cyan
-	printf "\\e]PFFFF8E7" # white
+	# printf "\\e]PFFFF8E7" # white
+	printf "\\e]PF333333" # white (gray)
 	clear                 # fix artifacts
 fi
 

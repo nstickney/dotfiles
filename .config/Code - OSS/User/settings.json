@@ -37,4 +37,5 @@
     "editor.minimap.enabled": false,
     "editor.wrappingIndent": "indent",
     "files.autoSave": "onFocusChange",
+    "redhat.telemetry.enabled": false,
 }

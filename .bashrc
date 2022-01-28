@@ -180,27 +180,23 @@ PROMPT_COMMAND=__prompt_command
 # COLORIZE EVERYTHING #########################################################
 
 # the tty/framebuffer console
-if [ "$TERM" = 'linux' ]; then # Dark theme
+if [ "$TERM" = 'linux' ]; then
 	# printf "\\e]P01A1A1A" # black
-	printf "\\e]P0E6E6E6" # black (light gray)
-	printf "\\e]P1C22436" # red     (red)
-	printf "\\e]P2A58440" # green   (yellow)
-	printf "\\e]P3E64D00" # brown   (orange)
-	printf "\\e]P40077E6" # blue    (blue)
-	printf "\\e]P5AB3B85" # magenta (purple)
-	printf "\\e]P635B181" # cyan    (green)
-	# printf "\\e]P7E6E6E6" # light gray
-	printf "\\e]P71A1A1A" # light gray (black)
-	# printf "\\e]P8333333" # gray
-	printf "\\e]P8FFF8E7" # gray (white)
-	printf "\\e]P9DF5363" # bright red
-	printf "\\e]PAC6A86C" # bright green
-	printf "\\e]PBFF7733" # yellow
-	printf "\\e]PC338CFF" # bright blue
-	printf "\\e]PDCB67AA" # bright magenta
-	printf "\\e]PE62D0A6" # bright cyan
-	# printf "\\e]PFFFF8E7" # white
-	printf "\\e]PF333333" # white (gray)
+	printf "\\e]P1DF5363" # red     (red)
+	printf "\\e]P29E7E3D" # green   (yellow)
+	printf "\\e]P3EB4E00" # brown   (orange)
+	printf "\\e]P40081FA" # blue    (blue)
+	printf "\\e]P5C75CA3" # magenta (purple)
+	printf "\\e]P62D956D" # cyan    (green)
+	printf "\\e]P7C7C7C7" # light gray
+	printf "\\e]P8363636" # gray
+	printf "\\e]P9EA8B96" # bright red
+	printf "\\e]PAC2A161" # bright green
+	printf "\\e]PBFF8142" # yellow
+	printf "\\e]PC52ABFF" # bright blue
+	printf "\\e]PDD88DBF" # bright magenta
+	printf "\\e]PE37B897" # bright cyan
+	# printf "\\e]PE6E6E6"  # white
 	clear                 # fix artifacts
 fi
 

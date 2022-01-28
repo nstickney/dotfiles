@@ -53,7 +53,7 @@ set autoindent
 if has('autocmd')
 	filetype plugin indent on
 endif
-highlight SpecialKey ctermfg=8|  " indentation guides are dark gray
+highlight SpecialKey ctermfg=0|  " indentation guides are black
 set list listchars=tab:\│\  " indentation guide (tabs)
 set tabstop=4
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " indentation guide (spaces)
@@ -165,15 +165,15 @@ set conceallevel=2 concealcursor=nc
 "" Guides
 set colorcolumn=80,90,100,120
 highlight clear ColorColumn
-highlight ColorColumn ctermbg=15|  " guide columns are dark gray
+highlight ColorColumn ctermbg=0|  " guide columns are black
 "" Line Numbers
 highlight clear LineNr
-highlight LineNr ctermfg=15|  " line numbers should be dark gray
+highlight LineNr ctermfg=8|  " line numbers should be dark gray
 set cursorline  " highlight the current line
 highlight clear CursorLine
 highlight clear CursorLineNr
 highlight CursorLine cterm=None|  " don't highlight the line itself ...
-highlight CursorLineNr ctermfg=0|  " but increase brightness on the line number
+highlight CursorLineNr ctermfg=7|  " highlight the line number
 "" Status and Tab lines (lightline)
 set laststatus=2  " always show the status line
 set showtabline=2  " always show the tab line

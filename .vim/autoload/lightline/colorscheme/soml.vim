@@ -1,26 +1,19 @@
-" =============================================================================
-" Filename: autoload/lightline/colorscheme/soml.vim
-" Author: stick
-" License: Mozilla Public License, v. 2.0
-" Last Change: 2019/09/08 15:43
-" =============================================================================
-
 let s:black     = [ '#1a1a1a', 0 ]
-let s:red       = [ '#c22436', 1 ]
-let s:green     = [ '#a58440', 2 ]
-let s:brown     = [ '#e64d00', 3 ]
-let s:blue      = [ '#0077e6', 4 ]
-let s:magenta   = [ '#ab3b85', 5 ]
-let s:cyan      = [ '#35b181', 6 ]
-let s:lt_gray   = [ '#e6e6e6', 7 ]
-let s:gray      = [ '#333333', 8 ]
-let s:b_red     = [ '#df5363', 9 ]
-let s:b_green   = [ '#c6a86c', 10 ]
-let s:yellow    = [ '#ff7733', 11 ]
-let s:b_blue    = [ '#339cff', 12 ]
-let s:b_magenta = [ '#cb67aa', 13 ]
-let s:b_cyan    = [ '#6sd0a6', 14 ]
-let s:white     = [ '#fff8e7', 15 ]
+let s:red       = [ '#df5363', 1 ]
+let s:green     = [ '#9e7e3d', 2 ]
+let s:brown     = [ '#eb4e00', 3 ]
+let s:blue      = [ '#0081fa', 4 ]
+let s:magenta   = [ '#c75ca3', 5 ]
+let s:cyan      = [ '#2d956d', 6 ]
+let s:lt_gray   = [ '#c7c7c7', 7 ]
+let s:gray      = [ '#363636', 8 ]
+let s:b_red     = [ '#ea8b96', 9 ]
+let s:b_green   = [ '#c2a161', 10 ]
+let s:yellow    = [ '#ff8142', 11 ]
+let s:b_blue    = [ '#52abff', 12 ]
+let s:b_magenta = [ '#d88dbf', 13 ]
+let s:b_cyan    = [ '#37b897', 14 ]
+let s:white     = [ '#e6e6e6', 15 ]
 
 let s:p = {'normal': {},
 			\ 'inactive': {},

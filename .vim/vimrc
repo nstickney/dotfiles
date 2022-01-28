@@ -1,3 +1,8 @@
+" Vim is broken in Alacritty
+if $TERM ==# 'alacritty'
+	set ttymouse=sgr
+endif
+
 " Windows Terminal is broken.
 " https://superuser.com/a/1525060
 set t_u7=

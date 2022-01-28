@@ -2,6 +2,8 @@
 
 # Bash strict mode (https://github.com/alphabetum/bash-boilerplate)
 set -eu
+
+# If we get disconnected, flush the rules so we aren't locked out!
 trap flush_all_rules HUP INT QUIT TERM
 
 usage() {
@@ -48,39 +50,45 @@ __ask() {
 }
 
 add_bigbluebutton_rules() {
-	sudo iptables -A OUTPUT -p udp -m udp --dport 3478 -j ACCEPT
+	for i in tcp udp; do for j in 3443 3478; do
+		sudo iptables -A OUTPUT -p "$i" -m "$i" --dport "$j" -j ACCEPT
+	done; done
 }
 
 add_bittorrent_rules() {
-	for i in 6969 6881:6889 8999 51413; do
-		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
-		sudo iptables -A OUTPUT -p udp -m udp --dport "$i" -j ACCEPT
-	done
+	for i in tcp udp; do for j in 6969 6881:6889 8999 51413; do
+		sudo iptables -A OUTPUT -p "$i" -m "$i" --dport "$j" -j ACCEPT
+	done; done
 }
 
 add_blizzard_rules() {
-	for i in 1119 3724 4000 6012 6112:6114; do
-		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
-		sudo iptables -A OUTPUT -p udp -m udp --dport "$i" -j ACCEPT
+	for i in tcp udp; do for j in 1119 3724 4000 6012 6112:6114; do
+		sudo iptables -A OUTPUT -p "$i" -m "$i" --dport "$j" -j ACCEPT
+	done; done
+}
+
+add_cast_rules() {
+	_NETS="$(ip a | grep 'inet ' | grep -v 'inet 127\.' |
+		sed 's/  //g; s/inet //g; s/ .*//g')"
+	for _NET in $_NETS; do
+		_ADDR="${_NET%%/*}"
+		for i in '8008:8009' 8443; do
+			sudo iptables -A OUTPUT -d "$_ADDR" \
+				-p tcp -m tcp --dport "$i" -j ACCEPT
+		done
 	done
 }
 
 add_minecraft_rules() {
 	for i in 25565 27094; do
-		sudo iptables -A OUTPUT -p tcp -m tcp --dport $i -j ACCEPT
+		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
 	done
-	sudo iptables -A OUTPUT -p tcp -m tcp --dport 30000:32000 -j ACCEPT
+	# sudo iptables -A OUTPUT -p tcp -m tcp --dport 30000:32000 -j ACCEPT
 }
 
 add_printing_rules() {
 	for i in 161 515 631; do
 		sudo iptables -A OUTPUT -p tcp -m tcp --dport "$i" -j ACCEPT
-	done
-}
-
-add_openvpn_rules() {
-	for i in tcp udp; do
-		sudo iptables -A OUTPUT -p $i -m $i --dport 1194 -j ACCEPT
 	done
 }
 
@@ -129,6 +137,7 @@ add_workstation_rules() {
 	# https://support.google.com/a/answer/1279090
 	__ask 'Google Duo?' \
 		'sudo iptables -A OUTPUT -d 74.125.250.0/24,142.250.82.0/24 -p udp -m udp --dport 19302:19309 -j ACCEPT'
+	__ask 'Roku or Chromecast?' add_cast_rules
 	__ask 'Streaming on Twitch.tv?' add_twitch_rules
 	__ask 'Accessing MongoDB?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 27017 -j ACCEPT'
@@ -187,7 +196,8 @@ save_permanent_iptables() {
 		sudo service iptables save
 
 	# On a Debian machine:
-	elif [ -x "$(command -v dpkg)" ] && dpkg -s iptables-persistent >/dev/null 2>&1; then
+	elif [ -x "$(command -v dpkg)" ] &&
+		dpkg -s iptables-persistent >/dev/null 2>&1; then
 		sudo dpkg-reconfigure -y iptables-persistent
 
 	# Otherwise, fail:
@@ -303,15 +313,22 @@ main() {
 	sudo iptables -A INPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT
 	sudo iptables -A OUTPUT -d 224.0.0.251 -p udp -m udp --dport 5353 -j ACCEPT
 
+	# SSDP/UPnP
+	sudo iptables -A INPUT -d 239.255.255.250 \
+		-p udp -m udp --dport 1900 -j ACCEPT
+	sudo iptables -A OUTPUT -d 239.255.255.250 \
+		-p udp -m udp --dport 1900 -j ACCEPT
+
 	# Uncomment the lines below as needed to make services available
-	# sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH (DANGER)
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT # SSH (!!!)
 	# sudo iptables -A INPUT -p udp -m udp --dport 53 -j ACCEPT # DNS
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT # HTTP
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT # HTTPS
 	# sudo iptables -A INPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
+	# sudo iptables -A INPUT -p tcp -m tcp --dport 8100 -j ACCEPT # BlueMap
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 8123 -j ACCEPT # Dynmap
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 25565 -j ACCEPT # Minecraft
-	# sudo iptables -A INPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH (DANGER)
+	# sudo iptables -A INPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH (!!!)
 	# sudo iptables -A INPUT -p tcp -m tcp --dport 8999 -j ACCEPT # BitTorrent
 	# sudo iptables -A INPUT -p udp -m udp --dport 8999 -j ACCEPT # BitTorrent
 
@@ -322,14 +339,15 @@ main() {
 
 	# Allow required services outbound (UDP)
 	sudo iptables -A OUTPUT -p udp -m udp --dport 53 -j ACCEPT  # DNS
-	sudo iptables -A OUTPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
 	sudo iptables -A OUTPUT -p udp -m udp --dport 123 -j ACCEPT # NTP
+	sudo iptables -A OUTPUT -p udp -m udp --dport 443 -j ACCEPT # HTTP/2
 
 	# Allow BitTorrent?
 	__ask 'Allow BitTorrent?' add_bittorrent_rules
 
 	# Allow OpenVPN outbound?
-	__ask 'Does this computer use OpenVPN?' add_openvpn_rules
+	__ask 'Does this computer use OpenVPN?' \
+		'sudo iptables -A OUTPUT -p udp -m udp --dport 1194 -j ACCEPT'
 
 	# Allow WireGuard outbound?
 	__ask 'Does this computer use WireGuard?' \
@@ -338,6 +356,20 @@ main() {
 	# Workstation?
 	__ask 'Is this machine a workstation?' \
 		add_workstation_rules add_outbound_ssh
+
+	# Private rules
+	[ -x "$HOME"/safe/iptables-secrets.sh ] && "$HOME"/safe/iptables-secrets.sh
+
+	# Logging
+	sudo iptables -A INPUT -m limit --limit 3/min -j LOG \
+		--log-prefix "[iptables:in] " --log-level 4
+	sudo iptables -A OUTPUT -m limit --limit 3/min -j LOG \
+		--log-prefix "[iptables:out] " --log-level 4
+
+	# "Cleverness" https://unix.stackexchange.com/a/104361
+	sleep 1
+	__ask 'Still connected?' "printf 'Rules confirmed.\n'" \
+		flush_all_rules 100 flush_all_rules
 
 	# Set default policy for all chains to DROP
 	sudo iptables -P INPUT DROP
@@ -351,11 +383,6 @@ main() {
 		sudo ip6tables -P FORWARD DROP
 		sudo ip6tables -P OUTPUT DROP
 	fi
-
-	# "Cleverness" https://unix.stackexchange.com/a/104361
-	sleep 1
-	__ask 'Still connected?' "printf 'Rules confirmed.\n'" \
-		flush_all_rules 100 flush_all_rules
 
 	# Show the result
 	printf '\n\e[1;32m%s\e[0m\n\n' "IPTables rules implemented:"

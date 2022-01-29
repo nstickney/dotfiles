@@ -94,6 +94,9 @@ if DetectVirtualBox; then
 	CreateLink /etc/systemd/system/multi-user.target.wants/vboxservice.service /usr/lib/systemd/system/vboxservice.service
 fi
 
+# Create hostname file
+echo "$HOSTNAME" >"$(CreateFile /etc/hostname)"
+
 # Maintain just one virtual console by default; keep messages
 # https://wiki.archlinux.org/index.php/Getty#Have_boot_messages_stay_on_tty1
 cat >"$(CreateFile /etc/systemd/system/getty@tty1.service.d/noclear.conf)" <<-EOF

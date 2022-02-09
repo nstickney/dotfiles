@@ -68,12 +68,15 @@ add_blizzard_rules() {
 }
 
 add_cast_rules() {
+	sudo iptables -A OUTPUT -d 224.0.0.0/8 -j ACCEPT
 	_NETS="$(ip a | grep 'inet ' | grep -v 'inet 127\.' |
 		sed 's/  //g; s/inet //g; s/ .*//g')"
 	for _NET in $_NETS; do
-		_ADDR="${_NET%%/*}"
-		for i in '8008:8009' 8443; do
-			sudo iptables -A OUTPUT -d "$_ADDR" \
+		sudo iptables -A INPUT -s "$_NET" -d 224.0.0.0/8 -j ACCEPT
+		sudo iptables -A INPUT -d "$_NET" -p udp -m udp --sport 1900 -j ACCEPT
+		sudo iptables -A OUTPUT -d "$_NET" -p udp -m udp --dport 1900 -j ACCEPT
+		for i in '8008:8009' 8060 8443; do
+			sudo iptables -A OUTPUT -d "$_NET" \
 				-p tcp -m tcp --dport "$i" -j ACCEPT
 		done
 	done

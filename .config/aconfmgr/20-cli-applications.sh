@@ -88,17 +88,18 @@ AddPackage valgrind  # Tool to help find memory-management problems in programs
 AddPackage vegeta    # HTTP load testing tool
 
 # Debugging, reverse engineering, and binary exploitation
-AddPackage checksec          # Tool designed to test which standard Linux OS and PaX security features are being used
-AddPackage gdb               # The GNU Debugger
-AddPackage --foreign gef-git # Multi-Architecture GDB Enhanced Features for Exploiters & Reverse-Engineers
-AddPackage python-keystone   # OPTIONAL DEPENDENCY (gef-git)
-AddPackage lldb              # Next generation, high-performance debugger
-AddPackage peda              # Python Exploit Development Assistance for GDB
-AddPackage pwndbg            # Makes debugging with GDB suck less
-AddPackage python-ropper     # Show information about binary files and find gadgets to build rop chains for different architectures
-AddPackage radare2           # Open-source tools to disasm, debug, analyze and manipulate binary files
-AddPackage ropgadget         # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
-AddPackage strace            # A diagnostic, debugging and instructional userspace tracer
+AddPackage checksec           # Tool designed to test which standard Linux OS and PaX security features are being used
+AddPackage gdb                # The GNU Debugger
+AddPackage --foreign gef-git  # Multi-Architecture GDB Enhanced Features for Exploiters & Reverse-Engineers
+AddPackage --foreign hexcurse # Versatile ncurses-based hex editor.
+AddPackage python-keystone    # OPTIONAL DEPENDENCY (gef-git)
+AddPackage lldb               # Next generation, high-performance debugger
+AddPackage peda               # Python Exploit Development Assistance for GDB
+AddPackage pwndbg             # Makes debugging with GDB suck less
+AddPackage python-ropper      # Show information about binary files and find gadgets to build rop chains for different architectures
+AddPackage radare2            # Open-source tools to disasm, debug, analyze and manipulate binary files
+AddPackage ropgadget          # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
+AddPackage strace             # A diagnostic, debugging and instructional userspace tracer
 
 # Forensics
 AddPackage binwalk                           # A tool for searching a given binary image for embedded files
@@ -109,6 +110,7 @@ AddPackage --foreign python-oletools         # Python tools to analyze security 
 AddPackage --foreign scalpel-git             # Recover files based on their headers, footers and internal data structures. This program is based on Foremost.
 AddPackage sleuthkit                         # File system and media management forensic analysis tools
 AddPackage --foreign steghide                # Embeds a message in a file by replacing some of the least significant bits
+AddPackage volatility3                       # Advanced memory forensics framework
 AddPackage --foreign zsteg                   # detect stegano-hidden data in PNG & BMP
 
 # Images

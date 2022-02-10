@@ -85,6 +85,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage arduino-avr-core # OPTIONAL DEPENDENCY (arduino)
 
 	# Programming: Reverse Engineering
+	AddPackage bless # High-quality, full-featured hex editor
 	AddPackage ghidra # Software reverse engineering framework
 
 	# Programming: VSCode

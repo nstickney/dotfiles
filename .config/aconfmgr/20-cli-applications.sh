@@ -1,3 +1,4 @@
+AddPackage --foreign aha   # Ansi HTML Adapter: convert ANSI escape sequences to HTML.
 AddPackage asciinema       # Record and share terminal sessions
 AddPackage bash-completion # Programmable completion for the bash shell
 AddPackage bat             # Cat clone with syntax highlighting and git integration
@@ -88,18 +89,18 @@ AddPackage valgrind  # Tool to help find memory-management problems in programs
 AddPackage vegeta    # HTTP load testing tool
 
 # Debugging, reverse engineering, and binary exploitation
-AddPackage checksec           # Tool designed to test which standard Linux OS and PaX security features are being used
-AddPackage gdb                # The GNU Debugger
-AddPackage --foreign gef-git  # Multi-Architecture GDB Enhanced Features for Exploiters & Reverse-Engineers
-AddPackage --foreign hexcurse # Versatile ncurses-based hex editor.
-AddPackage python-keystone    # OPTIONAL DEPENDENCY (gef-git)
-AddPackage lldb               # Next generation, high-performance debugger
-AddPackage peda               # Python Exploit Development Assistance for GDB
-AddPackage pwndbg             # Makes debugging with GDB suck less
-AddPackage python-ropper      # Show information about binary files and find gadgets to build rop chains for different architectures
-AddPackage radare2            # Open-source tools to disasm, debug, analyze and manipulate binary files
-AddPackage ropgadget          # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
-AddPackage strace             # A diagnostic, debugging and instructional userspace tracer
+AddPackage checksec               # Tool designed to test which standard Linux OS and PaX security features are being used
+AddPackage gdb                    # The GNU Debugger
+AddPackage --foreign gef-git      # Multi-Architecture GDB Enhanced Features for Exploiters & Reverse-Engineers
+AddPackage --foreign hexcurse-git # Versatile ncurses-based hex editor.
+AddPackage python-keystone        # OPTIONAL DEPENDENCY (gef-git)
+AddPackage lldb                   # Next generation, high-performance debugger
+AddPackage peda                   # Python Exploit Development Assistance for GDB
+AddPackage pwndbg                 # Makes debugging with GDB suck less
+AddPackage python-ropper          # Show information about binary files and find gadgets to build rop chains for different architectures
+AddPackage radare2                # Open-source tools to disasm, debug, analyze and manipulate binary files
+AddPackage ropgadget              # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
+AddPackage strace                 # A diagnostic, debugging and instructional userspace tracer
 
 # Forensics
 AddPackage binwalk                           # A tool for searching a given binary image for embedded files
@@ -109,7 +110,6 @@ AddPackage --foreign python-msoffcrypto-tool # A Python tool and library for dec
 AddPackage --foreign python-oletools         # Python tools to analyze security characteristics of MS Office and OLE files
 AddPackage --foreign scalpel-git             # Recover files based on their headers, footers and internal data structures. This program is based on Foremost.
 AddPackage sleuthkit                         # File system and media management forensic analysis tools
-AddPackage --foreign steghide                # Embeds a message in a file by replacing some of the least significant bits
 AddPackage volatility3                       # Advanced memory forensics framework
 AddPackage --foreign zsteg                   # detect stegano-hidden data in PNG & BMP
 
@@ -141,6 +141,7 @@ AddPackage netsniff-ng        # High performance Linux network sniffer for packe
 AddPackage ngrep              # A grep-like utility that allows you to search for network packets on an interface.
 AddPackage nmap               # Utility for network discovery and security auditing
 AddPackage openbsd-netcat     # TCP/IP swiss army knife. OpenBSD variant.
+AddPackage scapy              # Powerful interactive packet manipulation program written in Python (tools)
 AddPackage sniffglue          # Secure multithreaded packet sniffer
 AddPackage sqlmap             # Automatic SQL injection and database takeover tool
 AddPackage tcpdump            # Powerful command-line packet analyzer
@@ -197,8 +198,10 @@ AddPackage ghdl-gcc # VHDL simulator (GCC backend)
 
 # Security
 if ! DetectWSL; then
-	AddPackage lynis    # Security and system auditing tool to harden Unix/Linux systems
-	AddPackage rkhunter # Checks machines for the presence of rootkits and other unwanted tools.
+	AddPackage john                # John the Ripper password cracker
+	AddPackage lynis               # Security and system auditing tool to harden Unix/Linux systems
+	AddPackage rkhunter            # Checks machines for the presence of rootkits and other unwanted tools.
+	AddPackage --foreign wordlists # Download a great set of wordlists. In /usr/share/wordlists
 fi
 
 # System monitoring

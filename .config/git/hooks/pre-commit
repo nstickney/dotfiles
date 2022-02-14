@@ -15,7 +15,7 @@ fi
 if [ -x "$(command -v jpegoptim)" ]; then
 	for file in $(printf '%s\n' "$_files" | grep -i -e ".\.jpg\$" -e ".\.jpeg\$"); do
 		printf '** Processing: %s\n' "$file"
-		jpegoptim "$file" 2>&1 | sed 's/^/	JPEGOPTIM: /'
+		jpegoptim -f "$file" 2>&1 | sed 's/^/	JPEGOPTIM: /'
 		git add "$file"
 	done
 fi

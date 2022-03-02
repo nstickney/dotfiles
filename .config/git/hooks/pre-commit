@@ -1,6 +1,6 @@
 #!/bin/sh
 
-_files=$(git diff --cached --name-only)
+_files=$(git status | grep -e modified -e 'new file' | cut -f2 -d':')
 
 # Optimize Images #############################################################
 
@@ -8,7 +8,7 @@ if [ -x "$(command -v gifsicle)" ]; then
 	for file in $(printf '%s\n' "$_files" | grep -i ".\.gif\$"); do
 		gifsicle --batch --optimize --verbose "$file" 2>&1 |
 			sed 's/^/	GIFSICLE: /'
-		git add "$file"
+		git add "$file" -f
 	done
 fi
 
@@ -16,7 +16,7 @@ if [ -x "$(command -v jpegoptim)" ]; then
 	for file in $(printf '%s\n' "$_files" | grep -i -e ".\.jpg\$" -e ".\.jpeg\$"); do
 		printf '** Processing: %s\n' "$file"
 		jpegoptim -f "$file" 2>&1 | sed 's/^/	JPEGOPTIM: /'
-		git add "$file"
+		git add "$file" -f
 	done
 fi
 
@@ -24,6 +24,6 @@ if [ -x "$(command -v optipng)" ]; then
 	for file in $(printf '%s\n' "$_files" | grep -i ".\.png\$"); do
 		optipng "$file" 2>&1 |
 			sed '/^$/d' | sed -e 1b -e '$!d' | sed 's/^/	OPTIPNG: /'
-		git add "$file"
+		git add "$file" -f
 	done
 fi

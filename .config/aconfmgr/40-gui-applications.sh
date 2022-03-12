@@ -64,6 +64,9 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage gimp        # GNU Image Manipulation Program
 	AddPackage inkscape    # Professional vector graphics editor
 
+	# Java
+	AddPackage jdk-openjdk # Get the latest java and use it.
+
 	# Network
 	AddPackage network-manager-applet # Applet for managing network connections
 	AddPackage nm-connection-editor   # NetworkManager GUI connection editor and widgets
@@ -73,8 +76,6 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage libreoffice-still # LibreOffice maintenance branch
 	AddPackage coin-or-mp        # OPTIONAL DEPENDENCY (libreoffice-still)
 	AddPackage gst-plugins-base  # OPTIONAL DEPENDENCY (libreoffice-still)
-	AddPackage jdk11-openjdk     # OPTIONAL DEPENDENCY (libreoffice-still)
-	AddPackage jre11-openjdk     # OPTIONAL DEPENDENCY (libreoffice-still)
 	AddPackage libmythes         # OPTIONAL DEPENDENCY (libreoffice-still)
 	AddPackage libpaper          # OPTIONAL DEPENDENCY (libreoffice-still)
 	AddPackage libwpg            # OPTIONAL DEPENDENCY (libreoffice-still)
@@ -92,8 +93,8 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage bash-completion # OPTIONAL DEPENDENCY (code)
 
 	# Remote
-	AddPackage remmina # remote desktop client written in GTK+
-	AddPackage freerdp # remmina opt dep
+	AddPackage remmina      # remote desktop client written in GTK+
+	AddPackage freerdp      # remmina opt dep
 	AddPackage libvncserver # remmina opt dep
 	# AddPackage vinagre # A VNC Client for the GNOME desktop
 

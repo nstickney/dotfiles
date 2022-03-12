@@ -24,6 +24,7 @@ AddPackage man-pages       # Linux man pages
 AddPackage mlocate         # Merging locate/updatedb implementation
 AddPackage ncdu            # Disk usage analyzer with an ncurses interface
 AddPackage parallel        # A shell tool for executing jobs in parallel
+AddPackage qrencode        # C library for encoding data in a QR Code symbol.
 AddPackage ripgrep         # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rmlint          # Tool to remove duplicates and other lint, being much faster than fdupes
 AddPackage rsync           # A fast and versatile file copying tool for remote and local files
@@ -32,8 +33,9 @@ AddPackage tree            # A directory listing program displaying a depth inde
 AddPackage watchexec       # Executes commands in response to file modifications
 
 # $EDITOR
-AddPackage vim          # Vi Improved, a highly configurable, improved version of the vi text editor
-AddPackage vim-spell-en # Language files for Vim spell checking
+AddPackage vim              # Vi Improved, a highly configurable, improved version of the vi text editor
+AddPackage vim-spell-en     # Language files for Vim spell checking
+AddPackage vim-editorconfig # EditorConfig plugin for Vim
 
 ## ALE: https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 AddPackage ansible-lint           # Checks playbooks for practices and behaviour that could potentially be improved.
@@ -95,6 +97,7 @@ AddPackage --foreign gef-git      # Multi-Architecture GDB Enhanced Features for
 AddPackage --foreign hexcurse-git # Versatile ncurses-based hex editor.
 AddPackage python-keystone        # OPTIONAL DEPENDENCY (gef-git)
 AddPackage lldb                   # Next generation, high-performance debugger
+AddPackage metasploit             # Advanced open-source platform for developing, testing, and using exploit code
 AddPackage peda                   # Python Exploit Development Assistance for GDB
 AddPackage pwndbg                 # Makes debugging with GDB suck less
 AddPackage python-ropper          # Show information about binary files and find gadgets to build rop chains for different architectures
@@ -133,6 +136,8 @@ AddPackage aria2              # Download utility that supports HTTP(S), FTP, Bit
 AddPackage bmon               # Portable bandwidth monitor and rate estimator
 AddPackage dog                # Command-line DNS client like dig
 AddPackage --foreign gmni-git # A Gemini client
+AddPackage inetutils          # A collection of common network programs
+AddPackage iperf3             # TCP, UDP, and SCTP network bandwidth measurement tool
 AddPackage ipguard            # ipguard - arp<->ip relation checking tool
 AddPackage masscan            # TCP port scanner, spews SYN packets asynchronously, scanning entire Internet in under 5 minutes
 AddPackage mtr                # Combines the functionality of traceroute and ping into one tool (CLI version)
@@ -141,16 +146,19 @@ AddPackage netsniff-ng        # High performance Linux network sniffer for packe
 AddPackage ngrep              # A grep-like utility that allows you to search for network packets on an interface.
 AddPackage nmap               # Utility for network discovery and security auditing
 AddPackage openbsd-netcat     # TCP/IP swiss army knife. OpenBSD variant.
-AddPackage scapy              # Powerful interactive packet manipulation program written in Python (tools)
-AddPackage sniffglue          # Secure multithreaded packet sniffer
-AddPackage sqlmap             # Automatic SQL injection and database takeover tool
-AddPackage tcpdump            # Powerful command-line packet analyzer
-AddPackage traceroute         # Tracks the route taken by packets over an IP network
-AddPackage vulscan            # A module which enhances nmap to a vulnerability scanner
-AddPackage wireshark-cli      # Network traffic and protocol analyzer/sniffer - CLI tools and data files
-AddPackage wget               # Network utility to retrieve files from the Web
-AddPackage whois              # Intelligent WHOIS client
-AddPackage youtube-dl         # A command-line program to download videos from YouTube.com and a few more sites
+AddPackage p0f                # Purely passive TCP/IP traffic fingerprinting tool
+AddPackage proxychains-ng     # A hook preloader that allows to redirect TCP traffic of existing dynamically linked programs through one or more SOCKS or HTTP proxies
+CopyFile /etc/proxychains.conf
+AddPackage scapy         # Powerful interactive packet manipulation program written in Python (tools)
+AddPackage sniffglue     # Secure multithreaded packet sniffer
+AddPackage sqlmap        # Automatic SQL injection and database takeover tool
+AddPackage tcpdump       # Powerful command-line packet analyzer
+AddPackage traceroute    # Tracks the route taken by packets over an IP network
+AddPackage vulscan       # A module which enhances nmap to a vulnerability scanner
+AddPackage wireshark-cli # Network traffic and protocol analyzer/sniffer - CLI tools and data files
+AddPackage wget          # Network utility to retrieve files from the Web
+AddPackage whois         # Intelligent WHOIS client
+AddPackage youtube-dl    # A command-line program to download videos from YouTube.com and a few more sites
 
 # Programming
 AddPackage cloc  # Count lines of code

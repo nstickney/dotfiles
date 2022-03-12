@@ -2,7 +2,6 @@ if ! DetectVM; then
 	AddPackage libvirt            # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
 	AddPackage dmidecode          # OPTIONAL DEPENDENCY (libvirt)
 	AddPackage dnsmasq            # OPTIONAL DEPENDENCY (libvirt)
-	AddPackage --foreign ebtables # OPTIONAL DEPENDENCY (libvirt)
 	AddPackage gettext            # OPTIONAL DEPENDENCY (libvirt)
 	AddPackage lvm2               # OPTIONAL DEPENDENCY (libvirt)
 	AddPackage openbsd-netcat     # OPTIONAL DEPENDENCY (libvirt)

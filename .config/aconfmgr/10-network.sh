@@ -1,6 +1,7 @@
 if ! DetectWSL; then # Networking already handled (?) in WSL (?)
 
 	# Firewall
+	AddPackage iptables-nft # Linux kernel packet control tool (using nft interface)
 	CreateLink /etc/systemd/system/multi-user.target.wants/iptables.service /usr/lib/systemd/system/iptables.service
 
 	# NetworkManager
@@ -15,6 +16,11 @@ if ! DetectWSL; then # Networking already handled (?) in WSL (?)
 	AddPackage iproute2        # IP Routing Utilities
 	AddPackage zerotier-one    # Creates virtual Ethernet networks of almost unlimited size.
 	AddPackage wireguard-tools # next generation secure network tunnel - tools for configuration
+
+	# Wireless only when not in VMs
+	if ! DetectVM; then
+		AddPackage iw # nl80211 based CLI configuration utility for wireless devices
+	fi
 fi
 
 # Hosts file

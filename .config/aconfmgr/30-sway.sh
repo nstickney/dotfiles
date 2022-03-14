@@ -19,4 +19,7 @@ if ! DetectWSL; then          # No GUI in WSL
 	AddPackage xdg-desktop-portal-wlr          # xdg-desktop-portal backend for wlroots
 
 	CopyFile /etc/systemd/user/sway-gsd-rfkill.service 755
+
+	sway_bin="$(GetPackageOriginalFile sway /usr/share/wayland-sessions/sway.desktop)"
+	sed -i 's|Exec=.*|Exec=/bin/sh -l -c sway|' "$sway_bin"
 fi

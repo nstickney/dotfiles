@@ -22,9 +22,9 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage gnome-characters # A character map application
 
 	# Chat
-	AddPackage --foreign discord_arch_electron    # Discord (popular voice + video app) using the system provided electron for increased security and performance
-	AddPackage signal-desktop                     # Signal Private Messenger for Linux
-	AddPackage --foreign skypeforlinux-stable-bin # Skype for Linux - Stable/Release Version
+	AddPackage --foreign discord_arch_electron_wayland # Discord (popular voice + video app) using system electron (v13) and set up for wayland
+	AddPackage signal-desktop                          # Signal Private Messenger for Linux
+	AddPackage --foreign skypeforlinux-stable-bin      # Skype for Linux - Stable/Release Version
 
 	# Credential management
 	AddPackage bitwarden # A secure and free password manager for all of your devices.

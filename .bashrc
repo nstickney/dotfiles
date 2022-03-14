@@ -459,9 +459,6 @@ alias mkdir='mkdir -pv'
 [ -z "$(command -v pinc)" ] && alias pinc='ping -c'
 
 # pacman
-[ -x "$(command -v powerpill)" ] &&
-	PACMAN="$(command -v powerpill)" &&
-	export PACMAN
 if [ -x "$(command -v reflector)" ] && [ -z "$(command -v mirrors)" ]; then
 	mirrors() {
 		local OPTS='--age 12 --country US --fastest 50 --protocol https --sort rate'

@@ -33,6 +33,8 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage --foreign wlsunset-git # Day/night gamma adjustments for Wayland
 	AddPackage xdg-utils              # Command line tools that assist applications with a variety of desktop integration tasks
 	AddPackage xorg-xauth             # X.Org authorization settings program (required for X11 forwarding in ssh)
+	AddPackage xorg-xeyes             # Follow the mouse/SHAPE extension X demo
 
+	CopyFile /etc/profile.d/wayland-env.sh
 	CreateLink /etc/systemd/user/default.target.wants/xdg-user-dirs-update.service /usr/lib/systemd/user/xdg-user-dirs-update.service
 fi

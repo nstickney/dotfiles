@@ -33,9 +33,12 @@ AddPackage tree            # A directory listing program displaying a depth inde
 AddPackage watchexec       # Executes commands in response to file modifications
 
 # $EDITOR
-AddPackage vim              # Vi Improved, a highly configurable, improved version of the vi text editor
-AddPackage vim-spell-en     # Language files for Vim spell checking
-AddPackage vim-editorconfig # EditorConfig plugin for Vim
+AddPackage vim                        # Vi Improved, a highly configurable, improved version of the vi text editor
+AddPackage vim-ale                    # Asynchronous Lint Engine with Language Server Protocol (LSP) support
+AddPackage vim-ansible                # A vim plugin for syntax highlighting Ansible's common filetypes
+AddPackage --foreign vim-pkgbuild-git # Vim plugin to edit PKGBUILD files
+AddPackage vim-spell-en               # Language files for Vim spell checking
+AddPackage vim-editorconfig           # EditorConfig plugin for Vim
 
 ## ALE: https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 AddPackage ansible-lint           # Checks playbooks for practices and behaviour that could potentially be improved.

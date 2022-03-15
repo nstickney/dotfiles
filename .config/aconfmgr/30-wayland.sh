@@ -24,16 +24,17 @@ if ! DetectWSL; then # No GUI in WSL
 		AddPackage nvidia-utils
 	fi
 
-	AddPackage gdm                    # Display manager and login screen
-	AddPackage glfw-wayland           # A free, open source, portable framework for graphical application development (wayland)
-	AddPackage grim                   # Screenshot utility that works under Wayland
-	AddPackage qt5-wayland            # Provides APIs for Wayland
-	AddPackage slurp                  # Select a region in a Wayland compositor
-	AddPackage --foreign wev-git      # Print wayland events, like xev(1)
-	AddPackage --foreign wlsunset-git # Day/night gamma adjustments for Wayland
-	AddPackage xdg-utils              # Command line tools that assist applications with a variety of desktop integration tasks
-	AddPackage xorg-xauth             # X.Org authorization settings program (required for X11 forwarding in ssh)
-	AddPackage xorg-xeyes             # Follow the mouse/SHAPE extension X demo
+	AddPackage gdm                     # Display manager and login screen
+	AddPackage glfw-wayland            # A free, open source, portable framework for graphical application development (wayland)
+	AddPackage grim                    # Screenshot utility that works under Wayland
+	AddPackage qt5-wayland             # Provides APIs for Wayland
+	AddPackage slurp                   # Select a region in a Wayland compositor
+	AddPackage --foreign wev-git       # Print wayland events, like xev(1)
+	AddPackage --foreign wlsunset-git  # Day/night gamma adjustments for Wayland
+	AddPackage --foreign wshowkeys-git # Displays keys being pressed on a Wayland session
+	AddPackage xdg-utils               # Command line tools that assist applications with a variety of desktop integration tasks
+	AddPackage xorg-xauth              # X.Org authorization settings program (required for X11 forwarding in ssh)
+	AddPackage xorg-xeyes              # Follow the mouse/SHAPE extension X demo
 
 	CopyFile /etc/profile.d/wayland-env.sh
 	CreateLink /etc/systemd/user/default.target.wants/xdg-user-dirs-update.service /usr/lib/systemd/user/xdg-user-dirs-update.service

@@ -1,7 +1,6 @@
 ---
 window:
   dynamic_padding: true
-  decorations: none
   opacity: 0.93
 font:
   normal:

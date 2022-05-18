@@ -1,8 +1,7 @@
 if ! DetectWSL; then # No GUI in WSL
 
-	AddPackage rhythmbox  # Music playback and management application
-	AddPackage solaar     # Linux device manager for a wide range of Logitech devices
-	AddPackage stellarium # A stellarium with great graphics and a nice database of sky-objects
+	AddPackage rhythmbox # Music playback and management application
+	AddPackage solaar    # Linux device manager for a wide range of Logitech devices
 
 	# 3D Modeling
 	AddPackage leocad   # A CAD program for creating virtual LEGO models
@@ -53,7 +52,6 @@ if ! DetectWSL; then # No GUI in WSL
 	CreateLink /opt/minecraft-launcher/swiftshader/libGLESv2.so /lib64/libGLESv2.so
 	AddPackage --foreign protontricks # A simple wrapper that does winetricks things for Proton enabled games.
 	AddPackage steam                  # Valve's digital software delivery system
-	AddPackage --foreign steam-fonts  # Fonts to fix scrambled or missing text in steam menus
 	AddPackage steam-native-runtime   # Native replacement for the Steam runtime using system libraries
 	AddPackage stone-soup             # Open-source, single-player, role-playing roguelike game of exploration and treasure-hunting
 	AddPackage --foreign tome4        # An open-source, single-player, role-playing roguelike game set in the world of Eyal.

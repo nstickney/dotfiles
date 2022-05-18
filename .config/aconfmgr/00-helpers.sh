@@ -49,7 +49,7 @@ function DetectIntelGPU() {
 
 # Fail if no Nvidia GPU is found
 function DetectNvidia() {
-	lspci -v | grep -i -q nvidia &>/dev/null
+	lspci -v | grep -i 'nvidia' | grep -i -q 'vga' &>/dev/null
 	return $?
 }
 

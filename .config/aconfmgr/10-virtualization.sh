@@ -1,14 +1,13 @@
 if ! DetectVM; then
-	AddPackage libvirt            # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
-	AddPackage dmidecode          # OPTIONAL DEPENDENCY (libvirt)
-	AddPackage dnsmasq            # OPTIONAL DEPENDENCY (libvirt)
-	AddPackage gettext            # OPTIONAL DEPENDENCY (libvirt)
-	AddPackage lvm2               # OPTIONAL DEPENDENCY (libvirt)
-	AddPackage openbsd-netcat     # OPTIONAL DEPENDENCY (libvirt)
-	AddPackage qemu               # OPTIONAL DEPENDENCY (libvirt)
+	AddPackage libvirt        # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
+	AddPackage dmidecode      # OPTIONAL DEPENDENCY (libvirt)
+	AddPackage dnsmasq        # OPTIONAL DEPENDENCY (libvirt)
+	AddPackage gettext        # OPTIONAL DEPENDENCY (libvirt)
+	AddPackage lvm2           # OPTIONAL DEPENDENCY (libvirt)
+	AddPackage openbsd-netcat # OPTIONAL DEPENDENCY (libvirt)
+	AddPackage qemu-desktop   # A QEMU setup for desktop environments
 
 	AddPackage edk2-ovmf            # Firmware for Virtual Machines (x86_64, i686)
-	AddPackage qemu-arch-extra      # QEMU for foreign architectures
 	AddPackage swtpm                # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface
 	AddPackage virt-manager         # Desktop user interface for managing virtual machines
 	AddPackage virt-viewer          # A lightweight interface for interacting with the graphical display of virtualized guest OS.

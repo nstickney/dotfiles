@@ -22,6 +22,11 @@ if ! DetectWSL; then # No GUI in WSL
 		AddPackage nvidia
 		AddPackage nvidia-lts
 		AddPackage nvidia-utils
+		CopyFile /etc/modprobe.d/nvidia-wayland-gnome.conf
+		CreateLink /etc/systemd/system/systemd-hibernate.service.wants/nvidia-hibernate.service /usr/lib/systemd/system/nvidia-hibernate.service
+		CreateLink /etc/systemd/system/systemd-hibernate.service.wants/nvidia-resume.service /usr/lib/systemd/system/nvidia-resume.service
+		CreateLink /etc/systemd/system/systemd-suspend.service.wants/nvidia-resume.service /usr/lib/systemd/system/nvidia-resume.service
+		CreateLink /etc/systemd/system/systemd-suspend.service.wants/nvidia-suspend.service /usr/lib/systemd/system/nvidia-suspend.service
 	fi
 
 	AddPackage gdm                     # Display manager and login screen

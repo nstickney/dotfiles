@@ -4,7 +4,7 @@ AddPackage bash-completion # Programmable completion for the bash shell
 AddPackage bat             # Cat clone with syntax highlighting and git integration
 AddPackage colordiff       # A Perl script wrapper for 'diff' that produces the same output but with pretty 'syntax' highlighting
 AddPackage dos2unix        # Text file format converter
-AddPackage --foreign eva   # simple calculator REPL, similar to bc(1)
+AddPackage eva             # simple calculator REPL, similar to bc(1)
 AddPackage exa             # ls replacement
 AddPackage fd              # Simple, fast and user-friendly alternative to find
 AddPackage fzf             # Command-line fuzzy finder
@@ -43,34 +43,30 @@ AddPackage vim-editorconfig           # EditorConfig plugin for Vim
 ## ALE: https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 AddPackage ansible-lint           # Checks playbooks for practices and behaviour that could potentially be improved.
 AddPackage autopep8               # A tool that automatically formats Python code to conform to the PEP 8 style guide
-AddPackage bash-language-server   # Bash language server implementation based on Tree Sitter and its grammar for Bash
 AddPackage --foreign checkmake    # Experimental linter/analyzer for makefiles
 AddPackage clang                  # C language family frontend for LLVM
 AddPackage cppcheck               # A tool for static C/C++ code analysis
-AddPackage eslint                 # An AST-based pattern checker for JavaScript
 AddPackage flawfinder             # Searches through source code for potential security flaws
 AddPackage --foreign gitlint      # Git commit message linter
 AddPackage gopls                  # Language server for Go programming language
 AddPackage --foreign hadolint-bin # Dockerfile linter, validate inline bash, written in Haskell
 AddPackage --foreign metals       # Language Server For Scala
 AddPackage perl-tidy              # Parses and beautifies perl source
-AddPackage prettier               # An opinionated code formatter for JS, JSON, CSS, YAML and much more
 # AddPackage --foreign proselint           # Linter for prose
-AddPackage python-black                  # Uncompromising Python code formatter
-AddPackage python-isort                  # A Python utility / library to sort Python imports.
-AddPackage python-lsp-server             # Fork of the python-language-server project, maintained by the Spyder IDE team and the community
-AddPackage --foreign ruby-sqlint         # Simple SQL linter supporting ANSI and PostgreSQL syntaxes
-AddPackage rust-analyzer                 # Experimental Rust compiler front-end for IDEs
-AddPackage --foreign scalafmt            # code formatter for the Scala programming language
-AddPackage shellcheck                    # Shell script analysis tool
-AddPackage shfmt                         # Format shell programs
-AddPackage --foreign sqlfmt-bin          # Experimental SQL formatter with width-aware output.
-AddPackage texlab                        # A cross-platform implementation of the Language Server Protocol for LaTeX.
-AddPackage --foreign vim-language-server # Vim language server
-AddPackage --foreign vim-ripgrep-git     # Use RipGrep in Vim and display results in a quickfix list.
-AddPackage uncrustify                    # A source code beautifier
-AddPackage vint                          # Lint tool for Vim script Language
-AddPackage yamllint                      # Linter for YAML files
+AddPackage python-black              # Uncompromising Python code formatter
+AddPackage python-isort              # A Python utility / library to sort Python imports.
+AddPackage python-lsp-server         # Fork of the python-language-server project, maintained by the Spyder IDE team and the community
+AddPackage --foreign ruby-sqlint     # Simple SQL linter supporting ANSI and PostgreSQL syntaxes
+AddPackage rust-analyzer             # Experimental Rust compiler front-end for IDEs
+AddPackage --foreign scalafmt        # code formatter for the Scala programming language
+AddPackage shellcheck                # Shell script analysis tool
+AddPackage shfmt                     # Format shell programs
+AddPackage --foreign sqlfmt-bin      # Experimental SQL formatter with width-aware output.
+AddPackage texlab                    # A cross-platform implementation of the Language Server Protocol for LaTeX.
+AddPackage --foreign vim-ripgrep-git # Use RipGrep in Vim and display results in a quickfix list.
+AddPackage uncrustify                # A source code beautifier
+AddPackage vint                      # Lint tool for Vim script Language
+AddPackage yamllint                  # Linter for YAML files
 
 # Archives
 AddPackage arj        # Free and portable clone of the ARJ archiver
@@ -101,12 +97,14 @@ AddPackage --foreign hexcurse-git # Versatile ncurses-based hex editor.
 AddPackage python-keystone        # OPTIONAL DEPENDENCY (gef-git)
 AddPackage lldb                   # Next generation, high-performance debugger
 AddPackage metasploit             # Advanced open-source platform for developing, testing, and using exploit code
+AddPackage mingw-w64-gcc          # Cross GCC for the MinGW-w64 cross-compiler
 AddPackage peda                   # Python Exploit Development Assistance for GDB
 AddPackage pwndbg                 # Makes debugging with GDB suck less
 AddPackage python-ropper          # Show information about binary files and find gadgets to build rop chains for different architectures
 AddPackage radare2                # Open-source tools to disasm, debug, analyze and manipulate binary files
 AddPackage ropgadget              # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
 AddPackage strace                 # A diagnostic, debugging and instructional userspace tracer
+AddPackage xortool                # Tool to analyze multi-byte XOR cipher
 
 # Forensics
 AddPackage binwalk                           # A tool for searching a given binary image for embedded files
@@ -118,6 +116,9 @@ AddPackage --foreign scalpel-git             # Recover files based on their head
 AddPackage sleuthkit                         # File system and media management forensic analysis tools
 AddPackage volatility3                       # Advanced memory forensics framework
 AddPackage --foreign zsteg                   # detect stegano-hidden data in PNG & BMP
+
+# Games
+AddPackage rogue # The original dungeon crawl game.
 
 # Images
 AddPackage gifsicle            # A powerful command-line program for creating, editing, manipulating and getting information about GIF images and animations
@@ -145,8 +146,10 @@ AddPackage ipguard            # ipguard - arp<->ip relation checking tool
 AddPackage masscan            # TCP port scanner, spews SYN packets asynchronously, scanning entire Internet in under 5 minutes
 AddPackage mtr                # Combines the functionality of traceroute and ping into one tool (CLI version)
 AddPackage ncrack             # High-speed network authentication cracking tool
+AddPackage --foreign nessus   # Nessus vulnerability scanner
 AddPackage netsniff-ng        # High performance Linux network sniffer for packet inspection
 AddPackage ngrep              # A grep-like utility that allows you to search for network packets on an interface.
+AddPackage nikto              # A web server scanner which performs comprehensive tests against web servers for multiple items
 AddPackage nmap               # Utility for network discovery and security auditing
 AddPackage openbsd-netcat     # TCP/IP swiss army knife. OpenBSD variant.
 AddPackage p0f                # Purely passive TCP/IP traffic fingerprinting tool
@@ -181,10 +184,6 @@ AddPackage graphviz # Graph visualization software
 ## Java
 AddPackage maven   # Java project management and project comprehension tool
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
-
-## JavaScript
-AddPackage npm               # A package manager for javascript
-AddPackage --foreign vue-cli # Standard tooling for Vue.js development
 
 ## Go
 AddPackage delve    # A debugger for the Go programming language.

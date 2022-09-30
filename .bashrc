@@ -223,7 +223,7 @@ alias vdir='vdir --color=auto'
 [ -n "$(command -v dircolors)" ] && eval "$(dircolors -b)"
 
 # grep
-export GREP_COLOR='1;33'
+export GREP_COLORS='mt=1;33'
 if grep --color 'a' <<<'a' &>/dev/null; then
 	alias grep='grep --color=auto'
 	alias fgrep='fgrep --color=auto'

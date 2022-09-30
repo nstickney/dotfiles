@@ -126,6 +126,27 @@ add_ryzom_rules() {
 	sudo iptables -A OUTPUT -p udp -m udp --dport 47851:47860 -j ACCEPT
 }
 
+add_satisfactory_rules() {
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 15777 -j ACCEPT
+	sudo iptables -A OUTPUT -p udp -m udp --dport 15777 -j ACCEPT
+}
+
+add_steam_rules() {
+	for protocol in tcp udp; do
+		for ports in 3075 27000:27500 30000:35000; do
+			sudo iptables -A OUTPUT -p $protocol -m $protocol \
+				--dport $ports -j ACCEPT
+		done
+	done
+}
+
+add_teamspeak_rules() {
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 9107 -j ACCEPT
+	sudo iptables -A OUTPUT -p tcp -m tcp --dport 30033 -j ACCEPT
+	sudo iptables -A OUTPUT -p udp -m udp --dport 9107 -j ACCEPT
+	sudo iptables -A OUTPUT -p udp -m udp --dport 9987 -j ACCEPT
+}
+
 add_tome4_rules() {
 	sudo iptables -A OUTPUT -d angolwen.net-core.org -p tcp -m tcp --dport 2240 -j ACCEPT
 	sudo iptables -A OUTPUT -d angolwen.net-core.org -p tcp -m tcp --dport 2257:2258 -j ACCEPT
@@ -166,6 +187,7 @@ add_workstation_rules() {
 		'sudo iptables -A OUTPUT -d 74.125.250.0/24,142.250.82.0/24 -p udp -m udp --dport 19302:19309 -j ACCEPT'
 	__ask 'Roku or Chromecast?' add_cast_rules
 	__ask 'Streaming on Twitch.tv?' add_twitch_rules
+	__ask 'TeamSpeak?' add_teamspeak_rules
 	__ask 'Accessing MongoDB?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 27017 -j ACCEPT'
 	__ask 'Accessing ProxMox?' \
@@ -180,6 +202,8 @@ add_workstation_rules() {
 		'sudo iptables -A OUTPUT -p udp -m udp --dport 1337 -j ACCEPT'
 	__ask 'Playing Minecraft?' add_minecraft_rules
 	__ask 'Playing Saga of Ryzom?' add_ryzom_rules
+	__ask 'Playing Satisfactory?' add_satisfactory_rules
+	__ask 'Playing games on Steam?' add_steam_rules
 	__ask 'Playing Tales of Maj'\''Eyal?' add_tome4_rules
 	__ask 'Playing Veloren?' \
 		'sudo iptables -A OUTPUT -d server.veloren.net -p tcp -m tcp --dport 14004 -j ACCEPT'
@@ -371,7 +395,7 @@ main() {
 		add_workstation_rules add_outbound_ssh
 
 	# Private rules
-	[ -x "$HOME"/safe/iptables-secrets.sh ] && \
+	[ -x "$HOME"/safe/iptables-secrets.sh ] &&
 		sudo "$HOME"/safe/iptables-secrets.sh
 
 	# Logging

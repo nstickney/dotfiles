@@ -1,4 +1,4 @@
-AddPackage --foreign aha   # Ansi HTML Adapter: convert ANSI escape sequences to HTML.
+AddPackage aha             # Ansi HTML Adapter: convert ANSI escape sequences to HTML.
 AddPackage asciinema       # Record and share terminal sessions
 AddPackage bash-completion # Programmable completion for the bash shell
 AddPackage bat             # Cat clone with syntax highlighting and git integration
@@ -100,7 +100,7 @@ AddPackage metasploit             # Advanced open-source platform for developing
 AddPackage mingw-w64-gcc          # Cross GCC for the MinGW-w64 cross-compiler
 AddPackage peda                   # Python Exploit Development Assistance for GDB
 AddPackage pwndbg                 # Makes debugging with GDB suck less
-AddPackage python-ropper          # Show information about binary files and find gadgets to build rop chains for different architectures
+AddPackage ropper                 # Show information about binary files and find gadgets to build rop chains for different architectures
 AddPackage radare2                # Open-source tools to disasm, debug, analyze and manipulate binary files
 AddPackage ropgadget              # Search gadgets in binaries to facilitate ROP exploitation for several file formats and architectures
 AddPackage strace                 # A diagnostic, debugging and instructional userspace tracer
@@ -126,6 +126,7 @@ AddPackage jp2a                # A small utility for converting JPG images to AS
 AddPackage jpegoptim           # Jpeg optimisation utility
 AddPackage optipng             # Compresses PNG files to a smaller size, without losing any information.
 AddPackage perl-image-exiftool # Reader and rewriter of EXIF informations that supports raw files
+AddPackage --foreign pngcheck  # Verifies the integrity of PNG, JNG and MNG files by checking the CRCs and decompressing the image data
 AddPackage svgcleaner          # An application that cleans svg images from unnecessary data in batch mode.
 
 # Messaging

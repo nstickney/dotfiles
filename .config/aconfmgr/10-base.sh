@@ -74,7 +74,6 @@ else # Don't need a kernel or filesystems in WSL
 		AddPackage reiserfsprogs  # Reiserfs utilities
 		AddPackage squashfs-tools # Tools for squashfs, a highly compressed read-only filesystem for Linux.
 		AddPackage sysfsutils     # System Utilities Based on Sysfs
-		AddPackage truecrypt      # Free open-source cross-platform disk encryption software
 		AddPackage xfsprogs       # XFS filesystem utilities
 
 		# Sensors

@@ -20,15 +20,18 @@ main() {
 		_dir="$(realpath "$1")"
 		local _img
 		_img="$(find "$_dir" ! -wholename "$_dir" | shuf -n 1)"
-		swaymsg "output $_display bg $_img fill ${2:-#111111}"
-	done <<< "$("$HOME"/bin/sway-get-active-outputs.py)"
+		swaymsg "output $_display background $_img fill ${2:-#111111}"
+	done <<<"$("$HOME"/bin/sway-get-active-outputs.py)"
 }
 
 _pos_args=()
 while [ "$#" -gt 0 ]; do
 	case "$1" in
-		'--help'|'-h') usage;;
-		*) _pos_args+=("$1"); shift;;
+	'--help' | '-h') usage ;;
+	*)
+		_pos_args+=("$1")
+		shift
+		;;
 	esac
 done
 main ${_pos_args[@]:+"${_pos_args[@]}"}

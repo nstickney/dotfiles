@@ -1,5 +1,6 @@
 if ! DetectWSL; then          # No GUI in WSL
 	AddPackage sway              # Tiling Wayland compositor and replacement for the i3 window manager
+	AddPackage swaybg            # Wallpaper tool for Wayland compositors
 	AddPackage swayidle          # Idle management daemon for Wayland
 	AddPackage swaylock          # Screen locker for Wayland
 	AddPackage --foreign waypipe # A proxy for Wayland protocol applications; like ssh -X

@@ -179,7 +179,7 @@ add_workstation_rules() {
 	__ask 'Network printing?' add_printing_rules
 	__ask 'BigBlueButton?' add_bigbluebutton_rules
 	__ask 'Discord?' \
-		'sudo iptables -A OUTPUT -p udp -m udp --dport 50000:50025 -j ACCEPT'
+		'sudo iptables -A OUTPUT -p udp -m udp --dport 50000:50035 -j ACCEPT'
 	__ask 'Gemini?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 1965 -j ACCEPT'
 	# https://support.google.com/a/answer/1279090

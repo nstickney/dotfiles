@@ -7,7 +7,7 @@ CopyFile /etc/locale.gen
 CreateLink /etc/localtime /usr/share/zoneinfo/America/New_York
 
 # Package management
-AddPackageGroup base-devel        # Required for building AUR packages
+AddPackage base-devel             # Required for building AUR packages
 AddPackage arch-audit             # A utility like pkg-audit based on Arch Security Team data
 AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
 AddPackage namcap                 # A Pacman package analyzer

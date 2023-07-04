@@ -1,6 +1,7 @@
 # Minimal system
 AddPackage archlinux-keyring # Arch Linux PGP keyring
 AddPackage base              # Minimal package set to define a basic Arch Linux installation
+AddPackage sudo              # Give certain users the ability to run some commands as root
 CreateFile /etc/ld.so.preload >/dev/null
 CopyFile /etc/locale.conf
 CopyFile /etc/locale.gen

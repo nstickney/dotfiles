@@ -24,6 +24,7 @@ AddPackage man-pages       # Linux man pages
 AddPackage mlocate         # Merging locate/updatedb implementation
 AddPackage ncdu            # Disk usage analyzer with an ncurses interface
 AddPackage parallel        # A shell tool for executing jobs in parallel
+AddPackage pandoc-cli      # Conversion between document formats
 AddPackage qrencode        # C library for encoding data in a QR Code symbol.
 AddPackage ripgrep         # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rmlint          # Tool to remove duplicates and other lint, being much faster than fdupes
@@ -111,14 +112,12 @@ AddPackage binwalk                           # A tool for searching a given bina
 AddPackage mtd-utils                         # OPTIONAL DEPENDENCY (binwalk)
 AddPackage foremost                          # A console program to recover files based on their headers, footers, and internal data structures
 AddPackage --foreign python-msoffcrypto-tool # A Python tool and library for decrypting encrypted MS Office files.
-AddPackage --foreign python-oletools         # Python tools to analyze security characteristics of MS Office and OLE files
 AddPackage --foreign scalpel-git             # Recover files based on their headers, footers and internal data structures. This program is based on Foremost.
 AddPackage sleuthkit                         # File system and media management forensic analysis tools
 AddPackage volatility3                       # Advanced memory forensics framework
-AddPackage --foreign zsteg                   # detect stegano-hidden data in PNG & BMP
 
 # Games
-AddPackage rogue # The original dungeon crawl game.
+AddPackage crawl-ncurses # Dungeon Crawl Stone Soup: open-source, single-player, role-playing roguelike game of exploration and treasure-hunting (ncurses version)
 
 # Images
 AddPackage gifsicle            # A powerful command-line program for creating, editing, manipulating and getting information about GIF images and animations
@@ -158,6 +157,7 @@ AddPackage proxychains-ng     # A hook preloader that allows to redirect TCP tra
 CopyFile /etc/proxychains.conf
 AddPackage scapy         # Powerful interactive packet manipulation program written in Python (tools)
 AddPackage sniffglue     # Secure multithreaded packet sniffer
+AddPackage speedtest-cli # Command line interface for testing internet bandwidth using speedtest.net
 AddPackage sqlmap        # Automatic SQL injection and database takeover tool
 AddPackage tcpdump       # Powerful command-line packet analyzer
 AddPackage traceroute    # Tracks the route taken by packets over an IP network
@@ -182,14 +182,17 @@ AddPackage leiningen # Automate Clojure projects
 ## DOT
 AddPackage graphviz # Graph visualization software
 
-## Java
-AddPackage maven   # Java project management and project comprehension tool
-AddPackage vim-jad # Automatically decompile Java class files and display Java code
-
 ## Go
 AddPackage delve    # A debugger for the Go programming language.
 AddPackage go       # Core compiler tools for the Go programming language
 AddPackage go-tools # Developer tools for the Go programming language
+
+## Java
+AddPackage maven   # Java project management and project comprehension tool
+AddPackage vim-jad # Automatically decompile Java class files and display Java code
+
+## Javascript
+AddPackage npm # A package manager for javascript
 
 ## Octave
 AddPackage octave # A high-level language, primarily intended for numerical computations.
@@ -201,11 +204,9 @@ AddPackage python-matplotlib # A python plotting library, making publication qua
 AddPackage rustup # The Rust toolchain installer
 
 ## Scala
-AddPackage sbt   # The interactive build tool
-AddPackage scala # A Java-interoperable language with object-oriented and functional features
-
-## VHDL
-AddPackage ghdl-gcc # VHDL simulator (GCC backend)
+AddPackage coursier        #  	Pure Scala Artifact Fetching
+AddPackage sbt             # The interactive build tool
+AddPackage --foreign scala # A Java-interoperable language with object-oriented and functional features
 
 # Security
 if ! DetectWSL; then

@@ -1,36 +1,30 @@
 if ! DetectWSL; then # No GUI in WSL
 
-	AddPackage rhythmbox # Music playback and management application
-	AddPackage solaar    # Linux device manager for a wide range of Logitech devices
+	AddPackage bitwarden         # A secure and free password manager for all of your devices.
+	AddPackage cheese            #  	Take photos and videos with your webcam, with fun graphical effects
+	AddPackage evince            # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
+	AddPackage gnome-calculator  # GNOME Scientific calculator
+	AddPackage gnome-characters  # A character map application
+	AddPackage gnome-font-viewer # A font viewer utility for GNOME
+	AddPackage solaar            # Linux device manager for a wide range of Logitech devices
 
 	# 3D Modeling
 	AddPackage leocad   # A CAD program for creating virtual LEGO models
 	AddPackage openscad # The programmers solid 3D CAD modeller
 
-	# Audio editing
-	AddPackage audacity # A program that lets you manipulate digital audio waveforms
+	# Audio
+	AddPackage audacity  # A program that lets you manipulate digital audio waveforms
+	AddPackage rhythmbox # Music playback and management application
 
 	# Books
 	AddPackage calibre                      # Ebook management application
 	CreateLink /usr/lib/calibre/bin bin-py3 # Use Python3 in calibre
-
-	# Calculator
-	AddPackage gnome-calculator # GNOME Scientific calculator
-
-	# Character Map
-	AddPackage gnome-characters # A character map application
 
 	# Chat
 	AddPackage --foreign discord_arch_electron    # Discord (popular voice + video app) using system electron
 	AddPackage signal-desktop                     # Signal Private Messenger for Linux
 	AddPackage --foreign skypeforlinux-stable-bin # Skype for Linux - Stable/Release Version
 	AddPackage teamspeak3                         # TeamSpeak is software for quality voice communication via the Internet
-
-	# Credential management
-	AddPackage bitwarden # A secure and free password manager for all of your devices.
-
-	# Document viewer
-	AddPackage evince # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
 
 	# File management
 	AddPackage nautilus                 # Default file manager for GNOME
@@ -39,12 +33,10 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage sushi                    # A quick previewer for Nautilus
 	AddPackage rmlint-shredder          # Graphical user interface for rmlint
 
-	# Fonts
-	AddPackage gnome-font-viewer # A font viewer utility for GNOME
-
 	# Games
 	AddPackage --foreign airshipper-git         # The official launcher for Veloren - an open-world, open-source multiplayer voxel RPG
 	AddPackage --foreign amidst-git             # Advanced Minecraft Interface and Data/Structure Tracking
+	AddPackage crawl-tiles                      # Dungeon Crawl Stone Soup: open-source, single-player, role-playing roguelike game of exploration and treasure-hunting (graphical version)
 	AddPackage --foreign dwarffortress-ironhand # A single-player fantasy game in which you build a dwarven outpost or play an adventurer in a randomly generated world
 	AddPackage --foreign dwarftherapist-git     # Heavily modified version of the original Dwarf Therapist.
 	AddPackage freeciv                          # A multiuser clone of the famous Microprose game of Civilization
@@ -54,7 +46,6 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage --foreign protontricks # A simple wrapper that does winetricks things for Proton enabled games.
 	AddPackage steam                  # Valve's digital software delivery system
 	AddPackage steam-native-runtime   # Native replacement for the Steam runtime using system libraries
-	AddPackage stone-soup             # Open-source, single-player, role-playing roguelike game of exploration and treasure-hunting
 	AddPackage --foreign tome4        # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
 
 	# Images
@@ -97,9 +88,6 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage libvncserver # remmina opt dep
 	# AddPackage vinagre # A VNC Client for the GNOME desktop
 
-	# Security
-	#AddPackage --foreign burpsuite # An integrated platform for performing security testing of web applications (free edition)
-
 	# Terminal emulator
 	AddPackage alacritty # A cross-platform, GPU-accelerated terminal emulator
 	AddPackage ncurses   # OPTIONAL DEPENDENCY (alacritty)
@@ -117,8 +105,6 @@ if ! DetectWSL; then # No GUI in WSL
 
 	# Web browser: Edge
 	AddPackage --foreign microsoft-edge-stable-bin # A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier
-	AddPackage gtk3                                # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
-	AddPackage libpipewire02                       # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
 	AddPackage ttf-liberation                      # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
 	AddPackage xdg-utils                           # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
 

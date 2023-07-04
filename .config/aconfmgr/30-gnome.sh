@@ -3,7 +3,6 @@ if ! DetectVM; then                                        # No use for GNOME in
 	AddPackage gnome-keyring                                  # Stores passwords and encryption keys
 	AddPackage gnome-screenshot                               # Take pictures of your screen
 	AddPackage gnome-shell                                    # Next generation desktop shell
-	AddPackage --foreign gnome-shell-extension-material-shell # Tiling window extension for GNOME, following Material Design guidelines
 	AddPackage gnome-tweaks                                   # Graphical interface for advanced GNOME 3 settings (Tweak Tool)
 	AddPackage xdg-user-dirs-gtk                              # Creates user dirs and asks to relocalize them
 	CreateLink /etc/systemd/system/display-manager.service /usr/lib/systemd/system/gdm.service

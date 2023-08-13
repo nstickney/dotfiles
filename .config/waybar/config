@@ -1,0 +1,94 @@
+{
+    // Universal module configuration
+    "battery": {
+        "states": {
+            "warning": 32,
+            "critical": 8
+        },
+        "format": "{icon} {capacity}% {time}",
+        "format-charging": "{icon} ",
+        "format-plugged": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "clock": {
+        "format": "{:%a %Y.%m.%d %H:%M:%OS}",
+        "interval": 1,
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "cpu": {
+        "format": " {usage}%",
+"interval": 1
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "memory": {
+        "format": " {}%",
+        "states": {
+            "warning": 68,
+            "critical": 92
+        }
+    },
+    "network": {
+        "format-wifi": " {ipaddr}/{cidr} ({essid} {signalStrength}%)",
+        "format-ethernet": " {ipaddr}/{cidr}",
+        "format-linked": "  (No IP)",
+        "format-disconnected": "  Disconnected"
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "temperature": {
+        "critical-threshold": 64,
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": ["", "", ""]
+    },
+    "tray": {
+        "icon-size": 22,
+        "spacing": 2
+    },
+
+    // Per-host module configuration
+    "disk#/": {
+        "format": " {percentage_used}%",
+        "path": "/",
+        "tooltip-format": "{path}: {used}/{total} ({percentage_free}% free)"
+    },
+    "disk#/boot": {
+        "format": " {percentage_used}%",
+        "path": "/boot",
+        "tooltip-format": "{path}: {used}/{total} ({percentage_free}% free)"
+    },
+    "disk#/home": {
+        "format": " {percentage_used}%",
+        "path": "/home",
+        "tooltip-format": "{path}: {used}/{total} ({percentage_free}% free)"
+    },
+
+    // Overall configuration options
+    "layer": "top", // Popups over other windows
+    "margin-bottom": 1,
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["network", "cpu", "temperature", "memory", "disk#/", "disk#/boot", "disk#/home", "battery", "pulseaudio", "clock", "idle_inhibitor", "tray"]
+}

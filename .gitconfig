@@ -70,7 +70,7 @@
 		--date=format-local:'%Y.%m.%d %H:%M' \
 		--pretty=format:'%C(yellow)%h%Creset %an %C(cyan)%ad%Creset%Cgreen%d%Creset %s'
 	# List Ignored
-	LI = ls-files --others -i --exclude-standard
+	LI = ls-files --others --ignored --exclude-standard --directory
 	# Log with Signatures
 	LS = log --graph \
 		--date=format-local:'%Y.%m.%d %H:%M' \

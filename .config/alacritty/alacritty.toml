@@ -1,0 +1,39 @@
+[colors.bright]
+black = "#363636"
+blue = "#52abff"
+cyan = "#37b897"
+green = "#c2a161"
+magenta = "#d88dbf"
+red = "#ea8b96"
+white = "#e6e6e6"
+yellow = "#ff8142"
+
+[colors.normal]
+black = "#1a1a1a"
+blue = "#0081fa"
+cyan = "#2d956d"
+green = "#9e7e3d"
+magenta = "#c75ca3"
+red = "#df5363"
+white = "#c7c7c7"
+yellow = "#eb4e00"
+
+[colors.primary]
+background = "#0d0d0d"
+foreground = "#f2f2f2"
+
+[font]
+size = 12.0
+
+[font.normal]
+family = "Source Code Pro"
+
+[mouse]
+hide_when_typing = true
+
+[selection]
+save_to_clipboard = true
+
+[window]
+dynamic_padding = true
+opacity = 0.93

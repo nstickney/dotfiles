@@ -11,7 +11,7 @@
         "format-icons": ["", "", "", "", ""]
     },
     "clock": {
-        "format": "{:%a %Y.%m.%d %H:%M:%OS}",
+        "format": "{:%a %Y.%m.%d %H:%M:%S}",
         "interval": 1,
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
     },

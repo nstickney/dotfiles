@@ -5,7 +5,7 @@ AddPackage bat             # Cat clone with syntax highlighting and git integrat
 AddPackage colordiff       # A Perl script wrapper for 'diff' that produces the same output but with pretty 'syntax' highlighting
 AddPackage dos2unix        # Text file format converter
 AddPackage eva             # simple calculator REPL, similar to bc(1)
-AddPackage exa             # ls replacement
+AddPackage eza             # ls replacement
 AddPackage fd              # Simple, fast and user-friendly alternative to find
 AddPackage fzf             # Command-line fuzzy finder
 AddPackage git             # the fast distributed version control system

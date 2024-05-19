@@ -36,6 +36,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage glfw-wayland            # A free, open source, portable framework for graphical application development (wayland)
 	AddPackage grim                    # Screenshot utility that works under Wayland
 	AddPackage qt5-wayland             # Provides APIs for Wayland
+	AddPackage qt6-wayland             # Provides APIs for Wayland
 	AddPackage slurp                   # Select a region in a Wayland compositor
 	AddPackage --foreign wev-git       # Print wayland events, like xev(1)
 	AddPackage --foreign wlsunset-git  # Day/night gamma adjustments for Wayland

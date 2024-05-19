@@ -21,10 +21,10 @@ if ! DetectWSL; then # No GUI in WSL
 	CreateLink /usr/lib/calibre/bin bin-py3 # Use Python3 in calibre
 
 	# Chat
-	AddPackage --foreign discord_arch_electron    # Discord (popular voice + video app) using system electron
-	AddPackage signal-desktop                     # Signal Private Messenger for Linux
-	AddPackage --foreign skypeforlinux-stable-bin # Skype for Linux - Stable/Release Version
-	AddPackage teamspeak3                         # TeamSpeak is software for quality voice communication via the Internet
+	AddPackage --foreign discord_arch_electron # Discord (popular voice + video app) using system electron
+	AddPackage signal-desktop                  # Signal Private Messenger for Linux
+	AddPackage --foreign skypeforlinux-bin     # Skype for Linux - Stable/Release Version
+	AddPackage teamspeak3                      # TeamSpeak is software for quality voice communication via the Internet
 
 	# File management
 	AddPackage nautilus                 # Default file manager for GNOME

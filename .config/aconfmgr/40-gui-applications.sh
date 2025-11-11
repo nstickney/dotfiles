@@ -26,7 +26,6 @@ if ! DetectWSL; then # No GUI in WSL
 	# Chat
 	AddPackage --foreign discord_arch_electron # Discord (popular voice + video app) using system electron
 	AddPackage signal-desktop                  # Signal Private Messenger for Linux
-	AddPackage --foreign skypeforlinux-bin     # Skype for Linux - Stable/Release Version
 	AddPackage teamspeak3                      # TeamSpeak is software for quality voice communication via the Internet
 
 	# File management

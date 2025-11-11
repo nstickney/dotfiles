@@ -86,6 +86,12 @@ add_blizzard_rules() {
 	done; done
 }
 
+add_discord_rules() {
+		sudo iptables -A OUTPUT -p tcp -m tcp --dport 8443 -j ACCEPT
+		sudo iptables -A OUTPUT -p tcp -m tcp --dport 2000:2100 -j ACCEPT
+		sudo iptables -A OUTPUT -p udp -m udp --dport 50000:65535 -j ACCEPT
+}
+
 add_cast_rules() {
 	sudo iptables -A OUTPUT -d 224.0.0.0/8 -j ACCEPT
 	_NETS="$(ip a | grep 'inet ' | grep -v 'inet 127\.' |
@@ -183,8 +189,7 @@ add_workstation_rules() {
 	sudo iptables -A OUTPUT -p udp -m udp --dport 59999 -j ACCEPT # MOSH
 	__ask 'Network printing?' add_printing_rules
 	__ask 'BigBlueButton?' add_bigbluebutton_rules
-	__ask 'Discord?' \
-		'sudo iptables -A OUTPUT -p udp -m udp --dport 50000:50035 -j ACCEPT'
+	__ask 'Discord?' add_discord_rules
 	__ask 'Gemini?' \
 		'sudo iptables -A OUTPUT -p tcp -m tcp --dport 1965 -j ACCEPT'
 	# https://support.google.com/a/answer/1279090

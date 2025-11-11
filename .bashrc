@@ -197,7 +197,7 @@ if [ "$TERM" = 'linux' ]; then
 	printf "\\e]PDD88DBF" # bright magenta
 	printf "\\e]PE37B897" # bright cyan
 	# printf "\\e]PE6E6E6"  # white
-	clear                 # fix artifacts
+	clear # fix artifacts
 fi
 
 # bat
@@ -344,8 +344,7 @@ path_override() {
 path_append "$HOME/bin"
 
 # Add ~/.local/lib to library path (cleanly)
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$HOME/.local/lib"
-LD_LIBRARY_PATH="$(remove_dups "$LD_LIBRARY_PATH")"
+LD_LIBRARY_PATH="$(remove_dups "$LD_LIBRARY_PATH:$HOME/.local/lib")"
 
 # NVM
 source_if_readable /usr/share/nvm/init-nvm.sh
@@ -429,13 +428,17 @@ fi
 [ "$(type -t dnf)" == 'alias' ] && alias dnfup='dnf -y update'
 
 # editor
-[ -x "$(command -v vi)" ] && export EDITOR='vi'
-if [ -x "$(command -v vim)" ]; then
+if [ -x "$(command -v helix)" ]; then
+	alias hx='helix'
+	export EDTIOR='helix'
+elif [ -x "$(command -v vim)" ]; then
 	# shellcheck disable=2139
 	alias vi='$(command -v vim)'
 	alias vimrc='$(command -v vim) ~/.vim/vimrc'
 	EDITOR="$(command -v vim)"
 	export EDITOR
+elif [ -x "$(command -v vi)" ]; then
+	export EDITOR='vi'
 fi
 [ -x "$(command -v sudo)" ] && alias se='sudo -e'
 
@@ -459,18 +462,17 @@ alias mkdir='mkdir -pv'
 [ -z "$(command -v pinc)" ] && alias pinc='ping -c'
 
 # pacman
-if [ -x "$(command -v reflector)" ] && [ -z "$(command -v mirrors)" ]; then
+if [ -x "$(command -v rate-mirrors)" ] && [ -z "$(command -v mirrors)" ]; then
 	mirrors() {
-		local OPTS='--age 12 --country US --fastest 50 --protocol https --sort rate'
-		if [ -x "$(command -v spinner)" ]; then
-			sudo spinner "reflector $OPTS --save /etc/pacman.d/mirrorlist" \
-				"Updating mirrorlist:" 'unicode'
-		else
-			printf 'Updating mirrorlist:'
-			# shellcheck disable=2086
-			reflector $OPTS --save /etc/pacman.d/mirrorlist
-			printf ' Done\n'
-		fi
+		# if [ -x "$(command -v spinner)" ]; then
+		# 	sudo spinner "rate-mirrors arch | tee /etc/pacman.d/mirrorlist" \
+		# 		"Updating mirrorlist:" 'unicode'
+		# else
+		# 	printf 'Updating mirrorlist:'
+		# shellcheck disable=2086
+		rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist
+		# printf ' Done\n'
+		# fi
 	}
 fi
 if [ -x "$(command -v paru)" ]; then

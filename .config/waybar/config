@@ -61,7 +61,7 @@
     "temperature": {
         "critical-threshold": 64,
         "format": "{icon} {temperatureC}°C",
-        "format-icons": ["", "", ""]
+        "format-icons": ["❄", "", "🔥"]
     },
     "tray": {
         "icon-size": 22,
@@ -74,14 +74,14 @@
         "path": "/",
         "tooltip-format": "{path}: {used}/{total} ({percentage_free}% free)"
     },
-    "disk#/boot": {
-        "format": " {percentage_used}%",
-        "path": "/boot",
-        "tooltip-format": "{path}: {used}/{total} ({percentage_free}% free)"
-    },
     "disk#/home": {
         "format": " {percentage_used}%",
         "path": "/home",
+        "tooltip-format": "{path}: {used}/{total} ({percentage_free}% free)"
+    },
+    "disk#/boot": {
+        "format": " {percentage_used}%",
+        "path": "/boot",
         "tooltip-format": "{path}: {used}/{total} ({percentage_free}% free)"
     },
 
@@ -90,5 +90,5 @@
     "margin-bottom": 1,
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["network", "cpu", "temperature", "memory", "disk#/", "disk#/boot", "disk#/home", "battery", "pulseaudio", "clock", "idle_inhibitor", "tray"]
+    "modules-right": ["network", "cpu", "temperature", "memory", "disk#/", "disk#/home", "disk#/boot", "battery", "pulseaudio", "clock", "idle_inhibitor", "tray"]
 }

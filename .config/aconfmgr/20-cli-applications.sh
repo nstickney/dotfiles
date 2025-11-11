@@ -147,7 +147,6 @@ AddPackage irssi                   # Modular text mode IRC client with Perl scri
 AddPackage aria2              # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
 AddPackage bmon               # Portable bandwidth monitor and rate estimator
 AddPackage dog                # Command-line DNS client like dig
-AddPackage --foreign gmni-git # A Gemini client
 AddPackage inetutils          # A collection of common network programs
 AddPackage iperf3             # TCP, UDP, and SCTP network bandwidth measurement tool
 AddPackage ipguard            # ipguard - arp<->ip relation checking tool

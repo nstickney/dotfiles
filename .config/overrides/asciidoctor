@@ -1,6 +1,7 @@
 #!/bin/sh
 
-/usr/bin/asciidoctor -r asciidoctor-html5s -b html5s \
+#-r asciidoctor-html5s \
+/usr/bin/asciidoctor \
 	--attribute tabsize=4 \
 	--attribute source-highlighter=rouge \
 	--attribute rouge-css=style \

@@ -428,9 +428,10 @@ fi
 [ "$(type -t dnf)" == 'alias' ] && alias dnfup='dnf -y update'
 
 # editor
+EDITOR=''
 if [ -x "$(command -v helix)" ]; then
 	alias hx='helix'
-	export EDTIOR='helix'
+	EDITOR="$(command -v helix)"
 elif [ -x "$(command -v vim)" ]; then
 	# shellcheck disable=2139
 	alias vi='$(command -v vim)'
@@ -438,8 +439,9 @@ elif [ -x "$(command -v vim)" ]; then
 	EDITOR="$(command -v vim)"
 	export EDITOR
 elif [ -x "$(command -v vi)" ]; then
-	export EDITOR='vi'
+	EDITOR="$(command -v vi)"
 fi
+export EDITOR
 [ -x "$(command -v sudo)" ] && alias se='sudo -e'
 
 # ls

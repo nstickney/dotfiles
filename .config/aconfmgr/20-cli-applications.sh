@@ -14,24 +14,23 @@ AddPackage git-crypt       # Transparent file encryption in Git
 AddPackage git-filter-repo # Quickly rewrite git repository history (filter-branch replacement)
 AddPackage git-lfs         # Git extension for versioning large files
 AddPackage hexyl           # Colored command-line hex viewer
-AddPackage hq              # HTML processor inspired by jq
 AddPackage htop            # Interactive process viewer
 AddPackage jq              # Command-line JSON processor
 AddPackage lesspipe        # an input filter for the pager less
 AddPackage lsof            # Lists open files for running Unix processes
 AddPackage man-db          # A utility for reading man pages
 AddPackage man-pages       # Linux man pages
-AddPackage mlocate         # Merging locate/updatedb implementation
+AddPackage plocate         # Alternative to locate, faster and compatible with mlocate's database.
 AddPackage ncdu            # Disk usage analyzer with an ncurses interface
 AddPackage parallel        # A shell tool for executing jobs in parallel
-AddPackage pandoc-cli      # Conversion between document formats
 AddPackage qrencode        # C library for encoding data in a QR Code symbol.
 AddPackage ripgrep         # A search tool that combines the usability of ag with the raw speed of grep
-AddPackage rmlint          # Tool to remove duplicates and other lint, being much faster than fdupes
 AddPackage rsync           # A fast and versatile file copying tool for remote and local files
 AddPackage tmux            # A terminal multiplexer
 AddPackage tree            # A directory listing program displaying a depth indented list of files
 AddPackage watchexec       # Executes commands in response to file modifications
+# AddPackage --foreign hq    # HTML processor inspired by jq
+# AddPackage rmlint          # Tool to remove duplicates and other lint, being much faster than fdupes
 
 # $EDITOR
 AddPackage vim                        # Vi Improved, a highly configurable, improved version of the vi text editor
@@ -39,27 +38,27 @@ AddPackage vim-ale                    # Asynchronous Lint Engine with Language S
 AddPackage vim-ansible                # A vim plugin for syntax highlighting Ansible's common filetypes
 AddPackage --foreign vim-pkgbuild-git # Vim plugin to edit PKGBUILD files
 AddPackage vim-spell-en               # Language files for Vim spell checking
-AddPackage vim-editorconfig           # EditorConfig plugin for Vim
 
 ## ALE: https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 AddPackage ansible-lint           # Checks playbooks for practices and behaviour that could potentially be improved.
 AddPackage autopep8               # A tool that automatically formats Python code to conform to the PEP 8 style guide
 AddPackage --foreign checkmake    # Experimental linter/analyzer for makefiles
 AddPackage clang                  # C language family frontend for LLVM
+AddPackage llvm                   # referenced by some clang headers
 AddPackage cppcheck               # A tool for static C/C++ code analysis
 AddPackage flawfinder             # Searches through source code for potential security flaws
 AddPackage --foreign gitlint      # Git commit message linter
 AddPackage gopls                  # Language server for Go programming language
 AddPackage --foreign hadolint-bin # Dockerfile linter, validate inline bash, written in Haskell
-AddPackage --foreign metals       # Language Server For Scala
-AddPackage perl-tidy              # Parses and beautifies perl source
+# AddPackage --foreign metals       # Language Server For Scala
+AddPackage perl-tidy # Parses and beautifies perl source
 # AddPackage --foreign proselint           # Linter for prose
-AddPackage python-black              # Uncompromising Python code formatter
-AddPackage python-isort              # A Python utility / library to sort Python imports.
-AddPackage python-lsp-server         # Fork of the python-language-server project, maintained by the Spyder IDE team and the community
-AddPackage --foreign ruby-sqlint     # Simple SQL linter supporting ANSI and PostgreSQL syntaxes
-AddPackage rust-analyzer             # Experimental Rust compiler front-end for IDEs
-AddPackage --foreign scalafmt        # code formatter for the Scala programming language
+AddPackage python-black          # Uncompromising Python code formatter
+AddPackage python-isort          # A Python utility / library to sort Python imports.
+AddPackage python-lsp-server     # Fork of the python-language-server project, maintained by the Spyder IDE team and the community
+AddPackage --foreign ruby-sqlint # Simple SQL linter supporting ANSI and PostgreSQL syntaxes
+AddPackage rust-analyzer         # Experimental Rust compiler front-end for IDEs
+# AddPackage --foreign scalafmt        # code formatter for the Scala programming language
 AddPackage shellcheck                # Shell script analysis tool
 AddPackage shfmt                     # Format shell programs
 AddPackage --foreign sqlfmt-bin      # Experimental SQL formatter with width-aware output.
@@ -69,14 +68,23 @@ AddPackage uncrustify                # A source code beautifier
 AddPackage vint                      # Lint tool for Vim script Language
 AddPackage yamllint                  # Linter for YAML files
 
+## Helix?
+AddPackage helix                      # A post-modern modal text editor
+AddPackage bash-language-server       # Bash language server implementation based on Tree Sitter and its grammar for Bash
+AddPackage taplo-cli                  # TOML toolkit written in Rust
+AddPackage vscode-css-languageserver  # CSS/LESS/SCSS language server
+AddPackage vscode-html-languageserver # HTML language server
+AddPackage vscode-json-languageserver # JSON language server
+AddPackage yaml-language-server       # YAML Language Server
+
 # Archives
+AddPackage 7zip       # Command-line file archiver with high compression ratio
 AddPackage arj        # Free and portable clone of the ARJ archiver
 AddPackage cabextract # A program to extract Microsoft cabinet (.CAB) files
 AddPackage cpio       # A tool to copy files into or out of a cpio or tar archive
 AddPackage lhasa      # Free LZH/LHA archive tool
 AddPackage lrzip      # Multi-threaded compression with rzip/lzma, lzo, and zpaq
 AddPackage pax        # Portable Archive Interchange - the POSIX standard archive tool for cpio and tar formats
-AddPackage p7zip      # Command-line file archiver with high compression ratio
 AddPackage rpmextract # Script to convert or extract RPM archives (contains rpm2cpio)
 AddPackage sharutils  # Makes so-called shell archives out of many files
 AddPackage unace      # An extraction tool for the proprietary ace archive format
@@ -165,7 +173,7 @@ AddPackage vulscan       # A module which enhances nmap to a vulnerability scann
 AddPackage wireshark-cli # Network traffic and protocol analyzer/sniffer - CLI tools and data files
 AddPackage wget          # Network utility to retrieve files from the Web
 AddPackage whois         # Intelligent WHOIS client
-AddPackage youtube-dl    # A command-line program to download videos from YouTube.com and a few more sites
+AddPackage yt-dlp        # A youtube-dl fork with additional features and fixes
 
 # Programming
 AddPackage cloc  # Count lines of code
@@ -192,21 +200,22 @@ AddPackage maven   # Java project management and project comprehension tool
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
 ## Javascript
-AddPackage npm # A package manager for javascript
+# AddPackage npm # A package manager for javascript
 
 ## Octave
 AddPackage octave # A high-level language, primarily intended for numerical computations.
 
 ## Python
 AddPackage python-matplotlib # A python plotting library, making publication quality plots
+AddPackage python-pip        # The PyPA recommended tool for installing Python packages
 
 ## Rust
 AddPackage rustup # The Rust toolchain installer
 
 ## Scala
-AddPackage coursier        #  	Pure Scala Artifact Fetching
-AddPackage sbt             # The interactive build tool
-AddPackage --foreign scala # A Java-interoperable language with object-oriented and functional features
+# AddPackage coursier        #  	Pure Scala Artifact Fetching
+# AddPackage sbt             # The interactive build tool
+# AddPackage --foreign scala # A Java-interoperable language with object-oriented and functional features
 
 # Security
 if ! DetectWSL; then

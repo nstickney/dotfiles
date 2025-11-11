@@ -6,6 +6,7 @@ if ! DetectVM; then
 	AddPackage lvm2           # OPTIONAL DEPENDENCY (libvirt)
 	AddPackage openbsd-netcat # OPTIONAL DEPENDENCY (libvirt)
 	AddPackage qemu-desktop   # A QEMU setup for desktop environments
+AddPackage samba               # SMB Fileserver and AD Domain server
 
 	AddPackage edk2-ovmf            # Firmware for Virtual Machines (x86_64, i686)
 	AddPackage swtpm                # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface

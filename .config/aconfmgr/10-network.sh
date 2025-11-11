@@ -1,5 +1,9 @@
 if ! DetectWSL; then # Networking already handled (?) in WSL (?)
 
+	#Networking Firmware
+	DetectBroadcom && AddPackage linux-firmware-broadcom # Firmware files for Linux - Firmware for Broadcom and Cypress network adapters
+	DetectRealtek && AddPackage linux-firmware-realtek   # Firmware files for Linux - Firmware for Realtek devices
+
 	# Firewall
 	AddPackage iptables-nft # Linux kernel packet control tool (using nft interface)
 	CreateLink /etc/systemd/system/multi-user.target.wants/iptables.service /usr/lib/systemd/system/iptables.service
@@ -24,10 +28,7 @@ if ! DetectWSL; then # Networking already handled (?) in WSL (?)
 fi
 
 # Hosts file
-cat >>"$(GetPackageOriginalFile filesystem /etc/hosts)" <<-EOF
-	127.0.0.1 localhost $HOSTNAME
-	::1       localhost $HOSTNAME
-EOF
+sed -i "s/localhost/localhost $HOSTNAME/g" "$(GetPackageOriginalFile filesystem /etc/hosts)"
 
 # SSH
 AddPackage mosh  # Mobile shell, surviving disconnects with local echo and line editing

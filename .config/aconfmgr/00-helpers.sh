@@ -58,3 +58,15 @@ function DetectCrypt() {
 	grep -q '/dev/mapper/' /etc/fstab
 	return $?
 }
+
+# Fail if no Broadcom network devices exist
+function DetectBroadcom() {
+	lspci -k | grep -i -q 'broadcom' &>/dev/null
+	return $?
+}
+
+# Fail if no Realtek network devices exist
+function DetectRealtek() {
+	lspci -k | grep -i -q 'realtek' &>/dev/null
+	return $?
+}

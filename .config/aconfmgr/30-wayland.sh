@@ -2,24 +2,27 @@ if ! DetectWSL; then # No GUI in WSL
 
 	# AMD graphics support
 	if DetectAMDGPU; then
-		AddPackage amdvlk                  # AMD's standalone Vulkan driver
-		AddPackage lib32-amdvlk            # AMD's standalone Vulkan driver
-		AddPackage libva-mesa-driver       # VA-API implementation for gallium
-		AddPackage lib32-libva-mesa-driver # VA-API implementation for gallium (32-bit)
-		AddPackage mesa-vdpau              # Mesa VDPAU drivers
-		AddPackage opencl-mesa             # OpenCL support for AMD/ATI Radeon mesa drivers
-		AddPackage vulkan-radeon           # Radeon's Vulkan mesa driver
-		AddPackage vulkan-tools            # Vulkan Utilities and Tools
+		AddPackage amdgpu_top            # Tool that shows AMD GPU utilization
+		AddPackage linux-firmware-amdgpu # Firmware files for Linux - Firmware for AMD Radeon GPUs
+		AddPackage mesa-vdpau            # Mesa VDPAU drivers
+		AddPackage vulkan-radeon         # Radeon's Vulkan mesa driver
+		AddPackage lib32-vulkan-radeon   # Radeon's Vulkan mesa driver
+		AddPackage vulkan-tools          # Vulkan Utilities and Tools
+		# AddPackage amdvlk                # AMD's standalone Vulkan driver
+		# AddPackage lib32-amdvlk          # AMD's standalone Vulkan driver
+		# AddPackage opencl-mesa           # OpenCL support for AMD/ATI Radeon mesa drivers
 	fi
 
 	# Intel graphics support
 	if DetectIntelGPU; then
-		AddPackage vulcan-intel # Intel's Vulkan mesa driver
-		AddPackage vulkan-tools # Vulkan Utilities and Tools
+		AddPackage linux-firmware-intel #  	Firmware files for Linux - Firmware for Intel devices
+		AddPackage vulcan-intel         # Intel's Vulkan mesa driver
+		AddPackage vulkan-tools         # Vulkan Utilities and Tools
 	fi
 
 	# Nvidia graphics support
 	if DetectNvidia; then
+		AddPackage linxu-firmware-nvidia # Firmware files for Linux - Firmware for NVIDIA GPUs and SoCs
 		AddPackage egl-wayland
 		AddPackage lib32-nvidia-utils
 		AddPackage nvidia
@@ -33,11 +36,11 @@ if ! DetectWSL; then # No GUI in WSL
 	fi
 
 	AddPackage gdm                     # Display manager and login screen
-	AddPackage glfw-wayland            # A free, open source, portable framework for graphical application development (wayland)
 	AddPackage grim                    # Screenshot utility that works under Wayland
 	AddPackage qt5-wayland             # Provides APIs for Wayland
 	AddPackage qt6-wayland             # Provides APIs for Wayland
 	AddPackage slurp                   # Select a region in a Wayland compositor
+	AddPackage waypipe                 # A proxy for Wayland protocol applications; like ssh -X
 	AddPackage --foreign wev-git       # Print wayland events, like xev(1)
 	AddPackage --foreign wlsunset-git  # Day/night gamma adjustments for Wayland
 	AddPackage --foreign wshowkeys-git # Displays keys being pressed on a Wayland session

@@ -15,13 +15,17 @@ AddPackage namcap                 # A Pacman package analyzer
 AddPackage pacman-contrib         # Contributed scripts and tools for pacman systems
 AddPackage --foreign paru         # Feature packed AUR helper
 AddPackage pkgfile                # a pacman .files metadata explorer
-AddPackage --foreign powerpill    # Pacman wrapper for faster downloads.
-AddPackage reflector              # A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
-CopyFile /etc/makepkg.conf
-CopyFile /etc/pacman.conf
+AddPackage --foreign rate-mirrors # Everyday-use client-side map-aware mirror ranking tool
+
+makepkg_conf="$(GetPackageOriginalFile pacman /etc/makepkg.conf)"
+sed -i 's/\.tar\..*$/.tar'\''/' "$makepkg_conf"
+
+pacman_conf="$(GetPackageOriginalFile pacman /etc/pacman.conf)"
+sed -i '/ParallelDownloads/{s/5/10/;}' "$pacman_conf"
+sed -i '/\[multilib\]/{s/^#//; n; s/^#//;}' "$pacman_conf"
+
 CopyFile /etc/pacman.d/hooks/arch-audit.hook
 CopyFile /etc/pacman.d/hooks/mirrorupgrade.hook
-CopyFile /etc/profile.d/powerpill.sh
 CopyFile /etc/security/faillock.conf
 
 if DetectWSL; then
@@ -62,20 +66,20 @@ else # Don't need a kernel or filesystems in WSL
 		DetectNVME && AddPackage nvme-cli # NVM-Express user space tooling for Linux
 
 		# Extra file system support... just in case
-		AddPackage afpfs-ng       # A client for the Apple Filing Protocol (AFP)
 		AddPackage btrfs-progs    # Btrfs filesystem utilities
 		AddPackage dosfstools     # DOS filesystem utilities
 		AddPackage f2fs-tools     # Tools for Flash-Friendly File System (F2FS)
-		AddPackage jfsutils       # JFS filesystem utilities
-		AddPackage kbfs           # The Keybase filesystem
-		AddPackage mtools         # A collection of utilities to access MS-DOS disks
-		AddPackage mtpfs          # A FUSE filesystem that supports reading and writing from any MTP device
 		AddPackage nilfs-utils    # A log-structured file system supporting continuous snapshotting (userspace utils)
 		AddPackage ntfs-3g        # NTFS filesystem driver and utilities
-		AddPackage reiserfsprogs  # Reiserfs utilities
 		AddPackage squashfs-tools # Tools for squashfs, a highly compressed read-only filesystem for Linux.
-		AddPackage sysfsutils     # System Utilities Based on Sysfs
 		AddPackage xfsprogs       # XFS filesystem utilities
+		# AddPackage afpfs-ng    # A client for the Apple Filing Protocol (AFP)
+		# AddPackage jfsutils    # JFS filesystem utilities
+		# AddPackage kbfs           # The Keybase filesystem
+		# AddPackage mtools      # A collection of utilities to access MS-DOS disks
+		# AddPackage mtpfs       # A FUSE filesystem that supports reading and writing from any MTP device
+		# AddPackage reiserfsprogs  # Reiserfs utilities
+		# AddPackage sysfsutils     # System Utilities Based on Sysfs
 
 		# Sensors
 		AddPackage lm_sensors # Collection of user space tools for general SMBus access and hardware monitoring

@@ -16,6 +16,9 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage audacity  # A program that lets you manipulate digital audio waveforms
 	AddPackage rhythmbox # Music playback and management application
 
+	# Bittorrent
+	AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
+
 	# Books
 	AddPackage calibre                      # Ebook management application
 	CreateLink /usr/lib/calibre/bin bin-py3 # Use Python3 in calibre
@@ -31,7 +34,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage nautilus-image-converter # Nautilus extension to rotate/resize image files
 	AddPackage seahorse-nautilus        # PGP encryption and signing for nautilus
 	AddPackage sushi                    # A quick previewer for Nautilus
-	AddPackage rmlint-shredder          # Graphical user interface for rmlint
+	# AddPackage rmlint-shredder          # Graphical user interface for rmlint
 
 	# Games
 	AddPackage --foreign airshipper-git         # The official launcher for Veloren - an open-world, open-source multiplayer voxel RPG
@@ -45,7 +48,6 @@ if ! DetectWSL; then # No GUI in WSL
 	CreateLink /opt/minecraft-launcher/swiftshader/libGLESv2.so /lib64/libGLESv2.so
 	AddPackage --foreign protontricks # A simple wrapper that does winetricks things for Proton enabled games.
 	AddPackage steam                  # Valve's digital software delivery system
-	AddPackage steam-native-runtime   # Native replacement for the Steam runtime using system libraries
 	AddPackage --foreign tome4        # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
 
 	# Images
@@ -72,8 +74,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage pstoedit          # OPTIONAL DEPENDENCY (libreoffice-still)
 
 	# Programming: Arduino
-	AddPackage arduino          # Arduino prototyping platform SDK
-	AddPackage arduino-avr-core # OPTIONAL DEPENDENCY (arduino)
+	AddPackage arduino-cli # Arduino command line interface
 
 	# Programming: Reverse Engineering
 	AddPackage ghidra # Software reverse engineering framework
@@ -95,8 +96,8 @@ if ! DetectWSL; then # No GUI in WSL
 	# Video
 	AddPackage handbrake  # Multithreaded video transcoder
 	AddPackage obs-studio # Free, open source software for live streaming and recording
-	AddPackage openshot   # An award-winning free and open-source video editor
 	AddPackage vlc        # Multi-platform MPEG, VCD/DVD, and DivX player
+	# AddPackage --foreign openshot   # An award-winning free and open-source video editor
 
 	# Web browser: Chrome
 	AddPackage chromium                    # A web browser built for speed, simplicity, and security
@@ -105,8 +106,8 @@ if ! DetectWSL; then # No GUI in WSL
 
 	# Web browser: Edge
 	AddPackage --foreign microsoft-edge-stable-bin # A browser that combines a minimal design with sophisticated technology to make the web faster, safer, and easier
-	AddPackage ttf-liberation                      # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
-	AddPackage xdg-utils                           # OPTIONAL DEPENDENCY (microsoft-edge-dev-bin)
+	AddPackage ttf-liberation                      # OPTIONAL DEPENDENCY (microsoft-edge-stable-bin)
+	AddPackage xdg-utils                           # OPTIONAL DEPENDENCY (microsoft-edge-stable-bin)
 
 	# Web browser: Firefox
 	AddPackage firefox         # Standalone web browser from mozilla.org

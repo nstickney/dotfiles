@@ -29,7 +29,7 @@ main() {
 		            "critical": 8
 		        },
 		        "format": "{icon} {capacity}% {time}",
-		        "format-charging": "{icon} ",
+		        "format-charging": "🔌{icon}",
 		        "format-plugged": "",
 		        "format-icons": ["", "", "", "", ""]
 		    },
@@ -40,7 +40,7 @@ main() {
 		    },
 		    "cpu": {
 		        "format": " {usage}%",
-				"interval": 1
+		        "interval": 1
 		    },
 		    "idle_inhibitor": {
 		        "format": "{icon}",
@@ -50,7 +50,7 @@ main() {
 		        }
 		    },
 		    "memory": {
-		        "format": " {}%",
+		        "format": "🖸 {}%",
 		        "states": {
 		            "warning": 68,
 		            "critical": 92
@@ -58,17 +58,17 @@ main() {
 		    },
 		    "network": {
 		        "format-wifi": " {ipaddr}/{cidr} ({essid} {signalStrength}%)",
-		        "format-ethernet": " {ipaddr}/{cidr}",
-		        "format-linked": "  (No IP)",
-		        "format-disconnected": "  Disconnected"
+		        "format-ethernet": "🖧 {ipaddr}/{cidr}",
+		        "format-linked": " (No IP)",
+		        "format-disconnected": " Disconnected"
 		    },
 		    "pulseaudio": {
 		        // "scroll-step": 1, // %, can be a float
-		        "format": "{volume}% {icon} {format_source}",
-		        "format-bluetooth": "{volume}% {icon} {format_source}",
-		        "format-bluetooth-muted": " {icon} {format_source}",
-		        "format-muted": " {format_source}",
-		        "format-source": "{volume}% ",
+		        "format": "{icon} {volume}% {format_source}",
+		        "format-bluetooth": "{icon} {volume}% {format_source}",
+		        "format-bluetooth-muted": " {icon} {format_source}",
+		        "format-muted": "🔇{format_source}",
+		        "format-source": " {volume}%",
 		        "format-source-muted": "",
 		        "format-icons": {
 		            "headphone": "",
@@ -84,14 +84,13 @@ main() {
 		    "temperature": {
 		        "critical-threshold": 64,
 		        "format": "{icon} {temperatureC}°C",
-		        "format-icons": ["", "", ""]
+		        "format-icons": ["❄", "", "🔥"]
 		    },
 		    "tray": {
 		        "icon-size": 22,
 		        "spacing": 2
 		    },
-
-		    // Per-host module configuration
+			// Per-host module configuration
 	EOF
 
 	# Add disk blocks for each physical filesystem

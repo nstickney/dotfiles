@@ -109,7 +109,8 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage xdg-utils                           # OPTIONAL DEPENDENCY (microsoft-edge-stable-bin)
 
 	# Web browser: Firefox
-	AddPackage firefox         # Standalone web browser from mozilla.org
-	AddPackage hunspell-en_us  # OPTIONAL DEPENDENCY (firefox)
-	AddPackage x11-ssh-askpass # OPTIONAL DEPENDENCY (code)
+	AddPackage firefox           # Standalone web browser from mozilla.org
+	AddPackage hunspell-en_us    # OPTIONAL DEPENDENCY (firefox)
+	AddPackage speech-dispatcher # OPTIONAL DEPENDENCY (firefox)
+	AddPackage x11-ssh-askpass   # OPTIONAL DEPENDENCY (code)
 fi

@@ -299,6 +299,8 @@ export HISTIGNORE="clear:bg:fg:cd:pd:exit:date:poweroff:reboot:* --help"
 # Avoid duplicates, and share history across terminals
 export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
+# Prevent duplication if .bashrc is sourced multiple times
+PROMPT_COMMAND="${PROMPT_COMMAND//history -a; history -n; /}"
 PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
 
 # Date and time format

@@ -213,8 +213,8 @@ if [ "$(uname -s)" == 'Darwin' ]; then
 else
 	alias ls='ls --color=auto'
 fi
-if [ -x "$(command -v exa)" ]; then
-	alias ls='exa --group-directories-first'
+if [ -x "$(command -v eza)" ]; then
+	alias ls='eza --group-directories-first'
 	alias lg='ls --long --git'
 	alias ll='lg --all'
 fi

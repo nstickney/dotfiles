@@ -299,7 +299,7 @@ export HISTIGNORE="clear:bg:fg:cd:pd:exit:date:poweroff:reboot:* --help"
 # Avoid duplicates, and share history across terminals
 export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
-PROMPT_COMMAND="history -n;history -w;history -c;history -r;$PROMPT_COMMAND"
+PROMPT_COMMAND="history -a; history -n; $PROMPT_COMMAND"
 
 # Date and time format
 #export HISTTIMEFORMAT='%Y.%m.%d %T  '

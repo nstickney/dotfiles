@@ -67,6 +67,18 @@ The included sway configuration requires the following packages as dependencies 
 - `libpulse` (volume control)
 - `playerctl` (music player controls)
 
+### Claude Code Integration
+
+A `CLAUDE.md` file in `.config/docs/` provides context for [Claude Code](https://claude.com/claude-code) when working in the home directory.
+Since Claude Code looks for `CLAUDE.md` in the project root, a symlink is created at `$HOME/CLAUDE.md` pointing to `.config/docs/CLAUDE.md`.
+This keeps the actual documentation with the other dotfiles docs while remaining discoverable by Claude Code.
+
+To recreate the symlink:
+
+```bash
+$ ln -s .config/docs/CLAUDE.md $HOME/CLAUDE.md
+```
+
 ## Usage
 
 Use the `dots` alias (made permanent in `.bashrc`) to interact with the repository.

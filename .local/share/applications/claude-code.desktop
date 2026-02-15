@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Claude Code
+Exec=alacritty --command claude
+Terminal=false
+Type=Application
+Categories=Development;

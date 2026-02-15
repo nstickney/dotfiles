@@ -5,6 +5,9 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Cache uname result to avoid repeated subshell calls
+_UNAME_S="$(uname -s)"
+
 # Used to source various files
 source_if_readable() {
 	# shellcheck disable=1090
@@ -23,7 +26,7 @@ bind -m vi-insert "\C-l":clear-screen
 [ "$DISPLAY" ] && shopt -s checkwinsize
 
 # Recursive **/* and `cd` when only entering a path (does not work on OS X)
-if [ "$(uname -s)" != "Darwin" ]; then
+if [ "$_UNAME_S" != "Darwin" ]; then
 	shopt -s globstar
 	shopt -s autocd
 fi
@@ -33,7 +36,7 @@ export LC_ALL=en_US.UTF-8
 
 # Fix spelling
 shopt -s cdspell
-[ "$(uname -s)" != 'Darwin' ] && shopt -s dirspell
+[ "$_UNAME_S" != 'Darwin' ] && shopt -s dirspell
 
 # Fix gpg agent
 GPG_TTY="$(tty)"
@@ -78,11 +81,11 @@ gitstatus_prompt_update() {
 	[[ "$VCS_STATUS_RESULT" == ok-sync ]] || return 0 # not a git repo
 
 	local reset=$'\e[0m'         # no color
-	local clean=$'\e[0;36m'      # green foreground
+	local clean=$'\e[0;36m'      # cyan foreground
 	local pbranch=$'\e[0;35m'    # purple foreground
 	local otag=$'\e[0;93m'       # orange foreground
-	local untracked=$'\e[0;94m'  # blue foreground
-	local modified=$'\e[0;92m'   # yellow foreground
+	local untracked=$'\e[0;94m'  # bright blue foreground
+	local modified=$'\e[0;92m'   # bright green foreground
 	local conflicted=$'\e[0;91m' # red foreground
 
 	local p="${pbranch}"
@@ -123,7 +126,7 @@ gitstatus_prompt_update() {
 }
 
 # Start gitstatusd in the background.
-gitstatus_stop && gitstatus_start -s -1 -u -1 -c -1 -d -1
+gitstatus_stop 2>/dev/null; gitstatus_start -s -1 -u -1 -c -1 -d -1
 
 __prompt_command() {
 
@@ -207,7 +210,7 @@ if [ -x "$(command -v bat)" ]; then
 fi
 
 # ls
-if [ "$(uname -s)" == 'Darwin' ]; then
+if [ "$_UNAME_S" == 'Darwin' ]; then
 	# shellcheck disable=2032
 	alias ls='ls -G'
 else
@@ -279,18 +282,6 @@ bind '"\e[6~": next-history'
 # Sudo Completion
 [ -n "$(command -v sudo)" ] && complete -cf sudo
 
-# DEFEAT LOGGING ##############################################################
-
-# Defeat Snoopy logging
-# http://blog.rchapman.org/posts/Bypassing_snoopy_logging/
-# [ ! -f "$HOME"/bin/bypass.so ] &&
-# 	[ -x "$(command -v gcc)" ] &&
-# 	[ -f "$HOME"/bin/bypass.c ] &&
-# 	gcc -nostartfiles -shared -O3 -fPIC "$HOME"/bin/bypass.c -o \
-# 		"$HOME"/bin/bypass.so -ldl -Wall -Wextra
-# [ -x "$HOME"/bin/bypass.so ] &&
-# 	export LD_PRELOAD=$HOME/bin/bypass.so
-
 # HISTORY #####################################################################
 
 # Colon seperated list of exact commands to ignore
@@ -318,7 +309,7 @@ remove_dups() {
 	local path=
 	local dir=
 	while IFS= read -r -d"$D" dir; do
-		[[ $path$D =~ .*$D$dir$D.* ]] || path+="$D$dir"
+		[[ "$D$path$D" == *"$D$dir$D"* ]] || path+="$D$dir"
 	done <<<"$1$D"
 	printf %s "${path#$D}"
 }
@@ -328,7 +319,7 @@ PATH="$(remove_dups "$PATH")"
 # https://unix.stackexchange.com/a/124447
 path_append() {
 	case ":${PATH:=$1}:" in
-	*:$@:*) ;;
+	*:"$1":*) ;;
 	*) PATH="$PATH:$1" ;;
 	esac
 }
@@ -336,7 +327,7 @@ path_append() {
 # Cleanly add an item to the beginning of $PATH
 path_override() {
 	case ":${PATH:=$1}:" in
-	*:$@:*) ;;
+	*:"$1":*) ;;
 	*) PATH="$1:$PATH" ;;
 	esac
 }
@@ -365,7 +356,7 @@ alias_directories() {
 		_dir="${_dir%% *}"
 		if [ -d "$1/$_dir" ] && [ -z "$(command -v "$_dir")" ]; then
 			# shellcheck disable=2139,2140
-			alias "$_dir"="cd -- $1/$_dir || exit"
+			alias "$_dir"="cd -- '$1/$_dir' || return"
 		fi
 	done
 }
@@ -403,7 +394,6 @@ dir_memo() {
 alias cd='dir_memo cd'
 alias pushd='dir_memo pushd'
 alias popd='dir_memo popd'
-alias .='cd -'
 alias cd..='cd ..'
 if [ -z "$(command -v pd)" ]; then
 	# shellcheck disable=2164
@@ -458,7 +448,7 @@ alias mkdir='mkdir -pv'
 	alias mksrcinfo='makepkg --printsrcinfo > .SRCINFO'
 
 # mosh
-[ -n "$(command -v mosh)" ] && [ ! -v "$(command -v mop)" ] &&
+[ -n "$(command -v mosh)" ] && [ -z "$(command -v mop)" ] &&
 	alias mop='mosh -p 59999'
 
 # networking

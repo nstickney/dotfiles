@@ -1,0 +1,384 @@
+#!/bin/sh
+
+# Disallow unset variables
+set -u
+
+flush_all_rules() {
+	printf 'Flushing nftables\n'
+	sudo nft flush ruleset
+}
+
+# If we get disconnected, flush the rules so we aren't locked out!
+trap flush_all_rules HUP INT QUIT TERM
+
+usage() {
+	printf 'Usage: %s\n' "$(basename "$0")" >&2
+	printf ' -h --help : display this message\n' >&2
+	exit
+}
+
+__get_ch() {
+	# Get an answer
+	if [ -n "${1:-}" ]; then
+		old=$(stty -g)
+		stty raw min 0 time "$1"
+		printf '%s' "$(dd bs=1 count=1 2>/dev/null)"
+		stty "$old"
+	else
+		old=$(stty -g)
+		stty raw min 1 time 0
+		printf '%s' "$(dd bs=1 count=1 2>/dev/null)"
+		stty "$old"
+	fi
+}
+
+__ask() {
+	while :; do
+		printf '%s' "${1:-'Input Required'} [y/N]: "
+		answer=$(__get_ch "${4:-}")
+		printf '\n'
+		case "$answer" in
+		[Yy]*)
+			eval "${2:-}"
+			break
+			;;
+		[Nn]*)
+			eval "${3:-}"
+			break
+			;;
+		"")
+			[ -n "${4:-}" ] && eval "${5:-}"
+			break
+			;;
+		esac
+	done
+}
+
+# Resolve a hostname to an IPv4 address; prints nothing on failure
+resolve_host() {
+	getent hosts "$1" 2>/dev/null | awk '{ print $1; exit }'
+}
+
+# Rule accumulator functions
+input_add() { RULESET_INPUT="${RULESET_INPUT} ${1}
+"; }
+output_add() { RULESET_OUTPUT="${RULESET_OUTPUT} ${1}
+"; }
+
+add_bittorrent_rules() {
+	output_add 'meta l4proto { tcp, udp } th dport { 6969, 6881-6889, 8999, 51413 } accept'
+}
+
+add_blizzard_rules() {
+	output_add 'meta l4proto { tcp, udp } th dport { 1119, 3724, 4000, 6012, 6112-6114 } accept'
+}
+
+add_cast_rules() {
+	output_add 'ip daddr 224.0.0.0/8 accept'
+	input_add "ip saddr { $_NET_SET } ip daddr 224.0.0.0/8 accept"
+	input_add "ip daddr { $_ADDR_SET } udp sport 1900 accept"
+	output_add "ip daddr { $_NET_SET } udp dport 1900 accept"
+	output_add "ip daddr { $_NET_SET } tcp dport { 8008-8009, 8060, 8443 } accept"
+}
+
+add_discord_rules() {
+	output_add 'tcp dport { 2080-2089, 8443 } accept'
+	output_add 'udp dport { 19300-19399, 50000-65535 } accept'
+}
+
+add_outbound_ssh() {
+	__ask 'Does this computer need outbound ssh access?' \
+		'output_add "tcp dport 22 accept"'
+}
+
+add_ryzom_rules() {
+	output_add 'tcp dport { 40916, 43434, 48851-48860, 50000 } accept'
+	output_add 'udp dport 47851-47860 accept'
+}
+
+add_steam_rules() {
+	output_add 'meta l4proto { tcp, udp } th dport { 3075, 27000-27500, 30000-35000 } accept'
+}
+
+add_teamspeak_rules() {
+	output_add 'tcp dport { 9107, 30033 } accept'
+	output_add 'udp dport { 9107, 9987 } accept'
+}
+
+add_tome4_rules() {
+	_tome4_addr="$(resolve_host angolwen.net-core.org)"
+	if [ -n "$_tome4_addr" ]; then
+		output_add "ip daddr $_tome4_addr tcp dport { 2240, 2257-2258 } accept"
+	else
+		printf 'Warning: could not resolve angolwen.net-core.org, skipping ToME4 rules\n'
+	fi
+}
+
+add_twitch_rules() {
+	output_add 'meta l4proto { tcp, udp } th dport 1935 accept'
+}
+
+add_veloren_rules() {
+	_veloren_addr="$(resolve_host server.veloren.net)"
+	if [ -n "$_veloren_addr" ]; then
+		output_add "ip daddr $_veloren_addr tcp dport 14004 accept"
+	else
+		printf 'Warning: could not resolve server.veloren.net, skipping Veloren rules\n'
+	fi
+}
+
+add_workstation_rules() {
+
+	# Allow outbound ping (replies are handled by ct state in base)
+	output_add 'icmp type echo-request accept'
+
+	# Allow needed workstation outbound access
+	output_add 'tcp dport 22 accept    # SSH'
+	output_add 'tcp dport 43 accept    # WHOIS'
+	output_add 'tcp dport 53 accept    # DNS (XFR)'
+	output_add 'tcp dport 873 accept   # RSYNC'
+	output_add 'tcp dport 6697 accept  # IRC'
+	output_add 'tcp dport 8448 accept  # Matrix'
+	output_add 'tcp dport 11371 accept # HKPS'
+	output_add 'udp dport 59999 accept # MOSH'
+	__ask 'Network printing?' \
+		'output_add "tcp dport { 161, 515, 631 } accept"'
+	__ask 'BigBlueButton?' \
+		'output_add "meta l4proto { tcp, udp } th dport { 3443, 3478 } accept"'
+	__ask 'Discord?' add_discord_rules
+	__ask 'Gemini?' \
+		'output_add "tcp dport 1965 accept"'
+	__ask 'Roku or Chromecast?' add_cast_rules
+	__ask 'Streaming on Twitch.tv?' add_twitch_rules
+	__ask 'TeamSpeak?' add_teamspeak_rules
+	__ask 'Accessing MongoDB?' \
+		'output_add "tcp dport 27017 accept"'
+	__ask 'Accessing ProxMox?' \
+		'output_add "tcp dport 8006 accept"'
+	__ask 'Accessing Remote Desktop (RDP)?' \
+		'output_add "tcp dport 3389 accept"'
+	__ask 'Accessing Virtual Network Computing (VNC)?' \
+		'output_add "tcp dport 5900 accept"'
+	__ask 'Accessing vSphere?' \
+		'output_add "tcp dport 9443 accept"'
+	__ask 'Hack The Box?' \
+		'output_add "udp dport 1337 accept"'
+	__ask 'Playing games on Steam?' add_steam_rules
+	__ask 'Playing Minecraft?' \
+		'output_add "tcp dport { 25565, 27094 } accept"'
+	__ask 'Playing Saga of Ryzom?' add_ryzom_rules
+	__ask 'Playing Satisfactory?' \
+		'output_add "meta l4proto { tcp, udp } th dport 15777 accept"'
+	__ask 'Playing Star Wars: The Old Republic?' \
+		'output_add "tcp dport { 8995, 20900-20999 } accept"'
+	__ask "Playing Tales of Maj'Eyal?" add_tome4_rules
+	__ask 'Playing Veloren?' add_veloren_rules
+	__ask 'Playing World of Warcraft?' add_blizzard_rules
+}
+
+save_permanent_nftables() {
+	if [ -x "$(command -v yum)" ]; then
+		sudo nft list ruleset | sudo tee /etc/sysconfig/nftables.conf >/dev/null
+	else
+		sudo nft list ruleset | sudo tee /etc/nftables.conf >/dev/null
+	fi
+}
+
+load_secrets() {
+	_secrets="$HOME/safe/nftables-secrets.nft"
+	[ -r "$_secrets" ] || return 0
+	while IFS= read -r _line || [ -n "$_line" ]; do
+		# Skip blank lines and comments
+		case "$_line" in
+		'' | \#*) continue ;;
+		esac
+		# Handle hostname resolution for lines containing DNS names
+		# Format: host:<hostname> <rest of rule>
+		case "$_line" in
+		host:*)
+			_hostpart="${_line%%	*}"
+			_hostpart="${_hostpart%% *}"
+			_hostname="${_hostpart#host:}"
+			_rest="${_line#"$_hostpart"}"
+			_rest="${_rest#	}"
+			_rest="${_rest# }"
+			_addr="$(resolve_host "$_hostname")"
+			if [ -n "$_addr" ]; then
+				output_add "ip daddr $_addr $_rest"
+			else
+				printf 'Warning: could not resolve %s, skipping secret rule\n' "$_hostname"
+			fi
+			;;
+		*)
+			output_add "$_line"
+			;;
+		esac
+	done <"$_secrets"
+}
+
+main() {
+	# Sanity check
+	if [ ! -x "$(command -v nft)" ]; then
+		printf 'Do you have nftables installed?\n'
+		exit 127
+	fi
+
+	# firewalld sanity check
+	if [ -x "$(command -v firewall-cmd)" ]; then
+		printf 'firewalld conflicts with these settings.\n'
+		__ask 'Abort setting up nftables?' 'exit 1'
+	fi
+
+	# sudo check
+	if [ ! -x "$(command -v sudo)" ]; then
+		printf '%s\n' "This script requires sudo." >&2
+		exit 127
+	fi
+
+	# Don't run with sudo! Need to preserve $SSH_CLIENT in some situations
+	if [ "$(id -u)" -eq 0 ] && [ -n "$SUDO_COMMAND" ]; then
+		printf 'Do not run this as root (sudo); it invokes sudo as required.\n'
+		exit 1
+	fi
+
+	# Find necessary information
+	_NETS="$(ip a | grep 'inet ' | grep -v 'inet 127\.' |
+		sed 's/  //g; s/inet //g; s/ .*//g')"
+
+	if [ -n "${SSH_CLIENT:-}" ]; then
+		SSH_ADDR="$(echo "$SSH_CLIENT" | cut -d' ' -f1)"
+	fi
+
+	# Build nft set strings from local networks
+	_NET_SET=""
+	_ADDR_SET=""
+	for _NET in $_NETS; do
+		[ -n "$_NET_SET" ] && _NET_SET="$_NET_SET, "
+		_NET_SET="${_NET_SET}${_NET}"
+		[ -n "$_ADDR_SET" ] && _ADDR_SET="$_ADDR_SET, "
+		_ADDR_SET="${_ADDR_SET}${_NET%%/*}"
+	done
+
+	# Initialize rule accumulators
+	RULESET_INPUT=""
+	RULESET_OUTPUT=""
+
+	# --- Build rules ---
+
+	# Anti-lockout rule (allow SSH from current connection)
+	[ -z "${SSH_ADDR+x}" ] || input_add "ip saddr $SSH_ADDR tcp dport 22 accept"
+
+	# Allow DHCP for faster renewals
+	input_add 'ip saddr 0.0.0.0 ip daddr 255.255.255.255 udp sport 67-68 udp dport 67-68 accept'
+
+	# Prevent host spoofing (bare addresses)
+	input_add "ip saddr { $_ADDR_SET } drop"
+	output_add "ip daddr { $_ADDR_SET } drop"
+
+	# Allow DHCP for faster renewals
+	input_add "ip saddr { $_NET_SET } udp sport 67-68 udp dport 67-68 accept"
+	output_add "ip daddr { $_NET_SET } udp sport 67-68 udp dport 67-68 accept"
+
+	# Allow mDNS for zeroconf
+	input_add "ip saddr { $_NET_SET } udp dport 5353 accept"
+	output_add "ip daddr { $_NET_SET } udp dport 5353 accept"
+
+	# Allow Mosh
+	input_add "ip saddr { $_NET_SET } udp dport 59999 accept"
+
+	# Allow inbound ping (replies handled by ct state in base)
+	input_add "ip saddr { $_NET_SET } icmp type echo-request accept"
+
+	# Allow ssh
+	input_add "ip saddr { $_NET_SET } tcp dport 22 accept"
+
+	# mDNS multicast
+	input_add 'ip daddr 224.0.0.251 udp dport 5353 accept'
+	output_add 'ip daddr 224.0.0.251 udp dport 5353 accept'
+
+	# SSDP/UPnP
+	input_add 'ip daddr 239.255.255.250 udp dport 1900 accept'
+	output_add 'ip daddr 239.255.255.250 udp dport 1900 accept'
+
+	# Allow required services outbound (TCP)
+	output_add 'tcp dport 80 accept  # HTTP'
+	output_add 'tcp dport 443 accept # HTTPS'
+
+	# Allow required services outbound (UDP)
+	output_add 'udp dport 53 accept  # DNS'
+	output_add 'udp dport 123 accept # NTP'
+	output_add 'udp dport 443 accept # HTTP/2'
+
+	# Allow BitTorrent?
+	__ask 'Allow BitTorrent?' add_bittorrent_rules
+
+	# Allow OpenVPN outbound?
+	__ask 'Does this computer use OpenVPN?' \
+		'output_add "udp dport 1194 accept"'
+
+	# Allow WireGuard outbound?
+	__ask 'Does this computer use WireGuard?' \
+		'output_add "udp dport 51820 accept"'
+
+	# Workstation?
+	__ask 'Is this machine a workstation?' \
+		add_workstation_rules add_outbound_ssh
+
+	# Private rules
+	load_secrets
+
+	# ICMPv6 NDP rules (replaces entire ip6tables section)
+	input_add 'icmpv6 type { nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } accept'
+	output_add 'icmpv6 type { nd-router-solicit, nd-neighbor-solicit, nd-neighbor-advert } accept'
+
+	# Assemble the complete ruleset
+	RULESET="flush ruleset
+
+table inet filter {
+    chain base {
+        ct state invalid drop
+        ct state { established, related } accept
+        iifname \"lo\" accept
+        oifname \"lo\" accept
+        return
+    }
+    chain input {
+        type filter hook input priority 0; policy drop;
+        jump base
+${RULESET_INPUT}        limit rate 3/minute log prefix \"[nft:in] \" level warn
+    }
+    chain forward {
+        type filter hook forward priority 0; policy drop;
+        jump base
+    }
+    chain output {
+        type filter hook output priority 0; policy drop;
+        jump base
+${RULESET_OUTPUT}        limit rate 3/minute log prefix \"[nft:out] \" level warn
+    }
+}"
+
+	# Load atomically
+	printf '%s\n' "$RULESET" | sudo nft -f -
+
+	# "Cleverness" https://unix.stackexchange.com/a/104361
+	sleep 1
+	__ask 'Still connected?' "printf 'Rules confirmed.\n'" \
+		flush_all_rules 100 flush_all_rules
+
+	# Show the result
+	printf '\n\e[1;32m%s\e[0m\n\n' "nftables rules implemented:"
+	sudo nft list ruleset | sed 's/^/  /'
+	printf '\n'
+
+	# Make rules persistent
+	__ask 'Save rules persistently?' save_permanent_nftables
+
+	# Start nftables at boot
+	if [ -x "$(command -v systemctl)" ]; then
+		__ask 'Start nftables at boot?' 'sudo systemctl enable nftables'
+	fi
+}
+
+[ "$#" -gt 0 ] && usage
+main

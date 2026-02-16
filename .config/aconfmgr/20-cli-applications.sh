@@ -1,34 +1,35 @@
-AddPackage aha             # Ansi HTML Adapter: convert ANSI escape sequences to HTML.
-AddPackage asciinema       # Record and share terminal sessions
-AddPackage bash-completion # Programmable completion for the bash shell
-AddPackage bat             # Cat clone with syntax highlighting and git integration
-AddPackage colordiff       # A Perl script wrapper for 'diff' that produces the same output but with pretty 'syntax' highlighting
-AddPackage dos2unix        # Text file format converter
-AddPackage eva             # simple calculator REPL, similar to bc(1)
-AddPackage eza             # ls replacement
-AddPackage fd              # Simple, fast and user-friendly alternative to find
-AddPackage fzf             # Command-line fuzzy finder
-AddPackage git             # the fast distributed version control system
-AddPackage git-absorb      # git commit --fixup, but automatic
-AddPackage git-crypt       # Transparent file encryption in Git
-AddPackage git-filter-repo # Quickly rewrite git repository history (filter-branch replacement)
-AddPackage git-lfs         # Git extension for versioning large files
-AddPackage hexyl           # Colored command-line hex viewer
-AddPackage htop            # Interactive process viewer
-AddPackage jq              # Command-line JSON processor
-AddPackage lesspipe        # an input filter for the pager less
-AddPackage lsof            # Lists open files for running Unix processes
-AddPackage man-db          # A utility for reading man pages
-AddPackage man-pages       # Linux man pages
-AddPackage plocate         # Alternative to locate, faster and compatible with mlocate's database.
-AddPackage ncdu            # Disk usage analyzer with an ncurses interface
-AddPackage parallel        # A shell tool for executing jobs in parallel
-AddPackage qrencode        # C library for encoding data in a QR Code symbol.
-AddPackage ripgrep         # A search tool that combines the usability of ag with the raw speed of grep
-AddPackage rsync           # A fast and versatile file copying tool for remote and local files
-AddPackage tmux            # A terminal multiplexer
-AddPackage tree            # A directory listing program displaying a depth indented list of files
-AddPackage watchexec       # Executes commands in response to file modifications
+AddPackage aha                   # Ansi HTML Adapter: convert ANSI escape sequences to HTML.
+AddPackage asciinema             # Record and share terminal sessions
+AddPackage bash-completion       # Programmable completion for the bash shell
+AddPackage bat                   # Cat clone with syntax highlighting and git integration
+AddPackage colordiff             # A Perl script wrapper for 'diff' that produces the same output but with pretty 'syntax' highlighting
+AddPackage --foreign claude-code # An agentic coding tool that lives in your terminal
+AddPackage dos2unix              # Text file format converter
+AddPackage eva                   # simple calculator REPL, similar to bc(1)
+AddPackage eza                   # ls replacement
+AddPackage fd                    # Simple, fast and user-friendly alternative to find
+AddPackage fzf                   # Command-line fuzzy finder
+AddPackage git                   # the fast distributed version control system
+AddPackage git-absorb            # git commit --fixup, but automatic
+AddPackage git-crypt             # Transparent file encryption in Git
+AddPackage git-filter-repo       # Quickly rewrite git repository history (filter-branch replacement)
+AddPackage git-lfs               # Git extension for versioning large files
+AddPackage hexyl                 # Colored command-line hex viewer
+AddPackage htop                  # Interactive process viewer
+AddPackage jq                    # Command-line JSON processor
+AddPackage lesspipe              # an input filter for the pager less
+AddPackage lsof                  # Lists open files for running Unix processes
+AddPackage man-db                # A utility for reading man pages
+AddPackage man-pages             # Linux man pages
+AddPackage plocate               # Alternative to locate, faster and compatible with mlocate's database.
+AddPackage ncdu                  # Disk usage analyzer with an ncurses interface
+AddPackage parallel              # A shell tool for executing jobs in parallel
+AddPackage qrencode              # C library for encoding data in a QR Code symbol.
+AddPackage ripgrep               # A search tool that combines the usability of ag with the raw speed of grep
+AddPackage rsync                 # A fast and versatile file copying tool for remote and local files
+AddPackage tmux                  # A terminal multiplexer
+AddPackage tree                  # A directory listing program displaying a depth indented list of files
+AddPackage watchexec             # Executes commands in response to file modifications
 # AddPackage --foreign hq    # HTML processor inspired by jq
 # AddPackage rmlint          # Tool to remove duplicates and other lint, being much faster than fdupes
 
@@ -46,6 +47,7 @@ AddPackage --foreign checkmake    # Experimental linter/analyzer for makefiles
 AddPackage clang                  # C language family frontend for LLVM
 AddPackage llvm                   # referenced by some clang headers
 AddPackage cppcheck               # A tool for static C/C++ code analysis
+AddPackage eslint                 # An AST-based pattern checker for JavaScript
 AddPackage flawfinder             # Searches through source code for potential security flaws
 AddPackage --foreign gitlint      # Git commit message linter
 AddPackage gopls                  # Language server for Go programming language
@@ -53,9 +55,11 @@ AddPackage --foreign hadolint-bin # Dockerfile linter, validate inline bash, wri
 # AddPackage --foreign metals       # Language Server For Scala
 AddPackage perl-tidy # Parses and beautifies perl source
 # AddPackage --foreign proselint           # Linter for prose
+AddPackage prettier              # An opinionated code formatter
 AddPackage python-black          # Uncompromising Python code formatter
 AddPackage python-isort          # A Python utility / library to sort Python imports.
 AddPackage python-lsp-server     # Fork of the python-language-server project, maintained by the Spyder IDE team and the community
+AddPackage pyright               # Type checker for the Python language
 AddPackage --foreign ruby-sqlint # Simple SQL linter supporting ANSI and PostgreSQL syntaxes
 AddPackage rust-analyzer         # Experimental Rust compiler front-end for IDEs
 # AddPackage --foreign scalafmt        # code formatter for the Scala programming language
@@ -72,6 +76,7 @@ AddPackage yamllint                  # Linter for YAML files
 AddPackage helix                      # A post-modern modal text editor
 AddPackage bash-language-server       # Bash language server implementation based on Tree Sitter and its grammar for Bash
 AddPackage taplo-cli                  # TOML toolkit written in Rust
+AddPackage typescript-language-server # Language Server Protocol (LSP) implementation for TypeScript using tsserver
 AddPackage vscode-css-languageserver  # CSS/LESS/SCSS language server
 AddPackage vscode-html-languageserver # HTML language server
 AddPackage vscode-json-languageserver # JSON language server
@@ -144,23 +149,23 @@ AddPackage irssi                   # Modular text mode IRC client with Perl scri
 # AddPackage --foreign python-cleantoots # Cleanup your toot history
 
 # Network
-AddPackage aria2              # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
-AddPackage bmon               # Portable bandwidth monitor and rate estimator
-AddPackage dog                # Command-line DNS client like dig
-AddPackage inetutils          # A collection of common network programs
-AddPackage iperf3             # TCP, UDP, and SCTP network bandwidth measurement tool
-AddPackage ipguard            # ipguard - arp<->ip relation checking tool
-AddPackage masscan            # TCP port scanner, spews SYN packets asynchronously, scanning entire Internet in under 5 minutes
-AddPackage mtr                # Combines the functionality of traceroute and ping into one tool (CLI version)
-AddPackage ncrack             # High-speed network authentication cracking tool
-AddPackage --foreign nessus   # Nessus vulnerability scanner
-AddPackage netsniff-ng        # High performance Linux network sniffer for packet inspection
-AddPackage ngrep              # A grep-like utility that allows you to search for network packets on an interface.
-AddPackage nikto              # A web server scanner which performs comprehensive tests against web servers for multiple items
-AddPackage nmap               # Utility for network discovery and security auditing
-AddPackage openbsd-netcat     # TCP/IP swiss army knife. OpenBSD variant.
-AddPackage p0f                # Purely passive TCP/IP traffic fingerprinting tool
-AddPackage proxychains-ng     # A hook preloader that allows to redirect TCP traffic of existing dynamically linked programs through one or more SOCKS or HTTP proxies
+AddPackage aria2            # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
+AddPackage bmon             # Portable bandwidth monitor and rate estimator
+AddPackage dog              # Command-line DNS client like dig
+AddPackage inetutils        # A collection of common network programs
+AddPackage iperf3           # TCP, UDP, and SCTP network bandwidth measurement tool
+AddPackage ipguard          # ipguard - arp<->ip relation checking tool
+AddPackage masscan          # TCP port scanner, spews SYN packets asynchronously, scanning entire Internet in under 5 minutes
+AddPackage mtr              # Combines the functionality of traceroute and ping into one tool (CLI version)
+AddPackage ncrack           # High-speed network authentication cracking tool
+AddPackage --foreign nessus # Nessus vulnerability scanner
+AddPackage netsniff-ng      # High performance Linux network sniffer for packet inspection
+AddPackage ngrep            # A grep-like utility that allows you to search for network packets on an interface.
+AddPackage nikto            # A web server scanner which performs comprehensive tests against web servers for multiple items
+AddPackage nmap             # Utility for network discovery and security auditing
+AddPackage openbsd-netcat   # TCP/IP swiss army knife. OpenBSD variant.
+AddPackage p0f              # Purely passive TCP/IP traffic fingerprinting tool
+AddPackage proxychains-ng   # A hook preloader that allows to redirect TCP traffic of existing dynamically linked programs through one or more SOCKS or HTTP proxies
 CopyFile /etc/proxychains.conf
 AddPackage scapy         # Powerful interactive packet manipulation program written in Python (tools)
 AddPackage sniffglue     # Secure multithreaded packet sniffer

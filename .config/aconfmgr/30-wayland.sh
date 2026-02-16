@@ -4,7 +4,6 @@ if ! DetectWSL; then # No GUI in WSL
 	if DetectAMDGPU; then
 		AddPackage amdgpu_top            # Tool that shows AMD GPU utilization
 		AddPackage linux-firmware-amdgpu # Firmware files for Linux - Firmware for AMD Radeon GPUs
-		AddPackage mesa-vdpau            # Mesa VDPAU drivers
 		AddPackage vulkan-radeon         # Radeon's Vulkan mesa driver
 		AddPackage lib32-vulkan-radeon   # Radeon's Vulkan mesa driver
 		AddPackage vulkan-tools          # Vulkan Utilities and Tools

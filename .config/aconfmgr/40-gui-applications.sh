@@ -1,11 +1,11 @@
 if ! DetectWSL; then # No GUI in WSL
 
 	AddPackage bitwarden         # A secure and free password manager for all of your devices.
-	AddPackage cheese            #  	Take photos and videos with your webcam, with fun graphical effects
 	AddPackage evince            # Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)
 	AddPackage gnome-calculator  # GNOME Scientific calculator
 	AddPackage gnome-characters  # A character map application
 	AddPackage gnome-font-viewer # A font viewer utility for GNOME
+	AddPackage orca              # Screen reader for individuals who are blind or visually impaired
 	AddPackage solaar            # Linux device manager for a wide range of Logitech devices
 
 	# 3D Modeling
@@ -31,23 +31,21 @@ if ! DetectWSL; then # No GUI in WSL
 	# File management
 	AddPackage nautilus                 # Default file manager for GNOME
 	AddPackage nautilus-image-converter # Nautilus extension to rotate/resize image files
-	AddPackage seahorse-nautilus        # PGP encryption and signing for nautilus
 	AddPackage sushi                    # A quick previewer for Nautilus
 	# AddPackage rmlint-shredder          # Graphical user interface for rmlint
 
 	# Games
-	AddPackage --foreign airshipper-git         # The official launcher for Veloren - an open-world, open-source multiplayer voxel RPG
-	AddPackage --foreign amidst-git             # Advanced Minecraft Interface and Data/Structure Tracking
+	AddPackage --foreign airshipper             # The official launcher for Veloren - an open-world, open-source multiplayer voxel RPG
 	AddPackage crawl-tiles                      # Dungeon Crawl Stone Soup: open-source, single-player, role-playing roguelike game of exploration and treasure-hunting (graphical version)
 	AddPackage --foreign dwarffortress-ironhand # A single-player fantasy game in which you build a dwarven outpost or play an adventurer in a randomly generated world
 	AddPackage --foreign dwarftherapist-git     # Heavily modified version of the original Dwarf Therapist.
-	AddPackage freeciv                          # A multiuser clone of the famous Microprose game of Civilization
+	AddPackage freeciv-gtk4                     # A multiuser clone of the famous Microprose game of Civilization (GTK4 client)
 	AddPackage --foreign minecraft-launcher     # Official Minecraft Launcher
 	CreateLink /opt/minecraft-launcher/swiftshader/libEGL.so /lib64/libEGL.so
 	CreateLink /opt/minecraft-launcher/swiftshader/libGLESv2.so /lib64/libGLESv2.so
-	AddPackage --foreign protontricks # A simple wrapper that does winetricks things for Proton enabled games.
-	AddPackage steam                  # Valve's digital software delivery system
-	AddPackage --foreign tome4        # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
+	AddPackage protontricks    # A simple wrapper that does winetricks things for Proton enabled games.
+	AddPackage steam           # Valve's digital software delivery system
+	AddPackage --foreign tome4 # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
 
 	# Images
 	AddPackage eog         # Eye of Gnome
@@ -78,9 +76,8 @@ if ! DetectWSL; then # No GUI in WSL
 	# Programming: Reverse Engineering
 	AddPackage ghidra # Software reverse engineering framework
 
-	# Programming: VSCode
-	AddPackage code            # The Open Source build of Visual Studio Code (vscode) editor
-	AddPackage bash-completion # OPTIONAL DEPENDENCY (code)
+	# Programming: Zed
+	AddPackage zed # A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
 
 	# Remote
 	AddPackage remmina      # remote desktop client written in GTK+
@@ -109,8 +106,10 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage xdg-utils                           # OPTIONAL DEPENDENCY (microsoft-edge-stable-bin)
 
 	# Web browser: Firefox
-	AddPackage firefox           # Standalone web browser from mozilla.org
-	AddPackage hunspell-en_us    # OPTIONAL DEPENDENCY (firefox)
-	AddPackage speech-dispatcher # OPTIONAL DEPENDENCY (firefox)
-	AddPackage x11-ssh-askpass   # OPTIONAL DEPENDENCY (code)
+	AddPackage firefox               # Standalone web browser from mozilla.org
+	AddPackage firefox-decentraleyes # Local emulation of Content Delivery Networks
+	AddPackage firefox-ublock-origin # Efficient blocker add-on for various browsers. Fast, potent, and lean
+	AddPackage hunspell-en_us        # OPTIONAL DEPENDENCY (firefox)
+	AddPackage speech-dispatcher     # OPTIONAL DEPENDENCY (firefox)
+	CreateLink /etc/systemd/user/sockets.target.wants/speech-dispatcher.socket /usr/lib/systemd/user/speech-dispatcher.socket
 fi

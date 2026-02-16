@@ -3,8 +3,16 @@ AddPackage archlinux-keyring # Arch Linux PGP keyring
 AddPackage base              # Minimal package set to define a basic Arch Linux installation
 AddPackage sudo              # Give certain users the ability to run some commands as root
 CreateFile /etc/ld.so.preload >/dev/null
-CopyFile /etc/locale.conf
-CopyFile /etc/locale.gen
+
+# Localization
+cat >"$(CreateFile /etc/locale.conf)" <<EOF
+LANG=en_US.UTF-8
+LANGUAGE=en_US.UTF-8
+EOF
+
+glibc_locale_gen="$(GetPackageOriginalFile glibc /etc/locale.gen)"
+sed -i 's/^#\(en_US.UTF-8\)/\1/g' "$glibc_locale_gen"
+
 CreateLink /etc/localtime /usr/share/zoneinfo/America/New_York
 
 # Package management
@@ -15,7 +23,7 @@ AddPackage namcap                 # A Pacman package analyzer
 AddPackage pacman-contrib         # Contributed scripts and tools for pacman systems
 AddPackage --foreign paru         # Feature packed AUR helper
 AddPackage pkgfile                # a pacman .files metadata explorer
-AddPackage --foreign rate-mirrors # Everyday-use client-side map-aware mirror ranking tool
+AddPackage rate-mirrors           # Everyday-use client-side map-aware mirror ranking tool
 
 makepkg_conf="$(GetPackageOriginalFile pacman /etc/makepkg.conf)"
 sed -i 's/\.tar\..*$/.tar'\''/' "$makepkg_conf"
@@ -36,8 +44,8 @@ if DetectWSL; then
 else # Don't need a kernel or filesystems in WSL
 
 	# Default kernel
-	AddPackage linux         # The Linux kernel and modules
-	AddPackage linux-headers # Headers and scripts for building modules for the Linux kernel
+	AddPackage linux-zen         # The Linux ZEN kernel and modules
+	AddPackage linux-zen-headers # Headers and scripts for building modules for the Linux ZEN kernel
 
 	# Backup kernel
 	AddPackage linux-lts         # The LTS Linux kernel and modules

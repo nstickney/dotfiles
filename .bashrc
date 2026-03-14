@@ -71,7 +71,7 @@ fi
 
 # BASH PROMPT #################################################################
 
-source_if_readable "$HOME"/.config/gitstatus/gitstatus.plugin.sh
+source_if_readable /usr/share/gitstatus/gitstatus.prompt.sh
 
 # shellcheck disable=2120
 gitstatus_prompt_update() {
@@ -126,7 +126,8 @@ gitstatus_prompt_update() {
 }
 
 # Start gitstatusd in the background.
-gitstatus_stop 2>/dev/null; gitstatus_start -s -1 -u -1 -c -1 -d -1
+gitstatus_stop 2>/dev/null
+gitstatus_start -s -1 -u -1 -c -1 -d -1
 
 __prompt_command() {
 

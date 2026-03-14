@@ -14,6 +14,7 @@ AddPackage git-absorb            # git commit --fixup, but automatic
 AddPackage git-crypt             # Transparent file encryption in Git
 AddPackage git-filter-repo       # Quickly rewrite git repository history (filter-branch replacement)
 AddPackage git-lfs               # Git extension for versioning large files
+AddPackage --foreign gitstatus   # Git status for Bash and Zsh prompt
 AddPackage hexyl                 # Colored command-line hex viewer
 AddPackage htop                  # Interactive process viewer
 AddPackage jq                    # Command-line JSON processor

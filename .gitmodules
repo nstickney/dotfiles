@@ -1,6 +1,3 @@
-[submodule ".config/gitstatus"]
-	path = .config/gitstatus
-	url = https://github.com/romkatv/gitstatus
 [submodule ".vim/pack/stick/start/fzf.vim"]
 	path = .vim/pack/stick/start/fzf.vim
 	url = https://github.com/junegunn/fzf.vim

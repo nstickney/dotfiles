@@ -82,8 +82,8 @@ add_cast_rules() {
 }
 
 add_discord_rules() {
-	output_add 'tcp dport { 2080-2089, 8443 } accept'
-	output_add 'udp dport { 19300-19399, 50000-65535 } accept'
+	output_add 'tcp dport { 2050-2099, 8443 } accept'
+	output_add 'udp dport { 19200-19399, 50000-65535 } accept'
 }
 
 add_outbound_ssh() {

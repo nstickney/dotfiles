@@ -7,6 +7,7 @@ if ! DetectWSL; then # Networking already handled (?) in WSL (?)
 	# Firewall
 	AddPackage iptables-nft # Linux kernel packet control tool (using nft interface)
 	CreateLink /etc/systemd/system/multi-user.target.wants/nftables.service /usr/lib/systemd/system/nftables.service
+	CopyFile /etc/nftables.conf
 
 	# NetworkManager
 	AddPackage networkmanager             # Network connection manager and user applications

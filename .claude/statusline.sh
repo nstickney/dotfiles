@@ -50,39 +50,53 @@ fetch_usage() {
 	local now
 	now=$(date +%s)
 
-	# Try cache first (< 60s old)
+	# Load cache if it exists (used for fresh reads and stale fallback)
+	local cache_ts=0
 	if [[ -f "$CACHE_FILE" ]]; then
-		local cache_ts
 		cache_ts=$(jq -r '.timestamp // 0' "$CACHE_FILE" 2>/dev/null)
-		# timestamp is in milliseconds
-		local cache_age=$((now - cache_ts / 1000))
-		if ((cache_age < 60)); then
-			USAGE_5H=$(jq -r '.data.fiveHour // empty' "$CACHE_FILE" 2>/dev/null)
-			USAGE_7D=$(jq -r '.data.sevenDay // empty' "$CACHE_FILE" 2>/dev/null)
-			RESET_5H=$(jq -r '.data.fiveHourResetAt // empty' "$CACHE_FILE" 2>/dev/null)
-			RESET_7D=$(jq -r '.data.sevenDayResetAt // empty' "$CACHE_FILE" 2>/dev/null)
-			return 0
-		fi
+	fi
+
+	load_cache() {
+		USAGE_5H=$(jq -r '.data.fiveHour // empty' "$CACHE_FILE" 2>/dev/null)
+		USAGE_7D=$(jq -r '.data.sevenDay // empty' "$CACHE_FILE" 2>/dev/null)
+		RESET_5H=$(jq -r '.data.fiveHourResetAt // empty' "$CACHE_FILE" 2>/dev/null)
+		RESET_7D=$(jq -r '.data.sevenDayResetAt // empty' "$CACHE_FILE" 2>/dev/null)
+	}
+
+	# Fresh cache (< 5 min old) — use directly
+	local cache_age=$((now - cache_ts / 1000))
+	if [[ -f "$CACHE_FILE" ]] && ((cache_age < 300)); then
+		load_cache
+		return 0
 	fi
 
 	# Need to fetch — get OAuth token
-	[[ -f "$CREDS_FILE" ]] || return 1
+	[[ -f "$CREDS_FILE" ]] || { load_cache; return 0; }
 	local token
 	token=$(jq -r '.claudeAiOauth.accessToken // empty' "$CREDS_FILE" 2>/dev/null)
-	[[ -n "$token" ]] || return 1
+	[[ -n "$token" ]] || { load_cache; return 0; }
 
 	local resp
 	resp=$(curl -sf --max-time 3 \
 		-H "Authorization: Bearer $token" \
 		-H "anthropic-beta: oauth-2025-04-20" \
-		"https://api.anthropic.com/api/oauth/usage" 2>/dev/null) || return 1
+		"https://api.anthropic.com/api/oauth/usage" 2>/dev/null)
+	if [[ $? -ne 0 ]]; then
+		# API failed — fall back to stale cache
+		load_cache
+		return 0
+	fi
 
 	local five_hour seven_day five_hour_reset seven_day_reset
 	five_hour=$(echo "$resp" | jq -r '.five_hour.utilization // empty' 2>/dev/null)
 	seven_day=$(echo "$resp" | jq -r '.seven_day.utilization // empty' 2>/dev/null)
 	five_hour_reset=$(echo "$resp" | jq -r '.five_hour.resets_at // empty' 2>/dev/null)
 	seven_day_reset=$(echo "$resp" | jq -r '.seven_day.resets_at // empty' 2>/dev/null)
-	[[ -n "$five_hour" && -n "$seven_day" ]] || return 1
+	if [[ -z "$five_hour" || -z "$seven_day" ]]; then
+		# Bad response — fall back to stale cache
+		load_cache
+		return 0
+	fi
 
 	# Round to integers
 	five_hour=$(printf '%.0f' "$five_hour")

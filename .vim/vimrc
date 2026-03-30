@@ -165,6 +165,17 @@ set wildmenu  " show completions for menu items
 if has('syntax') && !exists('g:syntax_on')
 	syntax enable  " apply syntax highlighting
 endif
+highlight Normal     ctermfg=NONE cterm=NONE
+highlight Comment    ctermfg=15   cterm=NONE
+highlight Constant   ctermfg=2    cterm=NONE
+highlight Identifier ctermfg=6    cterm=NONE
+highlight Statement  ctermfg=NONE cterm=NONE
+highlight PreProc    ctermfg=NONE cterm=NONE
+highlight Type       ctermfg=NONE cterm=NONE
+highlight Special    ctermfg=5    cterm=NONE
+highlight Underlined ctermfg=4    cterm=underline
+highlight Error      ctermfg=1    cterm=bold
+highlight Todo       ctermfg=3    cterm=bold
 "" Conceal
 set conceallevel=2 concealcursor=nc
 "" Guides
@@ -173,12 +184,12 @@ highlight clear ColorColumn
 highlight ColorColumn ctermbg=0|  " guide columns are black
 "" Line Numbers
 highlight clear LineNr
-highlight LineNr ctermfg=8|  " line numbers should be dark gray
+highlight LineNr ctermfg=8|  " line numbers should be barely visible
 set cursorline  " highlight the current line
 highlight clear CursorLine
 highlight clear CursorLineNr
 highlight CursorLine cterm=None|  " don't highlight the line itself ...
-highlight CursorLineNr ctermfg=7|  " highlight the line number
+highlight CursorLineNr ctermfg=15|  " current line number is subdued
 "" Status and Tab lines (lightline)
 set laststatus=2  " always show the status line
 set showtabline=2  " always show the tab line

@@ -1,12 +1,12 @@
-@define-color soml_black rgba(26, 26, 26, 0.8);
-@define-color soml_half rgba(40, 40, 40, 0.8);
-@define-color soml_gray rgba(54, 54, 54, 0.8);
-@define-color soml_red rgba(223, 83, 99, 0.8);
-@define-color soml_gold rgba(158, 126, 61, 0.8);
-@define-color soml_orange rgba(235, 78, 0, 0.8);
-@define-color soml_blue rgba(0, 129, 250, 0.8);
-@define-color soml_green rgba(45, 149, 109, 0.8);
-@define-color soml_white rgba(230, 230, 230, 0.8);
+@define-color soml_black rgba(17, 17, 17, 0.8);
+@define-color soml_half rgba(8, 8, 8, 0.8);
+@define-color soml_dark rgba(0, 0, 0, 0.8);
+@define-color soml_red rgba(250, 119, 121, 0.8);
+@define-color soml_gold rgba(201, 152, 0, 0.8);
+@define-color soml_orange rgba(246, 125, 82, 0.8);
+@define-color soml_blue rgba(86, 162, 255, 0.8);
+@define-color soml_green rgba(0, 182, 129, 0.8);
+@define-color soml_white rgba(238, 238, 238, 0.8);
 
 * {
   border-radius: 0;
@@ -28,11 +28,12 @@
 }
 
 #workspaces button:not(.focused):not(.urgent):nth-child(even) {
-  background: @soml_gray;
+  background: @soml_dark;
 }
 
 #workspaces button.focused {
   background-color: @soml_orange;
+  color: @soml_black;
 }
 
 #workspaces button.urgent {
@@ -73,11 +74,11 @@
 }
 
 .horizontal:nth-child(3):last-child > *:nth-child(odd) > * {
-  background: @soml_gray;
+  background: @soml_dark;
   border-image-source: linear-gradient(
     to right,
     @soml_half,
-    @soml_gray,
+    @soml_dark,
     @soml_half
   );
 }

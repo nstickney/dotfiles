@@ -81,12 +81,12 @@ gitstatus_prompt_update() {
 	[[ "$VCS_STATUS_RESULT" == ok-sync ]] || return 0 # not a git repo
 
 	local reset=$'\e[0m'         # no color
-	local clean=$'\e[0;36m'      # cyan foreground
-	local pbranch=$'\e[0;35m'    # purple foreground
-	local otag=$'\e[0;93m'       # orange foreground
+	local clean=$'\e[0;32m'      # green foreground
+	local pbranch=$'\e[0;35m'    # magenta foreground
+	local otag=$'\e[0;96m'       # bright orange foreground
 	local untracked=$'\e[0;94m'  # bright blue foreground
-	local modified=$'\e[0;92m'   # bright green foreground
-	local conflicted=$'\e[0;91m' # red foreground
+	local modified=$'\e[0;93m'   # bright gold foreground
+	local conflicted=$'\e[0;91m' # bright red foreground
 
 	local p="${pbranch}"
 
@@ -165,7 +165,7 @@ __prompt_command() {
 	local UC=$R # user's color
 
 	if [ "$USER" == 'stick' ] || [ "$USER" == 'nstickney' ]; then
-		UC=$Y
+		UC=$C
 	elif [ "$USER" == 'emma' ] || [ "$USER" == 'emmafreester' ]; then
 		UC=$M
 	elif [ "$(id -u)" -eq '0' ]; then
@@ -173,10 +173,10 @@ __prompt_command() {
 	fi
 
 	# Next line shows username, hostname, current working directory, git status
-	PS1+="  ${UC}\\u${U}@${C}\\h${U}:${B}\${CPWD}${U}\${GITSTATUS_PROMPT}\\n"
+	PS1+="  ${UC}\\u${U}@${G}\\h${U}:${B}\${CPWD}${U}\${GITSTATUS_PROMPT}\\n"
 
 	# Last line shows bash version and prompt level (root vs nonroot)
-	PS1+="[${G}\\s \\V${U}] ${UC}\\$ ${U}"
+	PS1+="[${Y}\\s \\V${U}] ${UC}\\$ ${U}"
 }
 
 PROMPT_COMMAND=__prompt_command
@@ -185,22 +185,22 @@ PROMPT_COMMAND=__prompt_command
 
 # the tty/framebuffer console
 if [ "$TERM" = 'linux' ]; then
-	# printf "\\e]P01A1A1A" # black
-	printf "\\e]P1DF5363" # red     (red)
-	printf "\\e]P29E7E3D" # green   (yellow)
-	printf "\\e]P3EB4E00" # brown   (orange)
-	printf "\\e]P40081FA" # blue    (blue)
-	printf "\\e]P5C75CA3" # magenta (purple)
-	printf "\\e]P62D956D" # cyan    (green)
-	printf "\\e]P7C7C7C7" # light gray
-	printf "\\e]P8363636" # gray
-	printf "\\e]P9EA8B96" # bright red
-	printf "\\e]PAC2A161" # bright green
-	printf "\\e]PBFF8142" # yellow
-	printf "\\e]PC52ABFF" # bright blue
-	printf "\\e]PDD88DBF" # bright magenta
-	printf "\\e]PE37B897" # bright cyan
-	# printf "\\e]PE6E6E6"  # white
+	# printf "\\e]P0111111" # black
+	printf "\\e]P1FA7779" # red
+	printf "\\e]P200B681" # green
+	printf "\\e]P3C99800" # gold
+	printf "\\e]P456A2FF" # blue
+	printf "\\e]P5E77AC3" # magenta
+	printf "\\e]P6F67D52" # orange
+	printf "\\e]P7EEEEEE" # light gray
+	printf "\\e]P8444444" # gray
+	printf "\\e]P9FFA5A4" # bright red
+	printf "\\e]PA5BD2A2" # bright green
+	printf "\\e]PBE3B752" # bright gold
+	printf "\\e]PC90C0FF" # bright blue
+	printf "\\e]PDFBA0DB" # bright magenta
+	printf "\\e]PEFFA789" # bright orange
+	# printf "\\e]PFBBBBBB" # white
 	clear # fix artifacts
 fi
 

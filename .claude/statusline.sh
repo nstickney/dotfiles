@@ -24,9 +24,9 @@ render_bar() {
 	if [ "$pct" -ge 85 ]; then
 		bar=$'\e[31;100m'
 	elif [ "$pct" -ge 70 ]; then
-		bar=$'\e[32;100m'
+		bar=$'\e[33;100m'
 	else
-		bar=$'\e[36;100m'
+		bar=$'\e[32;100m'
 	fi
 
 	for ((i = 0; i < full; i++)); do bar="${bar}█"; done
@@ -127,11 +127,11 @@ if [[ -n "$CWD" ]] && git -C "$CWD" rev-parse --is-inside-work-tree &>/dev/null;
 	short_commit=$(git -C "$CWD" rev-parse --short HEAD 2>/dev/null)
 
 	reset=$'\e[0m'
-	clean=$'\e[0;36m'
+	clean=$'\e[0;32m'
 	pbranch=$'\e[0;35m'
-	otag=$'\e[0;93m'
+	otag=$'\e[0;96m'
 	untracked_c=$'\e[0;94m'
-	modified_c=$'\e[0;92m'
+	modified_c=$'\e[0;93m'
 	conflicted_c=$'\e[0;91m'
 
 	p="${pbranch}"

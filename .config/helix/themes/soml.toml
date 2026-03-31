@@ -1,0 +1,80 @@
+# SOML 2.0
+
+"ui.background" = {}
+"ui.text" = "fg"
+"ui.text.focus" = "fg"
+"ui.cursor" = { modifiers = ["reversed"] }
+"ui.cursor.primary" = { modifiers = ["reversed"] }
+"ui.cursor.match" = { modifiers = ["underlined"] }
+"ui.selection" = { bg = "gray" }
+"ui.linenr" = { fg = "gray" }
+"ui.linenr.selected" = { fg = "subdued" }
+"ui.statusline" = { fg = "subdued", bg = "bg" }
+"ui.statusline.inactive" = { fg = "gray", bg = "bg" }
+"ui.statusline.normal" = { fg = "bg", bg = "blue" }
+"ui.statusline.insert" = { fg = "bg", bg = "green" }
+"ui.statusline.select" = { fg = "bg", bg = "gold" }
+"ui.popup" = { fg = "fg", bg = "bg" }
+"ui.menu" = { fg = "fg", bg = "bg" }
+"ui.menu.selected" = { fg = "fg", bg = "gray" }
+"ui.window" = { fg = "gray" }
+"ui.help" = { fg = "fg", bg = "bg" }
+"ui.virtual.whitespace" = "gray"
+"ui.virtual.ruler" = { bg = "gray" }
+"ui.virtual.jump-label" = { fg = "blue", modifiers = ["bold", "underlined"] }
+"ui.bufferline" = { fg = "subdued", bg = "bg" }
+"ui.bufferline.active" = { fg = "fg", bg = "gray" }
+"ui.gutter" = {}
+"ui.cursorline.primary" = { bg = "bg" }
+
+"comment" = "subdued"
+"constant" = "green"
+"string" = "green"
+"constant.character.escape" = "magenta"
+"variable" = "fg"
+"variable.builtin" = "orange"
+"function" = "fg"
+"function.builtin" = "orange"
+"keyword" = "fg"
+"operator" = "fg"
+"type" = "fg"
+"constructor" = "fg"
+"namespace" = "fg"
+"label" = "fg"
+"attribute" = "orange"
+"special" = "magenta"
+"tag" = "orange"
+"punctuation" = "fg"
+
+"markup.heading" = { fg = "blue", modifiers = ["bold"] }
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.link.url" = { fg = "blue", modifiers = ["underlined"] }
+"markup.link.text" = "green"
+"markup.raw" = "green"
+
+"diff.plus" = "green"
+"diff.minus" = "red"
+"diff.delta" = "gold"
+
+"diagnostic.hint" = { underline = { style = "curl", color = "subdued" } }
+"diagnostic.info" = { underline = { style = "curl", color = "blue" } }
+"diagnostic.warning" = { underline = { style = "curl", color = "gold" } }
+"diagnostic.error" = { underline = { style = "curl", color = "red" } }
+"info" = "blue"
+"hint" = "subdued"
+"debug" = "subdued"
+"warning" = "gold"
+"error" = "red"
+
+[palette]
+bg = "#111111"
+gray = "#444444"
+subdued = "#bbbbbb"
+fg = "#eeeeee"
+red = "#fa7779"
+green = "#00b681"
+gold = "#c99800"
+blue = "#56a2ff"
+magenta = "#e77ac3"
+orange = "#f67d52"

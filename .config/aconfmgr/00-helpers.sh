@@ -24,7 +24,7 @@ function DetectAMD() {
 }
 
 # Fail if not on an Intel processor
-function DetectIntel() {
+function DetectIntelCPU() {
 	grep -i -q Intel /proc/cpuinfo &>/dev/null
 	return $?
 }
@@ -62,6 +62,12 @@ function DetectCrypt() {
 # Fail if no Broadcom network devices exist
 function DetectBroadcom() {
 	lspci -k | grep -i -q 'broadcom' &>/dev/null
+	return $?
+}
+
+# Fail if no Intel network devices exist
+function DetectIntelNetwork() {
+	lspci -k | grep -i 'intel' | grep -i -q 'network' &>/dev/null
 	return $?
 }
 

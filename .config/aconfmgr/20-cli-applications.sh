@@ -1,3 +1,4 @@
+AddPackage age                    # A simple, modern and secure file encryption tool
 AddPackage aha                   # Ansi HTML Adapter: convert ANSI escape sequences to HTML.
 AddPackage asciinema             # Record and share terminal sessions
 AddPackage bash-completion       # Programmable completion for the bash shell
@@ -82,6 +83,8 @@ AddPackage vscode-css-languageserver  # CSS/LESS/SCSS language server
 AddPackage vscode-html-languageserver # HTML language server
 AddPackage vscode-json-languageserver # JSON language server
 AddPackage yaml-language-server       # YAML Language Server
+
+AddPackage github-cli             # The GitHub CLI
 
 # Archives
 AddPackage 7zip       # Command-line file archiver with high compression ratio
@@ -205,6 +208,7 @@ AddPackage maven   # Java project management and project comprehension tool
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
 ## Javascript
+AddPackage pnpm                   # Fast, disk space efficient package manager
 # AddPackage npm # A package manager for javascript
 
 ## Octave
@@ -227,6 +231,7 @@ if ! DetectWSL; then
 	AddPackage john                # John the Ripper password cracker
 	AddPackage lynis               # Security and system auditing tool to harden Unix/Linux systems
 	AddPackage rkhunter            # Checks machines for the presence of rootkits and other unwanted tools.
+	AddPackage sops                    # Editor of encrypted files that supports YAML, JSON, ENV, INI and BINARY formats
 	AddPackage --foreign wordlists # Download a great set of wordlists. In /usr/share/wordlists
 fi
 

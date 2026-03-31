@@ -40,9 +40,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage --foreign dwarffortress-ironhand # A single-player fantasy game in which you build a dwarven outpost or play an adventurer in a randomly generated world
 	AddPackage --foreign dwarftherapist-git     # Heavily modified version of the original Dwarf Therapist.
 	AddPackage freeciv-gtk4                     # A multiuser clone of the famous Microprose game of Civilization (GTK4 client)
-	AddPackage --foreign minecraft-launcher     # Official Minecraft Launcher
-	CreateLink /opt/minecraft-launcher/swiftshader/libEGL.so /lib64/libEGL.so
-	CreateLink /opt/minecraft-launcher/swiftshader/libGLESv2.so /lib64/libGLESv2.so
+	AddPackage --foreign modrinth-app           # An unique, open source launcher that allows you to play your favorite mods, and keep them up to date, all in one neat little package.
 	AddPackage protontricks    # A simple wrapper that does winetricks things for Proton enabled games.
 	AddPackage steam           # Valve's digital software delivery system
 	AddPackage --foreign tome4 # An open-source, single-player, role-playing roguelike game set in the world of Eyal.

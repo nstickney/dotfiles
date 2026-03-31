@@ -1,0 +1,6 @@
+# Remove Realtek RTL8821CE Bluetooth USB device (13d3:3558) at boot
+# so btusb never claims it and Blueberry/bluetoothd only sees the Intel AX210
+ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="13d3", ATTRS{idProduct}=="3558", RUN+="/bin/sh -c 'echo 1 > /sys%p/remove'"
+
+# Remove Realtek RTL8821CE WiFi PCI device (10ec:c821) at boot
+ACTION=="add", SUBSYSTEM=="pci", ATTRS{vendor}=="0x10ec", ATTRS{device}=="0xc821", RUN+="/bin/sh -c 'echo 1 > /sys%p/remove'"

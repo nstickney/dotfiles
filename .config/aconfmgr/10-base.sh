@@ -67,7 +67,7 @@ else # Don't need a kernel or filesystems in WSL
 
 		# Processor support
 		DetectAMD && AddPackage amd-ucode     # Microcode update image for AMD CPUs
-		DetectIntel && AddPackage intel-ucode # Microcode update files for Intel CPUs
+		DetectIntelCPU && AddPackage intel-ucode # Microcode update files for Intel CPUs
 
 		# Hardware support
 		AddPackage fwupd                  # Simple daemon to allow session software to update firmware

@@ -2,7 +2,11 @@ if ! DetectWSL; then # Networking already handled (?) in WSL (?)
 
 	#Networking Firmware
 	DetectBroadcom && AddPackage linux-firmware-broadcom # Firmware files for Linux - Firmware for Broadcom and Cypress network adapters
-	DetectRealtek && AddPackage linux-firmware-realtek   # Firmware files for Linux - Firmware for Realtek devices
+	if DetectIntelNetwork; then
+		AddPackage linux-firmware-intel # Firmware files for Linux - Firmware for Intel devices
+		DetectRealtek && CopyFile /etc/udev/rules.d/81-realtek-hci.rules
+	fi
+		DetectRealtek && AddPackage linux-firmware-realtek # Firmware files for Linux - Firmware for Realtek devices
 
 	# Firewall
 	AddPackage iptables-nft # Linux kernel packet control tool (using nft interface)

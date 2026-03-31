@@ -1,0 +1,4 @@
+theme = "soml"
+
+[editor]
+line-number = "relative"

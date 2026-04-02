@@ -34,7 +34,7 @@ sed -i '/\[multilib\]/{s/^#//; n; s/^#//;}' "$pacman_conf"
 
 CopyFile /etc/pacman.d/hooks/arch-audit.hook
 CopyFile /etc/pacman.d/hooks/mirrorupgrade.hook
-CopyFile /etc/security/faillock.conf
+
 
 if DetectWSL; then
 

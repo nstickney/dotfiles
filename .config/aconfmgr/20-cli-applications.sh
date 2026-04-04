@@ -1,10 +1,11 @@
-AddPackage age                    # A simple, modern and secure file encryption tool
+AddPackage age                   # A simple, modern and secure file encryption tool
 AddPackage aha                   # Ansi HTML Adapter: convert ANSI escape sequences to HTML.
 AddPackage asciinema             # Record and share terminal sessions
 AddPackage bash-completion       # Programmable completion for the bash shell
 AddPackage bat                   # Cat clone with syntax highlighting and git integration
 AddPackage colordiff             # A Perl script wrapper for 'diff' that produces the same output but with pretty 'syntax' highlighting
 AddPackage --foreign claude-code # An agentic coding tool that lives in your terminal
+AddPackage gemini-cli            # Open-source AI agent that brings the power of Gemini directly into your terminal
 AddPackage dos2unix              # Text file format converter
 AddPackage eva                   # simple calculator REPL, similar to bc(1)
 AddPackage eza                   # ls replacement
@@ -36,11 +37,19 @@ AddPackage watchexec             # Executes commands in response to file modific
 # AddPackage rmlint          # Tool to remove duplicates and other lint, being much faster than fdupes
 
 # $EDITOR
-AddPackage vim                        # Vi Improved, a highly configurable, improved version of the vi text editor
-AddPackage vim-ale                    # Asynchronous Lint Engine with Language Server Protocol (LSP) support
-AddPackage vim-ansible                # A vim plugin for syntax highlighting Ansible's common filetypes
-AddPackage --foreign vim-pkgbuild-git # Vim plugin to edit PKGBUILD files
-AddPackage vim-spell-en               # Language files for Vim spell checking
+AddPackage vim                                    # Vi Improved, a highly configurable, improved version of the vi text editor
+AddPackage vim-ale                                # Asynchronous Lint Engine with Language Server Protocol (LSP) support
+AddPackage vim-ansible                            # A vim plugin for syntax highlighting Ansible's common filetypes
+AddPackage --foreign vim-pkgbuild-git             # Vim plugin to edit PKGBUILD files
+AddPackage vim-spell-en                           # Language files for Vim spell checking
+AddPackage --foreign vim-fzf-git                  # Vim plugin that integrates fzf, the fuzzy file finder
+AddPackage --foreign vim-go                       # Go development plugin for Vim
+AddPackage --foreign vim-indentline-git           # A vim plugin to display the indention levels with thin vertical lines
+AddPackage --foreign vim-lightline-bufferline-git # A lightweight bufferline plugin for vim-lightline
+AddPackage --foreign vim-lightline-git            # A light and configurable statusline/tabline for Vim
+AddPackage --foreign vim-markdown-git             # Markdown Vim Mode
+AddPackage --foreign vim-signify-git              # Show a diff using Vim its sign column
+AddPackage --foreign vim-tcomment                 # An extensible & universal comment vim-plugin that also handles embedded filetypes
 
 ## ALE: https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 AddPackage ansible-lint           # Checks playbooks for practices and behaviour that could potentially be improved.
@@ -65,26 +74,28 @@ AddPackage pyright               # Type checker for the Python language
 AddPackage --foreign ruby-sqlint # Simple SQL linter supporting ANSI and PostgreSQL syntaxes
 AddPackage rust-analyzer         # Experimental Rust compiler front-end for IDEs
 # AddPackage --foreign scalafmt        # code formatter for the Scala programming language
-AddPackage shellcheck                # Shell script analysis tool
-AddPackage shfmt                     # Format shell programs
-AddPackage --foreign sqlfmt-bin      # Experimental SQL formatter with width-aware output.
-AddPackage texlab                    # A cross-platform implementation of the Language Server Protocol for LaTeX.
-AddPackage --foreign vim-ripgrep-git # Use RipGrep in Vim and display results in a quickfix list.
-AddPackage uncrustify                # A source code beautifier
-AddPackage vint                      # Lint tool for Vim script Language
-AddPackage yamllint                  # Linter for YAML files
+AddPackage shellcheck           # Shell script analysis tool
+AddPackage shfmt                # Format shell programs
+AddPackage --foreign sqlfmt-bin # Experimental SQL formatter with width-aware output.
+AddPackage texlab               # A cross-platform implementation of the Language Server Protocol for LaTeX.
+AddPackage uncrustify           # A source code beautifier
+AddPackage vint                 # Lint tool for Vim script Language
+AddPackage yamllint             # Linter for YAML files
 
 ## Helix?
-AddPackage helix                      # A post-modern modal text editor
-AddPackage bash-language-server       # Bash language server implementation based on Tree Sitter and its grammar for Bash
-AddPackage taplo-cli                  # TOML toolkit written in Rust
-AddPackage typescript-language-server # Language Server Protocol (LSP) implementation for TypeScript using tsserver
-AddPackage vscode-css-languageserver  # CSS/LESS/SCSS language server
-AddPackage vscode-html-languageserver # HTML language server
-AddPackage vscode-json-languageserver # JSON language server
-AddPackage yaml-language-server       # YAML Language Server
+AddPackage helix                                 # A post-modern modal text editor
+AddPackage bash-language-server                  # Bash language server implementation based on Tree Sitter and its grammar for Bash
+AddPackage taplo-cli                             # TOML toolkit written in Rust
+AddPackage typescript-language-server            # Language Server Protocol (LSP) implementation for TypeScript using tsserver
+AddPackage vscode-css-languageserver             # CSS/LESS/SCSS language server
+AddPackage vscode-html-languageserver            # HTML language server
+AddPackage vscode-json-languageserver            # JSON language server
+AddPackage yaml-language-server                  # YAML Language Server
+AddPackage --foreign go-template-lsp             # LSP for the Go template engine
+AddPackage --foreign go-template-lsp-debug       # Detached debugging symbols for go-template-lsp
+AddPackage --foreign prettier-plugin-go-template # Prettier plugin for formatting Go & GoHugo templates
 
-AddPackage github-cli             # The GitHub CLI
+AddPackage github-cli # The GitHub CLI
 
 # Archives
 AddPackage 7zip       # Command-line file archiver with high compression ratio
@@ -208,7 +219,7 @@ AddPackage maven   # Java project management and project comprehension tool
 AddPackage vim-jad # Automatically decompile Java class files and display Java code
 
 ## Javascript
-AddPackage pnpm                   # Fast, disk space efficient package manager
+AddPackage pnpm # Fast, disk space efficient package manager
 # AddPackage npm # A package manager for javascript
 
 ## Octave
@@ -231,7 +242,7 @@ if ! DetectWSL; then
 	AddPackage john                # John the Ripper password cracker
 	AddPackage lynis               # Security and system auditing tool to harden Unix/Linux systems
 	AddPackage rkhunter            # Checks machines for the presence of rootkits and other unwanted tools.
-	AddPackage sops                    # Editor of encrypted files that supports YAML, JSON, ENV, INI and BINARY formats
+	AddPackage sops                # Editor of encrypted files that supports YAML, JSON, ENV, INI and BINARY formats
 	AddPackage --foreign wordlists # Download a great set of wordlists. In /usr/share/wordlists
 fi
 

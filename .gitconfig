@@ -96,9 +96,10 @@
 	# Rebase Interactively
 	RI = rebase -i
 	# Rebase Origin
-	RO = "!f(){ git fetch origin && git rebase origin/master; }; f"
+	RO = "!f(){ git fetch origin && git rebase \"$(git rev-parse --abbrev-ref origin/HEAD)\"; }; f"
 	# Rebase Upstream
-	RU = "!f(){ git fetch upstream && git rebase upstream/master; }; f"
+	RU = "!f(){ git fetch upstream && git rebase \"$(git rev-parse --abbrev-ref upstream/HEAD)\"; }; f"
+
 	# Remotes Verbose
 	RV = remote -v
 	# Stash Add

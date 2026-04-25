@@ -2,3 +2,4 @@ theme = "soml"
 
 [editor]
 line-number = "relative"
+soft-wrap.enable = true

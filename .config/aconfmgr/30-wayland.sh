@@ -14,24 +14,26 @@ if ! DetectWSL; then # No GUI in WSL
 
 	# Intel graphics support
 	if DetectIntelGPU; then
-		AddPackage linux-firmware-intel #  	Firmware files for Linux - Firmware for Intel devices
-		# AddPackage vulcan-intel         # Intel's Vulkan mesa driver
-		# AddPackage vulkan-tools         # Vulkan Utilities and Tools
+		AddPackage linux-firmware-intel # Firmware files for Linux - Firmware for Intel devices
+		AddPackage intel-media-driver   # Intel Media Driver for VAAPI — Broadwell+ iGPUs
+		AddPackage vulkan-intel         # Open-source Vulkan driver for Intel GPUs
+		AddPackage lib32-vulkan-intel   # Open-source Vulkan driver for Intel GPUs - 32-bit
 	fi
 
-	# Nvidia graphics support
+	# Nvidia graphics support (PRIME render offload via prime-run)
 	if DetectNvidiaGPU; then
 		AddPackage linux-firmware-nvidia # Firmware files for Linux - Firmware for NVIDIA GPUs and SoCs
-		AddPackage egl-wayland
-		AddPackage lib32-nvidia-utils
-		AddPackage nvidia
-		AddPackage nvidia-lts
-		AddPackage nvidia-utils
-		CopyFile /etc/modprobe.d/nvidia-wayland-gnome.conf
-		CreateLink /etc/systemd/system/systemd-hibernate.service.wants/nvidia-hibernate.service /usr/lib/systemd/system/nvidia-hibernate.service
-		CreateLink /etc/systemd/system/systemd-hibernate.service.wants/nvidia-resume.service /usr/lib/systemd/system/nvidia-resume.service
-		CreateLink /etc/systemd/system/systemd-suspend.service.wants/nvidia-resume.service /usr/lib/systemd/system/nvidia-resume.service
-		CreateLink /etc/systemd/system/systemd-suspend.service.wants/nvidia-suspend.service /usr/lib/systemd/system/nvidia-suspend.service
+		AddPackage nvidia-open           # NVIDIA open kernel modules
+		AddPackage nvidia-open-lts       # NVIDIA open kernel modules (LTS)
+		AddPackage nvidia-utils          # NVIDIA drivers utilities
+		AddPackage lib32-nvidia-utils    # NVIDIA drivers utilities (32-bit)
+		AddPackage nvidia-prime          # NVIDIA Prime Render Offload configuration and utilities
+		AddPackage egl-wayland           # EGLStream-based Wayland external platform
+
+		# Required for Wayland on the dGPU; fbdev=1 keeps fbdev consumers happy
+		cat >"$(CreateFile /etc/modprobe.d/nvidia.conf)" <<-EOF
+			options nvidia_drm modeset=1 fbdev=1
+		EOF
 	fi
 
 	AddPackage gdm                     # Display manager and login screen

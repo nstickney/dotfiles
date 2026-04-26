@@ -15,13 +15,13 @@ if ! DetectWSL; then # No GUI in WSL
 	# Intel graphics support
 	if DetectIntelGPU; then
 		AddPackage linux-firmware-intel #  	Firmware files for Linux - Firmware for Intel devices
-		AddPackage vulcan-intel         # Intel's Vulkan mesa driver
-		AddPackage vulkan-tools         # Vulkan Utilities and Tools
+		# AddPackage vulcan-intel         # Intel's Vulkan mesa driver
+		# AddPackage vulkan-tools         # Vulkan Utilities and Tools
 	fi
 
 	# Nvidia graphics support
-	if DetectNvidia; then
-		AddPackage linxu-firmware-nvidia # Firmware files for Linux - Firmware for NVIDIA GPUs and SoCs
+	if DetectNvidiaGPU; then
+		AddPackage linux-firmware-nvidia # Firmware files for Linux - Firmware for NVIDIA GPUs and SoCs
 		AddPackage egl-wayland
 		AddPackage lib32-nvidia-utils
 		AddPackage nvidia

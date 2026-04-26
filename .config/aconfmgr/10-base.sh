@@ -66,12 +66,12 @@ else # Don't need a kernel or filesystems in WSL
 	if ! DetectVM; then
 
 		# Processor support
-		DetectAMD && AddPackage amd-ucode     # Microcode update image for AMD CPUs
+		DetectAMDCPU && AddPackage amd-ucode     # Microcode update image for AMD CPUs
 		DetectIntelCPU && AddPackage intel-ucode # Microcode update files for Intel CPUs
 
 		# Hardware support
 		AddPackage fwupd                  # Simple daemon to allow session software to update firmware
-		DetectNVME && AddPackage nvme-cli # NVM-Express user space tooling for Linux
+		DetectNVMe && AddPackage nvme-cli # NVM-Express user space tooling for Linux
 
 		# Extra file system support... just in case
 		AddPackage btrfs-progs    # Btrfs filesystem utilities

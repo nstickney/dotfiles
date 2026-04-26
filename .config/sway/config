@@ -35,6 +35,21 @@ client.background       $bact
 ## Orientation
 default_orientation horizontal
 
+# Inputs ######################################################################
+input "type:keyboard" {
+	xkb_options caps:escape
+}
+
+# Touchpad
+bindsym XF86TouchpadToggle exec $_BIN_DIR/toggletouchpad # toggle touchpad
+input "type:touchpad" {
+	natural_scroll enabled
+	# dwt enabled
+	# dwtp enabled
+	tap enabled
+	# tap_button_map lrm
+}
+
 # Startup Actions #############################################################
 
 # Set up the session for xdg-desktop-portal screen sharing
@@ -314,9 +329,6 @@ bindsym Mod1+r mode "Resize"
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-
-# Touchpad controls
-bindsym XF86TouchpadToggle exec $_BIN_DIR/toggletouchpad # toggle touchpad
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play

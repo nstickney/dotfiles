@@ -3,7 +3,6 @@ if ! DetectWSL; then # No GUI in WSL
 	# AMD graphics support
 	if DetectAMDGPU; then
 		AddPackage amdgpu_top            # Tool that shows AMD GPU utilization
-		AddPackage linux-firmware-amdgpu # Firmware files for Linux - Firmware for AMD Radeon GPUs
 		AddPackage vulkan-radeon         # Radeon's Vulkan mesa driver
 		AddPackage lib32-vulkan-radeon   # Radeon's Vulkan mesa driver
 		AddPackage vulkan-tools          # Vulkan Utilities and Tools
@@ -14,7 +13,6 @@ if ! DetectWSL; then # No GUI in WSL
 
 	# Intel graphics support
 	if DetectIntelGPU; then
-		AddPackage linux-firmware-intel # Firmware files for Linux - Firmware for Intel devices
 		AddPackage intel-media-driver   # Intel Media Driver for VAAPI — Broadwell+ iGPUs
 		AddPackage vulkan-intel         # Open-source Vulkan driver for Intel GPUs
 		AddPackage lib32-vulkan-intel   # Open-source Vulkan driver for Intel GPUs - 32-bit
@@ -22,7 +20,6 @@ if ! DetectWSL; then # No GUI in WSL
 
 	# Nvidia graphics support (PRIME render offload via prime-run)
 	if DetectNvidiaGPU; then
-		AddPackage linux-firmware-nvidia # Firmware files for Linux - Firmware for NVIDIA GPUs and SoCs
 		AddPackage nvidia-open           # NVIDIA open kernel modules
 		AddPackage nvidia-open-lts       # NVIDIA open kernel modules (LTS)
 		AddPackage nvidia-utils          # NVIDIA drivers utilities

@@ -78,3 +78,21 @@ function DetectRealtekNetwork() {
 	lspci -k | grep -i 'realtek' | grep -iqE 'network|ethernet'
 	return $?
 }
+
+# Fail if no Atheros network devices exist
+function DetectAtherosNetwork() {
+	lspci -k | grep -i 'atheros' | grep -iqE 'network|ethernet'
+	return $?
+}
+
+# Fail if no MediaTek network devices exist
+function DetectMediaTekNetwork() {
+	lspci -k | grep -i 'mediatek' | grep -iqE 'network|ethernet'
+	return $?
+}
+
+# Fail if no Cirrus Logic audio codec is present
+function DetectCirrusAudio() {
+	grep -qs 'Cirrus Logic' /proc/asound/card*/codec\#*
+	return $?
+}

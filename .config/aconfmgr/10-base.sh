@@ -54,9 +54,6 @@ else # Don't need a kernel or filesystems in WSL
 	# Boot
 	AddPackage --foreign systemd-boot-pacman-hook # Pacman hook to upgrade systemd-boot after systemd upgrade.
 
-	# Firmware - split; add firmware packages per-hardware
-	# AddPackage linux-firmware # Firmware files for Linux
-
 	# EFI filesystem support
 	AddPackage exfat-utils # Utilities for exFAT file system
 
@@ -68,6 +65,18 @@ else # Don't need a kernel or filesystems in WSL
 		# Processor support
 		DetectAMDCPU && AddPackage amd-ucode     # Microcode update image for AMD CPUs
 		DetectIntelCPU && AddPackage intel-ucode # Microcode update files for Intel CPUs
+
+		# Firmware (hardware-gated; do NOT add the linux-firmware metapackage)
+		DetectAMDGPU         && AddPackage linux-firmware-amdgpu   # Firmware for AMD Radeon GPUs
+		DetectAMDGPU         && AddPackage linux-firmware-radeon   # Firmware for legacy ATI/Radeon GPUs
+		{ DetectIntelGPU || DetectIntelNetwork; } && \
+			AddPackage linux-firmware-intel                          # Firmware for Intel GPUs / Wi-Fi / Bluetooth
+		DetectNvidiaGPU      && AddPackage linux-firmware-nvidia   # Firmware for NVIDIA GPUs and SoCs
+		DetectAtherosNetwork && AddPackage linux-firmware-atheros  # Firmware for Atheros / QCA wireless
+		DetectBroadcomNetwork && AddPackage linux-firmware-broadcom # Firmware for Broadcom / Cypress network
+		DetectMediaTekNetwork && AddPackage linux-firmware-mediatek # Firmware for MediaTek wireless
+		DetectRealtekNetwork && AddPackage linux-firmware-realtek  # Firmware for Realtek devices
+		DetectCirrusAudio    && AddPackage linux-firmware-cirrus   # Firmware for Cirrus Logic audio codecs
 
 		# Hardware support
 		AddPackage fwupd                  # Simple daemon to allow session software to update firmware

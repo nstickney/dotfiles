@@ -105,8 +105,24 @@ main() {
 		_mods_right+=" \"disk#$i\","
 	done
 
+	# Add the battery
+	_mods_right+=' "battery",'
+
+	# Add backlight block if this host has a backlight device (laptops)
+	if compgen -G "/sys/class/backlight/*" >/dev/null; then
+		cat <<-EOF >>"$HOME"/.config/waybar/config
+			    "backlight": {
+			        "format": " {percent}%",
+			        "on-scroll-up": "brightnessctl set +1%",
+			        "on-scroll-down": "brightnessctl set 1%-",
+			        "tooltip-format": "Brightness: {percent}%"
+			    },
+		EOF
+		_mods_right+=' "backlight",'
+	fi
+
 	# Finalize list of modules
-	_mods_right+=' "battery", "pulseaudio", "clock", "idle_inhibitor", "tray"]'
+	_mods_right+=' "pulseaudio", "clock", "idle_inhibitor", "tray"]'
 
 	cat <<-EOF >>"$HOME"/.config/waybar/config
 

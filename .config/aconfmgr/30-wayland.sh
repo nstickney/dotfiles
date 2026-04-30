@@ -33,6 +33,7 @@ if ! DetectWSL; then # No GUI in WSL
 		EOF
 	fi
 
+  AddPackage brightnessctl           # Lightweight brightness control tool
 	AddPackage gdm                     # Display manager and login screen
 	AddPackage grim                    # Screenshot utility that works under Wayland
 	AddPackage qt5-wayland             # Provides APIs for Wayland
@@ -42,6 +43,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage --foreign wev-git       # Print wayland events, like xev(1)
 	AddPackage --foreign wlsunset-git  # Day/night gamma adjustments for Wayland
 	AddPackage --foreign wshowkeys-git # Displays keys being pressed on a Wayland session
+  AddPackage --foreign wluma         # Automatic brightness adjustment based on screen contents and ALS
 	AddPackage xdg-utils               # Command line tools that assist applications with a variety of desktop integration tasks
 	AddPackage xorg-xauth              # X.Org authorization settings program (required for X11 forwarding in ssh)
 	AddPackage xorg-xeyes              # Follow the mouse/SHAPE extension X demo

@@ -73,9 +73,9 @@ function DetectIntelNetwork() {
 	return $?
 }
 
-# Fail if no Realtek network devices exist
+# Fail if no Realtek devices (network, smartcard, etc.) exist
 function DetectRealtekNetwork() {
-	lspci -k | grep -i 'realtek' | grep -iqE 'network|ethernet'
+	lspci -k | grep -iqE 'realtek'
 	return $?
 }
 

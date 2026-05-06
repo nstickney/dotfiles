@@ -75,7 +75,7 @@ else # Don't need a kernel or filesystems in WSL
 		DetectAtherosNetwork && AddPackage linux-firmware-atheros  # Firmware for Atheros / QCA wireless
 		DetectBroadcomNetwork && AddPackage linux-firmware-broadcom # Firmware for Broadcom / Cypress network
 		DetectMediaTekNetwork && AddPackage linux-firmware-mediatek # Firmware for MediaTek wireless
-		DetectRealtekNetwork && AddPackage linux-firmware-realtek  # Firmware for Realtek devices
+		DetectRealtek && AddPackage linux-firmware-realtek  # Firmware for Realtek devices
 		DetectCirrusAudio    && AddPackage linux-firmware-cirrus   # Firmware for Cirrus Logic audio codecs
 		DetectIntelAudio && AddPackage sof-firmware # Sound Open Firmware
 

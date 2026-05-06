@@ -31,7 +31,9 @@ main() {
 		        "format": "{icon} {capacity}% {time}",
 		        "format-charging": "🔌{icon}",
 		        "format-plugged": "",
-		        "format-icons": ["", "", "", "", ""]
+		        "format-icons": ["", "", "", "", ""],
+		        "format-time": "⏲ {H}:{m}",
+		        "full-at": 80
 		    },
 		    "clock": {
 		        "format": "{:%a %Y.%m.%d %H:%M:%S}",

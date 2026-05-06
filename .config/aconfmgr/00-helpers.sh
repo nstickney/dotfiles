@@ -96,3 +96,9 @@ function DetectCirrusAudio() {
 	grep -qs 'Cirrus Logic' /proc/asound/card*/codec\#*
 	return $?
 }
+
+# Fail if no Intel audio devices exist
+function DetectIntelAudio() {
+	lspci | grep -i 'intel' | grep -iqE 'audio|sound'
+	return $?
+}

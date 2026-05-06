@@ -77,6 +77,7 @@ else # Don't need a kernel or filesystems in WSL
 		DetectMediaTekNetwork && AddPackage linux-firmware-mediatek # Firmware for MediaTek wireless
 		DetectRealtekNetwork && AddPackage linux-firmware-realtek  # Firmware for Realtek devices
 		DetectCirrusAudio    && AddPackage linux-firmware-cirrus   # Firmware for Cirrus Logic audio codecs
+		DetectIntelAudio && AddPackage sof-firmware # Sound Open Firmware
 
 		# Hardware support
 		AddPackage fwupd                  # Simple daemon to allow session software to update firmware

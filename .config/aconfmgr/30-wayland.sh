@@ -25,7 +25,6 @@ if ! DetectWSL; then # No GUI in WSL
 		AddPackage nvidia-utils          # NVIDIA drivers utilities
 		AddPackage lib32-nvidia-utils    # NVIDIA drivers utilities (32-bit)
 		AddPackage nvidia-prime          # NVIDIA Prime Render Offload configuration and utilities
-		AddPackage egl-wayland           # EGLStream-based Wayland external platform
 
 		# Required for Wayland on the dGPU; fbdev=1 keeps fbdev consumers happy
 		cat >"$(CreateFile /etc/modprobe.d/nvidia.conf)" <<-EOF

@@ -23,6 +23,9 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage calibre                      # Ebook management application
 	CreateLink /usr/lib/calibre/bin bin-py3 # Use Python3 in calibre
 
+  # Camera
+  AddPackage snapshot
+
 	# Chat
 	AddPackage --foreign discord_arch_electron # Discord (popular voice + video app) using system electron
 	AddPackage signal-desktop                  # Signal Private Messenger for Linux

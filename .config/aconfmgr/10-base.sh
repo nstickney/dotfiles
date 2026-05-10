@@ -132,12 +132,12 @@ EOF
 CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/systemd/system/getty@.service
 
 # Reduce timeouts to sane values
-cat >>"$(GetPackageOriginalFile systemd /etc/systemd/system.conf)" <<-EOF
-	RuntimeWatchdogSec=10min
-	ShutdownWatchdogSec=10min
-	DefaultTimeoutStartSec=30s
-	DefaultTimeoutStopSec=30s
-EOF
+# cat >>"$(GetPackageOriginalFile systemd /etc/systemd/system.conf)" <<-EOF
+	# RuntimeWatchdogSec=10min
+	# ShutdownWatchdogSec=10min
+	# DefaultTimeoutStartSec=30s
+	# DefaultTimeoutStopSec=30s
+# EOF
 
 # Arch linux enables these GPG agent systemd user sockets by default
 CreateLink /etc/systemd/user/sockets.target.wants/dirmngr.socket /usr/lib/systemd/user/dirmngr.socket

@@ -37,13 +37,13 @@ if ! DetectWSL; then # No GUI in WSL
 	# Games
 	AddPackage --foreign airshipper             # The official launcher for Veloren - an open-world, open-source multiplayer voxel RPG
 	AddPackage crawl-tiles                      # Dungeon Crawl Stone Soup: open-source, single-player, role-playing roguelike game of exploration and treasure-hunting (graphical version)
-	AddPackage --foreign dwarffortress-ironhand # A single-player fantasy game in which you build a dwarven outpost or play an adventurer in a randomly generated world
-	AddPackage --foreign dwarftherapist-git     # Heavily modified version of the original Dwarf Therapist.
+	# AddPackage --foreign dwarffortress-ironhand # A single-player fantasy game in which you build a dwarven outpost or play an adventurer in a randomly generated world
+	# AddPackage --foreign dwarftherapist-git     # Heavily modified version of the original Dwarf Therapist.
 	AddPackage freeciv-gtk4                     # A multiuser clone of the famous Microprose game of Civilization (GTK4 client)
 	AddPackage --foreign modrinth-app           # An unique, open source launcher that allows you to play your favorite mods, and keep them up to date, all in one neat little package.
 	AddPackage protontricks    # A simple wrapper that does winetricks things for Proton enabled games.
 	AddPackage steam           # Valve's digital software delivery system
-	AddPackage --foreign tome4 # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
+	# AddPackage --foreign tome4 # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
 
 	# Images
 	AddPackage eog         # Eye of Gnome

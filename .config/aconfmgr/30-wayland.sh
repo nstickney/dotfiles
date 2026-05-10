@@ -40,8 +40,9 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage qt6-wayland             # Provides APIs for Wayland
 	AddPackage slurp                   # Select a region in a Wayland compositor
 	AddPackage waypipe                 # A proxy for Wayland protocol applications; like ssh -X
-	AddPackage --foreign wev-git       # Print wayland events, like xev(1)
-	AddPackage --foreign wlsunset-git  # Day/night gamma adjustments for Wayland
+  AddPackage wdisplays               # Graphical application for configuring Wayland displays
+  AddPackage wev # A tool for debugging wayland events on a Wayland window, analagous to the X11 tool xev
+  AddPackage wlsunset                # Day/night gamma adjustments for Wayland compositors
 	AddPackage --foreign wshowkeys-git # Displays keys being pressed on a Wayland session
   AddPackage --foreign wluma         # Automatic brightness adjustment based on screen contents and ALS
 	AddPackage xdg-utils               # Command line tools that assist applications with a variety of desktop integration tasks

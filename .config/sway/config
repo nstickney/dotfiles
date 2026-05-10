@@ -66,17 +66,12 @@ set $_WALLPAPER $_BIN_DIR/sway-random-wallpaper $_BG_DIR $back
 exec_always $_WALLPAPER
 
 # Applications
-#exec bitwarden-bin
-exec blueman-tray
 exec discord
 exec hydroxide serve
-# exec keybase-gui
 exec mako
 exec nm-applet --indicator
 # exec protonmail-bridge --no-window
 exec signal-desktop
-exec slack
-exec teams
 exec wlsunset -l 41.4 -L -74.0
 
 # Numlock

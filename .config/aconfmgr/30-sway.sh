@@ -11,7 +11,6 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage --foreign sway-launcher-desktop # TUI Application launcher with Desktop Entry support.
 	AddPackage waybar                          # Highly customizable Wayland bar for Sway and Wlroots based compositors
 	AddPackage otf-font-awesome                # OPTIONAL DEPENDENCY (waybar)
-	AddPackage --foreign wdisplays-git         # GUI display configurator for wlroots compositors
 	AddPackage wf-recorder                     # Screen recorder for wlroots-based compositors such as sway
 	AddPackage wl-clipboard                    # Command-line copy/paste utilities for Wayland
 	AddPackage xdg-desktop-portal-wlr          # xdg-desktop-portal backend for wlroots

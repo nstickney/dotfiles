@@ -17,6 +17,7 @@ AddPackage git-crypt             # Transparent file encryption in Git
 AddPackage git-filter-repo       # Quickly rewrite git repository history (filter-branch replacement)
 AddPackage git-lfs               # Git extension for versioning large files
 AddPackage --foreign gitstatus   # Git status for Bash and Zsh prompt
+AddPackage hexedit               # View and edit files in hexadecimal or in ASCII
 AddPackage hexyl                 # Colored command-line hex viewer
 AddPackage htop                  # Interactive process viewer
 AddPackage jq                    # Command-line JSON processor
@@ -92,7 +93,6 @@ AddPackage vscode-html-languageserver            # HTML language server
 AddPackage vscode-json-languageserver            # JSON language server
 AddPackage yaml-language-server                  # YAML Language Server
 AddPackage --foreign go-template-lsp             # LSP for the Go template engine
-AddPackage --foreign go-template-lsp-debug       # Detached debugging symbols for go-template-lsp
 AddPackage --foreign prettier-plugin-go-template # Prettier plugin for formatting Go & GoHugo templates
 
 AddPackage github-cli # The GitHub CLI
@@ -122,7 +122,6 @@ AddPackage vegeta    # HTTP load testing tool
 AddPackage checksec               # Tool designed to test which standard Linux OS and PaX security features are being used
 AddPackage gdb                    # The GNU Debugger
 AddPackage --foreign gef-git      # Multi-Architecture GDB Enhanced Features for Exploiters & Reverse-Engineers
-AddPackage --foreign hexcurse-git # Versatile ncurses-based hex editor.
 AddPackage python-keystone        # OPTIONAL DEPENDENCY (gef-git)
 AddPackage lldb                   # Next generation, high-performance debugger
 AddPackage metasploit             # Advanced open-source platform for developing, testing, and using exploit code

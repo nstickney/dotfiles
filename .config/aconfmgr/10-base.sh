@@ -44,8 +44,8 @@ if DetectWSL; then
 else # Don't need a kernel or filesystems in WSL
 
 	# Default kernel
-	AddPackage linux-zen         # The Linux ZEN kernel and modules
-	AddPackage linux-zen-headers # Headers and scripts for building modules for the Linux ZEN kernel
+	AddPackage linux         # The Linux kernel and modules
+	AddPackage linux-headers # Headers and scripts for building modules for the Linux kernel
 
 	# Backup kernel
 	AddPackage linux-lts         # The LTS Linux kernel and modules

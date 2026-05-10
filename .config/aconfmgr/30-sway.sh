@@ -5,7 +5,6 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage swaylock # Screen locker for Wayland
 	AddPackage wmname   # A utility to set the name of your window manager
 
-	AddPackage --foreign blueberry             # Bluetooth configuration tool
 	AddPackage mako                            # Lightweight notification daemon for Wayland
 	AddPackage polkit-gnome                    # Legacy polkit authentication agent for GNOME
 	AddPackage python-i3ipc                    # An improved Python library to control i3wm
@@ -16,9 +15,4 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage wf-recorder                     # Screen recorder for wlroots-based compositors such as sway
 	AddPackage wl-clipboard                    # Command-line copy/paste utilities for Wayland
 	AddPackage xdg-desktop-portal-wlr          # xdg-desktop-portal backend for wlroots
-
-	CopyFile /etc/systemd/user/sway-gsd-rfkill.service 755
-
-	# sway_bin="$(GetPackageOriginalFile sway /usr/share/wayland-sessions/sway.desktop)"
-	# sed -i 's|Exec=.*|Exec=/bin/sh -l -c sway|' "$sway_bin"
 fi

@@ -1,31 +1,31 @@
 if ! DetectWSL; then # Networking already handled (?) in WSL (?)
 
-	if DetectIntelNetwork; then
-		DetectRealtekNetwork && CopyFile /etc/udev/rules.d/81-realtek-hci.rules
-	fi
+  if DetectIntelNetwork; then
+    DetectRealtekNetwork && CopyFile /etc/udev/rules.d/81-realtek-hci.rules
+  fi
 
-	# Firewall
-	AddPackage iptables-nft # Linux kernel packet control tool (using nft interface)
-	CreateLink /etc/systemd/system/multi-user.target.wants/nftables.service /usr/lib/systemd/system/nftables.service
-	CopyFile /etc/nftables.conf
+  # Firewall
+  AddPackage iptables # Linux kernel packet control tool (using nft interface)
+  CreateLink /etc/systemd/system/multi-user.target.wants/nftables.service /usr/lib/systemd/system/nftables.service
+  CopyFile /etc/nftables.conf
 
-	# NetworkManager
-	AddPackage networkmanager             # Network connection manager and user applications
-	AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnect
-	AddPackage networkmanager-openvpn     # NetworkManager VPN plugin for OpenVPN
-	CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
-	CreateLink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service /usr/lib/systemd/system/NetworkManager-dispatcher.service
-	CreateLink /etc/systemd/system/multi-user.target.wants/NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
+  # NetworkManager
+  AddPackage networkmanager             # Network connection manager and user applications
+  AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnect
+  AddPackage networkmanager-openvpn     # NetworkManager VPN plugin for OpenVPN
+  CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
+  CreateLink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service /usr/lib/systemd/system/NetworkManager-dispatcher.service
+  CreateLink /etc/systemd/system/multi-user.target.wants/NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
 
-	# Tools
-	AddPackage iproute2        # IP Routing Utilities
-	AddPackage zerotier-one    # Creates virtual Ethernet networks of almost unlimited size.
-	AddPackage wireguard-tools # next generation secure network tunnel - tools for configuration
+  # Tools
+  AddPackage iproute2        # IP Routing Utilities
+  AddPackage zerotier-one    # Creates virtual Ethernet networks of almost unlimited size.
+  AddPackage wireguard-tools # next generation secure network tunnel - tools for configuration
 
-	# Wireless only when not in VMs
-	if ! DetectVM; then
-		AddPackage iw # nl80211 based CLI configuration utility for wireless devices
-	fi
+  # Wireless only when not in VMs
+  if ! DetectVM; then
+    AddPackage iw # nl80211 based CLI configuration utility for wireless devices
+  fi
 fi
 
 # Hosts file

@@ -110,6 +110,10 @@ if DetectCrypt; then
 	AddPackage device-mapper # Device mapper userspace library and tools
 fi
 
+if DetectDell; then
+	AddPackage libsmbios # A library for providing access to as much BIOS information as possible
+fi
+
 if DetectVirtualBox; then
 	AddPackage virtualbox-guest-modules-arch # Virtualbox guest kernel modules for Arch Kernel
 	AddPackage virtualbox-guest-utils        # VirtualBox Guest userspace utilities

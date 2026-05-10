@@ -10,9 +10,24 @@ if ! DetectVM; then # No peripherals on virtual machines
 	AddPackage bluez-utils # Development and debugging utilities for the bluetooth protocol stack
 
 	# CAC
-	AddPackage ccid   # A generic USB Chip/Smart Card Interface Devices driver
-	AddPackage opensc # Tools and libraries for smart cards
+	AddPackage ccid       # A generic USB Chip/Smart Card Interface Devices driver
+	AddPackage opensc     # Tools and libraries for smart cards
+	AddPackage pcsc-tools # PC/SC Architecture smartcard tools (pcsc_scan, ATR_analysis)
 	CreateLink /etc/systemd/system/sockets.target.wants/pcscd.socket /usr/lib/systemd/system/pcscd.socket
+	
+	# Camera (IPU6 only)
+	if DetectIPU6; then # Intel IPU6 imaging stack (Tiger/Alder/Meteor Lake laptops)
+		AddPackage --foreign gst-plugin-libcamera-ipu6 # GStreamer plugin for libcamera (IPU6 fork)
+		AddPackage --foreign intel-ipu6-camera-bin     # Intel IPU6 camera binaries
+		AddPackage --foreign intel-ipu6-camera-hal-git # Intel IPU6 camera HAL (Tiger Lake / Alder Lake / Meteor Lake)
+		AddPackage --foreign libcamera-ipu6            # libcamera with Intel IPU6 pipeline handler (kervel fork) and OV01A10 support - main library
+		AddPackage --foreign libcamera-ipu6-debug      # Detached debugging symbols for libcamera-ipu6
+		AddPackage --foreign libcamera-ipu6-ipa        # libcamera with Intel IPU6 pipeline handler (kervel fork) and OV01A10 support - signed IPA
+		AddPackage --foreign libcamera-ipu6-tools      # libcamera with Intel IPU6 pipeline handler (kervel fork) and OV01A10 support - tools (cam, qcam, lc-compliance)
+		AddPackage --foreign python-libcamera-ipu6     # libcamera with Intel IPU6 pipeline handler (kervel fork) and OV01A10 support - Python integration
+
+		CreateLink /etc/systemd/system/multi-user.target.wants/v4l2-relayd.service /usr/lib/systemd/system/v4l2-relayd.service
+	fi
 
 	# CD/DVD
 	AddPackage brasero             # CD/DVD mastering tool

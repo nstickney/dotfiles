@@ -37,10 +37,10 @@ function DetectNVMe() {
 	return $?
 }
 
-# Fail if no encrypted devices are configured
+# Fail if no encrypted devices are configured or active
 function DetectCrypt() {
-	[ -s /etc/crypttab ] && sudo -n grep -qv '^\s*\(#\|$\)' /etc/crypttab 2>/dev/null
-	return $?
+	lsblk -rno TYPE 2>/dev/null | grep -qx crypt && return 0
+	[ -r /etc/crypttab ] && [ -s /etc/crypttab ] && grep -qv '^\s*\(#\|$\)' /etc/crypttab 2>/dev/null
 }
 
 # Fail if no AMD GPU is found
@@ -73,8 +73,14 @@ function DetectIntelNetwork() {
 	return $?
 }
 
-# Fail if no Realtek devices (network, smartcard, etc.) exist
+# Fail if no Realtek network devices exist
 function DetectRealtekNetwork() {
+	lspci -k | grep -i 'realtek' | grep -iqE 'network|ethernet'
+	return $?
+}
+
+# Fail if no Realtek devices (network, smartcard, etc.) exist
+function DetectRealtek() {
 	lspci -k | grep -iqE 'realtek'
 	return $?
 }
@@ -101,4 +107,14 @@ function DetectCirrusAudio() {
 function DetectIntelAudio() {
 	lspci | grep -i 'intel' | grep -iqE 'audio|sound'
 	return $?
+}
+
+# Fail if not running on Dell hardware
+function DetectDell() {
+	grep -qi 'dell' /sys/class/dmi/id/sys_vendor 2>/dev/null
+}
+
+# Fail if no Intel IPU (Image Processing Unit, e.g. IPU6 on Tiger/Alder/Meteor Lake)
+function DetectIPU6() {
+	lspci 2>/dev/null | grep -i 'intel' | grep -iqE 'imaging|\bipu[0-9]\b'
 }

@@ -5,6 +5,8 @@ if ! DetectVM; then                     # No audio needed in VMs
 	AddPackage pipewire                    # Low-latency audio/video router and processor
 	AddPackage pipewire-alsa               # Low-latency audio/video router and processor - ALSA configuration
 	AddPackage pipewire-pulse              # Low-latency audio/video router and processor - PulseAudio replacement
+	DetectIPU6 && \
+		AddPackage pipewire-libcamera        # Low-latency audio/video router and processor - Libcamera support
 	AddPackage qpwgraph                    # PipeWire Graph Qt GUI Interface
 	AddPackage wireplumber                 # Session / policy manager implementation for PipeWire
 

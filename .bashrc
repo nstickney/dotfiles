@@ -465,7 +465,7 @@ if [ -x "$(command -v rate-mirrors)" ] && [ -z "$(command -v mirrors)" ]; then
 		# else
 		# 	printf 'Updating mirrorlist:'
 		# shellcheck disable=2086
-		rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist
+		rate-mirrors --entry-country DE arch | sudo tee /etc/pacman.d/mirrorlist
 		# printf ' Done\n'
 		# fi
 	}

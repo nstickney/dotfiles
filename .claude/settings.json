@@ -10,5 +10,8 @@
     "command": "~/.claude/statusline.sh"
   },
   "effortLevel": "medium",
-  "showClearContextOnPlanAccept": true
+  "showClearContextOnPlanAccept": true,
+  "editorMode": "vim",
+  "autoCompactEnabled": false,
+  "agentPushNotifEnabled": true
 }

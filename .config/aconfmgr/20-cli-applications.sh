@@ -49,8 +49,6 @@ AddPackage --foreign vim-pkgbuild-git             # Vim plugin to edit PKGBUILD 
 AddPackage vim-spell-en                           # Language files for Vim spell checking
 AddPackage --foreign vim-fzf-git                  # Vim plugin that integrates fzf, the fuzzy file finder
 AddPackage --foreign vim-go                       # Go development plugin for Vim
-AddPackage --foreign vim-indentline-git           # A vim plugin to display the indention levels with thin vertical lines
-AddPackage --foreign vim-lightline-bufferline-git # A lightweight bufferline plugin for vim-lightline
 AddPackage --foreign vim-lightline-git            # A light and configurable statusline/tabline for Vim
 AddPackage --foreign vim-markdown-git             # Markdown Vim Mode
 AddPackage --foreign vim-signify-git              # Show a diff using Vim its sign column

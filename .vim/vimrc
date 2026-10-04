@@ -58,10 +58,20 @@ set autoindent
 if has('autocmd')
 	filetype plugin indent on
 endif
-highlight SpecialKey ctermfg=0|  " indentation guides are black
+highlight SpecialKey ctermfg=239|  " indentation guides are dim grey (indentLine's old default)
 set list listchars=tab:\│\  " indentation guide (tabs)
 set tabstop=4
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']  " indentation guide (spaces)
+" indentation guide (spaces): one guide per shiftwidth, cycling | ¦ ┆ ┊
+function! s:IndentGuides() abort
+	let l:pad = repeat('\ ', shiftwidth() - 1)
+	execute 'setlocal listchars=tab:\│\ ,leadmultispace:' .
+		\ join(map(['\|', '¦', '┆', '┊'], 'v:val . l:pad'), '')
+endfunction
+augroup IndentGuides
+	autocmd!
+	autocmd OptionSet shiftwidth,tabstop call s:IndentGuides()
+	autocmd BufWinEnter * call s:IndentGuides()
+augroup END
 
 " Linting (ALE) (and completion)
 let g:ale_completion_enabled = 1

@@ -9,5 +9,4 @@ if ! DetectVM; then # No keyboards in VMs
 	AddPackage libusb-compat # qmk opt dep
 	AddPackage wget          # qmk opt dep
 	AddPackage zip           # qmk opt dep
-	CopyFile /etc/udev/rules.d/50-qmk.rules
 fi

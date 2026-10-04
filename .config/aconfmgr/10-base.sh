@@ -58,7 +58,7 @@ else # Don't need a kernel or filesystems in WSL
 	AddPackage --foreign systemd-boot-pacman-hook # Pacman hook to upgrade systemd-boot after systemd upgrade.
 
 	# EFI filesystem support
-	AddPackage exfat-utils # Utilities for exFAT file system
+	AddPackage exfatprogs # exFAT filesystem userspace utilities for the Linux Kernel exfat driver
 
 	# Main filesystem support
 	AddPackage e2fsprogs # Ext2/3/4 filesystem utilities

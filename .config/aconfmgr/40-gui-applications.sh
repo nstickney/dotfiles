@@ -20,8 +20,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
 
 	# Books
-	AddPackage calibre                      # Ebook management application
-	CreateLink /usr/lib/calibre/bin bin-py3 # Use Python3 in calibre
+	AddPackage calibre # Ebook management application
 
   # Camera
   AddPackage snapshot

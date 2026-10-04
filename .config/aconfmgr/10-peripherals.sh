@@ -21,7 +21,6 @@ if ! DetectVM; then # No peripherals on virtual machines
 		AddPackage --foreign intel-ipu6-camera-bin     # Intel IPU6 camera binaries
 		AddPackage --foreign intel-ipu6-camera-hal-git # Intel IPU6 camera HAL (Tiger Lake / Alder Lake / Meteor Lake)
 		AddPackage --foreign libcamera-ipu6            # libcamera with Intel IPU6 pipeline handler (kervel fork) and OV01A10 support - main library
-		AddPackage --foreign libcamera-ipu6-debug      # Detached debugging symbols for libcamera-ipu6
 		AddPackage --foreign libcamera-ipu6-ipa        # libcamera with Intel IPU6 pipeline handler (kervel fork) and OV01A10 support - signed IPA
 		AddPackage --foreign libcamera-ipu6-tools      # libcamera with Intel IPU6 pipeline handler (kervel fork) and OV01A10 support - tools (cam, qcam, lc-compliance)
 		AddPackage --foreign python-libcamera-ipu6     # libcamera with Intel IPU6 pipeline handler (kervel fork) and OV01A10 support - Python integration

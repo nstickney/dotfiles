@@ -5,7 +5,7 @@ if ! DetectWSL; then # Networking already handled (?) in WSL (?)
   fi
 
   # Firewall
-  AddPackage iptables # Linux kernel packet control tool (using nft interface)
+  AddPackage nftables # Netfilter tables userspace tools
   CreateLink /etc/systemd/system/multi-user.target.wants/nftables.service /usr/lib/systemd/system/nftables.service
   CopyFile /etc/nftables.conf
 
@@ -38,11 +38,13 @@ CreateLink /etc/systemd/system/multi-user.target.wants/sshd.service /usr/lib/sys
 CreateLink /etc/systemd/user/sockets.target.wants/gcr-ssh-agent.socket /usr/lib/systemd/user/gcr-ssh-agent.socket
 
 ## SSH server configuration hardening
-sshd_conf="$(GetPackageOriginalFile openssh /etc/ssh/sshd_config)"
-sed -i 's/^#LoginGraceTime.*$/LoginGraceTime 30s/g' "$sshd_conf"
-sed -i 's/^#PermitRootLogin.*$/PermitRootLogin no/g' "$sshd_conf"
-sed -i 's/^#\?MaxAuthTries.*$/MaxAuthTries 3/g' "$sshd_conf"
-sed -i 's/^#\?MaxSessions.*$/MaxSessions 5/g' "$sshd_conf"
-sed -i 's/^#PasswordAuthentication.*$/PasswordAuthentication no/g' "$sshd_conf"
-sed -i 's/^#\?KbdInteractiveAuthentication.*$/KbdInteractiveAuthentication no/g' "$sshd_conf"
-sed -i 's/^#\?AllowAgentForwarding.*$/AllowAgentForwarding no/g' "$sshd_conf"
+## Drop-in (first value wins; 50- sorts before Arch's 99-archlinux.conf)
+cat >"$(CreateFile /etc/ssh/sshd_config.d/50-hardening.conf)" <<-EOF
+	LoginGraceTime 30s
+	PermitRootLogin no
+	MaxAuthTries 3
+	MaxSessions 5
+	PasswordAuthentication no
+	KbdInteractiveAuthentication no
+	AllowAgentForwarding no
+EOF

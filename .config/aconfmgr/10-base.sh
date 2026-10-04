@@ -25,8 +25,11 @@ AddPackage --foreign paru         # Feature packed AUR helper
 AddPackage pkgfile                # a pacman .files metadata explorer
 AddPackage rate-mirrors           # Everyday-use client-side map-aware mirror ranking tool
 
-makepkg_conf="$(GetPackageOriginalFile pacman /etc/makepkg.conf)"
-sed -i 's/\.tar\..*$/.tar'\''/' "$makepkg_conf"
+# Don't compress built packages
+cat >"$(CreateFile /etc/makepkg.conf.d/uncompressed.conf)" <<-EOF
+	PKGEXT='.pkg.tar'
+	SRCEXT='.src.tar'
+EOF
 
 pacman_conf="$(GetPackageOriginalFile pacman /etc/pacman.conf)"
 sed -i '/ParallelDownloads/{s/5/10/;}' "$pacman_conf"
@@ -115,8 +118,7 @@ if DetectDell; then
 fi
 
 if DetectVirtualBox; then
-	AddPackage virtualbox-guest-modules-arch # Virtualbox guest kernel modules for Arch Kernel
-	AddPackage virtualbox-guest-utils        # VirtualBox Guest userspace utilities
+	AddPackage virtualbox-guest-utils # VirtualBox Guest userspace utilities
 	CreateLink /etc/systemd/system/multi-user.target.wants/vboxservice.service /usr/lib/systemd/system/vboxservice.service
 fi
 
@@ -147,21 +149,29 @@ CreateLink /etc/systemd/user/sockets.target.wants/gpg-agent.socket /usr/lib/syst
 CreateLink /etc/systemd/user/sockets.target.wants/gpg-agent-ssh.socket /usr/lib/systemd/user/gpg-agent-ssh.socket
 
 # Login loggin' via Discord
+## The webhook key lives in a root-only file; the script is a no-op without it.
+## Managed when $DISCORD_WEBHOOK is set, otherwise left as-is on the system.
 if [ -n "${DISCORD_WEBHOOK:-}" ]; then
-	sed "s|%KEY%|$DISCORD_WEBHOOK|g" <<-'EOF' >"$(CreateFile /etc/pam.d/loglogins 755)"
-		#!/bin/sh
-
-		_LOGINHOST=${PAM_RHOST:-(local)}
-		[ "$_LOGINHOST" != '(local)' ] && _LOGINHOST="(\`$_LOGINHOST\`)"
-
-		curl -X POST -H 'Content-type: application/json' \
-			--data "{\"content\":\"**$(uname -n)**: ${PAM_TYPE} \`${PAM_USER:-$USER}\` $_LOGINHOST\"}" \
-			https://ptb.discord.com/api/webhooks/%KEY% &
-	EOF
-	cat >>"$(GetPackageOriginalFile pambase /etc/pam.d/system-login)" <<-'EOF'
-		session    optional   pam_exec.so          quiet /etc/pam.d/loglogins
-	EOF
+	printf '%s\n' "$DISCORD_WEBHOOK" >"$(CreateFile /etc/loglogins.webhook 600)"
+else
+	IgnorePath '/etc/loglogins.webhook'
 fi
+cat >"$(CreateFile /etc/pam.d/loglogins 755)" <<-'EOF'
+	#!/bin/sh
+
+	[ -r /etc/loglogins.webhook ] || exit 0
+	_KEY=$(cat /etc/loglogins.webhook)
+
+	_LOGINHOST=${PAM_RHOST:-(local)}
+	[ "$_LOGINHOST" != '(local)' ] && _LOGINHOST="(\`$_LOGINHOST\`)"
+
+	curl -fsS -m 10 -X POST -H 'Content-type: application/json' \
+		--data "{\"content\":\"**$(uname -n)**: ${PAM_TYPE} \`${PAM_USER:-$USER}\` $_LOGINHOST\"}" \
+		"https://ptb.discord.com/api/webhooks/$_KEY" &
+EOF
+cat >>"$(GetPackageOriginalFile pambase /etc/pam.d/system-login)" <<-'EOF'
+	session    optional   pam_exec.so          quiet /etc/pam.d/loglogins
+EOF
 
 # Network Time Protocol
 CreateLink /etc/systemd/system/dbus-org.freedesktop.timesync1.service /usr/lib/systemd/system/systemd-timesyncd.service

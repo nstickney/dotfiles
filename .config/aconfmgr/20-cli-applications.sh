@@ -65,7 +65,6 @@ AddPackage eslint                 # An AST-based pattern checker for JavaScript
 AddPackage flawfinder             # Searches through source code for potential security flaws
 AddPackage --foreign gitlint      # Git commit message linter
 AddPackage gopls                  # Language server for Go programming language
-AddPackage --foreign hadolint-bin # Dockerfile linter, validate inline bash, written in Haskell
 # AddPackage --foreign metals       # Language Server For Scala
 AddPackage perl-tidy # Parses and beautifies perl source
 # AddPackage --foreign proselint           # Linter for prose

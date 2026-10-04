@@ -17,9 +17,11 @@ AddPackage git-crypt             # Transparent file encryption in Git
 AddPackage git-filter-repo       # Quickly rewrite git repository history (filter-branch replacement)
 AddPackage git-lfs               # Git extension for versioning large files
 AddPackage --foreign gitstatus   # Git status for Bash and Zsh prompt
+AddPackage go-yq                 # Portable command-line YAML processor
 AddPackage hexedit               # View and edit files in hexadecimal or in ASCII
 AddPackage hexyl                 # Colored command-line hex viewer
 AddPackage htop                  # Interactive process viewer
+AddPackage hut                   # A CLI tool for Sourcehut
 AddPackage jq                    # Command-line JSON processor
 AddPackage lesspipe              # an input filter for the pager less
 AddPackage lsof                  # Lists open files for running Unix processes
@@ -32,6 +34,8 @@ AddPackage qrencode              # C library for encoding data in a QR Code symb
 AddPackage ripgrep               # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rsync                 # A fast and versatile file copying tool for remote and local files
 AddPackage tmux                  # A terminal multiplexer
+SetFileProperty /usr/lib/utempter/utempter group utmp # libutempter (tmux/mosh/screen dep) install script sets these
+SetFileProperty /usr/lib/utempter/utempter mode 2755
 AddPackage tree                  # A directory listing program displaying a depth indented list of files
 AddPackage watchexec             # Executes commands in response to file modifications
 # AddPackage --foreign hq    # HTML processor inspired by jq

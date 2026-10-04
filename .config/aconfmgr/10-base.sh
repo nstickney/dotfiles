@@ -13,7 +13,7 @@ EOF
 glibc_locale_gen="$(GetPackageOriginalFile glibc /etc/locale.gen)"
 sed -i 's/^#\(en_US.UTF-8\)/\1/g' "$glibc_locale_gen"
 
-CreateLink /etc/localtime /usr/share/zoneinfo/America/New_York
+CreateLink /etc/localtime /usr/share/zoneinfo/Europe/Berlin
 
 # Package management
 AddPackage base-devel             # Required for building AUR packages

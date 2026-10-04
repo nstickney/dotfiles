@@ -1,0 +1,12 @@
+[Unit]
+Description=Connect the Klipsch One II Bluetooth speaker at login
+After=wireplumber.service
+Wants=wireplumber.service
+
+[Service]
+Type=oneshot
+# Retry for ~2 minutes in case the adapter or speaker isn't ready yet
+ExecStart=/bin/sh -c 'for i in $(seq 24); do bluetoothctl info 7C:96:D2:95:EB:91 | grep -q "Connected: yes" && exit 0; bluetoothctl connect 7C:96:D2:95:EB:91 >/dev/null 2>&1; sleep 5; done; exit 1'
+
+[Install]
+WantedBy=default.target

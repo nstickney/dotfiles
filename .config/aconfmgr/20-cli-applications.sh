@@ -42,17 +42,17 @@ AddPackage watchexec             # Executes commands in response to file modific
 # AddPackage rmlint          # Tool to remove duplicates and other lint, being much faster than fdupes
 
 # $EDITOR
-AddPackage vim                                    # Vi Improved, a highly configurable, improved version of the vi text editor
-AddPackage vim-ale                                # Asynchronous Lint Engine with Language Server Protocol (LSP) support
-AddPackage vim-ansible                            # A vim plugin for syntax highlighting Ansible's common filetypes
-AddPackage --foreign vim-pkgbuild-git             # Vim plugin to edit PKGBUILD files
-AddPackage vim-spell-en                           # Language files for Vim spell checking
-AddPackage --foreign vim-fzf-git                  # Vim plugin that integrates fzf, the fuzzy file finder
-AddPackage --foreign vim-go                       # Go development plugin for Vim
-AddPackage --foreign vim-lightline-git            # A light and configurable statusline/tabline for Vim
-AddPackage --foreign vim-markdown-git             # Markdown Vim Mode
-AddPackage --foreign vim-signify-git              # Show a diff using Vim its sign column
-AddPackage --foreign vim-tcomment                 # An extensible & universal comment vim-plugin that also handles embedded filetypes
+AddPackage vim                         # Vi Improved, a highly configurable, improved version of the vi text editor
+AddPackage vim-ale                     # Asynchronous Lint Engine with Language Server Protocol (LSP) support
+AddPackage vim-ansible                 # A vim plugin for syntax highlighting Ansible's common filetypes
+AddPackage --foreign vim-pkgbuild-git  # Vim plugin to edit PKGBUILD files
+AddPackage vim-spell-en                # Language files for Vim spell checking
+AddPackage --foreign vim-fzf-git       # Vim plugin that integrates fzf, the fuzzy file finder
+AddPackage --foreign vim-go            # Go development plugin for Vim
+AddPackage --foreign vim-lightline-git # A light and configurable statusline/tabline for Vim
+AddPackage --foreign vim-markdown-git  # Markdown Vim Mode
+AddPackage --foreign vim-signify-git   # Show a diff using Vim its sign column
+AddPackage --foreign vim-tcomment      # An extensible & universal comment vim-plugin that also handles embedded filetypes
 
 ## ALE: https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 AddPackage ansible-lint           # Checks playbooks for practices and behaviour that could potentially be improved.

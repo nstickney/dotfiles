@@ -133,14 +133,6 @@ cat >"$(CreateFile /etc/systemd/system/getty@tty1.service.d/noclear.conf)" <<-EO
 EOF
 CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/systemd/system/getty@.service
 
-# Reduce timeouts to sane values
-# cat >>"$(GetPackageOriginalFile systemd /etc/systemd/system.conf)" <<-EOF
-	# RuntimeWatchdogSec=10min
-	# ShutdownWatchdogSec=10min
-	# DefaultTimeoutStartSec=30s
-	# DefaultTimeoutStopSec=30s
-# EOF
-
 # Arch linux enables these GPG agent systemd user sockets by default
 CreateLink /etc/systemd/user/sockets.target.wants/dirmngr.socket /usr/lib/systemd/user/dirmngr.socket
 CreateLink /etc/systemd/user/sockets.target.wants/gpg-agent-browser.socket /usr/lib/systemd/user/gpg-agent-browser.socket
@@ -177,6 +169,6 @@ EOF
 CreateLink /etc/systemd/system/dbus-org.freedesktop.timesync1.service /usr/lib/systemd/system/systemd-timesyncd.service
 CreateLink /etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service /usr/lib/systemd/system/systemd-timesyncd.service
 
-# TODO: Do we need these?
+# Enabled by default by their packages; listed so apply doesn't disable them
 CreateLink /etc/systemd/system/multi-user.target.wants/remote-fs.target /usr/lib/systemd/system/remote-fs.target
 CreateLink /etc/systemd/user/sockets.target.wants/p11-kit-server.socket /usr/lib/systemd/user/p11-kit-server.socket

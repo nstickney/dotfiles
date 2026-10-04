@@ -22,8 +22,8 @@ if ! DetectWSL; then # No GUI in WSL
 	# Books
 	AddPackage calibre # Ebook management application
 
-  # Camera
-  AddPackage snapshot
+	# Camera
+	AddPackage snapshot # Take pictures and videos
 
 	# Chat
 	AddPackage --foreign discord_arch_electron # Discord (popular voice + video app) using system electron

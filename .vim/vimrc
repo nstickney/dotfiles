@@ -37,8 +37,6 @@ let g:signify_cursorhold_normal = 0     " avoid auto-saving buffer
 let g:signify_cursorhold_insert = 0     " avoid auto-saving buffer
 nmap <Leader>t <Plug>(signify-prev-hunk)
 nmap <Leader>g <Plug>(signify-next-hunk)
-highlight clear Normal
-highlight Normal     cterm=bold
 highlight clear SignColumn
 highlight SignColumn cterm=bold
 highlight clear DiffAdd

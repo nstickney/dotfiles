@@ -23,11 +23,8 @@ IgnorePath '/etc/conf.d/lm_sensors'
 IgnorePath '/etc/crypttab'
 IgnorePath '/etc/cups/*'
 IgnorePath '/etc/dconf/db/ibus' # compiled by dconf update
-IgnorePath '/etc/dhcpcd*'
-IgnorePath '/etc/docker/key.json'
 IgnorePath '/etc/fstab'
 IgnorePath '/etc/fonts/conf.d/*-*.conf'
-IgnorePath '/etc/gconf/*'
 IgnorePath '/etc/group'
 IgnorePath '/etc/group-'
 IgnorePath '/etc/gshadow'
@@ -68,20 +65,16 @@ IgnorePath '/etc/vconsole.conf'
 IgnorePath '/etc/xml/*'
 IgnorePath '/etc/wireguard/*'
 IgnorePath '/lost+found'
-IgnorePath '/opt/containerd/*'
 IgnorePath '/opt/nessus/*'
-IgnorePath '/opt/tome4/*'
 IgnorePath '/usr/lib/**/*.cache'
-IgnorePath '/usr/lib/ghc-*/package.conf.d/*.conf'
 IgnorePath '/usr/lib/graphviz/config*'
 IgnorePath '/usr/lib/jvm/default*'
-IgnorePath '/usr/lib/libamd_comgr.so.*'
 IgnorePath '/usr/lib/locale/locale-archive'
+IgnorePath '/usr/lib/libvsscript.so' # ldconfig link from vapoursynth's SONAME
 IgnorePath '/usr/lib/udev/hwdb.bin'
 IgnorePath '/usr/lib/vlc/plugins/plugins.dat'
 IgnorePath '/usr/lib/modules/*'
 IgnorePath '/usr/lib32/**/*.cache'
-IgnorePath '/usr/share/.mono/*'
 IgnorePath '/usr/share/applications/mimeinfo.cache'
 IgnorePath '/usr/share/fonts/**/fonts.dir'
 IgnorePath '/usr/share/fonts/**/fonts.scale'
@@ -105,3 +98,10 @@ IgnorePath '/usr/share/icons/*/icon-theme.cache'
 IgnorePath '/usr/share/info/dir'
 IgnorePath '/usr/share/texmf*/ls-R'
 IgnorePath '/var/*'
+
+# Haskell registrations for the installed GHC only (written by haskell-*
+# install scripts); trees left by older GHC versions stay visible for cleanup
+if ghc_libs="$(pacman -Q ghc-libs 2>/dev/null)"; then
+	ghc_ver="${ghc_libs#ghc-libs }"
+	IgnorePath "/usr/lib/ghc-${ghc_ver%-*}/lib/package.conf.d/*"
+fi

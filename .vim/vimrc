@@ -63,9 +63,10 @@ set list listchars=tab:\│\  " indentation guide (tabs)
 set tabstop=4
 " indentation guide (spaces): one guide per shiftwidth, cycling | ¦ ┆ ┊
 function! s:IndentGuides() abort
-	let l:pad = repeat('\ ', shiftwidth() - 1)
-	execute 'setlocal listchars=tab:\│\ ,leadmultispace:' .
-		\ join(map(['\|', '¦', '┆', '┊'], 'v:val . l:pad'), '')
+	let l:pad = repeat(' ', shiftwidth() - 1)
+	let l:lcs = filter(split(&g:listchars, ','), 'v:val !~# "^leadmultispace:"')
+	let &l:listchars = join(l:lcs + ['leadmultispace:' .
+		\ join(map(['|', '¦', '┆', '┊'], 'v:val . l:pad'), '')], ',')
 endfunction
 augroup IndentGuides
 	autocmd!

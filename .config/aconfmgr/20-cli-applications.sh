@@ -57,7 +57,7 @@ AddPackage --foreign vim-tcomment      # An extensible & universal comment vim-p
 ## ALE: https://github.com/dense-analysis/ale/blob/master/supported-tools.md
 AddPackage ansible-lint           # Checks playbooks for practices and behaviour that could potentially be improved.
 AddPackage autopep8               # A tool that automatically formats Python code to conform to the PEP 8 style guide
-AddPackage --foreign checkmake    # Experimental linter/analyzer for makefiles
+AddPackage --foreign checkmake-bin # Experimental linter/analyzer for makefiles
 AddPackage clang                  # C language family frontend for LLVM
 AddPackage llvm                   # referenced by some clang headers
 AddPackage cppcheck               # A tool for static C/C++ code analysis

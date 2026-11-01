@@ -8,6 +8,7 @@ if ! DetectVM; then                     # No audio needed in VMs
 	DetectIPU6 && \
 		AddPackage pipewire-libcamera        # Low-latency audio/video router and processor - Libcamera support
 	AddPackage qpwgraph                    # PipeWire Graph Qt GUI Interface
+	AddPackage rtkit                       # Realtime Policy and Watchdog Daemon (pipewire, mutter KMS thread)
 	AddPackage wireplumber                 # Session / policy manager implementation for PipeWire
 
 	CreateLink /etc/systemd/user/pipewire.service.wants/wireplumber.service /usr/lib/systemd/user/wireplumber.service

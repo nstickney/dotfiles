@@ -35,6 +35,13 @@ pacman_conf="$(GetPackageOriginalFile pacman /etc/pacman.conf)"
 sed -i '/ParallelDownloads/{s/5/10/;}' "$pacman_conf"
 sed -i '/\[multilib\]/{s/^#//; n; s/^#//;}' "$pacman_conf"
 
+# GNOME 51 / mutter 51.1 crashes GDM on NVIDIA boxes (https://gitlab.gnome.org/GNOME/mutter/-/issues/5110).
+# Partial upgrade, unsupported on Arch: drop this once mutter > 51.1 is in [extra].
+if DetectNvidiaGPU; then
+	gnome_pin='mutter gnome-shell gdm libgdm gjs gnome-session gnome-settings-daemon gsettings-desktop-schemas gsettings-system-schemas gnome-control-center gnome-keybindings gnome-desktop gnome-desktop-4 gnome-desktop-common xdg-desktop-portal-gnome nautilus libnautilus-extension gnome-keyring dconf'
+	sed -i "s|^#IgnorePkg   =.*|IgnorePkg = ${gnome_pin}|" "$pacman_conf"
+fi
+
 CopyFile /etc/pacman.d/hooks/arch-audit.hook
 CopyFile /etc/pacman.d/hooks/mirrorupgrade.hook
 

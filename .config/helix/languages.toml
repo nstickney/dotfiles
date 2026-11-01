@@ -1,0 +1,22 @@
+[language-server.go-template-lsp]
+command = "go-template-lsp"
+
+[[language]]
+name = "gotmpl"
+scope = "source.gotmpl"
+file-types = ["gotmpl", "gohtml", "html"]
+language-servers = ["go-template-lsp", "vscode-html-language-server"]
+formatter = { command = "prettier", args = ["--parser", "go-template", "--plugin", "/usr/lib/node_modules/prettier-plugin-go-template/lib/index.js"] }
+auto-format = true
+
+[[language]]
+name = "html"
+formatter = { command = "prettier", args = ["--parser", "html"] }
+auto-format = true
+
+[[language]]
+name = "shell"
+scope = "source.sh"
+file-types = ["bash", "sh"]
+formatter = { command = "shfmt", args = ["-i", "2"] }
+auto-format = true

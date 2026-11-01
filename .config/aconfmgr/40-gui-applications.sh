@@ -42,6 +42,7 @@ if ! DetectWSL; then # No GUI in WSL
 	# AddPackage --foreign dwarffortress-ironhand # A single-player fantasy game in which you build a dwarven outpost or play an adventurer in a randomly generated world
 	# AddPackage --foreign dwarftherapist-git     # Heavily modified version of the original Dwarf Therapist.
 	AddPackage freeciv-gtk4                     # A multiuser clone of the famous Microprose game of Civilization (GTK4 client)
+	AddPackage --foreign heroic-games-launcher-bin # A Native GOG, Amazon and Epic Games Launcher for Linux, Windows and Mac
 	AddPackage modrinth-app                     # An unique, open source launcher that allows you to play your favorite mods, and keep them up to date, all in one neat little package.
 	AddPackage protontricks    # A simple wrapper that does winetricks things for Proton enabled games.
 	AddPackage steam           # Valve's digital software delivery system

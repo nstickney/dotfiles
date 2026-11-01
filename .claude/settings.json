@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "attribution": {
-    "commit": "Assisted-by: Claude:claude-4.6-opus",
-    "pr": "Assisted-by: Claude:claude-4.6-opus"
+    "commit": "Assisted-by: Claude:claude-opus-5-5",
+    "pr": "Assisted-by: Claude:claude-opus-5-5"
   },
   "model": "opus",
   "statusLine": {

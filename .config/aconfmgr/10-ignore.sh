@@ -14,6 +14,7 @@ IgnorePath '/boot/*'
 IgnorePath '/etc/.*'
 IgnorePath '/etc/adjtime'
 IgnorePath '/etc/arch-release'
+IgnorePath '/etc/audisp' # created by audit, unowned
 IgnorePath '/etc/audit/plugins.d' # created by audit's tmpfiles.d
 IgnorePath '/etc/audit/rules.d'
 IgnorePath '/etc/brlapi.key'

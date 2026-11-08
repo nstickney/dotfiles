@@ -13,5 +13,8 @@ if [ "$(loginctl show-session "$XDG_SESSION_ID" -p Type --value)" = wayland ]; t
 	export _JAVA_AWT_WM_NONREPARENTING=1
 
 	# https://wiki.archlinux.org/title/PipeWire#xdg-desktop-portal-wlr
-	export XDG_CURRENT_DESKTOP=sway
+	# Only as a fallback (e.g. sway from a TTY): GDM already sets this from
+	# the session's DesktopNames, and forcing "sway" under GNOME breaks
+	# gnome-control-center and makes xdg-desktop-portal load the wlr backends.
+	export XDG_CURRENT_DESKTOP="${XDG_CURRENT_DESKTOP:-sway}"
 fi

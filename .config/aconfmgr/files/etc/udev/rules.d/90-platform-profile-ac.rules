@@ -1,0 +1,10 @@
+# Firmware platform profile follows the charger: performance on AC,
+# balanced on battery. On the Precision 5470s, "balanced" lets the Dell
+# firmware cycle the dGPU power ceiling 35/20/15 W, which stutters games.
+
+# Plug / unplug
+SUBSYSTEM=="power_supply", KERNEL=="AC", ACTION=="add|change", ATTR{online}=="1", RUN+="/bin/sh -c 'echo performance > /sys/firmware/acpi/platform_profile'"
+SUBSYSTEM=="power_supply", KERNEL=="AC", ACTION=="add|change", ATTR{online}=="0", RUN+="/bin/sh -c 'echo balanced > /sys/firmware/acpi/platform_profile'"
+
+# Boot: the profile device (dell-pc) can appear after AC's coldplug event
+SUBSYSTEM=="platform-profile", ACTION=="add", RUN+="/bin/sh -c 'grep -qx 1 /sys/class/power_supply/AC/online && echo performance > /sys/firmware/acpi/platform_profile || true'"

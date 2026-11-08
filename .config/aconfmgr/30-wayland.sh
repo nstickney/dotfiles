@@ -30,6 +30,11 @@ if ! DetectWSL; then # No GUI in WSL
 		cat >"$(CreateFile /etc/modprobe.d/nvidia.conf)" <<-EOF
 			options nvidia_drm modeset=1 fbdev=1
 		EOF
+
+		# Dynamic Boost: negotiates the dGPU power budget with the firmware.
+		# Without it the Precision 5470s' firmware cycles the A1000 between
+		# 35/20/15 W every ~4 s, dropping to idle clocks mid-game.
+		CreateLink /etc/systemd/system/multi-user.target.wants/nvidia-powerd.service /usr/lib/systemd/system/nvidia-powerd.service
 	fi
 
 	AddPackage brightnessctl           # Lightweight brightness control tool

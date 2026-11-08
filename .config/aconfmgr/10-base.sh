@@ -124,6 +124,11 @@ if DetectDell; then
 	AddPackage libsmbios # A library for providing access to as much BIOS information as possible
 fi
 
+# Firmware platform profile: performance on AC, balanced on battery
+if [[ -e /sys/firmware/acpi/platform_profile ]]; then
+	CopyFile /etc/udev/rules.d/90-platform-profile-ac.rules
+fi
+
 if DetectVirtualBox; then
 	AddPackage virtualbox-guest-utils # VirtualBox Guest userspace utilities
 	CreateLink /etc/systemd/system/multi-user.target.wants/vboxservice.service /usr/lib/systemd/system/vboxservice.service

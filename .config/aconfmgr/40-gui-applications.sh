@@ -44,6 +44,7 @@ if ! DetectWSL; then # No GUI in WSL
 	AddPackage freeciv-gtk4                     # A multiuser clone of the famous Microprose game of Civilization (GTK4 client)
 	AddPackage --foreign heroic-games-launcher-bin # A Native GOG, Amazon and Epic Games Launcher for Linux, Windows and Mac
 	AddPackage modrinth-app                     # An unique, open source launcher that allows you to play your favorite mods, and keep them up to date, all in one neat little package.
+	AddPackage --foreign protonplus # A modern compatibility tools manager
 	AddPackage protontricks    # A simple wrapper that does winetricks things for Proton enabled games.
 	AddPackage steam           # Valve's digital software delivery system
 	# AddPackage --foreign tome4 # An open-source, single-player, role-playing roguelike game set in the world of Eyal.
